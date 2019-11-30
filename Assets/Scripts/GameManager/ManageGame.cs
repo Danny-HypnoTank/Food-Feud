@@ -33,6 +33,8 @@ public class ManageGame : MonoBehaviour
     [SerializeField]
     private GameObject godPowerUp;
     private List<GameObject> playerObjects = new List<GameObject>();
+    private LevelManager layoutManager;
+    private DrawColor drawColor;
 
     public bool IsTimingDown { get => isTimingDown; set => isTimingDown = value; }
     public Transform[] PlayerSpawnPositions { get => playerSpawnPositions; set => playerSpawnPositions = value; }
@@ -56,6 +58,14 @@ public class ManageGame : MonoBehaviour
 
     private void Start()
     {
+        layoutManager = GetComponent<LevelManager>();
+        drawColor = GetComponent<DrawColor>();
+        layoutManager.LayoutGeneration();
+        for (int i = 0; i < layoutManager.SpawnPoints.Length; i++)
+        {
+            PlayerSpawnPositions[i] = layoutManager.SpawnPoints[i].transform;
+        }
+        drawColor._Terrain = layoutManager.PaintableObjects;
         godPowerUp.SetActive(false);
         //grabs time from main menu scene and checks if its in bounds if its not it sets it to 60 (temporary measure for when we test it straight from game scene)
         reverseTime = PlayerPrefs.GetFloat("RoundDuration");

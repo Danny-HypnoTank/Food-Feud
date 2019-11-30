@@ -9,7 +9,8 @@ public class DrawColor : MonoBehaviour
     public Material myMaterial;
     [SerializeField]
     private List<RenderTexture> _splatMap = new List<RenderTexture>();
-    public List<GameObject> _terrain = new List<GameObject>();
+    [SerializeField]
+    private List<GameObject> _terrain = new List<GameObject>();
 
     [Range(0f, 500)]
     public float _brushSize;
@@ -19,6 +20,9 @@ public class DrawColor : MonoBehaviour
     public float _brushStrength;
     [SerializeField]
     Texture2D[] splatTexture = new Texture2D[12];
+
+    public List<GameObject> _Terrain { get => _terrain; set => _terrain = value; }
+
     private void Start()
     {
         //_terrain = GameObject.Find("Ground");
