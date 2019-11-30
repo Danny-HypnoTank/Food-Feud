@@ -129,6 +129,6 @@ public class LevelSelect : MonoBehaviour
     {
         PlayerPrefs.SetFloat("RoundDuration", currentTime);
         PlayerPrefs.SetInt("MapID", iteration);
-        SceneManager.LoadScene("GameScene" + iteration);
+        SceneManager.LoadScene("PlayScene");
     }
 }
