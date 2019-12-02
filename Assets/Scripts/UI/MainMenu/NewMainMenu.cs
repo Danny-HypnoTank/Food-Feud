@@ -45,15 +45,8 @@ public class NewMainMenu : MonoBehaviour
     private bool usingToolTips;
     [SerializeField]
     private GameObject toolTip;
-    private bool isTransition = false;
-
-    private void Start()
-    {
-        cameraTransform.position = optionsCameraPoint.position;
-    }
     private void OnEnable()
     {
-        isTransition = false;
         quitPanel.gameObject.SetActive(false);
         canPressBtn = true;
         //Closed door 115.504 open door 24.249
@@ -92,7 +85,6 @@ public class NewMainMenu : MonoBehaviour
     }
     private IEnumerator CameraDown()
     {
-        isTransition = true;
         canPressBtn = false;
         bool arrived = false;
         while (!arrived)
@@ -106,10 +98,9 @@ public class NewMainMenu : MonoBehaviour
                 cameraTransform.position = Vector3.MoveTowards(cameraTransform.position, characterSelectPoint.position, cameraMoveSpeed * Time.deltaTime);
             }
             cameraTransform.rotation = Quaternion.Slerp(cameraTransform.rotation, characterSelectPoint.rotation, cameraMoveSpeed * Time.deltaTime);
-            if (Vector3.Distance(cameraTransform.position, characterSelectPoint.position) < 0.01f) arrived = true;
+            if (Vector3.Distance(cameraTransform.position, characterSelectPoint.position) < 0.1f) arrived = true;
             yield return null;
         }
-        isTransition = false;
         MenuController.instance.MainMenuToCharacterSelect();
         yield return null;
     }
@@ -118,17 +109,15 @@ public class NewMainMenu : MonoBehaviour
         private IEnumerator CameraIn()
         {
         canPressBtn = false;
-        isTransition = true;
         yield return new WaitForSeconds(waitBetweenAnimation);
         bool arrived = false;
         while (!arrived)
         {
             cameraTransform.position = Vector3.Lerp(cameraTransform.position, optionsCameraPoint.position, cameraMoveSpeed);
             cameraTransform.rotation = Quaternion.Slerp(cameraTransform.rotation, optionsCameraPoint.rotation, cameraMoveSpeed);
-            if (Vector3.Distance(cameraTransform.position, optionsCameraPoint.position) < 0.01f) arrived = true;
+            if (Vector3.Distance(cameraTransform.position, optionsCameraPoint.position) < 0.1f) arrived = true;
             yield return null;
         }
-        isTransition = false;
         MenuController.instance.MainMenuToOptionsTransition();
         yield return null;
     }
@@ -184,11 +173,8 @@ public class NewMainMenu : MonoBehaviour
         {
             if (Input.GetButtonDown("BackButton"))
             {
-                if (isTransition == false)
-                {
-                    quitPanel.gameObject.SetActive(true);
-                    canPressBtn = false;
-                }
+                quitPanel.gameObject.SetActive(true);
+                canPressBtn = false;
             }
         }
     }
