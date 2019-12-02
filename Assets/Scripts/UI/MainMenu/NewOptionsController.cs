@@ -138,7 +138,7 @@ public class NewOptionsController : MonoBehaviour
         {
             cameraTransform.position = Vector3.Lerp(cameraTransform.position, mainMenuCameraPoint.position, cameraMoveSpeed);
             cameraTransform.rotation = Quaternion.Slerp(cameraTransform.rotation, mainMenuCameraPoint.rotation, cameraMoveSpeed);
-            if (Vector3.Distance(cameraTransform.position, mainMenuCameraPoint.position) < 0.01f) arrived = true;
+            if (Vector3.Distance(cameraTransform.position, mainMenuCameraPoint.position) < 0.1f) arrived = true;
             yield return null;
         }
         doorAnimation.speed = animationSpeed;

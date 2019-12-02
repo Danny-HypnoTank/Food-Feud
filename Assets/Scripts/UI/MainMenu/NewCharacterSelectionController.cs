@@ -28,8 +28,6 @@ public class NewCharacterSelectionController : MonoBehaviour
     [SerializeField]
     private Player[] players;
     private int minPlayers = 2;
-    [Header("Animation and animation points")]
-    private Animator doorAnimation;
 
     private void OnEnable()
     {
@@ -44,9 +42,8 @@ public class NewCharacterSelectionController : MonoBehaviour
             playerPins[i].transform.position = pinLocations[i].transform.position;
         }
         canPressBtn = true;
-        doorAnimation = doorHolder.GetComponent<Animator>();
     }
-    //Default rotation(closed) 117.585 open rotation 45.021
+
 
     private void Update()
     {
