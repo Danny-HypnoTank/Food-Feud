@@ -1,4 +1,4 @@
-﻿Shader "Unlit/DrawSplatMap"
+﻿Shader "Unlit/CutSplatMap"
 {
 	Properties
 	{
@@ -9,7 +9,7 @@
 		_ClearColor("ClearColor", color) = (1,1,1,1)
 		_Size("Size", Range(0,500)) = 1
 		_TexSize("TexSize", Range(0,1)) = 1
-		
+
 		_Strength("Strength", Range(0,1)) = 1
 	}
 		SubShader
@@ -69,16 +69,16 @@
 
 
 
-					drawcol.r = _Color.r;
-					drawcol.g = _Color.g;
-					drawcol.b = _Color.b;
-					drawcol.a = _Color.a;
+					drawcol.r = 1;
+					drawcol.g = 1;
+					drawcol.b = 1;
+					drawcol.a = 1;
 					drawcol = drawcol * brightness;
 					//drawcol.r = 1;
 					//drawcol.g = _Color.g;
 					//drawcol.b = _Color.b;
 
-					return saturate(col + drawcol);
+					return saturate(col - drawcol);
 				}
 				ENDCG
 			}
