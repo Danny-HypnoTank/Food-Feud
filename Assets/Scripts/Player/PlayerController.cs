@@ -26,8 +26,8 @@ public class PlayerController : MonoBehaviour
     private DazeState pStunned;
     private PlayerBase playerBase;
     private StunBehavior stunB;
-
-    private float dashDuration = 0.5f;
+    [SerializeField]
+    private float dashDuration = 0.2f;          //if dash duration too small it causes animation glitch
     private float dashPower = 20;
     private float dashDistance = 5;
     private Vector3 dashPosition;
@@ -147,10 +147,8 @@ public class PlayerController : MonoBehaviour
             // Dashing();
             Vector3 direction = dashPosition - this.transform.position;
             Vector3 movement = direction.normalized * dashPower * Time.deltaTime;
-            if (movement.magnitude > direction.magnitude)
-            {
-                movement = direction;
-            }
+            if(movement.sqrMagnitude > 0.1f)
+                chc.transform.LookAt(chc.transform.position + movement);
 
             chc.Move(movement);
         }
