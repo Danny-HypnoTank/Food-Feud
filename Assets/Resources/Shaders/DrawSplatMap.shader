@@ -56,7 +56,7 @@
 				{
 					// sample the texture
 					fixed4 col = tex2D(_MainTex, i.uv);
-					float brightness = pow(saturate(1 - distance(i.uv, _Coordinate.xy)), _Size);
+					float brightness = pow(saturate(1 -distance(i.uv, _Coordinate.xy)), _Size);
 					//float brightness = 
 					//fixed4 drawcol = _Color * (brightness * _Strength);
 
@@ -67,18 +67,20 @@
 					//col = saturate(col - clearcol);
 					// *brightness;
 
+					float isMask = tex2D(_SplatTex, s.xy) == _Color;
 
-
-					drawcol.r = _Color.r;
+					/*drawcol.r = _Color.r;
 					drawcol.g = _Color.g;
 					drawcol.b = _Color.b;
 					drawcol.a = _Color.a;
-					drawcol = drawcol * brightness;
+					drawcol = drawcol * brightness;*/
 					//drawcol.r = 1;
 					//drawcol.g = _Color.g;
 					//drawcol.b = _Color.b;
 
-					return saturate(col + drawcol);
+					col = (1 - isMask) * col + isMask * _Color;
+					return col;
+					//return saturate(col + drawcol);
 				}
 				ENDCG
 			}

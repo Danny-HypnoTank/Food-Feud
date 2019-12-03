@@ -66,19 +66,20 @@
 					//fixed4 clearcol = _ClearColor * (brightness * _Strength);
 					//col = saturate(col - clearcol);
 					// *brightness;
+					float isMask = tex2D(_SplatTex, s.xy) == _Color;
 
 
-
-					drawcol.r = 1;
-					drawcol.g = 1;
-					drawcol.b = 1;
-					drawcol.a = 1;
-					drawcol = drawcol * brightness;
+					//drawcol.r = 1;
+					//drawcol.g = 1;
+					//drawcol.b = 1;
+					//drawcol.a = 1;
+					//drawcol = drawcol * brightness;
 					//drawcol.r = 1;
 					//drawcol.g = _Color.g;
 					//drawcol.b = _Color.b;
-
-					return saturate(col - drawcol);
+					col = (1 - isMask) * col - isMask * _Color;
+					return col;
+					//return saturate(col - drawcol);
 				}
 				ENDCG
 			}
