@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ParticleCollision : MonoBehaviour
@@ -6,28 +7,30 @@ public class ParticleCollision : MonoBehaviour
 
     [SerializeField]
     private ParticleSystem particle;
-    private List<ParticleCollisionEvent> collisions;
+    private bool canRipple;
 
     void Start()
     {
-        collisions = new List<ParticleCollisionEvent>();
+
+        canRipple = true;
 
     }
 
     private void OnParticleCollision(GameObject other)
     {
 
-        ParticlePhysicsExtensions.GetCollisionEvents(particle, other, collisions);
+        particle.Emit(1);
+        canRipple = false;
+        StartCoroutine(Cooldown());
 
-        PlayerBase player = GetComponent<PlayerBase>();
+    }
 
-        for (int i = 0; i < collisions.Count; i++)
-        {
+    private IEnumerator Cooldown()
+    {
 
-            //TODO: Implement painting
-            Debug.Log($"{collisions[i]}");
+        yield return new WaitForSeconds(1);
 
-        }
+        canRipple = true;
 
     }
 

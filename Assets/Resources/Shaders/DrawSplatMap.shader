@@ -59,15 +59,25 @@
 					float brightness = pow(saturate(1 - distance(i.uv, _Coordinate.xy)), _Size);
 					//float brightness = 
 					//fixed4 drawcol = _Color * (brightness * _Strength);
-					
+
 					s = float2(0.5, 0.5);
 					s = s + (i.uv - _Coordinate.xy) / _TexSize;
-					fixed4 drawcol = tex2D(_SplatTex, s.xy) * brightness;
+					fixed4 drawcol = tex2D(_SplatTex, s.xy);
 					//fixed4 clearcol = _ClearColor * (brightness * _Strength);
 					//col = saturate(col - clearcol);
 					// *brightness;
+
+
+
+					drawcol.r = _Color.r;
+					drawcol.g = _Color.g;
+					drawcol.b = _Color.b;
 					drawcol.a = _Color.a;
-					
+					drawcol = drawcol * brightness;
+					//drawcol.r = 1;
+					//drawcol.g = _Color.g;
+					//drawcol.b = _Color.b;
+
 					return saturate(col + drawcol);
 				}
 				ENDCG

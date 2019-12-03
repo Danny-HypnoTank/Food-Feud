@@ -41,6 +41,14 @@ public class Bullet : MonoBehaviour
                 DestroyBullet();
             }
         }
+
+        if(Physics.Raycast(transform.position, Vector3.down, out hit))
+        {
+
+            CollideWith(hit.collider.gameObject.tag, hit);
+
+        }
+
     }
 
     //when object becomes active it invokes function that disables it after specified time
