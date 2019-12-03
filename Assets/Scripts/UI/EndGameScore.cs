@@ -29,7 +29,7 @@ public class EndGameScore : MonoBehaviour
             playerScores[i].gameObject.SetActive(false);
         }
 
-        sortedPlayers = players.OrderByDescending(o => o.playerScore).ToList();
+        //sortedPlayers = players.OrderByDescending(o => o.playerScore).ToList();
 
         for (int i = 0; i < sortedPlayers.Count; i++)
         {
