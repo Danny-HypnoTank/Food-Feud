@@ -62,22 +62,25 @@ public class Shooting : MonoBehaviour
         drawColor = GameObject.Find("GameManager").GetComponent<DrawColor>();
         canShoot = true;
 
-        var main = particle.main;
-
-        switch (PlayerBase.Player.skinId)
+        if (particle != null)
         {
-            case 0:
-                main.startColor = Color.blue;
-                break;
-            case 1:
-                main.startColor = Color.green;
-                break;
-            case 2:
-                main.startColor = Color.red;
-                break;
-            case 3:
-                main.startColor = Color.yellow;
-                break;
+            var main = particle.main;
+
+            switch (PlayerBase.Player.skinId)
+            {
+                case 0:
+                    main.startColor = Color.blue;
+                    break;
+                case 1:
+                    main.startColor = Color.green;
+                    break;
+                case 2:
+                    main.startColor = Color.red;
+                    break;
+                case 3:
+                    main.startColor = Color.yellow;
+                    break;
+            }
         }
     }
 

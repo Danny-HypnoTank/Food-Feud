@@ -29,6 +29,7 @@ public class ManageGame : MonoBehaviour
     private float reverseTime = 60;                             //actual timer 
     [SerializeField]
     private List<GameObject> mapEdgesForGodPower = new List<GameObject>();
+    [SerializeField]
     private bool isTimingDown;
     [SerializeField]
     private GameObject godPowerUp;
