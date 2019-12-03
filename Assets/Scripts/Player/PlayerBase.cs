@@ -39,17 +39,23 @@ public class PlayerBase : MonoBehaviour
     [SerializeField]
     private GameObject[] skins;
     [SerializeField]
-    private Transform[] weaponOffsetPos;
+    private Transform[] weaponOffsetPos, weaponOffsetTwinGun;
     [Header("Offset")]
     [SerializeField]
-    private Transform gunHolder;
+    private Transform gunHolder, twinGunLeft, twinGunRight;
     private Vector3 currentPos;
     private Vector3 previousPos;
 
     private bool godModeKnockback;
     private float godPowerTimer;
     private float godPowerLimit = 10;
+    [SerializeField]
     private int animationIDSet;
+    [SerializeField]
+    private int currentWeaponId = 0;
+    private float resetAnimTimer;
+    private bool isWeaponSwitch = false;
+    private float weaponPoolTimer = 1.0f;
 
     private void OnEnable()
     {
@@ -102,7 +108,16 @@ public class PlayerBase : MonoBehaviour
 
     private void OffsetFixWeapon()
     {
-        gunHolder.transform.position = weaponOffsetPos[player.skinId].transform.position;
+        if (currentWeaponId == 2)
+        {
+            twinGunLeft.transform.position = weaponOffsetTwinGun[player.skinId].transform.position;
+            twinGunRight.transform.position = weaponOffsetPos[player.skinId].transform.position;
+        }
+        else
+        {
+
+            weapons[currentWeaponId].transform.position = weaponOffsetPos[player.skinId].transform.position;
+        }
     }
 
     private void checkInput()
@@ -118,43 +133,100 @@ public class PlayerBase : MonoBehaviour
         {
             animationIDSet = 2;
         }
-        else
+        else if (isWeaponSwitch == true)
         {
-            if (input == 0)
+            if (currentWeaponId == 1 || currentWeaponId == 3)
+            {
+                //ricochet and bomb anim id = 11
+                animationIDSet = 15;
+                resetAnimTimer = 0;
+            }
+            else if (currentWeaponId == 2)
+            {
+                //twin spray anim id = 21
+                animationIDSet = 25;
+                resetAnimTimer = 0;
+            }
+            else if (currentWeaponId == 0)
+            {
+                //default anim id = 1
+                animationIDSet = 1;
+                resetAnimTimer = 0;
+            }
+        }
+        else if (input != 0)
+        {
+            if (currentWeaponId == 1 || currentWeaponId == 3)
+            {
+                //ricochet and bomb anim id = 11
+                animationIDSet = 11;
+                resetAnimTimer = 0;
+            }
+            else if (currentWeaponId == 2)
+            {
+                //twin spray anim id = 21
+                animationIDSet = 21;
+                resetAnimTimer = 0;
+            }
+            else if (currentWeaponId == 0)
+            {
+                //default anim id = 1
+                animationIDSet = 1;
+                resetAnimTimer = 0;
+            }
+        }
+        else if (input == 0)
+        {
+            resetAnimTimer += Time.deltaTime;
+            if (resetAnimTimer > 0.1f)
             {
                 animationIDSet = 0;
-            }
-            else
-            {
-                animationIDSet = 1;
             }
         }
     }
 
-    
     private void AnimationManagement()
     {
-        switch (animationIDSet)
+        if (ManageGame.instance.IsTimingDown == true)
         {
-            case 0:               
-                animator.SetInteger("AnimController", 0);
-                break;
-            case 1:
-                animator.SetInteger("AnimController", 1);
-                break;
-            case 2:
-                animator.SetInteger("AnimController", 2);
-                break;
-            case 3:
-                animator.SetInteger("AnimController", 3);
-                break;
+            switch (animationIDSet)
+            {
+                case 0:
+                    animator.SetInteger("AnimController", 0);
+                    break;
+                case 1:
+                    animator.SetInteger("AnimController", 1);
+                    break;
+                case 2:
+                    animator.SetInteger("AnimController", 2);
+                    break;
+                case 3:
+                    animator.SetInteger("AnimController", 3);
+                    break;
+                case 11:
+                    animator.SetInteger("AnimController", 11);
+                    break;
+                case 21:
+                    animator.SetInteger("AnimController", 21);
+                    break;
+                case 15:
+                    animator.SetInteger("AnimController", 15);
+                    break;
+                case 25:
+                    animator.SetInteger("AnimController", 25);
+                    break;
+            }
+        }
+        else
+        {
+            animator.SetInteger("AnimController", 0);
         }
 
     }
 
     public void DefaultWeaponSet()
     {
-        gunHolder.transform.position = weaponOffsetPos[0].transform.position;
+        weapons[currentWeaponId].transform.position = weaponOffsetPos[0].transform.position;
         weapons[0].SetActive(true);
     }
 
@@ -207,8 +279,8 @@ public class PlayerBase : MonoBehaviour
         else if (currentPowerUp.powerUpPower == Powerup.powerUps.weapons)
         {
             ResetWeapon();
-            gunHolder.transform.position = weaponOffsetPos[player.skinId].transform.position;
-            weapons[currentPowerUp.weaponID].SetActive(true);
+            StopCoroutine("PullOutWeapon");
+            StartCoroutine("PullOutWeapon");
         }
         else if (currentPowerUp.powerUpPower == Powerup.powerUps.godpowerup)
         {
@@ -219,6 +291,31 @@ public class PlayerBase : MonoBehaviour
         }
         currentPowerUp = null;
         //ManageGame.instance.PowerIconUpdate(player.playerNum, 0);
+    }
+
+    private IEnumerator PullInWeapon()
+    {
+
+        yield return null;
+    }
+
+    private IEnumerator PullOutWeapon()
+    {
+        isWeaponSwitch = true;
+        currentWeaponId = currentPowerUp.weaponID;
+        if (currentWeaponId == 2)
+        {
+            twinGunLeft.transform.position = weaponOffsetTwinGun[player.skinId].transform.position;
+            twinGunRight.transform.position = weaponOffsetPos[player.skinId].transform.position;
+        }
+        else
+        {
+            weapons[currentPowerUp.weaponID].transform.position = weaponOffsetPos[player.skinId].transform.position;
+        }
+        weapons[currentPowerUp.weaponID].SetActive(true);
+        yield return new WaitForSeconds(weaponPoolTimer);
+        isWeaponSwitch = false;
+        yield return null;
     }
 
     private void ResetOtherPlayerWeapons()
