@@ -35,6 +35,8 @@ public class ManageGame : MonoBehaviour
     private List<GameObject> playerObjects = new List<GameObject>();
     private LevelManager layoutManager;
     private DrawColor drawColor;
+    [SerializeField]
+    private ObjectPooling objectPooling;
 
     public bool IsTimingDown { get => isTimingDown; set => isTimingDown = value; }
     public Transform[] PlayerSpawnPositions { get => playerSpawnPositions; set => playerSpawnPositions = value; }
@@ -125,6 +127,7 @@ public class ManageGame : MonoBehaviour
                 reverseTime = 0;
                 if(OnGameWin != null)
                     OnGameWin();
+                objectPooling.DisableAll();
                 SceneManager.LoadScene("EndRoundScene");
             }
         }
