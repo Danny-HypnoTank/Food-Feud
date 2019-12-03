@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
         {
             moveInput = new Vector3(Input.GetAxisRaw("Horizontal" + player.playerNum), 0f, Input.GetAxisRaw("Vertical" + player.playerNum));
             moveVelocity = moveInput * (player.Speed + (moveSpeedModifier));
-            
+
 
             if (Input.GetButtonDown("Dash" + player.playerNum) && isDashing == false && pStunned.Stunned == false)
             {
@@ -149,10 +149,9 @@ public class PlayerController : MonoBehaviour
             Vector3 movement = direction.normalized * dashPower * Time.deltaTime;
             if (movement.magnitude > direction.magnitude)
             {
-              //  movement = direction;
+                movement = direction;
             }
-            if (movement.sqrMagnitude > 0.1f)
-                chc.transform.LookAt(chc.transform.position + movement);
+
             chc.Move(movement);
         }
         else if (isDashing == false)
