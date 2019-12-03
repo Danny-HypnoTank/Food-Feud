@@ -20,8 +20,6 @@ public class NewCharacterSelectionController : MonoBehaviour
     [SerializeField]
     private float waitBetweenAnimation = 0.5f;
     [SerializeField]
-    private float animationSpeed = 0.5f;
-    [SerializeField]
     private float cameraMoveSpeed = 0.2f;
     [SerializeField]
     private bool usingLerp = true;
@@ -32,12 +30,9 @@ public class NewCharacterSelectionController : MonoBehaviour
     private int minPlayers = 2;
     [Header("Animation and animation points")]
     private Animator doorAnimation;
-    private bool isTransition = false;
 
     private void OnEnable()
     {
-        doorAnimation = doorHolder.GetComponent<Animator>();
-        doorAnimation.enabled = false;
         for (int i = 0; i < players.Length; i++)
         {
             players[i].isActivated = false;
@@ -46,12 +41,10 @@ public class NewCharacterSelectionController : MonoBehaviour
         }
         for (int i = 0; i < playerPins.Length; i++)
         {
-            playerPins[i].gameObject.SetActive(false);
             playerPins[i].transform.position = pinLocations[i].transform.position;
-            playerPins[i].gameObject.SetActive(true);
         }
         canPressBtn = true;
-        isTransition = false;   
+        doorAnimation = doorHolder.GetComponent<Animator>();
     }
     //Default rotation(closed) 117.585 open rotation 45.021
 
@@ -61,20 +54,17 @@ public class NewCharacterSelectionController : MonoBehaviour
         {
             if (Input.GetButtonDown("BackButton"))
             {
-                if (isTransition == false)
+                bool canReturn = true;
+                for (int i = 0; i < pinController.Length; i++)
                 {
-                    bool canReturn = true;
-                    for (int i = 0; i < pinController.Length; i++)
+                    if (pinController[i].GetComponent<PinController>().IsActive == true)
                     {
-                        if (pinController[i].GetComponent<PinController>().IsActive == true)
-                        {
-                            canReturn = false;
-                        }
+                        canReturn = false;
                     }
-                    if (canReturn == true)
-                    {
-                        ReturnToMainMenu();
-                    }
+                }
+                if (canReturn == true)
+                {
+                    ReturnToMainMenu();
                 }
             }
   
@@ -108,21 +98,8 @@ public class NewCharacterSelectionController : MonoBehaviour
 
     private void RandomMap()
     {
-        doorAnimation.enabled = true;
-        doorAnimation.speed = animationSpeed;
-        doorAnimation.SetInteger("CloseAnim", 1);
-        StartCoroutine("OpenFridge");
-    }
-
-    private IEnumerator OpenFridge()
-    {
-        canPressBtn = false;
-        isTransition = true;
-        yield return new WaitForSeconds(waitBetweenAnimation);
-        isTransition = false;
-        MenuController.instance.MainMenuToOptionsTransition();
-        SceneManager.LoadScene("PlayScene");
-        yield return null;
+        int randomNumber = Random.Range(1, 6);
+        SceneManager.LoadScene("Level" + randomNumber);
     }
 
 

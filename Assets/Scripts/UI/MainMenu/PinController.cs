@@ -261,8 +261,8 @@ public class PinController : MonoBehaviour
 
     private void InsertPlayer()
     {
-        target = characters[2].GetComponent<CharacterPin>().PlayerPinLocations[player.playerNum -1];
-        position = 2;
+        target = characters[0].GetComponent<CharacterPin>().PlayerPinLocations[player.playerNum -1];
+        position = 0;
         StopCoroutine("MovePin");
         StartCoroutine("MovePin");
         isOnFridge = true;
