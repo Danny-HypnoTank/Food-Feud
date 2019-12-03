@@ -65,17 +65,17 @@ public class DrawColor : MonoBehaviour
         //drawMaterial.SetFloat("_TexSize", _texSize);
     }
 
-    public void DrawOnSplatmap(RaycastHit hit, Color splatMapColor, float size = 400, float _texMultiplier = 1f, float _sizeMultiplier = 1f)
+    public void DrawOnSplatmap(RaycastHit hit, Color splatMapColor, float size = 0.1f, float _texMultiplier = 1f, float _sizeMultiplier = 1f)
     {
 
         int _currentSplat = Random.Range(0, 11);
 
         drawMaterial.SetFloat("_TexSize", _texSize * _texMultiplier);
-        drawMaterial.SetFloat("_Size", size * _sizeMultiplier);
+        drawMaterial.SetFloat("_Size", 0.1f * _sizeMultiplier);
         drawMaterial.SetTexture("_SplatTex", splatTexture[_currentSplat]);
 
         clearMaterial.SetFloat("_TexSize", _texSize * _texMultiplier);
-        clearMaterial.SetFloat("_Size", size * _sizeMultiplier);
+        clearMaterial.SetFloat("_Size", 0.1f * _sizeMultiplier);
         clearMaterial.SetTexture("_SplatTex", splatTexture[_currentSplat]);
 
 
@@ -91,6 +91,8 @@ public class DrawColor : MonoBehaviour
         Graphics.Blit(temp, _splatMap[terrainNum], clearMaterial);
         Graphics.Blit(temp, _splatMap[terrainNum], drawMaterial);
         RenderTexture.ReleaseTemporary(temp);
+
+        Debug.Log("SplatMapHit:" + _splatMap[terrainNum].name);
     }
 
     private void OnGUI()

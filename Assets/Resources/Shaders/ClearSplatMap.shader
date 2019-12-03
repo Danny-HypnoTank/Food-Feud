@@ -40,6 +40,7 @@
 
 				sampler2D _MainTex;
 				float4 _MainTex_ST;
+				float4 _SplatTex_TexelSize;
 				fixed4 _Coordinate, _Color, _ClearColor;
 				half _Size, _Strength, _TexSize;
 				sampler2D _SplatTex;
@@ -60,9 +61,13 @@
 					//float brightness = 
 					//fixed4 drawcol = _Color * (brightness * _Strength);
 
+					_SplatTex_TexelSize.z = 1;
+					_SplatTex_TexelSize.w = 1;
+
 					s = float2(0.5, 0.5);
-					s = s + (i.uv - _Coordinate.xy) / _TexSize;
+					s = s + (i.uv - _Coordinate.xy)/_Size;
 					fixed4 drawcol = tex2D(_SplatTex, s.xy);
+					
 					//fixed4 clearcol = _ClearColor * (brightness * _Strength);
 					//col = saturate(col - clearcol);
 					// *brightness;

@@ -61,7 +61,7 @@
 					//fixed4 drawcol = _Color * (brightness * _Strength);
 
 					s = float2(0.5, 0.5);
-					s = s + (i.uv - _Coordinate.xy) / _TexSize;
+					s = s + (i.uv - _Coordinate.xy) / _Size;
 					fixed4 drawcol = tex2D(_SplatTex, s.xy);
 					//fixed4 clearcol = _ClearColor * (brightness * _Strength);
 					//col = saturate(col - clearcol);
