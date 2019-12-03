@@ -3,9 +3,10 @@
  * Name: Dominik Waldowski
  * Sid: 1604336
  * Date Created: 06/10/2019
- * Date Modified: 22/10/2019
+ * Modified by: Alexander Watson
+ * Date Modified: 30/11/2019
  */
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -29,6 +30,14 @@ public class LevelSelect : MonoBehaviour
     private Image currentMapImg;                                    //image that displays map visuals
     [SerializeField]
     private Text mapNameText;                                       //text that stores mapName
+
+    [SerializeField]
+    private GameObject loadingScreenPanel;
+    [SerializeField]
+    private Slider slider;
+    [SerializeField]
+    private Text percentLoaded;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -124,11 +133,47 @@ public class LevelSelect : MonoBehaviour
         currentTimeText.text = "Round Time: " + currentTime;
     }
 
+    public void LoadScreen(int scene)
+    {
+        StartCoroutine(Loading(scene));
+
+        PlayerPrefs.SetFloat("RoundDuration", currentTime);
+        PlayerPrefs.SetInt("MapID", iteration);
+    }
+
+    //Coroutine for loading screen
+    IEnumerator Loading(int scene)
+    {
+        //activate loading screen object and set scene
+        loadingScreenPanel.SetActive(true);
+        AsyncOperation async = SceneManager.LoadSceneAsync(scene);
+        async.allowSceneActivation = false;
+
+        //if is async is false, use slider to calculate the loading progress
+        //and clamp values between 0 & 1
+        while (!async.isDone)
+        {
+            float progress = Mathf.Clamp01(async.progress / 0.9f);
+            slider.value = progress;
+
+            //set text
+            percentLoaded.text = Mathf.CeilToInt(progress * 100).ToString() + "%";
+
+            if (async.progress == 0.9f)
+            {
+                slider.value = 1f;
+                async.allowSceneActivation = true;
+            }
+
+            yield return null;
+        }
+    }
+
     //starts the game
-    public void StartGameFromLevel()
+    /*public void StartGameFromLevel()
     {
         PlayerPrefs.SetFloat("RoundDuration", currentTime);
         PlayerPrefs.SetInt("MapID", iteration);
-        SceneManager.LoadScene("GameScene" + iteration);
-    }
+        //SceneManager.LoadScene("GameScene" + iteration);
+    }*/
 }
