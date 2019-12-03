@@ -28,11 +28,11 @@ public class PlayerController : MonoBehaviour
     private StunBehavior stunB;
 
     private float dashDuration = 0.5f;
-    private float dashPower = 10;
+    private float dashPower = 20;
     private float dashDistance = 5;
     private Vector3 dashPosition;
     [SerializeField]
-    private GameObject trail;
+    private GameObject[] trail;
 
     [SerializeField]
     private bool rotationLockOption;
@@ -51,7 +51,12 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        trail.gameObject.SetActive(false);
+        foreach(GameObject t in trail)
+        {
+
+            t.gameObject.SetActive(false);
+
+        }
         isDashing = false;
         chc = GetComponent<CharacterController>();
         dShooting = GetComponent<DefaultShooting>();
@@ -78,7 +83,12 @@ public class PlayerController : MonoBehaviour
                 isDashing = true;
                 pStunned.CanShoot = false;
                 stunB.AddStun(0.3f, pStunned, Player);
-                trail.SetActive(true);
+                foreach (GameObject t in trail)
+                {
+
+                    t.gameObject.SetActive(true);
+
+                }
                 StartCoroutine(DashTimer());
             }
             else
@@ -211,7 +221,12 @@ public class PlayerController : MonoBehaviour
     private IEnumerator DashTimer()
     {
         yield return new WaitForSeconds(dashDuration);
-        trail.SetActive(false);
+        foreach (GameObject t in trail)
+        {
+
+            t.gameObject.SetActive(false);
+
+        }
         isDashing = false;
         if (pStunned.Stunned == false)
         {
