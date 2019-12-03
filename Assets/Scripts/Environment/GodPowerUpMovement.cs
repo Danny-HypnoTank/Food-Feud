@@ -17,7 +17,6 @@ public class GodPowerUpMovement : MonoBehaviour
     {
 
         nodes = GameObject.FindGameObjectsWithTag("NukeSpawn");
-        startPos = transform;
         isRepeating = false;
 
     }
@@ -71,74 +70,82 @@ public class GodPowerUpMovement : MonoBehaviour
                 gameObject.SetActive(false);
             }
     }
+
+    private void OnDisable()
+    {
+
+        Debug.Log("Disabled");
+
+    }
+
 }
 
-    /*public void FindClosestNode()
+/*public void FindClosestNode()
+{
+    startPos = this.transform.position;
+    GameObject[] allEdges = ManageGame.instance.MapEdgesForGodPower.ToArray();
+    float nearestEdge = Mathf.Infinity;
+    Transform target = null;
+    for (int i = 0; i < allEdges.Length; i++)
     {
-        startPos = this.transform.position;
-        GameObject[] allEdges = ManageGame.instance.MapEdgesForGodPower.ToArray();
-        float nearestEdge = Mathf.Infinity;
-        Transform target = null;
-        for (int i = 0; i < allEdges.Length; i++)
+        float distance = Vector3.Distance(startPos, allEdges[i].transform.position);
+        if (distance < nearestEdge)
         {
-            float distance = Vector3.Distance(startPos, allEdges[i].transform.position);
-            if (distance < nearestEdge)
-            {
-                nearestEdge = distance;
-                target = allEdges[i].transform;
-            }
+            nearestEdge = distance;
+            target = allEdges[i].transform;
         }
-        endPos = target.transform.position;
-        targetAppear = target.transform;
-        
-        SetParabola();
     }
+    endPos = target.transform.position;
+    targetAppear = target.transform;
 
-    public void FindFurthestNode()
+    SetParabola();
+}
+
+public void FindFurthestNode()
+{
+    startPos = this.transform.position;
+    GameObject[] allEdges = ManageGame.instance.MapEdgesForGodPower.ToArray();
+    float furthestEdge = 0;
+    Transform target = null;
+    for (int i = 0; i < allEdges.Length; i++)
     {
-        startPos = this.transform.position;
-        GameObject[] allEdges = ManageGame.instance.MapEdgesForGodPower.ToArray();
-        float furthestEdge = 0;
-        Transform target = null;
-        for (int i = 0; i < allEdges.Length; i++)
+        float distance = Vector3.Distance(startPos, allEdges[i].transform.position);
+        Debug.Log(allEdges[i].transform.name + " / " + distance + "/ " + startPos);
+        if (distance > furthestEdge)
         {
-            float distance = Vector3.Distance(startPos, allEdges[i].transform.position);
-            Debug.Log(allEdges[i].transform.name + " / " + distance + "/ " + startPos);
-            if (distance > furthestEdge)
-            {
-                furthestEdge = distance;
-                target = allEdges[i].transform;
-            }
+            furthestEdge = distance;
+            target = allEdges[i].transform;
         }
-        endPos = target.transform.position;
-        
-        targetAppear = target.transform;
-        SetParabola();
     }
+    endPos = target.transform.position;
 
-    private void SetParabola()
+    targetAppear = target.transform;
+    SetParabola();
+}
+
+private void SetParabola()
+{
+    startTime = 0;
+    startTime = Time.time;
+    journeyLength = Vector3.Distance(startPos, endPos);
+    startedFlying = true;
+}
+
+private void Update()
+{
+    if (startedFlying == true)
     {
-        startTime = 0;
-        startTime = Time.time;
+        float distCovered = (Time.time - startTime) * bombSpeed;
         journeyLength = Vector3.Distance(startPos, endPos);
-        startedFlying = true;
-    }
-
-    private void Update()
-    {
-        if (startedFlying == true)
+        float fractionOfJourney = distCovered / journeyLength;
+        transform.position = MathParabola.Parabola(startPos, endPos, bombTopHeight, fractionOfJourney * bombSpeed);
+        if (fractionOfJourney >= 1)
         {
-            float distCovered = (Time.time - startTime) * bombSpeed;
-            journeyLength = Vector3.Distance(startPos, endPos);
-            float fractionOfJourney = distCovered / journeyLength;
-            transform.position = MathParabola.Parabola(startPos, endPos, bombTopHeight, fractionOfJourney * bombSpeed);
-            if (fractionOfJourney >= 1)
-            {
-                canCollide = true;
-                startedFlying = false;
-                this.transform.position = endPos;
-                targetAppear.GetComponent<EdgePowerUpGodPower>().EnablePowerGodPower();
-                this.gameObject.SetActive(false);
-            }
+            canCollide = true;
+            startedFlying = false;
+            this.transform.position = endPos;
+            targetAppear.GetComponent<EdgePowerUpGodPower>().EnablePowerGodPower();
+            this.gameObject.SetActive(false);
         }
-    }*/
+    }
+}*/

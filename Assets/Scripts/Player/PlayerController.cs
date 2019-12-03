@@ -26,13 +26,13 @@ public class PlayerController : MonoBehaviour
     private DazeState pStunned;
     private PlayerBase playerBase;
     private StunBehavior stunB;
-
-    private float dashDuration = 0.5f;
-    private float dashPower = 10;
+    [SerializeField]
+    private float dashDuration = 0.2f;          //if dash duration too small it causes animation glitch
+    private float dashPower = 20;
     private float dashDistance = 5;
     private Vector3 dashPosition;
     [SerializeField]
-    private GameObject trail;
+    private GameObject[] trail;
 
     [SerializeField]
     private bool rotationLockOption;
@@ -51,7 +51,12 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        trail.gameObject.SetActive(false);
+        foreach(GameObject t in trail)
+        {
+
+            t.gameObject.SetActive(false);
+
+        }
         isDashing = false;
         chc = GetComponent<CharacterController>();
         dShooting = GetComponent<DefaultShooting>();
@@ -78,7 +83,12 @@ public class PlayerController : MonoBehaviour
                 isDashing = true;
                 pStunned.CanShoot = false;
                 stunB.AddStun(0.3f, pStunned, Player);
-                trail.SetActive(true);
+                foreach (GameObject t in trail)
+                {
+
+                    t.gameObject.SetActive(true);
+
+                }
                 StartCoroutine(DashTimer());
             }
             else
@@ -137,10 +147,8 @@ public class PlayerController : MonoBehaviour
             // Dashing();
             Vector3 direction = dashPosition - this.transform.position;
             Vector3 movement = direction.normalized * dashPower * Time.deltaTime;
-            if (movement.magnitude > direction.magnitude)
-            {
-                movement = direction;
-            }
+            if(movement.sqrMagnitude > 0.1f)
+                chc.transform.LookAt(chc.transform.position + movement);
 
             chc.Move(movement);
         }
@@ -211,7 +219,12 @@ public class PlayerController : MonoBehaviour
     private IEnumerator DashTimer()
     {
         yield return new WaitForSeconds(dashDuration);
-        trail.SetActive(false);
+        foreach (GameObject t in trail)
+        {
+
+            t.gameObject.SetActive(false);
+
+        }
         isDashing = false;
         if (pStunned.Stunned == false)
         {

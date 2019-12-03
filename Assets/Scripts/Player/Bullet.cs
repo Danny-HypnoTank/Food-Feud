@@ -41,6 +41,14 @@ public class Bullet : MonoBehaviour
                 DestroyBullet();
             }
         }
+
+        if(Physics.Raycast(transform.position, Vector3.down, out hit))
+        {
+
+            CollideWith(hit.collider.gameObject.tag, hit);
+
+        }
+ 
     }
 
     //when object becomes active it invokes function that disables it after specified time
@@ -99,32 +107,34 @@ public class Bullet : MonoBehaviour
                     _smult = 4.5f;
                     _tmult = 1;
                 }
-                int _id = player.skinId;
-                switch (_id)
+                if (player != null)
                 {
-                    case (0):
-                        {
-                            DrawColor.DrawOnSplatmap(hit, new Color(1, 0, 0, 0), 200, _smult, _tmult);
-                            break;
-                        }
-                    case (1):
-                        {
-                            DrawColor.DrawOnSplatmap(hit, new Color(0, 1, 0, 0), 200, _smult, _tmult);
-                            break;
-                        }
-                    case (2):
-                        {
-                            DrawColor.DrawOnSplatmap(hit, new Color(0, 0, 1, 0), 200, _smult, _tmult);
-                            break;
-                        }
-                    case (3):
-                        {
-                            DrawColor.DrawOnSplatmap(hit, new Color(0, 0, 0, 1), 200, _smult, _tmult);
-                            break;
-                        }
+                    int _id = player.skinId;
+                    switch (_id)
+                    {
+                        case (0):
+                            {
+                                DrawColor.DrawOnSplatmap(hit, new Color(1, 0, 0, 0), 200, _smult, _tmult);
+                                break;
+                            }
+                        case (1):
+                            {
+                                DrawColor.DrawOnSplatmap(hit, new Color(0, 1, 0, 0), 200, _smult, _tmult);
+                                break;
+                            }
+                        case (2):
+                            {
+                                DrawColor.DrawOnSplatmap(hit, new Color(0, 0, 1, 0), 200, _smult, _tmult);
+                                break;
+                            }
+                        case (3):
+                            {
+                                DrawColor.DrawOnSplatmap(hit, new Color(0, 0, 0, 1), 200, _smult, _tmult);
+                                break;
+                            }
+                    }
                 }
                 break;
-
         }
     }
 }
