@@ -19,28 +19,15 @@ public class PowerupHolder : MonoBehaviour
     private int randomPowerupId;
     public bool IsSpawned { get => isSpawned; set => isSpawned = value; }
     private int bounds = 0;
-    [SerializeField]
-    private GameObject godPower;
-    private bool isGodPower = false;
 
     private void Start()
     {
-        isGodPower = false;
-        godPower.SetActive(false);
-        bounds = availablePowerups[availablePowerups.Count - 1].MaxProbabilityRange;
+        bounds = availablePowerups[availablePowerups.Count -1].MaxProbabilityRange;
         powerupSpawn = this.GetComponentInParent<PowerupSpawner>();
         ResetPowerups();
     }
-
-    public void ActiveGodPowerup()
-    {
-        isSpawned = true;
-        isGodPower = true;
-        godPower.gameObject.SetActive(true);
-    }
     public void ActiveRandomPower()
     {
-        isGodPower = false;
         isSpawned = true;
         int randomPowerUp = Random.Range(0, bounds);
         //randomPowerupId = randomPowerUp;
@@ -48,11 +35,8 @@ public class PowerupHolder : MonoBehaviour
         {
             if (randomPowerUp >= availablePowerups[i].MinProbabilityRange && randomPowerUp <= availablePowerups[i].MaxProbabilityRange)
             {
-                if (availablePowerups[i].spawnObject.tag != "GodPower")
-                {
                     availablePowerups[i].spawnObject.SetActive(true);
                     randomPowerupId = i;
-                }
             }
         }
     }
@@ -66,14 +50,7 @@ public class PowerupHolder : MonoBehaviour
             {
                 if (other.gameObject.GetComponent<PlayerBase>().CurrentPowerUp == null)
                 {
-                    if (isGodPower == false)
-                    {
-                        other.GetComponent<PlayerBase>().SetPowerUp(availablePowerups[randomPowerupId].spawnObject.GetComponent<Power>().PowerHeld);
-                    }
-                    else if (isGodPower == true)
-                    {
-                        other.GetComponent<PlayerBase>().SetPowerUp(godPower.GetComponent<Power>().PowerHeld);
-                    }
+                    other.GetComponent<PlayerBase>().SetPowerUp(availablePowerups[randomPowerupId].spawnObject.GetComponent<Power>().PowerHeld);
                     //ManageGame.instance.PowerIconUpdate(other.GetComponent<PlayerBase>().Player.playerNum, (int)availablePowerups[randomPowerupId].spawnObject.GetComponent<Power>().PowerHeld.powerUpId);
                 }
                 ResetPowerups();
@@ -90,7 +67,6 @@ public class PowerupHolder : MonoBehaviour
         {
             availablePowerups[i].spawnObject.SetActive(false);
         }
-        godPower.SetActive(false);
 
 
 
