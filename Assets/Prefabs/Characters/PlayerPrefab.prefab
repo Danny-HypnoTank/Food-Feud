@@ -562,6 +562,7 @@ MonoBehaviour:
   drawColor: {fileID: 0}
   particle: {fileID: 8093691246401036337}
   ammo: 0
+  weaponSplashMultiplier: 0.5
   maxRange: 5
 --- !u!1 &3372684936532918610
 GameObject:
@@ -1920,6 +1921,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dd2fcb976464d24ba54ecfa0cfa3422, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dashDuration: 0.2
   trail:
   - {fileID: 8230786717279600726}
   - {fileID: 2379375488075754050}
@@ -1927,6 +1929,7 @@ MonoBehaviour:
   - {fileID: 7943211596268958685}
   - {fileID: 3372684936532918610}
   rotationLockOption: 1
+  weaponSplashMultiplier: 1
 --- !u!114 &-4909872721113032797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3042,41 +3045,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000,
         type: 0}
-    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: SizeModule.curve.minMaxState
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: SizeModule.curve.scalar
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: SizeModule.curve.minScalar
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: SizeModule.y.minMaxState
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: SizeModule.z.minMaxState
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: CollisionModule.collisionMessages
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: EmissionModule.rateOverTime.scalar
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 6951045793853702670, guid: 0c544b9716641d843b75e1d146458247,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3132,6 +3100,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
+        type: 3}
+      propertyPath: SizeModule.curve.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
+        type: 3}
+      propertyPath: SizeModule.curve.scalar
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
+        type: 3}
+      propertyPath: SizeModule.curve.minScalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
+        type: 3}
+      propertyPath: SizeModule.y.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
+        type: 3}
+      propertyPath: SizeModule.z.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
+        type: 3}
+      propertyPath: CollisionModule.collisionMessages
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
+        type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 6951045793853702671, guid: 0c544b9716641d843b75e1d146458247,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -3142,6 +3145,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 7a2c1698684bfda48b21536450ef3314, type: 2}
+    - target: {fileID: 6358298821470490829, guid: 0c544b9716641d843b75e1d146458247,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6358298821626938934, guid: 0c544b9716641d843b75e1d146458247,
         type: 3}
       propertyPath: InitialModule.startSize.scalar
@@ -3160,11 +3168,6 @@ PrefabInstance:
     - target: {fileID: 6358298821626938934, guid: 0c544b9716641d843b75e1d146458247,
         type: 3}
       propertyPath: CollisionModule.type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6358298821470490829, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: InitialModule.startSize.scalar
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -3669,36 +3672,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stream (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: SizeModule.curve.minMaxState
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: SizeModule.curve.scalar
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: SizeModule.curve.minScalar
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: SizeModule.y.minMaxState
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: SizeModule.z.minMaxState
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: CollisionModule.collisionMessages
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6951045793853702670, guid: 0c544b9716641d843b75e1d146458247,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3754,6 +3727,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
+        type: 3}
+      propertyPath: SizeModule.curve.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
+        type: 3}
+      propertyPath: SizeModule.curve.scalar
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
+        type: 3}
+      propertyPath: SizeModule.curve.minScalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
+        type: 3}
+      propertyPath: SizeModule.y.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
+        type: 3}
+      propertyPath: SizeModule.z.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
+        type: 3}
+      propertyPath: CollisionModule.collisionMessages
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6358298821470490829, guid: 0c544b9716641d843b75e1d146458247,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6358298821626938934, guid: 0c544b9716641d843b75e1d146458247,
         type: 3}
       propertyPath: InitialModule.startSize.scalar
@@ -3772,11 +3780,6 @@ PrefabInstance:
     - target: {fileID: 6358298821626938934, guid: 0c544b9716641d843b75e1d146458247,
         type: 3}
       propertyPath: CollisionModule.type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6358298821470490829, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: InitialModule.startSize.scalar
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -3800,21 +3803,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7828662610638031483}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: cc4665270b476a845a5f559daf738809,
-        type: 3}
-      propertyPath: m_Name
-      value: PizzaAnimations_V4
-      objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: cc4665270b476a845a5f559daf738809,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -6057140222963153312, guid: cc4665270b476a845a5f559daf738809,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 8d9bba057303d9349bafe14ca99676f3, type: 2}
     - target: {fileID: -4216859302048453862, guid: cc4665270b476a845a5f559daf738809,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3885,6 +3873,21 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: cc4665270b476a845a5f559daf738809,
+        type: 3}
+      propertyPath: m_Name
+      value: PizzaAnimations_V4
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: cc4665270b476a845a5f559daf738809,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6057140222963153312, guid: cc4665270b476a845a5f559daf738809,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 8d9bba057303d9349bafe14ca99676f3, type: 2}
     - target: {fileID: 1109325095550530801, guid: cc4665270b476a845a5f559daf738809,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -3923,16 +3926,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7828662610943177099}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: 52ce384eea6cf624185507a7f8a2b463,
-        type: 3}
-      propertyPath: m_Name
-      value: DefaultGun
-      objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: 52ce384eea6cf624185507a7f8a2b463,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 52ce384eea6cf624185507a7f8a2b463,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3998,6 +3991,16 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 3.845266
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 52ce384eea6cf624185507a7f8a2b463,
+        type: 3}
+      propertyPath: m_Name
+      value: DefaultGun
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 52ce384eea6cf624185507a7f8a2b463,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -1504981713932161579, guid: 52ce384eea6cf624185507a7f8a2b463,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -4039,11 +4042,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -1504981713932161579, guid: 6e09f8fe7242c024b961d88b59b49097,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 81517cb9d1d10f949a1d51b90f079cf0, type: 2}
     - target: {fileID: -4216859302048453862, guid: 6e09f8fe7242c024b961d88b59b49097,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4114,6 +4112,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2.5792112
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 6e09f8fe7242c024b961d88b59b49097,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 81517cb9d1d10f949a1d51b90f079cf0, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e09f8fe7242c024b961d88b59b49097, type: 3}
 --- !u!1 &111508954716418415 stripped
@@ -4139,36 +4142,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Stream (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: SizeModule.curve.minMaxState
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: SizeModule.curve.scalar
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: SizeModule.curve.minScalar
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: SizeModule.y.minMaxState
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: SizeModule.z.minMaxState
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: CollisionModule.collisionMessages
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6951045793853702670, guid: 0c544b9716641d843b75e1d146458247,
         type: 3}
@@ -4225,6 +4198,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
+        type: 3}
+      propertyPath: SizeModule.curve.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
+        type: 3}
+      propertyPath: SizeModule.curve.scalar
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
+        type: 3}
+      propertyPath: SizeModule.curve.minScalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
+        type: 3}
+      propertyPath: SizeModule.y.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
+        type: 3}
+      propertyPath: SizeModule.z.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
+        type: 3}
+      propertyPath: CollisionModule.collisionMessages
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6358298821470490829, guid: 0c544b9716641d843b75e1d146458247,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6358298821626938934, guid: 0c544b9716641d843b75e1d146458247,
         type: 3}
       propertyPath: InitialModule.startSize.scalar
@@ -4243,11 +4251,6 @@ PrefabInstance:
     - target: {fileID: 6358298821626938934, guid: 0c544b9716641d843b75e1d146458247,
         type: 3}
       propertyPath: CollisionModule.type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6358298821470490829, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: InitialModule.startSize.scalar
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
