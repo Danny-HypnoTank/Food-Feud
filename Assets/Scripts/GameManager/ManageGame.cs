@@ -97,7 +97,7 @@ public class ManageGame : MonoBehaviour
                     newPlayer.SetActive(true);
                     newPlayer.GetComponent<PlayerBase>().SetSkin(players[i].skinId);
                     players[i].playerScore = 0;
-                    
+                    newPlayer.GetComponent<PlayerBase>().SetExpressionManager(players[i].skinId);
                     newPlayer.GetComponent<PlayerController>().Player = players[i];
                     PlayerBase playerBase = newPlayer.GetComponent<PlayerBase>();
                     playerBase.Player = players[i];
