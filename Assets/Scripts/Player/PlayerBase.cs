@@ -56,7 +56,7 @@ public class PlayerBase : MonoBehaviour
     private float resetAnimTimer;
     private bool isWeaponSwitch = false;
     private float weaponPoolTimer = 1.0f;
-
+    private ExpressionManager expression;
     private void OnEnable()
     {
         ResetGodMode();
@@ -64,6 +64,11 @@ public class PlayerBase : MonoBehaviour
         {
             player.Speed = player.DefaultSpeed;
         }
+    }
+
+    public void SetExpressionManager(int idToPass)
+    {
+        expression = skins[idToPass].GetComponent<ExpressionManager>();
     }
 
     public void RemoveGodPower()
@@ -128,10 +133,12 @@ public class PlayerBase : MonoBehaviour
         if (this.gameObject.GetComponent<PlayerController>().IsDashing == true)
         {
             animationIDSet = 3;
+            expression.SetExpression(4);
         }
         else if (daze.Stunned == true)
         {
             animationIDSet = 2;
+            expression.SetExpression(3);
         }
         else if (isWeaponSwitch == true)
         {
@@ -140,22 +147,26 @@ public class PlayerBase : MonoBehaviour
                 //ricochet and bomb anim id = 11
                 animationIDSet = 15;
                 resetAnimTimer = 0;
+                expression.SetExpression(1);
             }
             else if (currentWeaponId == 2)
             {
                 //twin spray anim id = 21
                 animationIDSet = 25;
                 resetAnimTimer = 0;
+                expression.SetExpression(2);
             }
             else if (currentWeaponId == 0)
             {
                 //default anim id = 1
                 animationIDSet = 1;
                 resetAnimTimer = 0;
+                expression.SetExpression(0);
             }
         }
         else if (input != 0)
         {
+            expression.SetExpression(2);
             if (currentWeaponId == 1 || currentWeaponId == 3)
             {
                 //ricochet and bomb anim id = 11
@@ -181,6 +192,7 @@ public class PlayerBase : MonoBehaviour
             if (resetAnimTimer > 0.1f)
             {
                 animationIDSet = 0;
+                expression.SetExpression(1);
             }
         }
     }
