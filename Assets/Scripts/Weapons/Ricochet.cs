@@ -29,7 +29,7 @@ public class Ricochet : Shooting
 
     private void OnEnable()
     {
-        Ammo = 100;
+        Ammo = 10;
         UpdateFillBar();
         bullets = GameObject.Find("BulletsSpawn").GetComponent<ObjectPooling>();
         Debug.Log("fill bar reset");
