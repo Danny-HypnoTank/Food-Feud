@@ -1,5 +1,67 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &-6772886796938903610
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 1326490820}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3077202374725529107}
+  m_Layer: 0
+  m_Name: Missing Prefab (Dummy)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3077202374725529107
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 3077202375548619479, guid: 59ef44ca94960d047b2e1782ab9887b3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1326490820}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: -6772886796938903610}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8999051483538395722}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &-2970096590296251935
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 1326490820}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8999051483538395722}
+  m_Layer: 0
+  m_Name: BombExplosion (Missing Prefab)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8999051483538395722
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 1326490820}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: -2970096590296251935}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 3077202374725529107}
+  m_Father: {fileID: 2111020848634597764}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2111020848634597761
 GameObject:
   m_ObjectHideFlags: 0
@@ -32,7 +94,7 @@ Transform:
   m_LocalPosition: {x: 12.79, y: 0.5, z: -9.73}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
-  - {fileID: 3077202374725529107}
+  - {fileID: 8999051483538395722}
   - {fileID: 1574000689755428759}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -95,8 +157,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5f04ee70beaea24498ee06d7b08446c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blastRadius: 3
+  blastRadius: 2
   decal: {fileID: 4978113940245591912, guid: 45cbacc9d7edac0478c2671e45829108, type: 3}
+  weaponSplashMultiplier: 1
+  drawColor: {fileID: 0}
 --- !u!65 &998528421
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -133,11 +197,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2111020848634597764}
     m_Modifications:
-    - target: {fileID: 5230300542257164708, guid: 59ef44ca94960d047b2e1782ab9887b3,
-        type: 3}
-      propertyPath: m_Name
-      value: BombExplosion
-      objectReference: {fileID: 0}
     - target: {fileID: 3077202375548619479, guid: 59ef44ca94960d047b2e1782ab9887b3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -208,6 +267,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.6666667
       objectReference: {fileID: 0}
+    - target: {fileID: 5230300542257164708, guid: 59ef44ca94960d047b2e1782ab9887b3,
+        type: 3}
+      propertyPath: m_Name
+      value: BombExplosion
+      objectReference: {fileID: 0}
     - target: {fileID: 5022517634176368062, guid: 59ef44ca94960d047b2e1782ab9887b3,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -215,12 +279,6 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 23f846f1d4230d948a8b947e6516f6cd, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59ef44ca94960d047b2e1782ab9887b3, type: 3}
---- !u!4 &3077202374725529107 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3077202375548619479, guid: 59ef44ca94960d047b2e1782ab9887b3,
-    type: 3}
-  m_PrefabInstance: {fileID: 1326490820}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5813387937102838925
 PrefabInstance:
   m_ObjectHideFlags: 0

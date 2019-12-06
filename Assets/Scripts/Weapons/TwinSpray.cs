@@ -15,6 +15,9 @@ public class TwinSpray : Shooting
     private DazeState dazeState;
     [SerializeField]
     private ParticleSystem rightParticle;
+
+    [SerializeField]
+    private float weaponSplashMultiplier = 0.5f;
     #region raycast
     private RaycastHit hit;
     private Ray ray;
@@ -214,28 +217,37 @@ public class TwinSpray : Shooting
             case "PaintableEnvironment":
                 //Renderer _wallRenderer = hit.collider.gameObject.GetComponent<Renderer>();
                // Debug.Log("running paint!");
+                float _smult;
+
+                if (hit.collider.GetComponent<PaintSizeMultiplier>())
+                {
+                    _smult = (1f * hit.collider.GetComponent<PaintSizeMultiplier>().multiplier) * weaponSplashMultiplier;
+                }
+                else
+                {
+                    _smult = 1f * weaponSplashMultiplier;
+                }
                 int _id = Player.skinId;
-                Debug.Log(_id);
                 switch (_id)
                 {
                     case (0):
                         {
-                            DrawColor.DrawOnSplatmap(hit, new Color(1, 0, 0, 0));
+                            DrawColor.DrawOnSplatmap(hit, new Color(1, 0, 0, 0), _smult);
                             break;
                         }
                     case (1):
                         {
-                            DrawColor.DrawOnSplatmap(hit, new Color(0, 1, 0, 0));
+                            DrawColor.DrawOnSplatmap(hit, new Color(0, 1, 0, 0), _smult);
                             break;
                         }
                     case (2):
                         {
-                            DrawColor.DrawOnSplatmap(hit, new Color(0, 0, 1, 0));
+                            DrawColor.DrawOnSplatmap(hit, new Color(0, 0, 1, 0), _smult);
                             break;
                         }
                     case (3):
                         {
-                            DrawColor.DrawOnSplatmap(hit, new Color(0, 0, 0, 1));
+                            DrawColor.DrawOnSplatmap(hit, new Color(0, 0, 0, 1), _smult);
                             break;
                         }
                 }

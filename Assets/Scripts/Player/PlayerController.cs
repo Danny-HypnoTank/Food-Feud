@@ -37,6 +37,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private bool rotationLockOption;
 
+    [SerializeField]
+    private float weaponSplashMultiplier = 1;
+
     private Player player;                  //stores player data
 
     public Player Player { get => player; set => player = value; }
@@ -170,16 +173,14 @@ public class PlayerController : MonoBehaviour
             if (hit.collider.gameObject.tag == "PaintableEnvironment")
             {
                 float _smult;
-                float _tmult;
+
                 if (hit.collider.GetComponent<PaintSizeMultiplier>())
                 {
-                    _smult = hit.collider.GetComponent<PaintSizeMultiplier>().multiplier;
-                    _tmult = 1;
+                    _smult = hit.collider.GetComponent<PaintSizeMultiplier>().multiplier * weaponSplashMultiplier;
                 }
                 else
                 {
-                    _smult = 4.5f;
-                    _tmult = 1;
+                    _smult = 1f * weaponSplashMultiplier;
                 }
 
                 int _id = Player.skinId;
@@ -189,23 +190,22 @@ public class PlayerController : MonoBehaviour
                     {
                         case (0):
                             {
-                                DrawColor.DrawOnSplatmap(hit, new Color(1, 0, 0, 0), 100, _smult, _tmult);
-                                Debug.Log("red");
+                                DrawColor.DrawOnSplatmap(hit, new Color(1, 0, 0, 0), _smult);
                                 break;
                             }
                         case (1):
                             {
-                                DrawColor.DrawOnSplatmap(hit, new Color(0, 1, 0, 0), 100, _smult, _tmult);
+                                DrawColor.DrawOnSplatmap(hit, new Color(0, 1, 0, 0), _smult);
                                 break;
                             }
                         case (2):
                             {
-                                DrawColor.DrawOnSplatmap(hit, new Color(0, 0, 1, 0), 100, _smult, _tmult);
+                                DrawColor.DrawOnSplatmap(hit, new Color(0, 0, 1, 0), _smult);
                                 break;
                             }
                         case (3):
                             {
-                                DrawColor.DrawOnSplatmap(hit, new Color(0, 0, 0, 1), 100, _smult, _tmult);
+                                DrawColor.DrawOnSplatmap(hit, new Color(0, 0, 0, 1), _smult);
                                 break;
                             }
                     }

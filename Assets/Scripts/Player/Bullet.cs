@@ -19,6 +19,9 @@ public class Bullet : MonoBehaviour
     private int bounceLimit = 3;
     private int currentBounce = 0;
 
+    [SerializeField]
+    private float weaponSplashMultiplier = 1;
+
     public DrawColor DrawColor { get => drawColor; set => drawColor = value; }
     [SerializeField]
     private DrawColor drawColor;
@@ -96,16 +99,14 @@ public class Bullet : MonoBehaviour
                 //Renderer _wallRenderer = hit.collider.gameObject.GetComponent<Renderer>();
                 Debug.Log("paint");
                 float _smult;
-                float _tmult;
                 if (hit.collider.GetComponent<PaintSizeMultiplier>())
                 {
-                    _smult = hit.collider.GetComponent<PaintSizeMultiplier>().multiplier;
-                    _tmult = hit.collider.GetComponent<PaintSizeMultiplier>().multiplier;
+                    _smult = (1 * hit.collider.GetComponent<PaintSizeMultiplier>().multiplier) * weaponSplashMultiplier;
+                    
                 }
                 else
                 {
-                    _smult = 4.5f;
-                    _tmult = 1;
+                    _smult = 1f * weaponSplashMultiplier;
                 }
                 if (player != null)
                 {
@@ -114,22 +115,22 @@ public class Bullet : MonoBehaviour
                     {
                         case (0):
                             {
-                                DrawColor.DrawOnSplatmap(hit, new Color(1, 0, 0, 0), 200, _smult, _tmult);
+                                DrawColor.DrawOnSplatmap(hit, new Color(1, 0, 0, 0),_smult);
                                 break;
                             }
                         case (1):
                             {
-                                DrawColor.DrawOnSplatmap(hit, new Color(0, 1, 0, 0), 200, _smult, _tmult);
+                                DrawColor.DrawOnSplatmap(hit, new Color(0, 1, 0, 0), _smult);
                                 break;
                             }
                         case (2):
                             {
-                                DrawColor.DrawOnSplatmap(hit, new Color(0, 0, 1, 0), 200, _smult, _tmult);
+                                DrawColor.DrawOnSplatmap(hit, new Color(0, 0, 1, 0), _smult);
                                 break;
                             }
                         case (3):
                             {
-                                DrawColor.DrawOnSplatmap(hit, new Color(0, 0, 0, 1), 200, _smult, _tmult);
+                                DrawColor.DrawOnSplatmap(hit, new Color(0, 0, 0, 1),_smult);
                                 break;
                             }
                     }

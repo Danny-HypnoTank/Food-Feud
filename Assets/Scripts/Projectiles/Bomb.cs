@@ -27,6 +27,9 @@ public class Bomb : MonoBehaviour
     private Vector3 startPos;                                      //start position of the bomb(where it becomes enabled)
     public PlayerBase Parent { get => parent; set => parent = value; }
 
+    [SerializeField]
+    private float weaponSplashMultiplier = 1;
+
     RaycastHit hit;
     Ray ray;
     public DrawColor DrawColor { get => drawColor; set => drawColor = value; }
@@ -118,38 +121,35 @@ public class Bomb : MonoBehaviour
 
                 int _id = parent.Player.skinId;
                 float _smult;
-                float _tmult;
                 if (hit.collider.GetComponent<PaintSizeMultiplier>())
                 {
-                    _smult = hit.collider.GetComponent<PaintSizeMultiplier>().multiplier;
-                    _tmult = hit.collider.GetComponent<PaintSizeMultiplier>().multiplier;
+                    _smult = (1 * hit.collider.GetComponent<PaintSizeMultiplier>().multiplier) * weaponSplashMultiplier;
                 }
                 else
                 {
-                    _smult = 4.5f;
-                    _tmult = 1;
+                    _smult = 1f * weaponSplashMultiplier;
                 }
                 
                 switch (_id)
                 {
                     case (0):
                         {
-                            DrawColor.DrawOnSplatmap(hit, new Color(1, 0, 0, 0), 200, _smult, _tmult);
+                            DrawColor.DrawOnSplatmap(hit, new Color(1, 0, 0, 0), _smult);
                             break;
                         }
                     case (1):
                         {
-                            DrawColor.DrawOnSplatmap(hit, new Color(0, 1, 0, 0), 200, _smult, _tmult);
+                            DrawColor.DrawOnSplatmap(hit, new Color(0, 1, 0, 0), _smult);
                             break;
                         }
                     case (2):
                         {
-                            DrawColor.DrawOnSplatmap(hit, new Color(0, 0, 1, 0), 200, _smult, _tmult);
+                            DrawColor.DrawOnSplatmap(hit, new Color(0, 0, 1, 0),  _smult);
                             break;
                         }
                     case (3):
                         {
-                            DrawColor.DrawOnSplatmap(hit, new Color(0, 0, 0, 1), 200, _smult, _tmult);
+                            DrawColor.DrawOnSplatmap(hit, new Color(0, 0, 0, 1),_smult);
                             break;
                         }
                 }
