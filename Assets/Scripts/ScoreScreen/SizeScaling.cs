@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
+using System.Linq;
 
 public class SizeScaling : MonoBehaviour
 {
@@ -21,9 +22,24 @@ public class SizeScaling : MonoBehaviour
 
     [SerializeField]
     private Player[] players;
-   
 
-  IEnumerator Start()
+    [SerializeField]
+    private GameObject[] podiums;
+    private int[] ScaleFactor;
+    private float[] scores;
+
+
+    private void Start()
+    {
+
+        ScaleFactor = new int[4];
+        scores = new float[4];
+        PercentageCalc();
+        Scale();
+
+    }
+
+    private void Scale()
     {
         minScale = transform.localScale;
         // while (repeatable)
@@ -42,28 +58,91 @@ public class SizeScaling : MonoBehaviour
             {
                 if (players[i].isLocked == true)
                 {
-                    maxScale = new Vector3(150, players[i].playerScore, 150);
+                    maxScale = new Vector3(150, (int)players[i].scorePercentage, 150);
                     minScale = new Vector3(150, 0, 150);
+                    StartCoroutine(RepeatLerp(minScale, maxScale, duration,podiums[i]));
                     // maxScale = new Vector3(players[i].playerScore(10));
 
                 }
             }
         }
-        yield return RepeatLerp(minScale, maxScale, duration);
 
 
     }
 
+    private void PercentageCalc()
+    {
 
-    public IEnumerator RepeatLerp(Vector3 a, Vector3 b, float time)
+        float total = 0;
+
+        foreach(Player p in players)
+        {
+
+            total += p.playerScore;
+
+        }
+
+        for (int i = 0; i < 4; i++)
+        {
+
+            players[i].scorePercentage = (players[i].playerScore / total) * 100;
+
+        }
+        
+    }
+
+    private void SetScaleFactor()
+    {
+
+        for(int i = 0; i < 4; i++)
+        {
+
+            scores[i] = players[i].scorePercentage;
+
+        }
+
+        Array.Sort(scores);
+
+        for (int i = 0; i < 4; i++)
+        {
+
+            switch(i)
+            {
+
+                case 0:
+                    ScaleFactor[0] = 100;
+                    break;
+
+                case 1:
+                    ScaleFactor[1] = 75;
+                    break;
+
+                case 2:
+                    ScaleFactor[2] = 50;
+                    break;
+
+                case 3:
+                    ScaleFactor[3] = 25;
+                    break;
+
+            }
+
+        }
+
+        var index = players.Max();
+
+
+    }
+
+    public IEnumerator RepeatLerp(Vector3 a, Vector3 b, float time, GameObject podium)
     {
         float i = 0.0f;
         float rate = (1.0f / time) * speed;
         while (i < 1.0f)
         {
             i += Time.deltaTime * rate;
-            transform.Translate(Vector3.up * rate * Time.deltaTime);
-            transform.localScale = Vector3.Lerp(a, b, i);
+            podium.transform.Translate(Vector3.up * (rate/2) * Time.deltaTime);
+            podium.transform.localScale = Vector3.Lerp(a, b, i);
             yield return null;
         }
     }

@@ -38,7 +38,7 @@ public class EndGameScore : MonoBehaviour
                 if (sortedPlayers[i].isLocked == true)
                 {
                     playerScores[i].gameObject.SetActive(true);
-                    playerScores[i].GetComponent<Text>().text = "Player " + sortedPlayers[i].playerNum + ": score: " + sortedPlayers[i].playerScore;
+                    playerScores[i].GetComponent<Text>().text = $"Player {sortedPlayers[i].playerNum} score: {(int)sortedPlayers[i].scorePercentage}%";
                 }
             }
         }

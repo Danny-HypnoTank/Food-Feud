@@ -228,29 +228,7 @@ public class TwinSpray : Shooting
                     _smult = 1f * weaponSplashMultiplier;
                 }
                 int _id = Player.skinId;
-                switch (_id)
-                {
-                    case (0):
-                        {
-                            DrawColor.DrawOnSplatmap(hit, new Color(1, 0, 0, 0), _smult);
-                            break;
-                        }
-                    case (1):
-                        {
-                            DrawColor.DrawOnSplatmap(hit, new Color(0, 1, 0, 0), _smult);
-                            break;
-                        }
-                    case (2):
-                        {
-                            DrawColor.DrawOnSplatmap(hit, new Color(0, 0, 1, 0), _smult);
-                            break;
-                        }
-                    case (3):
-                        {
-                            DrawColor.DrawOnSplatmap(hit, new Color(0, 0, 0, 1), _smult);
-                            break;
-                        }
-                }
+                DrawColor.DrawOnSplatmap(hit, _id, Player, _smult);
                 break;
             default:
                 downRay = new Ray(ray.GetPoint(range), -playerBase.transform.up);
