@@ -22,6 +22,8 @@ public class DazeState : MonoBehaviour
     private float mass = 3.0f;
     private PlayerBase playerbase;
     private StunBehavior stunBehavior;
+    [SerializeField]
+    private GameObject[] stunStars;
 
     public bool Stunned { get => stunned; set => stunned = value; }
     public bool CanShoot { get => canShoot; set => canShoot = value; }
@@ -53,18 +55,16 @@ public class DazeState : MonoBehaviour
 
     public IEnumerator Stun(Player player)
     {
-        stunBehavior.StunStars[0].SetActive(true);
-        stunBehavior.StunStars[1].SetActive(true);
-        stunBehavior.StunStars[2].SetActive(true);
+        stunStars[0].SetActive(true);
+        stunStars[1].SetActive(true);
+        stunStars[2].SetActive(true);
         player.Speed = 0f;
         stunned = true;
         canShoot = false;
-        playerbase.LoseGodPower();
-        playerbase.ResetGodMode();
         yield return new WaitForSeconds(3.0f);
-        stunBehavior.StunStars[0].SetActive(false);
-        stunBehavior.StunStars[1].SetActive(false);
-        stunBehavior.StunStars[2].SetActive(false);
+        stunStars[0].SetActive(false);
+        stunStars[1].SetActive(false);
+        stunStars[2].SetActive(false);
         player.Speed = player.DefaultSpeed;
         stunned = false;
         canShoot = true;
