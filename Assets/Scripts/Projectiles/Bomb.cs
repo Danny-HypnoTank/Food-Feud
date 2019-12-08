@@ -129,30 +129,8 @@ public class Bomb : MonoBehaviour
                 {
                     _smult = 1f * weaponSplashMultiplier;
                 }
-                
-                switch (_id)
-                {
-                    case (0):
-                        {
-                            DrawColor.DrawOnSplatmap(hit, new Color(1, 0, 0, 0), _smult);
-                            break;
-                        }
-                    case (1):
-                        {
-                            DrawColor.DrawOnSplatmap(hit, new Color(0, 1, 0, 0), _smult);
-                            break;
-                        }
-                    case (2):
-                        {
-                            DrawColor.DrawOnSplatmap(hit, new Color(0, 0, 1, 0),  _smult);
-                            break;
-                        }
-                    case (3):
-                        {
-                            DrawColor.DrawOnSplatmap(hit, new Color(0, 0, 0, 1),_smult);
-                            break;
-                        }
-                }
+
+                DrawColor.DrawOnSplatmap(hit, _id, parent.Player, _smult);
                 break;
 
         }
