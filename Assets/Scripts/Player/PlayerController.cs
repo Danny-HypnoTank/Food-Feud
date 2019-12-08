@@ -23,9 +23,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 lookInput;
 
     private DefaultShooting dShooting;
-    private DazeState pStunned;
+    public DazeState pStunned { get; private set; }
     private PlayerBase playerBase;
-    private StunBehavior stunB;
     [SerializeField]
     private float dashDuration = 0.2f;          //if dash duration too small it causes animation glitch
     private float dashPower = 20;
@@ -65,7 +64,6 @@ public class PlayerController : MonoBehaviour
         dShooting = GetComponent<DefaultShooting>();
         pStunned = GetComponent<DazeState>();
         playerBase = GetComponent<PlayerBase>();
-        stunB = GetComponent<StunBehavior>();
         drawColor = GameObject.Find("GameManager").GetComponent<DrawColor>();
 
         Splat(20);
@@ -76,50 +74,56 @@ public class PlayerController : MonoBehaviour
         //Player Movement with joysticks or keyboard
         if (ManageGame.instance.IsTimingDown == true)
         {
-            moveInput = new Vector3(Input.GetAxisRaw("Horizontal" + player.playerNum), 0f, Input.GetAxisRaw("Vertical" + player.playerNum));
-            moveVelocity = moveInput * (player.Speed + (moveSpeedModifier));
 
-
-            if (Input.GetButtonDown("Dash" + player.playerNum) && isDashing == false && pStunned.Stunned == false)
+            if (!pStunned.Stunned)
             {
-                dashPosition = (this.transform.position) + (this.transform.forward * dashDistance);
-                isDashing = true;
-                pStunned.CanShoot = false;
-                stunB.AddStun(0.3f, pStunned, Player);
-                foreach (GameObject t in trail)
-                {
 
-                    t.gameObject.SetActive(true);
-
-                }
-                StartCoroutine(DashTimer());
-            }
-            else
-            {
+                moveInput = new Vector3(Input.GetAxisRaw("Horizontal" + player.playerNum), 0f, Input.GetAxisRaw("Vertical" + player.playerNum));
                 moveVelocity = moveInput * (player.Speed + (moveSpeedModifier));
-            }
 
-            //Player rotations with twin sticks
-            //lookInput = new Vector3(Input.GetAxisRaw("RHorizontal" + player.playerNum), 0f, Input.GetAxisRaw("RVertical" + player.playerNum));
 
-            //Player Rotation with only the left stick
-            if (rotationLockOption == true)
-            {
-                if (moveInput.sqrMagnitude > 0.1f)
+                if (Input.GetButtonDown("Dash" + player.playerNum) && isDashing == false && pStunned.Stunned == false)
                 {
-                    transform.rotation = Quaternion.LookRotation(moveInput);
+
+                    dashPosition = (this.transform.position) + (this.transform.forward * dashDistance);
+                    isDashing = true;
+                    pStunned.CanShoot = false;
+                    foreach (GameObject t in trail)
+                    {
+
+                        t.gameObject.SetActive(true);
+
+                    }
+                    StartCoroutine(DashTimer());
                 }
-            }
-
-            if (rotationLockOption == false)
-            {
-                if (moveInput.sqrMagnitude > 0.1f)
+                else
                 {
-                    if (!Input.GetButton("Shoot" + player.playerNum))
+                    moveVelocity = moveInput * (player.Speed + (moveSpeedModifier));
+                }
+
+                //Player rotations with twin sticks
+                //lookInput = new Vector3(Input.GetAxisRaw("RHorizontal" + player.playerNum), 0f, Input.GetAxisRaw("RVertical" + player.playerNum));
+
+                //Player Rotation with only the left stick
+                if (rotationLockOption == true)
+                {
+                    if (moveInput.sqrMagnitude > 0.1f)
                     {
                         transform.rotation = Quaternion.LookRotation(moveInput);
                     }
                 }
+
+                if (rotationLockOption == false)
+                {
+                    if (moveInput.sqrMagnitude > 0.1f)
+                    {
+                        if (!Input.GetButton("Shoot" + player.playerNum))
+                        {
+                            transform.rotation = Quaternion.LookRotation(moveInput);
+                        }
+                    }
+                }
+
             }
         }
     }
@@ -131,16 +135,50 @@ public class PlayerController : MonoBehaviour
             if (isDashing)
             {
 
-                PlayerBase player = other.gameObject.GetComponent<PlayerBase>();
-                DazeState pDaze = other.gameObject.GetComponent<DazeState>();
-                StunBehavior pStun = other.gameObject.GetComponent<StunBehavior>();
+                Debug.Log("Yes");
 
-                pStun.AddStun(1, pDaze, player.Player);
-                Splat(20);
+                PlayerController otherPlayer = other.gameObject.GetComponent<PlayerController>();
+
+                if (!otherPlayer.IsDashing)
+                {
+
+                    if (!otherPlayer.pStunned.Stunned)
+                        StartCoroutine(otherPlayer.pStunned.Stun(otherPlayer.Player));
+
+                    Splat(20);
+
+                }
 
             }
         }
     }
+
+    /*private void OnTriggerStay(Collider other)
+    {
+
+        if (other.tag == "Player")
+        {
+            if (isDashing)
+            {
+
+                Debug.Log("Yes");
+
+                PlayerController otherPlayer = other.gameObject.GetComponent<PlayerController>();
+
+                if (!otherPlayer.IsDashing)
+                {
+
+                    if (!otherPlayer.pStunned.Stunned)
+                        StartCoroutine(otherPlayer.pStunned.Stun(otherPlayer.Player));
+
+                    Splat(20);
+
+                }
+
+            }
+        }
+
+    }*/
 
     private void FixedUpdate()
     {
@@ -159,9 +197,6 @@ public class PlayerController : MonoBehaviour
         {
             chc.Move(moveVelocity * Time.deltaTime);
         }
-
-        if (stunB.StunProgress > 0 && !stunB.Recovering)
-            StartCoroutine(stunB.RemoveStun(pStunned));
     }
 
     public void Splat(float size)
