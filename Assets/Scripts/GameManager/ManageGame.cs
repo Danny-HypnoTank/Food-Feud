@@ -34,7 +34,7 @@ public class ManageGame : MonoBehaviour
     private GameObject godPowerUp;
     private List<GameObject> playerObjects = new List<GameObject>();
     private LevelManager layoutManager;
-    private DrawColor drawColor;
+    public DrawColor drawColor { get; private set; }
     [SerializeField]
     private ObjectPooling objectPooling;
 
@@ -56,10 +56,13 @@ public class ManageGame : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
     }
+
 
     private void Start()
     {
+
         layoutManager = GetComponent<LevelManager>();
         drawColor = GetComponent<DrawColor>();
         layoutManager.LayoutGeneration();

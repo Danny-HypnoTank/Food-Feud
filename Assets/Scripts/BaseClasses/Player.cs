@@ -15,6 +15,7 @@ public class Player : ScriptableObject
     public bool isActivated;       //checks if player is going to participate in the game in character selection panel
     public bool isLocked;       //used for character selection to see if player locked in or not
     public int playerScore;     //Used for storing score for each individual player
+    public float scorePercentage; //Percentage of total score
     public int skinId;          //Temporary will be replaced later based on how we choose to handle skins
     public string[] namesOfSkins; //Temporary variable for testing
     [Header("In Game Values")]

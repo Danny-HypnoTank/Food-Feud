@@ -30,9 +30,8 @@ public class PlayerBase : MonoBehaviour
     private ObjectPooling bombPool;
     [SerializeField]
     private Powerup currentPowerUp;
-    private DazeState daze;
+    public DazeState Daze { get; private set; }
     private Shooting shooting;
-    private StunBehavior stunB;
 
     [SerializeField]
     private GameObject[] weapons;
@@ -89,8 +88,7 @@ public class PlayerBase : MonoBehaviour
 
     private void Start()
     {
-        stunB = GetComponent<StunBehavior>();
-        daze = this.gameObject.GetComponent<DazeState>();
+        Daze = this.gameObject.GetComponent<DazeState>();
         bombPool = GameObject.Find("GameManager").GetComponent<ObjectPooling>();
         shooting = this.gameObject.GetComponent<Shooting>();
         drawColor = GameObject.Find("GameManager").GetComponent<DrawColor>();
@@ -135,7 +133,7 @@ public class PlayerBase : MonoBehaviour
             animationIDSet = 3;
             expression.SetExpression(4);
         }
-        else if (daze.Stunned == true)
+        else if (Daze.Stunned == true)
         {
             animationIDSet = 2;
             expression.SetExpression(3);

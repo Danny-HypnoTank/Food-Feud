@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,8 +13,7 @@ public class DrawColor : MonoBehaviour
     [SerializeField]
     private List<RenderTexture> _splatMap = new List<RenderTexture>();
     [SerializeField]
-    private List<GameObject> _terrain = new List<GameObject>();
-
+    private List<GameObject> _terrain;
     [Range(0f, 500)]
     public float _brushSize;
     [Range(0.01f, 1)]
@@ -23,12 +23,13 @@ public class DrawColor : MonoBehaviour
     [SerializeField]
     Texture2D[] splatTexture = new Texture2D[12];
 
-
+    
 
     public List<GameObject> _Terrain { get => _terrain; set => _terrain = value; }
 
     private void Start()
     {
+
         //_terrain = GameObject.Find("Ground");
         drawMaterial = new Material(drawShader);
         clearMaterial = new Material(clearShader);
@@ -57,15 +58,15 @@ public class DrawColor : MonoBehaviour
         
         
     }
-    private void Update()
+
+    public void DrawOnSplatmap(RaycastHit hit, int id, Player player, float _sizeMultiplier = 1f)
     {
 
-    }
+        int terrainNum = _terrain.IndexOf(hit.collider.gameObject);
 
-    public void DrawOnSplatmap(RaycastHit hit, Color splatMapColor, float _sizeMultiplier = 1f)
-    {
+        int _currentSplat = UnityEngine.Random.Range(0, 11);
 
-        int _currentSplat = Random.Range(0, 11);
+        //coreCalc.Instance.CircleLogic(hit, (UInt16)id, terrainNum);
 
         drawMaterial.SetFloat("_Size", 0.1f * _sizeMultiplier);
         drawMaterial.SetTexture("_SplatTex", splatTexture[_currentSplat]);
@@ -74,10 +75,9 @@ public class DrawColor : MonoBehaviour
         clearMaterial.SetTexture("_SplatTex", splatTexture[_currentSplat]);
 
 
-        int terrainNum = _terrain.IndexOf(hit.collider.gameObject);
-        //Debug.Log(terrainNum);
+        Debug.Log(terrainNum);
 
-        drawMaterial.SetColor("_Color", splatMapColor);
+        drawMaterial.SetColor("_Color", SetColour(id));
         drawMaterial.SetVector("_Coordinate", new Vector4(hit.textureCoord.x, hit.textureCoord.y, 0, 0));
         clearMaterial.SetVector("_Coordinate", new Vector4(hit.textureCoord.x, hit.textureCoord.y, 0, 0));
 
@@ -88,6 +88,41 @@ public class DrawColor : MonoBehaviour
         RenderTexture.ReleaseTemporary(temp);
 
         Debug.Log("SplatMapHit:" + _splatMap[terrainNum].name);
+
+        player.playerScore += 1;
+    }
+
+    private Color SetColour(int id)
+    {
+
+        Color color = new Color(0,0,0,0);
+
+        switch (id)
+        {
+            case (0):
+                {
+                    color = new Color(1, 0, 0, 0);
+                    break;
+                }
+            case (1):
+                {
+                    color = new Color(0, 1, 0, 0);
+                    break;
+                }
+            case (2):
+                {
+                    color = new Color(0, 0, 1, 0);
+                    break;
+                }
+            case (3):
+                {
+                    color = new Color(0, 0, 0, 1);
+                    break;
+                }
+        }
+
+        return color;
+
     }
 
     private void OnGUI()
