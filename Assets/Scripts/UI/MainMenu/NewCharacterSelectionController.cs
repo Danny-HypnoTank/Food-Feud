@@ -8,7 +8,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class NewCharacterSelectionController : MonoBehaviour
 {
@@ -33,6 +32,12 @@ public class NewCharacterSelectionController : MonoBehaviour
     [Header("Animation and animation points")]
     private Animator doorAnimation;
     private bool isTransition = false;
+    private Loading loadingManager;
+
+    private void Start()
+    {
+        loadingManager = GameObject.Find("LoadingManager").GetComponent<Loading>();
+    }
 
     private void OnEnable()
     {
@@ -120,8 +125,7 @@ public class NewCharacterSelectionController : MonoBehaviour
         isTransition = true;
         yield return new WaitForSeconds(waitBetweenAnimation);
         isTransition = false;
-        MenuController.instance.MainMenuToOptionsTransition();
-        SceneManager.LoadScene("PlayScene");
+        loadingManager.InitializeLoading();
         yield return null;
     }
 
