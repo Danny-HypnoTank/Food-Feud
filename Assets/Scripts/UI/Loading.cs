@@ -38,7 +38,7 @@ public class Loading : MonoBehaviour
             slider.value = progress;
 
             //set text
-            percentLoaded.text = Mathf.CeilToInt(progress * 100).ToString() + "%";
+           // percentLoaded.text = Mathf.CeilToInt(progress * 100).ToString() + "%";
 
             if (async.progress == 0.9f)
             {

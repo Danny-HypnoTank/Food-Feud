@@ -1,11 +1,4 @@
-﻿/* 
- * Created by:
- * Name: Dominik Waldowski
- * Sid: 1604336
- * Date Created: 22/11/2019
- * Last Modified: 22/11/2019
- */
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,8 +21,6 @@ public class NewOptionsController : MonoBehaviour
     [SerializeField]
     private GameObject[] Sliderbox;
     [SerializeField]
-    private GameObject[] sliderHover;
-    [SerializeField]
     private int selectId;
     [SerializeField]
     private bool isAxis = false;
@@ -50,16 +41,6 @@ public class NewOptionsController : MonoBehaviour
         selectId = 0;
         doorAnimation = doorHolder.GetComponent<Animator>();
         doorAnimation.enabled = false;
-        ResetSliderHovers();
-        sliderHover[0].SetActive(true);
-    }
-
-    private void ResetSliderHovers()
-    {
-        for (int i = 0; i < sliderHover.Length; i++)
-        {
-            sliderHover[i].SetActive(false);
-        }
     }
 
     private void Update()
@@ -81,7 +62,7 @@ public class NewOptionsController : MonoBehaviour
 
             if (isSlider == false)
             {
-                if (Input.GetAxis("Horizontal") > 0.3f)
+                if (Input.GetAxis("Horizontal") < -0.3f)
                 {
                     if (isAxis == false)
                     {
@@ -91,11 +72,10 @@ public class NewOptionsController : MonoBehaviour
                         {
                             selectId = Sliderbox.Length - 1;
                         }
-                        ResetSliderHovers();
-                        sliderHover[selectId].SetActive(true);
+
                     }
                 }
-                else if (Input.GetAxis("Horizontal") < -0.3f)
+                else if (Input.GetAxis("Horizontal") > 0.3f)
                 {
                     if (isAxis == false)
                     {
@@ -105,8 +85,6 @@ public class NewOptionsController : MonoBehaviour
                         {
                             selectId = 0;
                         }
-                        ResetSliderHovers();
-                        sliderHover[selectId].SetActive(true);
 
                     }
                 }

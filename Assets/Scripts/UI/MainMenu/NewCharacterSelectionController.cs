@@ -3,7 +3,7 @@
  * Name: Dominik Waldowski
  * Sid: 1604336
  * Date Created: 22/11/2019
- * Last Modified: 22/11/2019
+ * Last Modified: 21/11/2019
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -104,7 +104,7 @@ public class NewCharacterSelectionController : MonoBehaviour
                 }
             }
         }
-       // Debug.Log(canStart + " and ready players num: " + readyPlayers);
+        Debug.Log(canStart + " and ready players num: " + readyPlayers);
         if (canStart == true && readyPlayers >= 2)
         {
             RandomMap();
