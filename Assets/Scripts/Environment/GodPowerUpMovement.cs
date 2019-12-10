@@ -104,6 +104,7 @@ public class GodPowerUpMovement : MonoBehaviour
                 gameObject.SetActive(false);
             }
     }
+
 }
 
 /*public void FindClosestNode()
