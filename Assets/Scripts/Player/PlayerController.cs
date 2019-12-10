@@ -204,7 +204,7 @@ public class PlayerController : MonoBehaviour
         Debug.DrawRay(transform.position, -transform.up, Color.green, 90);
         if (Physics.Raycast(transform.position + Vector3.up, -transform.up, out hit))
         {
-            Debug.Log("God");
+
             if (hit.collider.gameObject.tag == "PaintableEnvironment")
             {
                 float _smult;
