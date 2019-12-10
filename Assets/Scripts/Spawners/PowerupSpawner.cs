@@ -22,12 +22,16 @@ public class PowerupSpawner : MonoBehaviour
     private int spawnedPowerUps = 0;
     private int godPowerTime = 3;
     private bool spawnedGodPower = false;
+    private bool respawnStarted;
+    private bool nukeHasBeenSpawned;
     private GameObject[] godNodes;
 
     //grabs every child object and adds it to powerup location list as well as starts coroutine to spawn them in
     private void Start()
     {
         spawnedGodPower = false;
+        nukeHasBeenSpawned = false;
+        respawnStarted = false;
         spawnedPowerUps = 0;
         currentActivePowerUps = 0;
         godNodes = GameObject.FindGameObjectsWithTag("NukeSpawn");
@@ -72,16 +76,27 @@ public class PowerupSpawner : MonoBehaviour
 
     private void GodPowerUp()
     {
-        int randomLocation = Random.Range(0, godNodes.Length);
+
+        if (!nukeHasBeenSpawned)
+            nukeHasBeenSpawned = true;
         spawnedGodPower = true;
-        godNodes[randomLocation].GetComponent<EdgePowerUpGodPower>().EnablePowerGodPower();
+        ManageGame.instance.GodPowerUp.SetActive(true);
+
+        /*int randomLocation = Random.Range(0, godNodes.Length);
+        godNodes[randomLocation].GetComponent<EdgePowerUpGodPower>().EnablePowerGodPower();*/
     }
 
     private void RandomPowerUp()
     {
 
-        if (!GameObject.FindGameObjectWithTag("Nuke") && spawnedGodPower)
-            spawnedGodPower = false;
+        if (nukeHasBeenSpawned)
+        {
+            if (!ManageGame.instance.GodPowerUp.activeSelf)
+            {
+                if (!respawnStarted)
+                    StartCoroutine(RespawnCooldown());
+            }
+        }
 
         int randomLocation;
 
@@ -97,8 +112,10 @@ public class PowerupSpawner : MonoBehaviour
     private IEnumerator RespawnCooldown()
     {
 
+        respawnStarted = true;
         yield return new WaitForSeconds(10);
         spawnedGodPower = false;
+        respawnStarted = false;
 
     }
     //Spawning of a powerup

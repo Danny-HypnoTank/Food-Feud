@@ -12,13 +12,13 @@ public class EdgePowerUpGodPower : MonoBehaviour
     private void Start()
     {
         isEnabled = false;
-        godPowerUp.SetActive(false);
+        
     }
     public void EnablePowerGodPower()
     {
         isEnabled = true;
-        godPowerUp.transform.position = transform.position;
-        godPowerUp.SetActive(true);
+        ManageGame.instance.GodPowerUp.transform.position = transform.position;
+        ManageGame.instance.GodPowerUp.SetActive(true);
     }
 
 }
