@@ -128,6 +128,6 @@ public class DrawColor : MonoBehaviour
     private void OnGUI()
     {
         ////USE TO VIEW A SPLATMAP
-        GUI.DrawTexture(new Rect(0, 0, 256, 128), _splatMap[0], ScaleMode.ScaleToFit, false, 1);
+        //GUI.DrawTexture(new Rect(0, 0, 256, 128), _splatMap[0], ScaleMode.ScaleToFit, false, 1);
     }
 }
