@@ -11,12 +11,11 @@ public class TwinSpray : Shooting
     //Ammo Regen
     private float ammoRegeneration = 20;
     //Ammo Consumption
-    private float twinsprayAmmoConsumption = 60;
+   // private float twinsprayAmmoConsumption = 60;
     private DazeState dazeState;
     [SerializeField]
     private ParticleSystem rightParticle;
 
-    [SerializeField]
     private float weaponSplashMultiplier = 0.5f;
     #region raycast
     private RaycastHit hit;
@@ -64,8 +63,9 @@ public class TwinSpray : Shooting
                 Particle.Stop();
                 rightParticle.Stop();
             }
-            if (Input.GetButtonDown("Shoot" + Player.playerNum))
-            {
+
+          //  if (Input.GetButtonDown("Shoot" + Player.playerNum))
+            //{
                 if (Input.GetButton("Shoot" + Player.playerNum))
                 {
                     IsAxisInUse = false;
@@ -81,10 +81,10 @@ public class TwinSpray : Shooting
                                 }
                                 Ammo -= (ammoConsumption - (AmmoConsumptionModifier)) * Time.deltaTime;
 
-                                UpdateFillBar();
                                 TwinSprayShooting();
                                 TwinShootTwo();
-                                if (!Input.GetButton("Shoot" + Player.playerNum))
+                                UpdateFillBar();
+                            if (!Input.GetButton("Shoot" + Player.playerNum))
                                 {
                                     range = 1.0f; //Resetting Range when player isnt pressing button
                                     Ammo += (ammoRegeneration + (AmmoRegenModifier)) * Time.deltaTime;
@@ -109,7 +109,7 @@ public class TwinSpray : Shooting
                     }
                 }
             }
-        }
+        //}
 
     }
 
