@@ -8,11 +8,12 @@
  */
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class ManageGame : MonoBehaviour
 {
+    private Loading loading;
     public delegate void GameWin();
     public static event GameWin OnGameWin;
     public static ManageGame instance;                            //instance of game manager
@@ -67,7 +68,7 @@ public class ManageGame : MonoBehaviour
     [SerializeField]
     Vector3 v3Dest;
 
-    float speed = 2.55f; //2.5f
+    float speed = 3.8f; //2.5f
 
     private void Update()
     {
@@ -94,6 +95,8 @@ public class ManageGame : MonoBehaviour
                 if(OnGameWin != null)
                     OnGameWin();
                 objectPooling.DisableAll();
+               // loading.SetID(2);
+               // loading.InitializeLoading();
                 SceneManager.LoadScene("EndRoundScene");
             }
         }
@@ -102,7 +105,7 @@ public class ManageGame : MonoBehaviour
 
     private void Start()
     {
-
+        loading = GameObject.Find("LoadingManager").GetComponent<Loading>();
         layoutManager = GetComponent<LevelManager>();
         drawColor = GetComponent<DrawColor>();
         layoutManager.LayoutGeneration();

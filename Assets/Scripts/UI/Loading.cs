@@ -16,10 +16,20 @@ public class Loading : MonoBehaviour
     [SerializeField]
     private int sceneToLoadId = 1;
 
+    private void Start()
+    {
+        loadingScreenPanel.gameObject.SetActive(false);
+    }
+
     public void InitializeLoading()
     {
         StopCoroutine("LoadingProgress");
         StartCoroutine("LoadingProgress");
+    }
+
+    public void SetID(int id)
+    {
+        sceneToLoadId = id;
     }
 
     //Coroutine for loading screen
