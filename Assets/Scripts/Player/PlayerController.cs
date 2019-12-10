@@ -47,7 +47,6 @@ public class PlayerController : MonoBehaviour
     private bool isDashing;
 
     private Ray ray;
-    private RaycastHit hit;
     private DrawColor drawColor;
     public DrawColor DrawColor { get { return drawColor; } private set { drawColor = value; } }
 
@@ -201,10 +200,11 @@ public class PlayerController : MonoBehaviour
 
     public void Splat(float size)
     {
-
-        if (Physics.Raycast(transform.position, Vector3.down, out hit))
+        RaycastHit hit;
+        Debug.DrawRay(transform.position, -transform.up, Color.green, 90);
+        if (Physics.Raycast(transform.position + Vector3.up, -transform.up, out hit))
         {
-
+            Debug.Log("God");
             if (hit.collider.gameObject.tag == "PaintableEnvironment")
             {
                 float _smult;
