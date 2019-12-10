@@ -74,7 +74,7 @@ public class GodPowerUpMovement : MonoBehaviour
     private void OnDisable()
     {
 
-        Debug.Log("Disabled");
+        //Debug.Log("Disabled");
 
     }
 

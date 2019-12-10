@@ -67,6 +67,7 @@ public class PinController : MonoBehaviour
                     {
                         isLocked = true;
                         characters[position].GetComponent<CharacterPin>().OwnedBy = pin;
+                       // Debug.Log("Click! OWN PIN " + characters[position].name);
                         characters[position].GetComponent<CharacterPin>().OwnPin();
                         player.isLocked = true;
                         player.isActivated = true;
