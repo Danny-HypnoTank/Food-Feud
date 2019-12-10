@@ -151,7 +151,7 @@ public class SoundManager : MonoBehaviour
 
         foreach (Audio a in backgroundM)
             a.Source.volume = MusicVol;
-        Debug.Log(MusicVol);
+       // Debug.Log(MusicVol);
     }
 
     /// <summary>

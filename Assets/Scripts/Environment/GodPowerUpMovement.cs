@@ -2,60 +2,29 @@
 
 public class GodPowerUpMovement : MonoBehaviour
 {
-
-    private float startTime;
+    private float bombSpeed = 1;                                 //time until bomb disappears automatically                         //how far the bomb will travel
+    private float bombTopHeight = 8;
+    private float startTime;                                        //Currently time when bomb activates
+    private float journeyLength;                                   //total length of journey travelled by bomb
+    //private Vector3 startPos;
     private float distance;
     private Transform target, startPos;
-    private Vector3 spawnPos;
     private GameObject[] nodes;
     private bool isRepeating;
     public int previousNode { get; set; }
-
-    [Header("Properties")]
-    [SerializeField]
-    private float speed = 25;
-
-    [Header("Bounce Properties")]
-    [SerializeField]
-    private bool usebounce;
-    [SerializeField]
-    private LayerMask bounceSurface;
 
     private void Awake()
     {
 
         nodes = GameObject.FindGameObjectsWithTag("NukeSpawn");
         isRepeating = false;
-        spawnPos = transform.position;
 
     }
 
     private void OnEnable()
     {
 
-        if (!usebounce)
-            ChooseRandomNode();
-        else
-        {
-            transform.position = spawnPos;
-            transform.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
-        }
-
-    }
-
-    private void Bouncing()
-    {
-
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
-
-        Ray ray = new Ray(transform.position, transform.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, Time.deltaTime * speed + 0.1f, bounceSurface))
-        {
-            Vector3 reflectDir = Vector3.Reflect(ray.direction, hit.normal);
-            float rot = 90 - Mathf.Atan2(reflectDir.z, reflectDir.x) * Mathf.Rad2Deg;
-            transform.eulerAngles = new Vector3(0, rot, 0);
-        }
-
+        ChooseRandomNode();
 
     }
 
@@ -65,7 +34,7 @@ public class GodPowerUpMovement : MonoBehaviour
         if (!isRepeating)
         {
 
-            InvokeRepeating(nameof(ChooseRandomNode), 10, 10);
+            InvokeRepeating(nameof(ChooseRandomNode), 5, 5);
             isRepeating = true;
 
         }
@@ -82,17 +51,14 @@ public class GodPowerUpMovement : MonoBehaviour
 
     private void Update()
     {
-        if (usebounce)
-            Bouncing();
-        else
+
+        if (transform.position != target.position)
         {
-            if (transform.position != target.position)
-            {
-                float duration = (Time.time - startTime) * 2.5f;
-                float fraction = duration / distance;
-                transform.position = Vector3.Lerp(startPos.position, target.position, fraction);
-            }
+            float duration = (Time.time - startTime) * 5;
+            float fraction = duration / distance;
+            transform.position = Vector3.Lerp(startPos.position, target.position, fraction);
         }
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -103,6 +69,13 @@ public class GodPowerUpMovement : MonoBehaviour
                 other.GetComponent<PlayerBase>().SetPowerUp(GetComponent<Power>().PowerHeld);
                 gameObject.SetActive(false);
             }
+    }
+
+    private void OnDisable()
+    {
+
+        //Debug.Log("Disabled");
+
     }
 
 }
