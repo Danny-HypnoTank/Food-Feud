@@ -72,9 +72,12 @@ public class PowerupSpawner : MonoBehaviour
 
     private void GodPowerUp()
     {
-        int randomLocation = Random.Range(0, godNodes.Length);
+
+        ManageGame.instance.GodPowerUp.SetActive(true);
+
+        /*int randomLocation = Random.Range(0, godNodes.Length);
         spawnedGodPower = true;
-        godNodes[randomLocation].GetComponent<EdgePowerUpGodPower>().EnablePowerGodPower();
+        godNodes[randomLocation].GetComponent<EdgePowerUpGodPower>().EnablePowerGodPower();*/
     }
 
     private void RandomPowerUp()
