@@ -75,7 +75,7 @@ public class DrawColor : MonoBehaviour
         clearMaterial.SetTexture("_SplatTex", splatTexture[_currentSplat]);
 
 
-        Debug.Log(terrainNum);
+        //Debug.Log(terrainNum);
 
         drawMaterial.SetColor("_Color", SetColour(id));
         drawMaterial.SetVector("_Coordinate", new Vector4(hit.textureCoord.x, hit.textureCoord.y, 0, 0));
@@ -87,7 +87,7 @@ public class DrawColor : MonoBehaviour
         Graphics.Blit(temp, _splatMap[terrainNum], drawMaterial);
         RenderTexture.ReleaseTemporary(temp);
 
-        Debug.Log("SplatMapHit:" + _splatMap[terrainNum].name);
+       // Debug.Log("SplatMapHit:" + _splatMap[terrainNum].name);
 
         player.playerScore += 1;
     }
@@ -128,6 +128,6 @@ public class DrawColor : MonoBehaviour
     private void OnGUI()
     {
         ////USE TO VIEW A SPLATMAP
-        //GUI.DrawTexture(new Rect(0, 0, 256, 128), _splatMap[0], ScaleMode.ScaleToFit, false, 1);
+        GUI.DrawTexture(new Rect(0, 0, 256, 128), _splatMap[0], ScaleMode.ScaleToFit, false, 1);
     }
 }

@@ -26,7 +26,7 @@ public class ManageGame : MonoBehaviour
     [Header("Clock")]
     [SerializeField]
     private TextMesh timeRemaining;                                 //text that displays remaining time
-    private float reverseTime = 60;                             //actual timer 
+    private float reverseTime = 0;                             //actual timer 
     [SerializeField]
     private List<GameObject> mapEdgesForGodPower = new List<GameObject>();
     private bool isTimingDown;
@@ -37,14 +37,16 @@ public class ManageGame : MonoBehaviour
     public DrawColor drawColor { get; private set; }
     [SerializeField]
     private ObjectPooling objectPooling;
-
+    [SerializeField]
+    private Transform clockHand, pointA, pointB;
+    [SerializeField]
+    private float journeyLength;
     public bool IsTimingDown { get => isTimingDown; set => isTimingDown = value; }
     public Transform[] PlayerSpawnPositions { get => playerSpawnPositions; set => playerSpawnPositions = value; }
     public Player[] Players { get => players; set => players = value; }
     public List<GameObject> PlayerObjects { get => playerObjects; set => playerObjects = value; }
     public List<GameObject> MapEdgesForGodPower { get => mapEdgesForGodPower; set => mapEdgesForGodPower = value; }
     public GameObject GodPowerUp { get => godPowerUp; set => godPowerUp = value; }
-
     //Creates instance of game manager
     private void Awake()
     {
@@ -57,6 +59,44 @@ public class ManageGame : MonoBehaviour
             Destroy(gameObject);
         }
 
+        clockHand.eulerAngles = v3Rot;
+    }
+    //handles display and counting of round timer
+    [SerializeField]
+    Vector3 v3Rot;
+    [SerializeField]
+    Vector3 v3Dest;
+
+    float speed = 2.55f; //2.5f
+
+    private void Update()
+    {
+        if (isTimingDown == true)
+        {
+            v3Rot = Vector3.MoveTowards(v3Rot, v3Dest, speed * Time.deltaTime);
+            v3Rot.y = 90;
+            v3Rot.z = 0;
+            Debug.Log(reverseTime);
+            reverseTime += Time.deltaTime;
+            clockHand.transform.eulerAngles = v3Rot;
+          //  var lookDir = pointB.position - clockHand.position;
+           // lookDir.y = 90; 
+          //  lookDir.z = 0;
+            //clockHand.rotation = Quaternion.LookRotation(lookDir);
+           // Quaternion rot = Quaternion.LookRotation(lookDir);
+           // clockHand.rotation = Quaternion.Slerp(clockHand.rotation, rot, 1 * Time.deltaTime);
+            //  string minutes = ((int)reverseTime / 60).ToString("00");
+            //string seconds = ((int)reverseTime % 60).ToString("00");
+            // timeRemaining.text = string.Format("{00:00}:{01:00}", minutes, seconds);
+            if (reverseTime >= 60)
+            {
+                reverseTime = 60;
+                if(OnGameWin != null)
+                    OnGameWin();
+                objectPooling.DisableAll();
+                SceneManager.LoadScene("EndRoundScene");
+            }
+        }
     }
 
 
@@ -73,17 +113,16 @@ public class ManageGame : MonoBehaviour
         drawColor._Terrain = layoutManager.PaintableObjects;
         godPowerUp.SetActive(false);
         //grabs time from main menu scene and checks if its in bounds if its not it sets it to 60 (temporary measure for when we test it straight from game scene)
-        reverseTime = PlayerPrefs.GetFloat("RoundDuration");
-        if(reverseTime < 29 || reverseTime > 91)
-        {
-            reverseTime = 60;
-        }
+        // reverseTime = PlayerPrefs.GetFloat("RoundDuration");
+        //  if(reverseTime < 29 || reverseTime > 91)
+        //  {
+        //    reverseTime = 60;
+        //  }
+        reverseTime = 0;
         isTimingDown = false;
-        timeRemaining.gameObject.SetActive(false);
+        // timeRemaining.gameObject.SetActive(false);
         PlacePlayers();
     }
-
-    //Prepares players and their UI to initiate the game
     private void PlacePlayers()
     {
         for (int i = 0; i < players.Length; i++)
@@ -107,31 +146,11 @@ public class ManageGame : MonoBehaviour
                     for (int t = 0; t < playerBase.Weapons.Length; t++)
                     {
                         playerBase.Weapons[t].GetComponent<Shooting>().Player = players[i];
-                        playerBase.Weapons[t].GetComponent<Shooting>().PlayerBase = playerBase; 
+                        playerBase.Weapons[t].GetComponent<Shooting>().PlayerBase = playerBase;
                     }
                     players[i].Speed = players[i].DefaultSpeed;
                     playerObjects.Add(newPlayer);
                 }
-            }
-        }
-    }
-
-    //handles display and counting of round timer
-    private void Update()
-    {
-        if (isTimingDown == true)
-        {
-            reverseTime -= Time.deltaTime;
-            string minutes = ((int)reverseTime / 60).ToString("00");
-            string seconds = ((int)reverseTime % 60).ToString("00");
-            timeRemaining.text = string.Format("{00:00}:{01:00}", minutes, seconds);
-            if (reverseTime <= 0)
-            {
-                reverseTime = 0;
-                if(OnGameWin != null)
-                    OnGameWin();
-                objectPooling.DisableAll();
-                SceneManager.LoadScene("EndRoundScene");
             }
         }
     }
@@ -169,7 +188,7 @@ public class ManageGame : MonoBehaviour
     //Activates round timer
     public void StartTimer()
     {
-        timeRemaining.gameObject.SetActive(true);
+      //  timeRemaining.gameObject.SetActive(true);
         isTimingDown = true;
         if (SoundManager.Instance != null)
         {
