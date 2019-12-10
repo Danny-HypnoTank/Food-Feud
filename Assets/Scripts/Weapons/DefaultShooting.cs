@@ -150,7 +150,6 @@ public class DefaultShooting : Shooting
         {
             case "Player":
                 GameObject player = hit.transform.gameObject;
-                StunBehavior pStun = player.GetComponent<StunBehavior>();
                 DazeState pDaze = player.GetComponent<DazeState>();
 
                 //hit.collider.gameObject.transform.Translate(ray.direction * 0.15f);
@@ -162,8 +161,6 @@ public class DefaultShooting : Shooting
                 {
                     hit.transform.gameObject.GetComponent<DazeState>().KnockBackEffect(ray.direction, knockBackForce);
                 }
-
-                pStun.AddStun(0.1f, pDaze, player.GetComponent<PlayerBase>().Player);
 
                 break;
             case "PaintableEnvironment":
