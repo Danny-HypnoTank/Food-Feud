@@ -1,5 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿/* 
+ * Created by:
+ * Name: Dominik Waldowski
+ * Sid: 1604336
+ * Date Created: 02/10/2019
+ * Last Modified: 10/12/2019
+ */
 using UnityEngine;
 using UnityEngine.UI;
 
