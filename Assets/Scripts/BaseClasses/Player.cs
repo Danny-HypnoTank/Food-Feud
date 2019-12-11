@@ -20,7 +20,7 @@ public class Player : ScriptableObject
     public string[] namesOfSkins; //Temporary variable for testing
     [Header("In Game Values")]
     private float defaultSpeed = 5;
-
+    public bool hasWon = false;
     private float speed = 5;
 
     public float Speed { get => speed; set => speed = value; }
