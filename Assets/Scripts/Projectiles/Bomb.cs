@@ -35,6 +35,15 @@ public class Bomb : MonoBehaviour
     public DrawColor DrawColor { get => drawColor; set => drawColor = value; }
     [SerializeField]
     private DrawColor drawColor;
+    private ObjectAudioHandler audioHandler;
+
+    private void Start()
+    {
+
+        audioHandler = GetComponent<ObjectAudioHandler>();
+
+    }
+
     private void OnEnable()
     {
         startTime = 0;
@@ -52,6 +61,8 @@ public class Bomb : MonoBehaviour
     //sets bomb to inactive
     private void DestroyBomb()
     {
+
+        audioHandler.SetSFX("Boom");
         this.gameObject.SetActive(false);
     }
     private void OnDisable()
@@ -88,6 +99,8 @@ public class Bomb : MonoBehaviour
 
     private void ExplosionEffect()
     {
+        
+        audioHandler.SetSFX("Splat");
         GameObject newExplosion = explosionEffect.GetPooledObject();
         newExplosion.transform.position = this.transform.position;
         newExplosion.transform.rotation = this.transform.rotation;

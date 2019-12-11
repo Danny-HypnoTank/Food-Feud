@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     private DefaultShooting dShooting;
     public DazeState pStunned { get; private set; }
     private PlayerBase playerBase;
+    public ObjectAudioHandler Audio { get; private set; }
     [SerializeField]
     private float dashDuration = 0.2f;          //if dash duration too small it causes animation glitch
     private float dashPower = 20;
@@ -63,6 +64,7 @@ public class PlayerController : MonoBehaviour
         dShooting = GetComponent<DefaultShooting>();
         pStunned = GetComponent<DazeState>();
         playerBase = GetComponent<PlayerBase>();
+        Audio = GetComponent<ObjectAudioHandler>();
         drawColor = GameObject.Find("GameManager").GetComponent<DrawColor>();
 
         Splat(20);
@@ -83,7 +85,7 @@ public class PlayerController : MonoBehaviour
 
                 if (Input.GetButtonDown("Dash" + player.playerNum) && isDashing == false && pStunned.Stunned == false)
                 {
-
+                    Audio.SetSFX("Dash");
                     dashPosition = (this.transform.position) + (this.transform.forward * dashDistance);
                     isDashing = true;
                     pStunned.CanShoot = false;

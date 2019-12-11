@@ -12,6 +12,7 @@ public class DefaultShooting : Shooting
     private float ammoRegeneration = 40;
 
     private DazeState dazeState;
+    //private ObjectAudioHandler audioHandler;
 
     [SerializeField]
     private float weaponSplashMultiplier = 1;
@@ -42,6 +43,7 @@ public class DefaultShooting : Shooting
     {
         Ammo = 100;
         UpdateFillBar();
+        //audioHandler = GetComponent<ObjectAudioHandler>();
     }
 
     private void DefaultWeapon()
@@ -146,6 +148,9 @@ public class DefaultShooting : Shooting
 
     private void CollideWith(string tag, PlayerBase playerBase)
     {
+
+        //audioHandler.SetSFX("Splat");
+
         switch (tag)
         {
             case "Player":

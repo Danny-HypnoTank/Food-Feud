@@ -271,6 +271,9 @@ public class PlayerBase : MonoBehaviour
 
     private void UsePower()
     {
+
+        pCon.Audio.SetSFX("Pickup");
+
         if (currentPowerUp.powerUpPower == Powerup.powerUps.powerups)
         {
             if (currentPowerUp.powerUpId == 0)
