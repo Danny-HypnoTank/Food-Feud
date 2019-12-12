@@ -52,10 +52,15 @@ public class DefaultShooting : Shooting
             if (Input.GetButtonDown("Shoot" + Player.playerNum))
             {
                 //TODO: Change color of particle based on player
-                Particle.Play();
+                if (Ammo > 0)
+                {
+                    Particle.Play();
+                }
             }
             else if (Input.GetButtonUp("Shoot" + Player.playerNum))
+            {
                 Particle.Stop();
+            }
 
             //Using right Bumper - Ammo Consumption
             if (Input.GetButton("Shoot" + Player.playerNum))
