@@ -6,7 +6,7 @@ public class BombLauncher : Shooting
 {
     //Weapon Specific Stats
     //Ammo Consumption
-    private float bombAmmoConsumption = 25;
+    private float bombAmmoConsumption = 20;
     private bool hasShot;
     private ObjectPooling bombPool;
 

@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 {
     //Variables and References:
     private float gravity = 300.0f;                      //stores value for gravity
+    [SerializeField]
     private float moveSpeedModifier = 5;
 
     private CharacterController chc;
@@ -49,6 +50,8 @@ public class PlayerController : MonoBehaviour
     private Ray ray;
     private DrawColor drawColor;
     public DrawColor DrawColor { get { return drawColor; } private set { drawColor = value; } }
+
+    public float MoveSpeedModifier { get => moveSpeedModifier; set => moveSpeedModifier = value; }
 
     private void Start()
     {
@@ -134,8 +137,6 @@ public class PlayerController : MonoBehaviour
             if (isDashing)
             {
 
-                Debug.Log("Yes");
-
                 PlayerController otherPlayer = other.gameObject.GetComponent<PlayerController>();
 
                 if (!otherPlayer.IsDashing)
@@ -151,33 +152,6 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
-    /*private void OnTriggerStay(Collider other)
-    {
-
-        if (other.tag == "Player")
-        {
-            if (isDashing)
-            {
-
-                Debug.Log("Yes");
-
-                PlayerController otherPlayer = other.gameObject.GetComponent<PlayerController>();
-
-                if (!otherPlayer.IsDashing)
-                {
-
-                    if (!otherPlayer.pStunned.Stunned)
-                        StartCoroutine(otherPlayer.pStunned.Stun(otherPlayer.Player));
-
-                    Splat(20);
-
-                }
-
-            }
-        }
-
-    }*/
 
     private void FixedUpdate()
     {
