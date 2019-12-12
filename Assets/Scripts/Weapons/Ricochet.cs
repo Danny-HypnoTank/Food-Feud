@@ -6,7 +6,7 @@ public class Ricochet : Shooting
 {
     //Weapon Specific Stats
     //Ammo Consumption
-    private float ricochetAmmoConsumption = 60;
+    private float ricochetAmmoConsumption = 25;
     private ObjectPooling bullets;
     #region raycast
     private RaycastHit hit;
@@ -29,7 +29,7 @@ public class Ricochet : Shooting
 
     private void OnEnable()
     {
-        Ammo = 10;
+        Ammo = 100;
         UpdateFillBar();
         bullets = GameObject.Find("BulletsSpawn").GetComponent<ObjectPooling>();
         Debug.Log("fill bar reset");
@@ -55,7 +55,7 @@ public class Ricochet : Shooting
                         if (IsAxisInUse == false)
                         {
 
-                            Ammo -= ricochetAmmoConsumption * Time.deltaTime;
+                            Ammo -= ricochetAmmoConsumption;
                             UpdateFillBar();
                            
                             if (ManageGame.instance.IsTimingDown == true)

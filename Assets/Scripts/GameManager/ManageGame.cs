@@ -77,7 +77,7 @@ public class ManageGame : MonoBehaviour
             v3Rot = Vector3.MoveTowards(v3Rot, v3Dest, speed * Time.deltaTime);
             v3Rot.y = 90;
             v3Rot.z = 0;
-            Debug.Log(reverseTime);
+            //Debug.Log(reverseTime);
             reverseTime += Time.deltaTime;
             clockHand.transform.eulerAngles = v3Rot;
           //  var lookDir = pointB.position - clockHand.position;
