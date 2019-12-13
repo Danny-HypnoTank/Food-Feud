@@ -26,32 +26,29 @@ public class Bullet : MonoBehaviour
     [SerializeField]
     private DrawColor drawColor;
     // Handles bullet logic
-    void Update()
+
+    private void FixedUpdate()
     {
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
 
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
-        if(Physics.Raycast(ray, out hit, Time.deltaTime * speed + 0.1f, bounceSurface))
+        if (Physics.Raycast(ray, out hit, Time.deltaTime * speed + 0.1f, bounceSurface))
         {
             CollideWith(hit.collider.gameObject.tag, hit);
             Vector3 reflectDir = Vector3.Reflect(ray.direction, hit.normal);
             float rot = 90 - Mathf.Atan2(reflectDir.z, reflectDir.x) * Mathf.Rad2Deg;
             transform.eulerAngles = new Vector3(0, rot, 0);
             currentBounce++;
-            if(currentBounce > 3)
+            if (currentBounce > 3)
             {
                 DestroyBullet();
             }
         }
-
-        if(Physics.Raycast(transform.position, Vector3.down, out hit))
+        if (Physics.Raycast(transform.position, Vector3.down, out hit))
         {
-
             CollideWith(hit.collider.gameObject.tag, hit);
-
         }
- 
     }
 
     //when object becomes active it invokes function that disables it after specified time
