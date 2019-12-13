@@ -48,7 +48,7 @@ public class DrawColor : MonoBehaviour
                 myMaterial = _terrain[i].GetComponent<MeshRenderer>().material;
             }
 
-            RenderTexture rend = new RenderTexture(4096, 4096, 0, RenderTextureFormat.ARGBFloat);
+            RenderTexture rend = new RenderTexture(1024, 1024, 0, RenderTextureFormat.ARGBFloat);
             rend.name = "RenderTex " + i;
             _splatMap.Add(rend);
 
@@ -128,6 +128,6 @@ public class DrawColor : MonoBehaviour
     private void OnGUI()
     {
         ////USE TO VIEW A SPLATMAP
-        GUI.DrawTexture(new Rect(0, 0, 256, 128), _splatMap[0], ScaleMode.ScaleToFit, false, 1);
+        //GUI.DrawTexture(new Rect(0, 0, 256, 128), _splatMap[0], ScaleMode.ScaleToFit, false, 1);
     }
 }

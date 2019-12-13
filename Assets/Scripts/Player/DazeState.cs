@@ -24,6 +24,7 @@ public class DazeState : MonoBehaviour
     private StunBehavior stunBehavior;
     [SerializeField]
     private GameObject[] stunStars;
+    private PlayerController playerController;
 
     public bool Stunned { get => stunned; set => stunned = value; }
     public bool CanShoot { get => canShoot; set => canShoot = value; }
@@ -34,6 +35,7 @@ public class DazeState : MonoBehaviour
         character = this.gameObject.GetComponent<CharacterController>();
         dShooting = this.GetComponent<DefaultShooting>();
         stunBehavior = this.GetComponent<StunBehavior>();
+        playerController = this.GetComponent<PlayerController>();
         stunned = false;
         canShoot = true;
     }
@@ -59,6 +61,7 @@ public class DazeState : MonoBehaviour
         stunStars[1].SetActive(true);
         stunStars[2].SetActive(true);
         player.Speed = 0f;
+        playerController.MoveSpeedModifier = 0f;
         stunned = true;
         canShoot = false;
         yield return new WaitForSeconds(3.0f);
@@ -66,6 +69,7 @@ public class DazeState : MonoBehaviour
         stunStars[1].SetActive(false);
         stunStars[2].SetActive(false);
         player.Speed = player.DefaultSpeed;
+        playerController.MoveSpeedModifier = 5f;
         stunned = false;
         canShoot = true;
     }

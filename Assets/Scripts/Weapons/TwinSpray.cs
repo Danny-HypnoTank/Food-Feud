@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TwinSpray : Shooting
 {
@@ -11,7 +9,7 @@ public class TwinSpray : Shooting
     //Ammo Regen
     private float ammoRegeneration = 20;
     //Ammo Consumption
-   // private float twinsprayAmmoConsumption = 60;
+    // private float twinsprayAmmoConsumption = 60;
     private DazeState dazeState;
     [SerializeField]
     private ParticleSystem rightParticle;
@@ -55,8 +53,11 @@ public class TwinSpray : Shooting
             if (Input.GetButtonDown("Shoot" + Player.playerNum))
             {
                 //TODO: Change color of particle based on player
-                Particle.Play();
-                rightParticle.Play();
+                if (Ammo > 0)
+                {
+                    Particle.Play();
+                    rightParticle.Play();
+                }
             }
             else if (Input.GetButtonUp("Shoot" + Player.playerNum))
             {
@@ -64,56 +65,58 @@ public class TwinSpray : Shooting
                 rightParticle.Stop();
             }
 
-          //  if (Input.GetButtonDown("Shoot" + Player.playerNum))
-            //{
-                if (Input.GetButton("Shoot" + Player.playerNum))
+            if (Input.GetButton("Shoot" + Player.playerNum))
+            {
+                IsAxisInUse = false;
+                if (Ammo > 0)
                 {
-                    IsAxisInUse = false;
-                    if (Ammo > 0)
+                    if (dazeState.CanShoot == true)
                     {
-                        if (dazeState.CanShoot == true)
+                        if (IsAxisInUse == false)
                         {
-                            if (IsAxisInUse == false)
+                            if (range > maxRange)
                             {
-                                if (range > maxRange)
-                                {
-                                    range = maxRange;
-                                }
-                                Ammo -= (ammoConsumption - (AmmoConsumptionModifier)) * Time.deltaTime;
+                                range = maxRange;
+                            }
+                            Ammo -= (ammoConsumption - (AmmoConsumptionModifier)) * Time.deltaTime;
 
-                                TwinSprayShooting();
-                                TwinShootTwo();
-                                UpdateFillBar();
+                            TwinSprayShooting();
+                            TwinShootTwo();
+                            UpdateFillBar();
                             if (!Input.GetButton("Shoot" + Player.playerNum))
+                            {
+                                range = 1.0f; //Resetting Range when player isnt pressing button
+                                Ammo += (ammoRegeneration + (AmmoRegenModifier)) * Time.deltaTime;
+                                //Setting Maximum Cap on player ammo
+                                if (Ammo >= 100)
                                 {
-                                    range = 1.0f; //Resetting Range when player isnt pressing button
-                                    Ammo += (ammoRegeneration + (AmmoRegenModifier)) * Time.deltaTime;
-                                    //Setting Maximum Cap on player ammo
-                                    if (Ammo >= 100)
-                                    {
-                                        Ammo = 100;
-                                    }
-                                    UpdateFillBar();
-
+                                    Ammo = 100;
                                 }
+                                UpdateFillBar();
+
                             }
                         }
                     }
-                    else
+                }
+                else
+                {
+                    if (Particle.isPlaying)
                     {
-                        if (Particle.isPlaying)
-                        {
-                            Particle.Stop();
-                            rightParticle.Stop();
-                        }
+                        Particle.Stop();
+                        rightParticle.Stop();
                     }
                 }
             }
-        //}
 
+            if (Ammo <= 0)
+            {
+                PlayerBase.ResetWeapon();
+                PlayerBase.DefaultWeaponSet();
+            }
+        }
     }
 
-    
+
     private void TwinSprayShooting()
     {
         Vector3 _lineOffset = ray.direction * range;
@@ -137,10 +140,10 @@ public class TwinSpray : Shooting
                     Ray _newRay = new Ray(_endRayCopy, (this.transform.forward - this.transform.up).normalized);
 
                     Debug.DrawRay(_newRay.origin, _newRay.direction * range, Color.blue);
-                  //  Debug.Log(_endRayCopy + " " + (this.transform.forward - this.transform.up).normalized);
+                    //  Debug.Log(_endRayCopy + " " + (this.transform.forward - this.transform.up).normalized);
                     if (Physics.Raycast(_newRay, out hit, range))
                     {
-                       // Debug.Log("if forward!");
+                        // Debug.Log("if forward!");
                         CollideWith(hit.collider.gameObject.tag, PlayerBase);
                         i = anglePrecision;
                         return;
@@ -214,7 +217,7 @@ public class TwinSpray : Shooting
                 break;
             case "PaintableEnvironment":
                 //Renderer _wallRenderer = hit.collider.gameObject.GetComponent<Renderer>();
-               // Debug.Log("running paint!");
+                // Debug.Log("running paint!");
                 float _smult;
 
                 if (hit.collider.GetComponent<PaintSizeMultiplier>())
@@ -241,5 +244,5 @@ public class TwinSpray : Shooting
                 break;
         }
     }
-    
+
 }
