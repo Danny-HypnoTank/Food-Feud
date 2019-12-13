@@ -57,7 +57,8 @@ public class Shooting : MonoBehaviour
 
     private void Start()
     {
-       // lineRenderer = GetComponentInChildren<LineRenderer>();
+
+        // lineRenderer = GetComponentInChildren<LineRenderer>();
         playerBaseCharacteristics = GetComponent<PlayerBase>();
         drawColor = GameObject.Find("GameManager").GetComponent<DrawColor>();
         canShoot = true;

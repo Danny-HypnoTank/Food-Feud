@@ -9,6 +9,7 @@ public class BombLauncher : Shooting
     private float bombAmmoConsumption = 20;
     private bool hasShot;
     private ObjectPooling bombPool;
+    private ObjectAudioHandler audioHandler;
 
     private void Update()
     {
@@ -17,6 +18,7 @@ public class BombLauncher : Shooting
 
     private void OnEnable()
     {
+        audioHandler = GetComponent<ObjectAudioHandler>();
         Ammo = 100;
         UpdateFillBar();
         hasShot = false;
@@ -37,6 +39,9 @@ public class BombLauncher : Shooting
                 {
                     if (/*CanShoot == true &&*/ hasShot == false)
                     {
+
+                        audioHandler.SetSFX("Pop");
+
                         GameObject bomb = bombPool.GetPooledObject();
                         bomb.transform.rotation = GunMuzzle.transform.rotation;
                         bomb.transform.position = GunMuzzle.transform.position;

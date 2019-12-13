@@ -117,7 +117,6 @@ public class Bomb : MonoBehaviour
                 break;
             case "PaintableEnvironment":
                 //Renderer _wallRenderer = hit.collider.gameObject.GetComponent<Renderer>();
-
                 int _id = parent.Player.skinId;
                 float _smult;
                 if (hit.collider.GetComponent<PaintSizeMultiplier>())

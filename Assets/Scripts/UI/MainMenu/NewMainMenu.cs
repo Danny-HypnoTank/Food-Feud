@@ -46,6 +46,12 @@ public class NewMainMenu : MonoBehaviour
     [SerializeField]
     private GameObject toolTip;
     private bool isTransition = false;
+    private ObjectAudioHandler audioHandler;
+
+    private void Awake()
+    {
+        audioHandler = GetComponent<ObjectAudioHandler>();
+    }
 
     private void Start()
     {
@@ -73,7 +79,9 @@ public class NewMainMenu : MonoBehaviour
 
     private void InputSelect()
     {
-        if(selectId == 0)
+
+        audioHandler.SetSFX("Accept");
+        if (selectId == 0)
         {
             StartCoroutine("CameraDown");
         }
@@ -178,6 +186,8 @@ public class NewMainMenu : MonoBehaviour
             if (Input.GetButtonDown("BackButton"))
             {
                 ResumeGame();
+
+                audioHandler.SetSFX("Cancel");
             }
         }
         else
@@ -188,6 +198,8 @@ public class NewMainMenu : MonoBehaviour
                 {
                     quitPanel.gameObject.SetActive(true);
                     canPressBtn = false;
+
+                    audioHandler.SetSFX("Cancel");
                 }
             }
         }
@@ -200,6 +212,8 @@ public class NewMainMenu : MonoBehaviour
             imageOfSprites[i].sprite = defaultSprites[i];
         }
         imageOfSprites[selectId].sprite = hoverSprites[selectId];
+
+        audioHandler.SetSFX("Hover");
     }
 
     public void QuitGame()

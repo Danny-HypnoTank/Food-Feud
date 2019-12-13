@@ -6,10 +6,8 @@
  * Last Modified 24/10/2019
  * Modified By:
  */
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System;
+using UnityEngine;
 
 /// <summary>
 /// Class for handling audio on objects
@@ -42,18 +40,35 @@ public class ObjectAudioHandler : MonoBehaviour
     public void SetSFX(string name)
     {
 
-        if(!SoundManager.Instance.Mute)
+        if (SoundManager.Instance != null)
         {
+            if (!SoundManager.Instance.Mute)
+            {
 
-            //Get the sound effect specified in the parameter
-            Audio a = Array.Find(sfx, sound => sound.Name == name);
-            if (a != null)
-                Audio.clip = a.GetAudio();
+                //Get the sound effect specified in the parameter
+                Audio a = Array.Find(sfx, sound => sound.Name == name);
+                if (a != null)
+                    Audio.clip = a.GetAudio();
 
-            //Play sound effect through the SoundManager
-            SoundManager.Instance.PlaySFX(Audio);
+                //Play sound effect through the SoundManager
+                SoundManager.Instance.PlaySFX(Audio);
 
+            }
         }
 
     }
+
+    public void StopSFX(string name)
+    {
+
+        //Get the sound effect specified in the parameter
+        Audio a = Array.Find(sfx, sound => sound.Name == name);
+        if (a != null)
+            Audio.clip = a.GetAudio();
+
+        //Play sound effect through the SoundManager
+        SoundManager.Instance.StopSFX(Audio);
+
+    }
+
 }

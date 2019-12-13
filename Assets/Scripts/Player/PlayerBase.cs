@@ -31,6 +31,7 @@ public class PlayerBase : MonoBehaviour
     [SerializeField]
     private Powerup currentPowerUp;
     public DazeState Daze { get; private set; }
+    public ObjectAudioHandler audioHandler { get; private set; }
     private Shooting shooting;
 
     [SerializeField]
@@ -93,6 +94,7 @@ public class PlayerBase : MonoBehaviour
         shooting = this.gameObject.GetComponent<Shooting>();
         drawColor = GameObject.Find("GameManager").GetComponent<DrawColor>();
         pCon = GetComponent<PlayerController>();
+        audioHandler = GetComponent<ObjectAudioHandler>();
         //Reseting Weapons and Characteristics
         //ResetGodMode();
         ResetWeapon();
@@ -265,7 +267,11 @@ public class PlayerBase : MonoBehaviour
 
     public void SetPowerUp(Powerup powerGained)
     {
-        currentPowerUp = powerGained;
+        CurrentPowerUp = powerGained;
+        if (CurrentPowerUp.powerUpPower != Powerup.powerUps.godpowerup)
+            audioHandler.SetSFX("Pickup");
+        else
+            audioHandler.SetSFX("Boom");
         UsePower();
     }
 

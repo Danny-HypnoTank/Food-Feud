@@ -8,6 +8,7 @@ public class Ricochet : Shooting
     //Ammo Consumption
     private float ricochetAmmoConsumption = 25;
     private ObjectPooling bullets;
+    private ObjectAudioHandler audioHandler;
     #region raycast
     private RaycastHit hit;
     private Ray ray;
@@ -33,6 +34,7 @@ public class Ricochet : Shooting
         UpdateFillBar();
         bullets = GameObject.Find("BulletsSpawn").GetComponent<ObjectPooling>();
         Debug.Log("fill bar reset");
+        audioHandler = GetComponent<ObjectAudioHandler>();
     }
 
     private void Update()
@@ -54,6 +56,8 @@ public class Ricochet : Shooting
                         //if it's equal to false
                         if (IsAxisInUse == false)
                         {
+
+                            audioHandler.SetSFX("RicochetShoot");
 
                             Ammo -= ricochetAmmoConsumption;
                             UpdateFillBar();

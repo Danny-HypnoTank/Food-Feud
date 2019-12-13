@@ -16,6 +16,9 @@ public class DefaultShooting : Shooting
     [SerializeField]
     private float weaponSplashMultiplier = 1;
 
+    private ObjectAudioHandler audioHandler;
+    private bool canPlaySplat;
+
     #region raycast
     private RaycastHit hit;
     private Ray ray;
@@ -42,6 +45,8 @@ public class DefaultShooting : Shooting
     {
         Ammo = 100;
         UpdateFillBar();
+        audioHandler = GetComponent<ObjectAudioHandler>();
+        canPlaySplat = true;
     }
 
     private void DefaultWeapon()
@@ -60,6 +65,8 @@ public class DefaultShooting : Shooting
             else if (Input.GetButtonUp("Shoot" + Player.playerNum))
             {
                 Particle.Stop();
+                audioHandler.StopSFX("Spray");
+                canPlaySplat = true;
             }
 
             //Using right Bumper - Ammo Consumption
@@ -72,6 +79,14 @@ public class DefaultShooting : Shooting
                         //if it's equal to false
                         if (IsAxisInUse == false)
                         {
+
+
+                            if (canPlaySplat)
+                            {
+                                audioHandler.SetSFX("Spray");
+                                StartCoroutine(SplatSFXCooldown());
+                            }
+
                             range += rangeRateIncrease * Time.deltaTime;
                             //Debug.Log(range);
                                if(range > maxRange)
@@ -124,9 +139,13 @@ public class DefaultShooting : Shooting
                 else
                 {
                     if (Particle.isPlaying)
+                    {
                         Particle.Stop();
+                        audioHandler.StopSFX("Spray");
+                        canPlaySplat = true;
+                    }
 
-                }
+                    }
                 if (Input.GetButton("Shoot" + Player.playerNum))
                 {
                     IsAxisInUse = false;
@@ -151,6 +170,7 @@ public class DefaultShooting : Shooting
 
     private void CollideWith(string tag, PlayerBase playerBase)
     {
+
         switch (tag)
         {
             case "Player":
@@ -200,5 +220,15 @@ public class DefaultShooting : Shooting
                 break;
         }
     }
+
+    private IEnumerator SplatSFXCooldown()
+    {
+
+        canPlaySplat = false;
+        yield return new WaitForSeconds(3f);
+        canPlaySplat = true;
+
+    }
+
 }
 
