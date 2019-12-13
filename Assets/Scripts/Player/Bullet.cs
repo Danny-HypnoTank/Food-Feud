@@ -18,7 +18,6 @@ public class Bullet : MonoBehaviour
     private LayerMask bounceSurface;
     private int bounceLimit = 3;
     private int currentBounce = 0;
-    private ObjectAudioHandler audioHandler;
 
     [SerializeField]
     private float weaponSplashMultiplier = 1;
@@ -26,14 +25,6 @@ public class Bullet : MonoBehaviour
     public DrawColor DrawColor { get => drawColor; set => drawColor = value; }
     [SerializeField]
     private DrawColor drawColor;
-
-    private void Start()
-    {
-
-        audioHandler = GetComponent<ObjectAudioHandler>();
-
-    }
-
     // Handles bullet logic
     void Update()
     {
@@ -47,7 +38,6 @@ public class Bullet : MonoBehaviour
             Vector3 reflectDir = Vector3.Reflect(ray.direction, hit.normal);
             float rot = 90 - Mathf.Atan2(reflectDir.z, reflectDir.x) * Mathf.Rad2Deg;
             transform.eulerAngles = new Vector3(0, rot, 0);
-            audioHandler.SetSFX("Bounce");
             currentBounce++;
             if(currentBounce > 3)
             {
