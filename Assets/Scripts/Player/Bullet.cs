@@ -25,6 +25,13 @@ public class Bullet : MonoBehaviour
     public DrawColor DrawColor { get => drawColor; set => drawColor = value; }
     [SerializeField]
     private DrawColor drawColor;
+    private ObjectAudioHandler audioHandler;
+
+    private void Start()
+    {
+        audioHandler = GetComponent<ObjectAudioHandler>();
+    }
+
     // Handles bullet logic
     void Update()
     {
@@ -34,6 +41,7 @@ public class Bullet : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(ray, out hit, Time.deltaTime * speed + 0.1f, bounceSurface))
         {
+            audioHandler.SetSFX("Bounce");
             CollideWith(hit.collider.gameObject.tag, hit);
             Vector3 reflectDir = Vector3.Reflect(ray.direction, hit.normal);
             float rot = 90 - Mathf.Atan2(reflectDir.z, reflectDir.x) * Mathf.Rad2Deg;

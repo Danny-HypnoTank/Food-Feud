@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class TwinSpray : Shooting
 {
@@ -15,6 +16,8 @@ public class TwinSpray : Shooting
     private ParticleSystem rightParticle;
 
     private float weaponSplashMultiplier = 0.5f;
+    private ObjectAudioHandler audioHandler;
+    private bool canPlaySplat;
     #region raycast
     private RaycastHit hit;
     private Ray ray;
@@ -39,6 +42,8 @@ public class TwinSpray : Shooting
         Ammo = 100;
         UpdateFillBar();
         DrawColor = GameObject.Find("GameManager").GetComponent<DrawColor>();
+        audioHandler = GetComponent<ObjectAudioHandler>();
+        canPlaySplat = true;
     }
 
     private void Start()
@@ -63,6 +68,7 @@ public class TwinSpray : Shooting
             {
                 Particle.Stop();
                 rightParticle.Stop();
+                audioHandler.StopSFX("Spray");
             }
 
             if (Input.GetButton("Shoot" + Player.playerNum))
@@ -74,6 +80,13 @@ public class TwinSpray : Shooting
                     {
                         if (IsAxisInUse == false)
                         {
+
+                            if (canPlaySplat)
+                            {
+                                audioHandler.SetSFX("Spray");
+                                StartCoroutine(SplatSFXCooldown());
+                            }
+
                             if (range > maxRange)
                             {
                                 range = maxRange;
@@ -104,6 +117,7 @@ public class TwinSpray : Shooting
                     {
                         Particle.Stop();
                         rightParticle.Stop();
+                        audioHandler.StopSFX("Spray");
                     }
                 }
             }
@@ -243,6 +257,15 @@ public class TwinSpray : Shooting
                 }
                 break;
         }
+    }
+
+    private IEnumerator SplatSFXCooldown()
+    {
+
+        canPlaySplat = false;
+        yield return new WaitForSeconds(0.5f);
+        canPlaySplat = true;
+
     }
 
 }

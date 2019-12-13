@@ -45,6 +45,8 @@ public class PlayerController : MonoBehaviour
     public Player Player { get => player; set => player = value; }
     public bool IsDashing { get => isDashing; set => isDashing = value; }
 
+    private ObjectAudioHandler audioHandler;
+
     private bool isDashing;
 
     private Ray ray;
@@ -67,6 +69,7 @@ public class PlayerController : MonoBehaviour
         pStunned = GetComponent<DazeState>();
         playerBase = GetComponent<PlayerBase>();
         drawColor = GameObject.Find("GameManager").GetComponent<DrawColor>();
+        audioHandler = GetComponent<ObjectAudioHandler>();
 
         Splat(20);
     }
@@ -87,6 +90,7 @@ public class PlayerController : MonoBehaviour
                 if (Input.GetButtonDown("Dash" + player.playerNum) && isDashing == false && pStunned.Stunned == false)
                 {
 
+                    playerBase.audioHandler.SetSFX("Whoosh");
                     dashPosition = (this.transform.position) + (this.transform.forward * dashDistance);
                     isDashing = true;
                     pStunned.CanShoot = false;
@@ -181,6 +185,9 @@ public class PlayerController : MonoBehaviour
 
             if (hit.collider.gameObject.tag == "PaintableEnvironment")
             {
+
+                //audioHandler.SetSFX("Splat");
+
                 float _smult;
 
                 if (hit.collider.GetComponent<PaintSizeMultiplier>())

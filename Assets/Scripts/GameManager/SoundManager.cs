@@ -192,6 +192,13 @@ public class SoundManager : MonoBehaviour
         src.PlayOneShot(src.clip);
 
     }
+    
+    public void StopSFX(AudioSource src)
+    {
+
+        src.Stop();
+
+    }
 
     /// <summary>
     /// Method to set the tempo of the music
