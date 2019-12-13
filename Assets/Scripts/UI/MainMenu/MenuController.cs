@@ -46,7 +46,6 @@ public class MenuController : MonoBehaviour
     }
     public void OptionsMenuToMainMenu()
     {
-        Debug.Log("Triggered");
         mainMenuScript.gameObject.SetActive(true);
         optionsScript.gameObject.SetActive(false);
     }

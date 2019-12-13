@@ -88,6 +88,8 @@ public class SoundManager : MonoBehaviour
             a.Source.clip = a.GetAudio();
         }
 
+        mute = false;
+
         //TODO: Load values from save once implemented
         SetBGMVol(1);
         SetSFXVol(1);

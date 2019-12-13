@@ -40,17 +40,20 @@ public class ObjectAudioHandler : MonoBehaviour
     public void SetSFX(string name)
     {
 
-        if (!SoundManager.Instance.Mute)
+        if (SoundManager.Instance != null)
         {
+            if (!SoundManager.Instance.Mute)
+            {
 
-            //Get the sound effect specified in the parameter
-            Audio a = Array.Find(sfx, sound => sound.Name == name);
-            if (a != null)
-                Audio.clip = a.GetAudio();
+                //Get the sound effect specified in the parameter
+                Audio a = Array.Find(sfx, sound => sound.Name == name);
+                if (a != null)
+                    Audio.clip = a.GetAudio();
 
-            //Play sound effect through the SoundManager
-            SoundManager.Instance.PlaySFX(Audio);
+                //Play sound effect through the SoundManager
+                SoundManager.Instance.PlaySFX(Audio);
 
+            }
         }
 
     }

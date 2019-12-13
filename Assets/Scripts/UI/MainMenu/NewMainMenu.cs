@@ -48,10 +48,14 @@ public class NewMainMenu : MonoBehaviour
     private bool isTransition = false;
     private ObjectAudioHandler audioHandler;
 
+    private void Awake()
+    {
+        audioHandler = GetComponent<ObjectAudioHandler>();
+    }
+
     private void Start()
     {
         cameraTransform.position = optionsCameraPoint.position;
-        audioHandler = GetComponent<ObjectAudioHandler>();
     }
     private void OnEnable()
     {
