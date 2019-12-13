@@ -80,7 +80,7 @@ public class GodPowerUpMovement : MonoBehaviour
 
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (usebounce)
             Bouncing();

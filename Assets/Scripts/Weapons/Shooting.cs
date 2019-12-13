@@ -69,13 +69,13 @@ public class Shooting : MonoBehaviour
             switch (PlayerBase.Player.skinId)
             {
                 case 0:
-                    main.startColor = Color.blue;
+                    main.startColor = Color.red;
                     break;
                 case 1:
                     main.startColor = Color.green;
                     break;
                 case 2:
-                    main.startColor = Color.red;
+                    main.startColor = Color.blue;
                     break;
                 case 3:
                     main.startColor = Color.yellow;
