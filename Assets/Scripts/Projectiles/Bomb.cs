@@ -19,8 +19,8 @@ public class Bomb : MonoBehaviour
     private PlayerBase parent;
     private float bombSpeed = 3;
     private float deathTime = 15;                                   //time until bomb disappears automatically
-    private float bombThrowDistance = 5;                           //how far the bomb will travel
-    private float bombTopHeight = 2;                                //how high the arc of parabola will be
+    private float bombThrowDistance = 10;                           //how far the bomb will travel
+    private float bombTopHeight = 2.2f;                                //how high the arc of parabola will be
     private float startTime;                                        //Currently time when bomb activates
     private float journeyLength;                                   //total length of journey travelled by bomb
     private Vector3 endPos;                                        //endPosition of the bomb(where it will land)
@@ -92,7 +92,6 @@ public class Bomb : MonoBehaviour
         newExplosion.transform.position = this.transform.position;
         newExplosion.transform.rotation = this.transform.rotation;
         newExplosion.SetActive(true);
-        Debug.Log(newExplosion);
     }
     //calculates explosion radius
     private void Explode()
