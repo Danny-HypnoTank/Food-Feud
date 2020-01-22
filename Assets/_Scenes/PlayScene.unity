@@ -2020,19 +2020,13 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &1132638978 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1215884880797703313, guid: 2b18d84211baf2048939e9a38770ab96,
-    type: 3}
-  m_PrefabInstance: {fileID: 2699071975884319301}
-  m_PrefabAsset: {fileID: 0}
 --- !u!64 &1132638980
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1132638978}
+  m_GameObject: {fileID: 3867104930548217556}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
@@ -2046,7 +2040,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1132638978}
+  m_GameObject: {fileID: 3867104930548217556}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5cd52ca8e58615b4a99d64c8a88795ce, type: 3}
@@ -4217,6 +4211,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fridge_V4
       objectReference: {fileID: 0}
+    - target: {fileID: 1215884880797703313, guid: 2b18d84211baf2048939e9a38770ab96,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1215884880797703313, guid: 2b18d84211baf2048939e9a38770ab96,
+        type: 3}
+      propertyPath: m_TagString
+      value: PaintableEnvironment
+      objectReference: {fileID: 0}
     - target: {fileID: 6921948409664680105, guid: 2b18d84211baf2048939e9a38770ab96,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4287,15 +4291,15 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 1215884880797703313, guid: 2b18d84211baf2048939e9a38770ab96,
-        type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1215884880797703313, guid: 2b18d84211baf2048939e9a38770ab96,
+    - target: {fileID: 332134786355535164, guid: 2b18d84211baf2048939e9a38770ab96,
         type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: PaintableEnvironment
+      objectReference: {fileID: 0}
+    - target: {fileID: 332134786355535164, guid: 2b18d84211baf2048939e9a38770ab96,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b18d84211baf2048939e9a38770ab96, type: 3}
@@ -4401,6 +4405,12 @@ MonoBehaviour:
   walls: []
   ground: {fileID: 0}
   wallsHolder: {fileID: 0}
+--- !u!1 &3867104930548217556 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1215884880797703313, guid: 2b18d84211baf2048939e9a38770ab96,
+    type: 3}
+  m_PrefabInstance: {fileID: 2699071975884319301}
+  m_PrefabAsset: {fileID: 0}
 --- !u!33 &4016955084524742390
 MeshFilter:
   m_ObjectHideFlags: 0
