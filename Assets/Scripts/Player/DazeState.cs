@@ -60,6 +60,7 @@ public class DazeState : MonoBehaviour
         stunStars[0].SetActive(true);
         stunStars[1].SetActive(true);
         stunStars[2].SetActive(true);
+        stunStars[3].SetActive(true);
         player.Speed = 0f;
         playerController.MoveSpeedModifier = 0f;
         stunned = true;
@@ -68,6 +69,7 @@ public class DazeState : MonoBehaviour
         stunStars[0].SetActive(false);
         stunStars[1].SetActive(false);
         stunStars[2].SetActive(false);
+        stunStars[3].SetActive(false);
         player.Speed = player.DefaultSpeed;
         playerController.MoveSpeedModifier = 5f;
         stunned = false;
