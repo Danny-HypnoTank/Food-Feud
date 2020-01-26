@@ -2413,7 +2413,7 @@ MonoBehaviour:
   faceObj: {fileID: 3271391760191601090}
   listOfExpressions:
   - {fileID: -2956972527834942131, guid: aa2a2f58b751a104398227467b2b4b03, type: 3}
-  - {fileID: 4535925395531633388, guid: aa2a2f58b751a104398227467b2b4b03, type: 3}
+  - {fileID: -7523970955242101793, guid: aa2a2f58b751a104398227467b2b4b03, type: 3}
   - {fileID: 4535925395531633388, guid: aa2a2f58b751a104398227467b2b4b03, type: 3}
   - {fileID: 1574771824586098789, guid: aa2a2f58b751a104398227467b2b4b03, type: 3}
   - {fileID: -8163974705076679140, guid: aa2a2f58b751a104398227467b2b4b03, type: 3}
@@ -4212,21 +4212,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
-    - target: {fileID: 6951045793853702671, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 10758, guid: 0000000000000000f000000000000000, type: 0}
-    - target: {fileID: 6951045793853702671, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 2100000, guid: 7a2c1698684bfda48b21536450ef3314, type: 2}
-    - target: {fileID: 6358298821470490829, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6358298821626938934, guid: 0c544b9716641d843b75e1d146458247,
         type: 3}
       propertyPath: InitialModule.startSize.scalar
@@ -4247,6 +4232,21 @@ PrefabInstance:
       propertyPath: CollisionModule.type
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6358298821470490829, guid: 0c544b9716641d843b75e1d146458247,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6951045793853702671, guid: 0c544b9716641d843b75e1d146458247,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10758, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 6951045793853702671, guid: 0c544b9716641d843b75e1d146458247,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7a2c1698684bfda48b21536450ef3314, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c544b9716641d843b75e1d146458247, type: 3}
 --- !u!4 &8093691246401036339 stripped
@@ -4578,11 +4578,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
-    - target: {fileID: 6358298821470490829, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6358298821626938934, guid: 0c544b9716641d843b75e1d146458247,
         type: 3}
       propertyPath: InitialModule.startSize.scalar
@@ -4601,6 +4596,11 @@ PrefabInstance:
     - target: {fileID: 6358298821626938934, guid: 0c544b9716641d843b75e1d146458247,
         type: 3}
       propertyPath: CollisionModule.type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6358298821470490829, guid: 0c544b9716641d843b75e1d146458247,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -5863,11 +5863,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
-    - target: {fileID: 6358298821470490829, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6358298821626938934, guid: 0c544b9716641d843b75e1d146458247,
         type: 3}
       propertyPath: InitialModule.startSize.scalar
@@ -5886,6 +5881,11 @@ PrefabInstance:
     - target: {fileID: 6358298821626938934, guid: 0c544b9716641d843b75e1d146458247,
         type: 3}
       propertyPath: CollisionModule.type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6358298821470490829, guid: 0c544b9716641d843b75e1d146458247,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
