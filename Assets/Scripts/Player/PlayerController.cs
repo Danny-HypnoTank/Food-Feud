@@ -26,8 +26,10 @@ public class PlayerController : MonoBehaviour
     private DefaultShooting dShooting;
     public DazeState pStunned { get; private set; }
     private PlayerBase playerBase;
-    [SerializeField]
-    private float dashDuration = 0.2f;          //if dash duration too small it causes animation glitch
+
+    private float dashDuration = 0.25f;          //if dash duration too small it causes animation glitch
+    private float dashCooldown = 1.0f;          //prevents dash to be used again for duration of this variable.
+    private bool canDash = true;
     private float dashPower = 20;
     private float dashDistance = 5;
     private Vector3 dashPosition;
@@ -89,18 +91,20 @@ public class PlayerController : MonoBehaviour
 
                 if (Input.GetButtonDown("Dash" + player.playerNum) && isDashing == false && pStunned.Stunned == false)
                 {
-
-                    playerBase.audioHandler.SetSFX("Whoosh");
-                    dashPosition = (this.transform.position) + (this.transform.forward * dashDistance);
-                    isDashing = true;
-                    pStunned.CanShoot = false;
-                    foreach (GameObject t in trail)
+                    if (canDash == true)
                     {
+                        playerBase.audioHandler.SetSFX("Whoosh");
+                        dashPosition = (this.transform.position) + (this.transform.forward * dashDistance);
+                        isDashing = true;
+                        pStunned.CanShoot = false;
+                        foreach (GameObject t in trail)
+                        {
 
-                        t.gameObject.SetActive(true);
+                            t.gameObject.SetActive(true);
 
+                        }
+                        StartCoroutine(DashTimer());
                     }
-                    StartCoroutine(DashTimer());
                 }
                 else
                 {
@@ -134,6 +138,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private bool tempFix = false;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
@@ -147,7 +153,12 @@ public class PlayerController : MonoBehaviour
                 {
 
                     if (!otherPlayer.pStunned.Stunned)
-                        StartCoroutine(otherPlayer.pStunned.Stun(otherPlayer.Player));
+                        if (tempFix == false)
+                        {
+                            tempFix = true;
+                            otherPlayer.pStunned.AddStun(0.35f);
+                        }
+                        
 
                     Splat(20);
 
@@ -212,6 +223,8 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator DashTimer()
     {
+        canDash = false;
+       
         yield return new WaitForSeconds(dashDuration);
         foreach (GameObject t in trail)
         {
@@ -224,5 +237,13 @@ public class PlayerController : MonoBehaviour
         {
             pStunned.CanShoot = true;
         }
+        StartCoroutine("DashCooldown");
+    }
+
+    private IEnumerator DashCooldown()
+    {
+        yield return new WaitForSeconds(dashCooldown);
+        canDash = true;
+        tempFix = false;
     }
 }
