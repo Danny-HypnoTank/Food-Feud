@@ -19,6 +19,8 @@ public class DefaultShooting : Shooting
     private ObjectAudioHandler audioHandler;
     private bool canPlaySplat;
 
+    private bool reloading;
+
     #region raycast
     private RaycastHit hit;
     private Ray ray;
@@ -37,12 +39,13 @@ public class DefaultShooting : Shooting
 
     private void Update()
     {
-            DefaultWeapon();
+        DefaultWeapon();
         dazeState = GetComponentInParent<DazeState>();
     }
 
     private void OnEnable()
     {
+        reloading = false;
         Ammo = 100;
         UpdateFillBar();
         audioHandler = GetComponent<ObjectAudioHandler>();
@@ -70,10 +73,14 @@ public class DefaultShooting : Shooting
             }
 
             //Using right Bumper - Ammo Consumption
-            if (Input.GetButton("Shoot" + Player.playerNum))
+            if (Input.GetButton("Shoot" + Player.playerNum) && !reloading)
             {
                 if (Ammo > 0)
                 {
+
+                    if (!Particle.isPlaying)
+                        Particle.Play();
+
                     if (dazeState.CanShoot == true)
                     {
                         //if it's equal to false
@@ -145,7 +152,9 @@ public class DefaultShooting : Shooting
                         canPlaySplat = true;
                     }
 
-                    }
+                    reloading = true;
+
+                }
                 if (Input.GetButton("Shoot" + Player.playerNum))
                 {
                     IsAxisInUse = false;
@@ -161,6 +170,20 @@ public class DefaultShooting : Shooting
                 if (Ammo >= 100)
                 {
                     Ammo = 100;
+                }
+                UpdateFillBar();
+
+            }
+            else if (Input.GetButton("Shoot" + Player.playerNum) && reloading)
+            {
+
+                range = 1.0f; //Resetting Range when player isnt pressing button
+                Ammo += (ammoRegeneration + (AmmoRegenModifier)) * Time.deltaTime;
+                //Setting Maximum Cap on player ammo
+                if (Ammo >= 100)
+                {
+                    Ammo = 100;
+                    reloading = false;
                 }
                 UpdateFillBar();
 
