@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1515,7 +1515,7 @@ MonoBehaviour:
   - {fileID: 2074459655}
   pin: {fileID: 1120957415}
   defaultPinLocation: {fileID: 1865517782}
-  speed: 3.5
+  speed: 10
   target: {fileID: 0}
   isOnFridge: 0
   isPinMoving: 0
@@ -3413,7 +3413,7 @@ MonoBehaviour:
   - {fileID: 2074459655}
   pin: {fileID: 751649592}
   defaultPinLocation: {fileID: 2056856458}
-  speed: 3.5
+  speed: 10
   target: {fileID: 0}
   isOnFridge: 0
   isPinMoving: 0
@@ -4259,7 +4259,7 @@ MonoBehaviour:
   - {fileID: 2074459655}
   pin: {fileID: 213736204}
   defaultPinLocation: {fileID: 1547007830}
-  speed: 3.5
+  speed: 10
   target: {fileID: 0}
   isOnFridge: 0
   isPinMoving: 0
@@ -7079,7 +7079,7 @@ MonoBehaviour:
   - {fileID: 2074459655}
   pin: {fileID: 1639363636}
   defaultPinLocation: {fileID: 146763326}
-  speed: 3.5
+  speed: 10
   target: {fileID: 0}
   isOnFridge: 0
   isPinMoving: 0
@@ -7922,6 +7922,36 @@ PrefabInstance:
       propertyPath: backgroundM.Array.data[2]._audio
       value: 
       objectReference: {fileID: 8300000, guid: d79adaf53d10a734e91bd56fa52c3186, type: 3}
+    - target: {fileID: 7772228152695579725, guid: aecf92513357b114690d0d3f7cc50de9,
+        type: 3}
+      propertyPath: backgroundM.Array.data[1]._name
+      value: Game Theme
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772228152695579725, guid: aecf92513357b114690d0d3f7cc50de9,
+        type: 3}
+      propertyPath: backgroundM.Array.data[1]._audio
+      value: 
+      objectReference: {fileID: 8300000, guid: 9c2fbffd2bd276842a47232764f60278, type: 3}
+    - target: {fileID: 7772228152695579725, guid: aecf92513357b114690d0d3f7cc50de9,
+        type: 3}
+      propertyPath: backgroundM.Array.data[3]._name
+      value: Win
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772228152695579725, guid: aecf92513357b114690d0d3f7cc50de9,
+        type: 3}
+      propertyPath: backgroundM.Array.data[3]._audio
+      value: 
+      objectReference: {fileID: 8300000, guid: d79adaf53d10a734e91bd56fa52c3186, type: 3}
+    - target: {fileID: 7772228152695579725, guid: aecf92513357b114690d0d3f7cc50de9,
+        type: 3}
+      propertyPath: backgroundM.Array.data[0]._name
+      value: Main Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772228152695579725, guid: aecf92513357b114690d0d3f7cc50de9,
+        type: 3}
+      propertyPath: backgroundM.Array.data[0]._audio
+      value: 
+      objectReference: {fileID: 8300000, guid: 22f07fac3b81c90438a2b22203ca1ebf, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aecf92513357b114690d0d3f7cc50de9, type: 3}
 --- !u!1 &2056856457

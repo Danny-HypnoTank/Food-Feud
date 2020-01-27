@@ -50,7 +50,6 @@ public class NewMainMenu : MonoBehaviour
 
     private void Awake()
     {
-        audioHandler = GetComponent<ObjectAudioHandler>();
     }
 
     private void Start()
@@ -66,6 +65,7 @@ public class NewMainMenu : MonoBehaviour
         selectId = 0;
         SetHover();
         doorAnimation = doorHolder.GetComponent<Animator>();
+        audioHandler = GetComponent<ObjectAudioHandler>();
         doorAnimation.enabled = false;
         if(usingToolTips == true)
         {
@@ -75,6 +75,9 @@ public class NewMainMenu : MonoBehaviour
         {
             toolTip.SetActive(false);
         }
+
+        if(SoundManager.Instance != null)
+            SoundManager.Instance.PlayMainTheme();
     }
 
     private void InputSelect()
@@ -213,7 +216,6 @@ public class NewMainMenu : MonoBehaviour
         }
         imageOfSprites[selectId].sprite = hoverSprites[selectId];
 
-        audioHandler.SetSFX("Hover");
     }
 
     public void QuitGame()
