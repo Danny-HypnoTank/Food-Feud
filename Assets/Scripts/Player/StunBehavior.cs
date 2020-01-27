@@ -86,7 +86,6 @@ public class StunBehavior : MonoBehaviour
     /// <param name="value">The value to add to the bar</param>
     public void AddStun(float value, DazeState daze, Player player)
     {
-
         if (StunProgress < 1)
         {
             StunProgress += value;

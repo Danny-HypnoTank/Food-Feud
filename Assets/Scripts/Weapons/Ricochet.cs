@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Ricochet : Shooting
 {
+    
     //Weapon Specific Stats
     //Ammo Consumption
     private float ricochetAmmoConsumption = 25;
@@ -26,6 +27,7 @@ public class Ricochet : Shooting
 
     [SerializeField]
     private LineRenderer lineRenderer;
+
     #endregion
 
     private void OnEnable()
@@ -41,6 +43,8 @@ public class Ricochet : Shooting
     {
             RicochetShooting();
     }
+
+   
 
     private void RicochetShooting()
     {
@@ -69,6 +73,7 @@ public class Ricochet : Shooting
                                 newBullet.transform.position = GunMuzzle.transform.position;
                                 newBullet.transform.rotation = GunMuzzle.transform.rotation;
                                 newBullet.GetComponent<Bullet>().SetPlayerId(Player);
+                                newBullet.GetComponent<Bullet>().SetBulletColour(Player.skinId);
                                 newBullet.gameObject.SetActive(true);
                                 
                             }

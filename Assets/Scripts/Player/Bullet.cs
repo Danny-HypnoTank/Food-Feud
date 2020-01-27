@@ -26,6 +26,8 @@ public class Bullet : MonoBehaviour
     [SerializeField]
     private DrawColor drawColor;
     private ObjectAudioHandler audioHandler;
+    [SerializeField]
+    private Material[] bulletColours;
 
     private void Start()
     {
@@ -57,6 +59,11 @@ public class Bullet : MonoBehaviour
         {
             CollideWith(hit.collider.gameObject.tag, hit);
         }
+    }
+
+    public void SetBulletColour(int colour)
+    {
+        this.gameObject.GetComponent<Renderer>().material = bulletColours[colour];
     }
 
     //when object becomes active it invokes function that disables it after specified time
