@@ -10,7 +10,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using StateMachine;
-
 public class DazeState : MonoBehaviour
 {
     private DefaultShooting dShooting;
@@ -82,13 +81,14 @@ public class DazeState : MonoBehaviour
 
     }
 
-    public IEnumerator Stun(Player player)
+    public IEnumerator Stun()
     {
+        
         stunStars[0].SetActive(true);
         stunStars[1].SetActive(true);
         stunStars[2].SetActive(true);
         stunStars[3].SetActive(true);
-        player.Speed = 0f;
+        playerbase.Player.Speed = 0f;
         this.gameObject.GetComponent<CharacterController>().Move(new Vector3(0, 0, 0));
         playerController.MoveSpeedModifier = 0f;
         stunned = true;
@@ -98,7 +98,7 @@ public class DazeState : MonoBehaviour
         stunStars[1].SetActive(false);
         stunStars[2].SetActive(false);
         stunStars[3].SetActive(false);
-        player.Speed = player.DefaultSpeed;
+        playerbase.Player.Speed = playerbase.Player.DefaultSpeed;
         playerController.MoveSpeedModifier = 5f;
         stunned = false;
         canShoot = true;
@@ -108,12 +108,12 @@ public class DazeState : MonoBehaviour
     {
         StopCoroutine("RemoveStun");
         StartCoroutine("RemoveStun");
-        if (StunProgress < 1)
-        {
-            StunProgress += value;
+        StunProgress += value;
+        if (StunProgress >= 1)
+        {            
+            StopCoroutine("Stun");
             StartCoroutine("Stun");
             // bar.fillAmount = StunProgress;
-
         }
     }
 
