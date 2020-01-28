@@ -19,6 +19,9 @@ public class DefaultShooting : Shooting
     private ObjectAudioHandler audioHandler;
     private bool canPlaySplat;
 
+    [SerializeField]
+    private List<Material> gunMaterials;
+
     #region raycast
     private RaycastHit hit;
     private Ray ray;
@@ -35,6 +38,8 @@ public class DefaultShooting : Shooting
     private float knockBackForce = 5;
     #endregion
 
+   
+
     private void Update()
     {
             DefaultWeapon();
@@ -47,6 +52,32 @@ public class DefaultShooting : Shooting
         UpdateFillBar();
         audioHandler = GetComponent<ObjectAudioHandler>();
         canPlaySplat = true;
+
+        Renderer _rend = gameObject.GetComponent<Renderer>();
+        switch (Player.skinId)
+        {
+            case (0):
+                {
+                    _rend.material = gunMaterials[0];
+                    break;
+                }
+            case (1):
+                {
+                    _rend.material = gunMaterials[1];
+                    break;
+                }
+            case (2):
+                {
+                    _rend.material = gunMaterials[2];
+                    break;
+                }
+            case (3):
+                {
+                    _rend.material = gunMaterials[3];
+                    break;
+                }
+        }
+
     }
 
     private void DefaultWeapon()
