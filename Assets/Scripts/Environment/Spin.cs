@@ -9,11 +9,10 @@ using UnityEngine;
 
 public class Spin : MonoBehaviour
 {
-    [SerializeField]
-    private float value = 30;
+
     // Update is called once per frame
     private void Update()
     {
-        transform.Rotate(0,0, value * Time.deltaTime);
+        transform.Rotate(0,0, 30 * Time.deltaTime);
     }
 }
