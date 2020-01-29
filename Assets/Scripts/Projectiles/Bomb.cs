@@ -4,7 +4,7 @@
  * Sid: 1314371
  * Date Created: 06/10/2019
  * Last Modified 22/10/2019
- * Modified By: Dominik Waldowski
+ * Modified By: Dominik Waldowski, Antoni Gudejko
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -27,11 +27,17 @@ public class Bomb : MonoBehaviour
     private Vector3 startPos;                                      //start position of the bomb(where it becomes enabled)
     public PlayerBase Parent { get => parent; set => parent = value; }
 
+
+    [SerializeField]
+    private List<Material> bombMaterials;
+
     [SerializeField]
     private float weaponSplashMultiplier = 1;
 
     RaycastHit hit;
     Ray ray;
+    private Renderer rend;
+    
     public DrawColor DrawColor { get => drawColor; set => drawColor = value; }
     [SerializeField]
     private DrawColor drawColor;
@@ -47,6 +53,10 @@ public class Bomb : MonoBehaviour
         Invoke("DestroyBomb", deathTime);
 
         drawColor = GameObject.Find("GameManager").GetComponent<DrawColor>();
+
+        rend = gameObject.GetComponent<Renderer>();
+
+        
     }
 
     //sets bomb to inactive
@@ -65,6 +75,69 @@ public class Bomb : MonoBehaviour
     {
 
         Parent = p;
+        switch (Parent.Player.skinId)
+        {
+            case (0):
+                {
+                    rend.material = bombMaterials[0];
+                    foreach(Transform child in transform)
+                    {
+                        child.GetComponent<Renderer>().material = bombMaterials[0];
+                        if(child.GetComponent<ParticleSystem>())
+                        {
+                           ParticleSystem _ps = child.GetComponent<ParticleSystem>();
+                            var main = _ps.main;
+                            main.startColor = Color.red;
+                        }
+                    }
+                    break;
+                }
+            case (1):
+                {
+                    rend.material = bombMaterials[1];
+                    foreach (Transform child in transform)
+                    {
+                        child.GetComponent<Renderer>().material = bombMaterials[1];
+                        if (child.GetComponent<ParticleSystem>())
+                        {
+                            ParticleSystem _ps = child.GetComponent<ParticleSystem>();
+                            var main = _ps.main;
+                            main.startColor = Color.green;
+                        }
+                    }
+                    break;
+                }
+            case (2):
+                {
+                    rend.material = bombMaterials[2];
+                    foreach (Transform child in transform)
+                    {
+                        child.GetComponent<Renderer>().material = bombMaterials[2];
+                        if (child.GetComponent<ParticleSystem>())
+                        {
+                            ParticleSystem _ps = child.GetComponent<ParticleSystem>();
+                            var main = _ps.main;
+                            main.startColor = Color.blue;
+                        }
+                    }
+                    break;
+                }
+            case (3):
+                {
+                    rend.material = bombMaterials[3];
+                    foreach (Transform child in transform)
+                    {
+                        child.GetComponent<Renderer>().material = bombMaterials[3];
+                        if (child.GetComponent<ParticleSystem>())
+                        {
+                            ParticleSystem _ps = child.GetComponent<ParticleSystem>();
+                            var main = _ps.main;
+                            main.startColor = Color.yellow;
+                        }
+                    }
+                    break;
+                }
+        }
     }
 
     //Moves the bomb using parabola class. 
@@ -91,6 +164,34 @@ public class Bomb : MonoBehaviour
         GameObject newExplosion = explosionEffect.GetPooledObject();
         newExplosion.transform.position = this.transform.position;
         newExplosion.transform.rotation = this.transform.rotation;
+
+        ParticleSystem ps = newExplosion.GetComponent<ParticleSystem>();
+        var mainPs = ps.main;
+        switch (Parent.Player.skinId)
+        {
+            case 0:
+                {
+                    mainPs.startColor = Color.red;
+                    break;
+                }
+            case 1:
+                {
+                    mainPs.startColor = Color.green;
+                    break;
+                }
+            case 2:
+                {
+                    mainPs.startColor = Color.blue;
+                    break;
+                }
+            case 3:
+                {
+                    mainPs.startColor = Color.yellow;
+                    break;
+                }
+
+        }
+
         newExplosion.SetActive(true);
     }
     //calculates explosion radius

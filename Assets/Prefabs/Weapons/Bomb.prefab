@@ -97,6 +97,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blastRadius: 2
   decal: {fileID: 4978113940245591912, guid: 45cbacc9d7edac0478c2671e45829108, type: 3}
+  bombMaterials:
+  - {fileID: -6315384390638877041, guid: 52ce384eea6cf624185507a7f8a2b463, type: 3}
+  - {fileID: 2100000, guid: 23f846f1d4230d948a8b947e6516f6cd, type: 2}
+  - {fileID: 2100000, guid: deb9d3b66ae329e419a3bf9543f3974f, type: 2}
+  - {fileID: 2100000, guid: 03fefcdd9fe18034b9eab1124e968080, type: 2}
   weaponSplashMultiplier: 1.5
   drawColor: {fileID: 0}
 --- !u!65 &998528421
@@ -194,6 +199,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6981840790686525754, guid: 76bd43ca9a0145541bb110ded45c54fc,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6981840790686525754, guid: 76bd43ca9a0145541bb110ded45c54fc,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6981840790686525754, guid: 76bd43ca9a0145541bb110ded45c54fc,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76bd43ca9a0145541bb110ded45c54fc, type: 3}

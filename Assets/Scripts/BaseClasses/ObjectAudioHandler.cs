@@ -48,11 +48,12 @@ public class ObjectAudioHandler : MonoBehaviour
                 //Get the sound effect specified in the parameter
                 Audio a = Array.Find(sfx, sound => sound.Name == name);
                 if (a != null)
+                {
                     Audio.clip = a.GetAudio();
 
-                //Play sound effect through the SoundManager
-                SoundManager.Instance.PlaySFX(Audio);
-
+                    //Play sound effect through the SoundManager
+                    SoundManager.Instance.PlaySFX(Audio);
+                }
             }
         }
 

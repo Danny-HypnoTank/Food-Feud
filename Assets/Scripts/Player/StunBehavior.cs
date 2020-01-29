@@ -55,24 +55,28 @@ public class StunBehavior : MonoBehaviour
             stunStars[0].SetActive(true);
             stunStars[1].SetActive(false);
             stunStars[2].SetActive(false);
+            stunStars[3].SetActive(false);
         }
         else if (StunProgress >= 0.7f && StunProgress <= 0.99f)
         {
             stunStars[0].SetActive(true);
             stunStars[1].SetActive(true);
             stunStars[2].SetActive(false);
+            stunStars[3].SetActive(false);
         }
         else if (StunProgress > 1)
         {
             stunStars[0].SetActive(true);
             stunStars[1].SetActive(true);
             stunStars[2].SetActive(true);
+            stunStars[3].SetActive(true);
         }
         if(StunProgress <= 0)
         {
             stunStars[0].SetActive(false);
             stunStars[1].SetActive(false);
             stunStars[2].SetActive(false);
+            stunStars[3].SetActive(false);
         }
     }
 
