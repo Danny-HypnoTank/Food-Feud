@@ -798,7 +798,7 @@ TrailRenderer:
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 0
+      ctime0: 12529
       ctime1: 65535
       ctime2: 0
       ctime3: 0
@@ -814,7 +814,7 @@ TrailRenderer:
       atime5: 0
       atime6: 0
       atime7: 0
-      m_Mode: 0
+      m_Mode: 1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
@@ -1165,7 +1165,7 @@ TrailRenderer:
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 0
+      ctime0: 12529
       ctime1: 65535
       ctime2: 0
       ctime3: 0
@@ -1181,7 +1181,7 @@ TrailRenderer:
       atime5: 0
       atime6: 0
       atime7: 0
-      m_Mode: 0
+      m_Mode: 1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
@@ -2118,7 +2118,7 @@ TrailRenderer:
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 0
+      ctime0: 12529
       ctime1: 65535
       ctime2: 0
       ctime3: 0
@@ -2134,7 +2134,7 @@ TrailRenderer:
       atime5: 0
       atime6: 0
       atime7: 0
-      m_Mode: 0
+      m_Mode: 1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
@@ -3268,7 +3268,7 @@ TrailRenderer:
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 0
+      ctime0: 12529
       ctime1: 65535
       ctime2: 0
       ctime3: 0
@@ -3284,7 +3284,7 @@ TrailRenderer:
       atime5: 0
       atime6: 0
       atime7: 0
-      m_Mode: 0
+      m_Mode: 1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
@@ -3506,7 +3506,7 @@ TrailRenderer:
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 0
+      ctime0: 12529
       ctime1: 65535
       ctime2: 0
       ctime3: 0
@@ -3522,7 +3522,7 @@ TrailRenderer:
       atime5: 0
       atime6: 0
       atime7: 0
-      m_Mode: 0
+      m_Mode: 1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
@@ -4124,6 +4124,11 @@ PrefabInstance:
         type: 0}
     - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
         type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
+        type: 3}
       propertyPath: SizeModule.curve.minMaxState
       value: 3
       objectReference: {fileID: 0}
@@ -4151,11 +4156,6 @@ PrefabInstance:
         type: 3}
       propertyPath: CollisionModule.collisionMessages
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6951045793853702668, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: EmissionModule.rateOverTime.scalar
-      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6951045793853702670, guid: 0c544b9716641d843b75e1d146458247,
         type: 3}
@@ -4217,11 +4217,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 10758, guid: 0000000000000000f000000000000000, type: 0}
-    - target: {fileID: 6951045793853702671, guid: 0c544b9716641d843b75e1d146458247,
-        type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 2100000, guid: 7a2c1698684bfda48b21536450ef3314, type: 2}
     - target: {fileID: 6358298821470490829, guid: 0c544b9716641d843b75e1d146458247,
         type: 3}
       propertyPath: InitialModule.startSize.scalar
@@ -4272,11 +4267,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LettuceAnimations_V6
-      objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: d9d250b2c2e2786488b128801444cb5c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: d9d250b2c2e2786488b128801444cb5c,
         type: 3}
@@ -4454,11 +4444,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 944265875255269153, guid: 0e1dc63b6c2aee8439145c2d7573118f,
         type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 944265875255269153, guid: 0e1dc63b6c2aee8439145c2d7573118f,
-        type: 3}
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
@@ -4628,11 +4613,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PepperAnimations_V2
-      objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: 7a0489ae568838749a3c67bf1f934045,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 7a0489ae568838749a3c67bf1f934045,
         type: 3}
@@ -5038,11 +5018,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ricochet
       objectReference: {fileID: 0}
-    - target: {fileID: 2913219231495964351, guid: 2763a41ee4d409c48aa3ee124f17a4c8,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6665843005830501052, guid: 2763a41ee4d409c48aa3ee124f17a4c8,
         type: 3}
       propertyPath: fillBar
@@ -5138,11 +5113,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BlueberryAnimations_V2
-      objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: a6480c598951d5b458f319940a061c76,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: a6480c598951d5b458f319940a061c76,
         type: 3}
@@ -5252,11 +5222,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PizzaAnimations_V4
-      objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: cc4665270b476a845a5f559daf738809,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: cc4665270b476a845a5f559daf738809,
         type: 3}
@@ -5448,21 +5413,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 29269441c777c5f46bd693d6c1172542, type: 2}
-    - target: {fileID: 889667986917253407, guid: cc4665270b476a845a5f559daf738809,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 889667986917253407, guid: cc4665270b476a845a5f559daf738809,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 889667986917253407, guid: cc4665270b476a845a5f559daf738809,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 9157248606043673096, guid: cc4665270b476a845a5f559daf738809,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -5731,16 +5681,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: 52ce384eea6cf624185507a7f8a2b463,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: 52ce384eea6cf624185507a7f8a2b463,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -1504981713932161579, guid: 52ce384eea6cf624185507a7f8a2b463,
         type: 3}
