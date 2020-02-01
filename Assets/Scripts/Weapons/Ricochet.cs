@@ -33,7 +33,6 @@ public class Ricochet : Shooting
         Ammo = 100;
         UpdateFillBar();
         bullets = GameObject.Find("BulletsSpawn").GetComponent<ObjectPooling>();
-        Debug.Log("fill bar reset");
         audioHandler = GetComponent<ObjectAudioHandler>();
     }
 
@@ -64,7 +63,6 @@ public class Ricochet : Shooting
                            
                             if (ManageGame.instance.IsTimingDown == true)
                             {
-                                Debug.Log("Shooting");
                                 GameObject newBullet = bullets.GetPooledObject();
                                 newBullet.transform.position = GunMuzzle.transform.position;
                                 newBullet.transform.rotation = GunMuzzle.transform.rotation;

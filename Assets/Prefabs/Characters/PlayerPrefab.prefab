@@ -2713,6 +2713,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeedModifier: 5
   dashDuration: 0.2
+  dashCooldownTime: 1
   trail:
   - {fileID: 8230786717279600726}
   - {fileID: 2379375488075754050}
@@ -2761,7 +2762,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
@@ -4674,6 +4675,31 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3513448674848421738, guid: 7a0489ae568838749a3c67bf1f934045,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.26529282
+      objectReference: {fileID: 0}
+    - target: {fileID: -3513448674848421738, guid: 7a0489ae568838749a3c67bf1f934045,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -14.999998
+      objectReference: {fileID: 0}
+    - target: {fileID: -3513448674848421738, guid: 7a0489ae568838749a3c67bf1f934045,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.0000000066701777
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 7a0489ae568838749a3c67bf1f934045,
+        type: 3}
+      propertyPath: m_Name
+      value: PepperAnimations_V2
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 7a0489ae568838749a3c67bf1f934045,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -8561221483730450821, guid: 7a0489ae568838749a3c67bf1f934045,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4773,21 +4799,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -95.02166
-      objectReference: {fileID: 0}
-    - target: {fileID: -3513448674848421738, guid: 7a0489ae568838749a3c67bf1f934045,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0.26529282
-      objectReference: {fileID: 0}
-    - target: {fileID: -3513448674848421738, guid: 7a0489ae568838749a3c67bf1f934045,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -14.999998
-      objectReference: {fileID: 0}
-    - target: {fileID: -3513448674848421738, guid: 7a0489ae568838749a3c67bf1f934045,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0.0000000066701777
       objectReference: {fileID: 0}
     - target: {fileID: -3231802203343273587, guid: 7a0489ae568838749a3c67bf1f934045,
         type: 3}
@@ -5174,6 +5185,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: a6480c598951d5b458f319940a061c76,
+        type: 3}
+      propertyPath: m_Name
+      value: BlueberryAnimations_V2
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: a6480c598951d5b458f319940a061c76,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -6057140222963153312, guid: a6480c598951d5b458f319940a061c76,
         type: 3}
       propertyPath: m_Controller
@@ -5223,10 +5244,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7828662610638031483}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: cc4665270b476a845a5f559daf738809,
+    - target: {fileID: 5950497558005427696, guid: cc4665270b476a845a5f559daf738809,
         type: 3}
-      propertyPath: m_Name
-      value: PizzaAnimations_V4
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -0.2514845
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: cc4665270b476a845a5f559daf738809,
         type: 3}
@@ -5298,20 +5319,15 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 5950497558005427696, guid: cc4665270b476a845a5f559daf738809,
+    - target: {fileID: -927199367670048503, guid: cc4665270b476a845a5f559daf738809,
         type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -0.2514845
+      propertyPath: m_Name
+      value: PizzaAnimations_V4
       objectReference: {fileID: 0}
-    - target: {fileID: 5950497558005427696, guid: cc4665270b476a845a5f559daf738809,
+    - target: {fileID: -927199367670048503, guid: cc4665270b476a845a5f559daf738809,
         type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 12.95769
-      objectReference: {fileID: 0}
-    - target: {fileID: 5950497558005427696, guid: cc4665270b476a845a5f559daf738809,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 89.284164
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9074474410375773067, guid: cc4665270b476a845a5f559daf738809,
         type: 3}
@@ -5637,16 +5653,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7828662610943177099}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: 52ce384eea6cf624185507a7f8a2b463,
-        type: 3}
-      propertyPath: m_Name
-      value: DefaultGun
-      objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: 52ce384eea6cf624185507a7f8a2b463,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 52ce384eea6cf624185507a7f8a2b463,
         type: 3}
       propertyPath: m_LocalPosition.x
