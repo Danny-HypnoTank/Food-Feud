@@ -200,6 +200,12 @@ public class PlayerBase : MonoBehaviour
                 animationIDSet = 0;
                 expression.SetExpression(0);
             }
+            if(CurrentPowerUp.powerUpPower == Powerup.powerUps.godpowerup)
+            {
+
+                animationIDSet = 4;
+
+            }
         }
     }
 
@@ -304,6 +310,8 @@ public class PlayerBase : MonoBehaviour
         else if (currentPowerUp.powerUpPower == Powerup.powerUps.godpowerup)
         {
             pCon.Splat(25);
+            animationIDSet = 4;
+            resetAnimTimer = 0;
             //StartTimer();
 
         }
