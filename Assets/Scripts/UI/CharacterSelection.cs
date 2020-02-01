@@ -3,7 +3,8 @@
  * Name: Dominik Waldowski
  * Sid: 1604336
  * Date Created: 29/09/2019
- * Last Modified: 06/10/2019
+ * Modified by: Alex Watson
+ * Last Modified: 01/02/2020
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ public class CharacterSelection : MonoBehaviour
     //resets all variables
     private void OnEnable()
     {
-        skinNumberIterations = new int[4];
+        skinNumberIterations = new int[6];
         isConfirminationOn = false;
         confirmSelectionPanel.gameObject.SetActive(false);
         characterSelectionPanel.gameObject.SetActive(true);

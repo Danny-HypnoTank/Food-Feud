@@ -63,7 +63,7 @@ public class PinController : MonoBehaviour
                 }
                 else if (isActive == true)
                 {
-                    if (characters[position].GetComponent<CharacterPin>().OwnedBy == null)
+ 
                     {
                         isLocked = true;
                         characters[position].GetComponent<CharacterPin>().OwnedBy = pin;
