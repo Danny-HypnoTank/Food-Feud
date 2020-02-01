@@ -16,7 +16,7 @@ public class Shooting : MonoBehaviour
     //Parent Class for all variables
     //References
     private Player player;
-    
+
     //Properties
     public Player Player { get => player; set => player = value; }
     public Transform GunMuzzle { get => gunMuzzle; set => gunMuzzle = value; }
@@ -44,7 +44,7 @@ public class Shooting : MonoBehaviour
 
     private PlayerBase playerBaseCharacteristics;
     private PlayerBase playerBase;
-    
+
     private bool canShoot;
     private bool isAxisInUse = false;
 
@@ -84,7 +84,7 @@ public class Shooting : MonoBehaviour
         }
     }
 
-    
+
     public void UpdateFillBar()
     {
         if (FillBar != null)

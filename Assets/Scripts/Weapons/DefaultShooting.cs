@@ -23,8 +23,6 @@ public class DefaultShooting : Shooting
     [SerializeField]
     private List<Material> gunMaterials;
 
-    private bool reloading;
-
     #region raycast
     private RaycastHit hit;
     private Ray ray;
@@ -58,7 +56,9 @@ public class DefaultShooting : Shooting
         canPlaySplat = true;
 
         Renderer _rend = gameObject.GetComponent<Renderer>();
-        switch (Player.skinId)
+
+        //TODO: fix pls, "Object reference not set to a reference of an object"
+        /*switch (Player.skinId)
         {
             case (0):
                 {
@@ -80,7 +80,7 @@ public class DefaultShooting : Shooting
                     _rend.material = gunMaterials[3];
                     break;
                 }
-        }
+        }*/
 
     }
 

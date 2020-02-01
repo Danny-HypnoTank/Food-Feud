@@ -200,12 +200,9 @@ public class PlayerBase : MonoBehaviour
                 animationIDSet = 0;
                 expression.SetExpression(0);
             }
-            if(CurrentPowerUp.powerUpPower == Powerup.powerUps.godpowerup)
-            {
-
-                animationIDSet = 4;
-
-            }
+            if (CurrentPowerUp != null)
+                if (CurrentPowerUp.powerUpPower == Powerup.powerUps.godpowerup)
+                    animationIDSet = 4;
         }
     }
 
