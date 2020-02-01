@@ -241,6 +241,7 @@ public class PlayerBase : MonoBehaviour
 
     public void DefaultWeaponSet()
     {
+        currentWeaponId = 0;
         weapons[currentWeaponId].transform.position = weaponOffsetPos[0].transform.position;
         weapons[0].SetActive(true);
     }
