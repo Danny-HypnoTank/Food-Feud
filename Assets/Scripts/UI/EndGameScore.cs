@@ -59,6 +59,7 @@ public class EndGameScore : MonoBehaviour
                 thePlayerData[usedPodiums].gameObject.SetActive(true);
                 thePlayerData[usedPodiums].GetComponent<PodiumController>().SetTotal(total);
                 usedPodiums++;
+                SoundManager.Instance.SetBGMTempo(1);
                 SoundManager.Instance.SetBGM("Win");
             }
         }
