@@ -24,7 +24,8 @@ public class LevelManager : MonoBehaviour
 
     public void LayoutGeneration()
     {
-        layoutIteration = Random.Range(0, levelLayouts.Length);
+        // layoutIteration = Random.Range(0, levelLayouts.Length);
+        layoutIteration = 0;            //For testing new mechanic
         Instantiate(levelLayouts[layoutIteration],new Vector3 (0,0,0), Quaternion.identity, map.transform);
         SpawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
         PaintableObjects.AddRange(GameObject.FindGameObjectsWithTag("PaintableEnvironment"));
