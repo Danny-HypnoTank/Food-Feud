@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2034,19 +2034,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: -4113507751672977772, guid: 6d611a7426001f940b58c7117ee9d1cf, type: 3}
---- !u!114 &1132638983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3867104930548217556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cd52ca8e58615b4a99d64c8a88795ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  multiplier: 2
 --- !u!1001 &1149461793
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3301,7 +3288,6 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 400d8749b3635bc46a2901b51662af3e, type: 3}
   - {fileID: 2800000, guid: a2d3ad05a39daf848b9ac2864260cd53, type: 3}
   - {fileID: 2800000, guid: e9ccc1b8e3de01246b027eed9cf2a646, type: 3}
-  - {fileID: 2800000, guid: b14ab25d491cf6e4280c14d9201fc85a, type: 3}
   - {fileID: 2800000, guid: 5ea6f96cff51910439c775d89dc46436, type: 3}
   - {fileID: 2800000, guid: e0b85ea8be11668488b6abae511a4115, type: 3}
   - {fileID: 2800000, guid: fd53c6196fb0456439fd35d6f0fc8022, type: 3}
@@ -3549,7 +3535,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b776d9e8273066347855a5de5d81dffc, type: 3}
   m_Name: 
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
 --- !u!1001 &1924411973
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4418,6 +4404,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 5663138913702476798, guid: 2b18d84211baf2048939e9a38770ab96,
+        type: 3}
+      propertyPath: multiplier
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b18d84211baf2048939e9a38770ab96, type: 3}
 --- !u!1 &2966908127380545424
@@ -4775,7 +4766,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.68500006, y: 0.087000005}
   m_AnchorMax: {x: 0.99000007, y: 0.28610447}
-  m_AnchoredPosition: {x: -1.4628906, y: -2.0372238}
+  m_AnchoredPosition: {x: -1.4628906, y: -2.0372162}
   m_SizeDelta: {x: -3.7000732, y: 0.40081787}
   m_Pivot: {x: 0.7876254, y: 0.30468056}
 --- !u!1 &6135753283376270421
