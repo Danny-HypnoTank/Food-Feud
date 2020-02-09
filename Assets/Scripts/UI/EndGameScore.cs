@@ -25,6 +25,14 @@ public class EndGameScore : MonoBehaviour
     private Loading loading;
     private void Start()
     {
+
+        for(int i = 0; i < players.Length; i++)
+        {
+
+            players[i].scorePercentage = ManageGame.instance.gridManager.Scores[i];
+
+        }
+
         loading = GameObject.Find("LoadingManager").GetComponent<Loading>();
         sortedPlayers = players.OrderByDescending(o => o.playerScore).ToList();
         for (int i = 0; i < sortedPlayers.Count; i++)

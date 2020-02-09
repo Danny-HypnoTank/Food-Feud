@@ -14,6 +14,8 @@ public class TwinSpray : Shooting
     private DazeState dazeState;
     [SerializeField]
     private ParticleSystem rightParticle;
+    [SerializeField]
+    private LayerMask scoreLayer;
 
     private float weaponSplashMultiplier = 0.5f;
     private ObjectAudioHandler audioHandler;
@@ -152,6 +154,7 @@ public class TwinSpray : Shooting
                     //rotation is bugged at some angles, replace "parent.transform.up" if fixed
                     //var _rotation = Quaternion.Euler(0, 0, 30) * parent.transform.up;
                     Ray _newRay = new Ray(_endRayCopy, (this.transform.forward - this.transform.up).normalized);
+                    Ray scoreRay = new Ray(_endRayCopy, (this.transform.forward - this.transform.up).normalized);
 
                     Debug.DrawRay(_newRay.origin, _newRay.direction * range, Color.blue);
                     //  Debug.Log(_endRayCopy + " " + (this.transform.forward - this.transform.up).normalized);
@@ -161,6 +164,15 @@ public class TwinSpray : Shooting
                         CollideWith(hit.collider.gameObject.tag, PlayerBase);
                         i = anglePrecision;
                         return;
+                    }
+                    if (Physics.Raycast(scoreRay, out hit, range, scoreLayer))
+                    {
+
+                        ScoreSquare square = hit.collider.gameObject.GetComponent<ScoreSquare>();
+
+                        if (square.Value != Player.skinId)
+                            square.SetValue(Player.skinId);
+
                     }
 
                     _endRayCopy = _newRay.origin + _newRay.direction * 1;
@@ -191,6 +203,7 @@ public class TwinSpray : Shooting
                     //rotation is bugged at some angles, replace "parent.transform.up" if fixed
                     //var _rotation = Quaternion.Euler(0, 0, 30) * parent.transform.up;
                     Ray _newRay = new Ray(_endRayCopy, (this.transform.forward - this.transform.up).normalized);
+                    Ray scoreRay = new Ray(_endRayCopy, (this.transform.forward - this.transform.up).normalized);
 
                     Debug.DrawRay(_newRay.origin, _newRay.direction * range, Color.blue);
 
@@ -199,6 +212,15 @@ public class TwinSpray : Shooting
                         CollideWith(hit.collider.gameObject.tag, PlayerBase);
                         i = anglePrecision;
                         return;
+                    }
+                    if (Physics.Raycast(scoreRay, out hit, range, scoreLayer))
+                    {
+
+                        ScoreSquare square = hit.collider.gameObject.GetComponent<ScoreSquare>();
+
+                        if (square.Value != Player.skinId)
+                            square.SetValue(Player.skinId);
+
                     }
 
                     _endRayCopy = _newRay.origin + _newRay.direction * 1;

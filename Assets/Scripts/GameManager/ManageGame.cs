@@ -30,7 +30,8 @@ public class ManageGame : MonoBehaviour
     [Header("Clock")]
     [SerializeField]
     private TextMesh timeRemaining;                                 //text that displays remaining time
-    private float reverseTime = 0;                             //actual timer 
+    private float reverseTime = 0;                             //actual timer
+    private float timeLimit = 60;
     [SerializeField]
     private List<GameObject> mapEdgesForGodPower = new List<GameObject>();
     private bool isTimingDown;
@@ -38,6 +39,7 @@ public class ManageGame : MonoBehaviour
     private GameObject godPowerUp;
     private List<GameObject> playerObjects = new List<GameObject>();
     private LevelManager layoutManager;
+    public GridManager gridManager { get; private set; }
     public DrawColor drawColor { get; private set; }
     [SerializeField]
     private ObjectPooling objectPooling;
@@ -80,34 +82,37 @@ public class ManageGame : MonoBehaviour
             v3Rot = Vector3.MoveTowards(v3Rot, v3Dest, speed * Time.deltaTime);
             v3Rot.y = 90;
             v3Rot.z = 0;
-            //Debug.Log(reverseTime);
             reverseTime += Time.deltaTime;
             clockHand.transform.eulerAngles = v3Rot;
-          //  var lookDir = pointB.position - clockHand.position;
-           // lookDir.y = 90; 
-          //  lookDir.z = 0;
+            //  var lookDir = pointB.position - clockHand.position;
+            // lookDir.y = 90; 
+            //  lookDir.z = 0;
             //clockHand.rotation = Quaternion.LookRotation(lookDir);
-           // Quaternion rot = Quaternion.LookRotation(lookDir);
-           // clockHand.rotation = Quaternion.Slerp(clockHand.rotation, rot, 1 * Time.deltaTime);
+            // Quaternion rot = Quaternion.LookRotation(lookDir);
+            // clockHand.rotation = Quaternion.Slerp(clockHand.rotation, rot, 1 * Time.deltaTime);
             //  string minutes = ((int)reverseTime / 60).ToString("00");
             //string seconds = ((int)reverseTime % 60).ToString("00");
             // timeRemaining.text = string.Format("{00:00}:{01:00}", minutes, seconds);
-            if (reverseTime >= 60)
+            if (reverseTime >= timeLimit)
             {
-                reverseTime = 60;
-                if(OnGameWin != null)
+                reverseTime = timeLimit;
+                if (OnGameWin != null)
                     OnGameWin();
                 objectPooling.DisableAll();
-               // loading.SetID(2);
-               // loading.InitializeLoading();
+                // loading.SetID(2);
+                // loading.InitializeLoading();
+                gridManager.CalcPercentages();
                 SceneManager.LoadScene("EndRoundScene");
             }
+            else if (reverseTime % gridManager.TimeToCheck < 1)
+                gridManager.UpdateUI();
         }
     }
 
 
     private void Start()
     {
+        gridManager = GetComponent<GridManager>();
         loading = GameObject.Find("LoadingManager").GetComponent<Loading>();
         layoutManager = GetComponent<LevelManager>();
         drawColor = GetComponent<DrawColor>();
@@ -131,6 +136,10 @@ public class ManageGame : MonoBehaviour
         PlacePlayers();
 
         SetUpSecondarySpawners();
+
+        gridManager.Initialisation(layoutManager.SpawnPoints.Length);
+        gridManager.PopulateGridList();
+        gridManager.UpdateUI();
     }
 
     private void SetUpSecondarySpawners()

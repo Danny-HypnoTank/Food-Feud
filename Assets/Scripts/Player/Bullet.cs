@@ -16,6 +16,8 @@ public class Bullet : MonoBehaviour
     private float timeToDie = 6;                //time left to disable the object
     [SerializeField]
     private LayerMask bounceSurface;
+    [SerializeField]
+    private LayerMask scoreLayer;
     private int bounceLimit = 3;
     private int currentBounce = 0;
 
@@ -39,6 +41,7 @@ public class Bullet : MonoBehaviour
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
 
         Ray ray = new Ray(transform.position, transform.forward);
+        Ray scoreRay = new Ray(transform.position, -transform.up);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, Time.deltaTime * speed + 0.1f, bounceSurface))
         {
@@ -56,6 +59,20 @@ public class Bullet : MonoBehaviour
         if (Physics.Raycast(transform.position, Vector3.down, out hit))
         {
             CollideWith(hit.collider.gameObject.tag, hit);
+        }
+        if (Physics.Raycast(scoreRay, out hit, 10f, scoreLayer))
+        {
+
+            if (hit.collider.tag == "ScoreGrid")
+            {
+
+                ScoreSquare square = hit.collider.gameObject.GetComponent<ScoreSquare>();
+
+                if (square.Value != player.skinId)
+                    square.SetValue(player.skinId);
+
+            }
+
         }
     }
 
@@ -76,7 +93,7 @@ public class Bullet : MonoBehaviour
     //detects collision with other players and environment
     private void OnCollisionEnter(Collision collision)
     {
-        
+
     }
 
     //grabs ID of player so that score can be added to appropriate player
@@ -106,7 +123,7 @@ public class Bullet : MonoBehaviour
                 if (hit.collider.GetComponent<PaintSizeMultiplier>())
                 {
                     _smult = (1 * hit.collider.GetComponent<PaintSizeMultiplier>().multiplier) * weaponSplashMultiplier;
-                    
+
                 }
                 else
                 {

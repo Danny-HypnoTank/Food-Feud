@@ -26,6 +26,8 @@ public class Bomb : MonoBehaviour
     private Vector3 endPos;                                        //endPosition of the bomb(where it will land)
     private Vector3 startPos;                                      //start position of the bomb(where it becomes enabled)
     public PlayerBase Parent { get => parent; set => parent = value; }
+    [SerializeField]
+    private LayerMask scoreLayer;
 
 
     [SerializeField]
@@ -37,7 +39,7 @@ public class Bomb : MonoBehaviour
     RaycastHit hit;
     Ray ray;
     private Renderer rend;
-    
+
     public DrawColor DrawColor { get => drawColor; set => drawColor = value; }
     [SerializeField]
     private DrawColor drawColor;
@@ -56,7 +58,7 @@ public class Bomb : MonoBehaviour
 
         rend = gameObject.GetComponent<Renderer>();
 
-        
+
     }
 
     //sets bomb to inactive
@@ -80,12 +82,12 @@ public class Bomb : MonoBehaviour
             case (0):
                 {
                     rend.material = bombMaterials[0];
-                    foreach(Transform child in transform)
+                    foreach (Transform child in transform)
                     {
                         child.GetComponent<Renderer>().material = bombMaterials[0];
-                        if(child.GetComponent<ParticleSystem>())
+                        if (child.GetComponent<ParticleSystem>())
                         {
-                           ParticleSystem _ps = child.GetComponent<ParticleSystem>();
+                            ParticleSystem _ps = child.GetComponent<ParticleSystem>();
                             var main = _ps.main;
                             main.startColor = Color.red;
                         }
@@ -152,11 +154,11 @@ public class Bomb : MonoBehaviour
     //Triggers explosion on collision
     private void OnTriggerEnter(Collider other)
     {
-            if (other.gameObject != parent.gameObject)
-            {
+        if (other.gameObject != parent.gameObject)
+        {
             ExplosionEffect();
             Explode();
-            }
+        }
     }
 
     private void ExplosionEffect()
@@ -198,9 +200,24 @@ public class Bomb : MonoBehaviour
     private void Explode()
     {
         Vector3 dwn = transform.TransformDirection(-Vector3.up);
+        Ray scoreRay = new Ray(transform.position, -transform.up);
         if (Physics.Raycast(transform.position, dwn, out hit, Mathf.Infinity))
         {
             CollideWith(hit.collider.gameObject.tag);
+        }
+        if (Physics.Raycast(scoreRay, out hit, 10f, scoreLayer))
+        {
+
+            if (hit.collider.tag == "ScoreGrid")
+            {
+
+                ScoreSquare square = hit.collider.gameObject.GetComponent<ScoreSquare>();
+
+                if(square.Value != parent.Player.skinId)
+                    square.SetValue(Parent.Player.skinId);
+
+            }
+
         }
         //TODO: implement bomb laying paint
 

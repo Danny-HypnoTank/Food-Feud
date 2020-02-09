@@ -22,6 +22,8 @@ public class DefaultShooting : Shooting
 
     [SerializeField]
     private List<Material> gunMaterials;
+    [SerializeField]
+    private LayerMask scoreLayer;
 
     #region raycast
     private RaycastHit hit;
@@ -39,7 +41,7 @@ public class DefaultShooting : Shooting
     private float knockBackForce = 5;
     #endregion
 
-   
+
 
     private void Update()
     {
@@ -133,10 +135,10 @@ public class DefaultShooting : Shooting
 
                             range += rangeRateIncrease * Time.deltaTime;
                             //Debug.Log(range);
-                               if(range > maxRange)
-                               {
-                                  range = maxRange;
-                               }
+                            if (range > maxRange)
+                            {
+                                range = maxRange;
+                            }
                             Ammo -= (ammoConsumption - (AmmoConsumptionModifier)) * Time.deltaTime;
 
                             UpdateFillBar();
@@ -160,6 +162,7 @@ public class DefaultShooting : Shooting
                                         //rotation is bugged at some angles, replace "parent.transform.up" if fixed
                                         //var _rotation = Quaternion.Euler(0, 0, 30) * parent.transform.up;
                                         Ray _newRay = new Ray(_endRayCopy, (this.transform.forward - this.transform.up).normalized);
+                                        Ray scoreRay = new Ray(_endRayCopy, (this.transform.forward - this.transform.up).normalized);
 
                                         Debug.DrawRay(_newRay.origin, _newRay.direction * range, Color.blue);
 
@@ -168,6 +171,15 @@ public class DefaultShooting : Shooting
                                             CollideWith(hit.collider.gameObject.tag, PlayerBase);
                                             i = anglePrecision;
                                             return;
+                                        }
+                                        if (Physics.Raycast(scoreRay, out hit, 10, scoreLayer))
+                                        {
+
+                                            ScoreSquare square = hit.collider.gameObject.GetComponent<ScoreSquare>();
+
+                                            if (square.Value != Player.skinId)
+                                                square.SetValue(Player.skinId);
+
                                         }
 
                                         _endRayCopy = _newRay.origin + _newRay.direction * 1;
@@ -268,10 +280,10 @@ public class DefaultShooting : Shooting
 
                 //Renderer _wallRenderer = hit.collider.gameObject.GetComponent<Renderer>();
                 float _smult;
-               
+
                 if (mult)
                 {
-                    _smult = (1f *  mult.multiplier) * weaponSplashMultiplier;
+                    _smult = (1f * mult.multiplier) * weaponSplashMultiplier;
                 }
                 else
                 {
@@ -279,7 +291,7 @@ public class DefaultShooting : Shooting
                 }
                 int _id = Player.skinId;
                 DrawColor.DrawOnSplatmap(hit, _id, Player, _smult);
-                
+
                 break;
             default:
                 downRay = new Ray(ray.GetPoint(range), -playerBase.transform.up);
