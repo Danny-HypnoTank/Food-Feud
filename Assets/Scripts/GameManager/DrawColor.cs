@@ -48,7 +48,7 @@ public class DrawColor : MonoBehaviour
                 myMaterial = _terrain[i].GetComponent<MeshRenderer>().material;
             }
 
-            RenderTexture rend = new RenderTexture(1024, 1024, 0, RenderTextureFormat.ARGBFloat);
+            RenderTexture rend = new RenderTexture(1024 * 2, 1024 * 2, 0, RenderTextureFormat.ARGBFloat);
             rend.name = "RenderTex " + i;
             _splatMap.Add(rend);
 
@@ -64,7 +64,7 @@ public class DrawColor : MonoBehaviour
 
         int terrainNum = _terrain.IndexOf(hit.collider.gameObject);
 
-        int _currentSplat = UnityEngine.Random.Range(0, 11);
+        int _currentSplat = UnityEngine.Random.Range(0, 10);
 
         //coreCalc.Instance.CircleLogic(hit, (UInt16)id, terrainNum);
 
