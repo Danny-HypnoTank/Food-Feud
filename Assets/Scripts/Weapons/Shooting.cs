@@ -70,15 +70,19 @@ public class Shooting : MonoBehaviour
             {
                 case 0:
                     main.startColor = Color.red;
+                    fillBar.color = Color.red;
                     break;
                 case 1:
                     main.startColor = Color.green;
+                    fillBar.color = Color.green;
                     break;
                 case 2:
                     main.startColor = Color.blue;
+                    fillBar.color = Color.blue;
                     break;
                 case 3:
                     main.startColor = Color.yellow;
+                    fillBar.color = Color.yellow;
                     break;
             }
         }

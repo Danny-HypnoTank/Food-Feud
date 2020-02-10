@@ -149,6 +149,11 @@ public class PlayerController : MonoBehaviour
             {
 
                 PlayerController otherPlayer = other.gameObject.GetComponent<PlayerController>();
+                if (other.GetComponent<SecondaryObjCollector>().HasSecondaryObj == true &&
+                   other.GetComponent<SecondaryObjCollector>().SecondaryObj != null)
+                {
+                    other.GetComponent<SecondaryObjCollector>().DropSecondaryObj();
+                }
 
                 if (!otherPlayer.IsDashing)
                 {
