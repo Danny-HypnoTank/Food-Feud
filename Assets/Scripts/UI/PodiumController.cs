@@ -33,11 +33,6 @@ public class PodiumController : MonoBehaviour
     private float speed = 2.0f;
     private float duration = 5.0f;
 
-    [SerializeField]
-    private List<Material> podiumMaterials;
-    [SerializeField]
-    private Renderer podiumRenderer;
-
     public void AddPlayer(Player newPlayer)
 
     {
@@ -55,35 +50,6 @@ public class PodiumController : MonoBehaviour
 
             animator.enabled = true;
             animator.SetInteger("Pos", 0);
-
-        
-        switch (player.skinId)
-        {
-            case (0):
-                {
-                    podiumRenderer.material = podiumMaterials[0];
-                   
-                    break;
-                }
-            case (1):
-                {
-                    podiumRenderer.material = podiumMaterials[1];
-                   
-                    break;
-                }
-            case (2):
-                {
-                    podiumRenderer.material = podiumMaterials[2];
-                    
-                    break;
-                }
-            case (3):
-                {
-                    podiumRenderer.material = podiumMaterials[3];
-                    
-                    break;
-                }
-        }
 
     }
     public void SetTotal(float _total)
