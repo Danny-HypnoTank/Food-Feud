@@ -3,7 +3,8 @@
  * Name: Dominik Waldowski
  * Sid: 1604336
  * Date Created: 10/12/2019
- * Last Modified: 10/12/2019
+ * Modified by: Alex Watson
+ * Last Modified: 10/02/2020
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -24,55 +25,31 @@ public class PodiumController : MonoBehaviour
     private float total;
     [SerializeField]
     private Transform podium;
+    [SerializeField]
+    private MeshRenderer podiumMesh;
+    [SerializeField]
+    private Material[] podiumAlternates;
+    [SerializeField]
     private float speed = 2.0f;
     private float duration = 5.0f;
 
-    [SerializeField]
-    private List<Material> podiumMaterials;
-    [SerializeField]
-    private Renderer podiumRenderer;
-
     public void AddPlayer(Player newPlayer)
+
     {
         player = newPlayer;
+
         for (int i = 0; i < models.Length; i++)
         {
             models[i].gameObject.SetActive(false);
         }
-        models[player.skinId].gameObject.SetActive(true);
+
+            models[player.skinId].gameObject.SetActive(true);
+        podiumMesh.material = podiumAlternates[player.skinId];
             animator = models[player.skinId].GetComponent<Animator>();
             models[player.skinId].GetComponent<ExpressionManager>().SetExpression(0);
+
             animator.enabled = true;
             animator.SetInteger("Pos", 0);
-
-        
-        switch (player.skinId)
-        {
-            case (0):
-                {
-                    podiumRenderer.material = podiumMaterials[0];
-                   
-                    break;
-                }
-            case (1):
-                {
-                    podiumRenderer.material = podiumMaterials[1];
-                   
-                    break;
-                }
-            case (2):
-                {
-                    podiumRenderer.material = podiumMaterials[2];
-                    
-                    break;
-                }
-            case (3):
-                {
-                    podiumRenderer.material = podiumMaterials[3];
-                    
-                    break;
-                }
-        }
 
     }
     public void SetTotal(float _total)
