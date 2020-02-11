@@ -7,7 +7,6 @@
  * Modified By: Dominik Waldowski, Danny Pym-Hember
  */
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -42,6 +41,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private float weaponSplashMultiplier = 1;
+    [SerializeField]
+    private LayerMask scoreLayer;
 
     private Player player;                  //stores player data
 
@@ -61,7 +62,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        foreach(GameObject t in trail)
+        foreach (GameObject t in trail)
         {
 
             t.gameObject.SetActive(false);
@@ -177,14 +178,14 @@ public class PlayerController : MonoBehaviour
             // Dashing();
             Vector3 direction = dashPosition - this.transform.position;
             Vector3 movement = direction.normalized * dashPower * Time.deltaTime;
-            if(movement.sqrMagnitude > 0.1f)
+            if (movement.sqrMagnitude > 0.1f)
                 chc.transform.LookAt(chc.transform.position + movement);
 
             chc.Move(movement);
         }
         else if (isDashing == false)
         {
-            if(!pStunned.Stunned)
+            if (!pStunned.Stunned)
                 chc.Move(moveVelocity * Time.deltaTime);
         }
     }
@@ -192,7 +193,7 @@ public class PlayerController : MonoBehaviour
     public void Splat(float size)
     {
         RaycastHit hit;
-        Debug.DrawRay(transform.position, -transform.up, Color.green, 90);
+        Ray scoreRay = new Ray(transform.position, -transform.up);
         if (Physics.Raycast(transform.position + Vector3.up, -transform.up, out hit))
         {
 
@@ -213,10 +214,26 @@ public class PlayerController : MonoBehaviour
                 }
 
                 int _id = Player.skinId;
-                for(int i = 0; i < 10; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     DrawColor.DrawOnSplatmap(hit, _id, player, _smult);
                 }
+
+            }
+
+        }
+        if (Physics.Raycast(scoreRay, out hit, 10f, scoreLayer))
+        {
+
+            if (hit.collider.tag == "ScoreGrid")
+            {
+
+                ScoreSquare square = hit.collider.gameObject.GetComponent<ScoreSquare>();
+
+                if (square.Value != Player.skinId)
+                    square.SetValue(Player.skinId);
+
+                Debug.Log(Player.skinId);
 
             }
 
