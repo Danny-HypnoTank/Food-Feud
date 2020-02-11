@@ -18,7 +18,8 @@ public class Powerup : ScriptableObject
     {
         powerups,
         weapons,
-        godpowerup
+        godpowerup,
+        none
     }
     public powerUps powerUpPower;
 }

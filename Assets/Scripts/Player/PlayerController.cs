@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private float gravity = 300.0f;                      //stores value for gravity
     [SerializeField]
     private float moveSpeedModifier = 5;
+    private float moveSpeed;
 
     private CharacterController chc;
 
@@ -30,7 +31,9 @@ public class PlayerController : MonoBehaviour
     private float dashDuration = 0.2f;          //if dash duration too small it causes animation glitch
     private float dashPower = 20;
     private float dashDistance = 5;
+    [SerializeField] private float dashCooldownTime;
     private Vector3 dashPosition;
+    private bool canDash;
     [SerializeField]
     private GameObject[] trail;
 
@@ -54,6 +57,7 @@ public class PlayerController : MonoBehaviour
     public DrawColor DrawColor { get { return drawColor; } private set { drawColor = value; } }
 
     public float MoveSpeedModifier { get => moveSpeedModifier; set => moveSpeedModifier = value; }
+    public float MoveSpeed { get => moveSpeed; set => moveSpeed = value; }
 
     private void Start()
     {
@@ -64,6 +68,8 @@ public class PlayerController : MonoBehaviour
 
         }
         isDashing = false;
+        canDash = true;
+        moveSpeed = Player.Speed;
         chc = GetComponent<CharacterController>();
         dShooting = GetComponent<DefaultShooting>();
         pStunned = GetComponent<DazeState>();
@@ -84,10 +90,10 @@ public class PlayerController : MonoBehaviour
             {
 
                 moveInput = new Vector3(Input.GetAxisRaw("Horizontal" + player.playerNum), 0f, Input.GetAxisRaw("Vertical" + player.playerNum));
-                moveVelocity = moveInput * (player.Speed + (moveSpeedModifier));
+                moveVelocity = moveInput * (MoveSpeed + (moveSpeedModifier));
 
 
-                if (Input.GetButtonDown("Dash" + player.playerNum) && isDashing == false && pStunned.Stunned == false)
+                if (Input.GetButtonDown("Dash" + player.playerNum) && isDashing == false && pStunned.Stunned == false && canDash)
                 {
 
                     playerBase.audioHandler.SetSFX("Whoosh");
@@ -101,6 +107,7 @@ public class PlayerController : MonoBehaviour
 
                     }
                     StartCoroutine(DashTimer());
+                    StartCoroutine(DashCooldown());
                 }
                 else
                 {
@@ -142,6 +149,11 @@ public class PlayerController : MonoBehaviour
             {
 
                 PlayerController otherPlayer = other.gameObject.GetComponent<PlayerController>();
+                if (other.GetComponent<SecondaryObjCollector>().HasSecondaryObj == true &&
+                   other.GetComponent<SecondaryObjCollector>().SecondaryObj != null)
+                {
+                    other.GetComponent<SecondaryObjCollector>().DropSecondaryObj();
+                }
 
                 if (!otherPlayer.IsDashing)
                 {
@@ -172,7 +184,8 @@ public class PlayerController : MonoBehaviour
         }
         else if (isDashing == false)
         {
-            chc.Move(moveVelocity * Time.deltaTime);
+            if(!pStunned.Stunned)
+                chc.Move(moveVelocity * Time.deltaTime);
         }
     }
 
@@ -224,5 +237,14 @@ public class PlayerController : MonoBehaviour
         {
             pStunned.CanShoot = true;
         }
+    }
+
+    private IEnumerator DashCooldown()
+    {
+
+        canDash = false;
+        yield return new WaitForSeconds(dashCooldownTime);
+        canDash = true;
+
     }
 }

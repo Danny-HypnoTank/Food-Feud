@@ -63,6 +63,7 @@ public class DazeState : MonoBehaviour
         stunStars[3].SetActive(true);
         player.Speed = 0f;
         playerController.MoveSpeedModifier = 0f;
+        playerController.MoveSpeed = 0f;
         stunned = true;
         canShoot = false;
         yield return new WaitForSeconds(3.0f);
@@ -72,11 +73,12 @@ public class DazeState : MonoBehaviour
         stunStars[3].SetActive(false);
         player.Speed = player.DefaultSpeed;
         playerController.MoveSpeedModifier = 5f;
+        playerController.MoveSpeed = playerController.Player.Speed;
         stunned = false;
         canShoot = true;
     }
 
-    private void Update()
+    /*private void Update()
     {
         if (impact.magnitude > 0.2f) character.Move(impact * Time.deltaTime);
         {
@@ -85,7 +87,7 @@ public class DazeState : MonoBehaviour
 
         //if (Stunned)
             //transform.Rotate(0, 2, 0);
-    }
+    }*/
 
 
 }

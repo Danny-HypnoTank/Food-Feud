@@ -102,7 +102,6 @@ public class Bullet : MonoBehaviour
                 break;
             case "PaintableEnvironment":
                 //Renderer _wallRenderer = hit.collider.gameObject.GetComponent<Renderer>();
-                Debug.Log("paint");
                 float _smult;
                 if (hit.collider.GetComponent<PaintSizeMultiplier>())
                 {

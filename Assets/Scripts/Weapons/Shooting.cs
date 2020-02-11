@@ -16,7 +16,7 @@ public class Shooting : MonoBehaviour
     //Parent Class for all variables
     //References
     private Player player;
-    
+
     //Properties
     public Player Player { get => player; set => player = value; }
     public Transform GunMuzzle { get => gunMuzzle; set => gunMuzzle = value; }
@@ -44,7 +44,7 @@ public class Shooting : MonoBehaviour
 
     private PlayerBase playerBaseCharacteristics;
     private PlayerBase playerBase;
-    
+
     private bool canShoot;
     private bool isAxisInUse = false;
 
@@ -70,21 +70,25 @@ public class Shooting : MonoBehaviour
             {
                 case 0:
                     main.startColor = Color.red;
+                    fillBar.color = Color.red;
                     break;
                 case 1:
                     main.startColor = Color.green;
+                    fillBar.color = Color.green;
                     break;
                 case 2:
                     main.startColor = Color.blue;
+                    fillBar.color = Color.blue;
                     break;
                 case 3:
                     main.startColor = Color.yellow;
+                    fillBar.color = Color.yellow;
                     break;
             }
         }
     }
 
-    
+
     public void UpdateFillBar()
     {
         if (FillBar != null)

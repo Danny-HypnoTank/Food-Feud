@@ -18,6 +18,10 @@ public class DefaultShooting : Shooting
 
     private ObjectAudioHandler audioHandler;
     private bool canPlaySplat;
+    private bool reloading;
+
+    [SerializeField]
+    private List<Material> gunMaterials;
 
     #region raycast
     private RaycastHit hit;
@@ -35,18 +39,49 @@ public class DefaultShooting : Shooting
     private float knockBackForce = 5;
     #endregion
 
+   
+
     private void Update()
     {
-            DefaultWeapon();
+        DefaultWeapon();
         dazeState = GetComponentInParent<DazeState>();
     }
 
     private void OnEnable()
     {
+        reloading = false;
         Ammo = 100;
         UpdateFillBar();
         audioHandler = GetComponent<ObjectAudioHandler>();
         canPlaySplat = true;
+
+        Renderer _rend = gameObject.GetComponent<Renderer>();
+
+        //TODO: fix pls, "Object reference not set to a reference of an object"
+        /*switch (Player.skinId)
+        {
+            case (0):
+                {
+                    _rend.material = gunMaterials[0];
+                    break;
+                }
+            case (1):
+                {
+                    _rend.material = gunMaterials[1];
+                    break;
+                }
+            case (2):
+                {
+                    _rend.material = gunMaterials[2];
+                    break;
+                }
+            case (3):
+                {
+                    _rend.material = gunMaterials[3];
+                    break;
+                }
+        }*/
+
     }
 
     private void DefaultWeapon()
@@ -60,6 +95,7 @@ public class DefaultShooting : Shooting
                 if (Ammo > 0)
                 {
                     Particle.Play();
+                    reloading = false;
                 }
             }
             else if (Input.GetButtonUp("Shoot" + Player.playerNum))
@@ -67,19 +103,27 @@ public class DefaultShooting : Shooting
                 Particle.Stop();
                 audioHandler.StopSFX("Spray");
                 canPlaySplat = true;
+                reloading = true;
             }
 
             //Using right Bumper - Ammo Consumption
-            if (Input.GetButton("Shoot" + Player.playerNum))
+            if (Input.GetButton("Shoot" + Player.playerNum) && !reloading)
             {
+
+                if (!Particle.isPlaying)
+                    Particle.Play();
+
                 if (Ammo > 0)
                 {
+
+                    if (!Particle.isPlaying)
+                        Particle.Play();
+
                     if (dazeState.CanShoot == true)
                     {
                         //if it's equal to false
                         if (IsAxisInUse == false)
                         {
-
 
                             if (canPlaySplat)
                             {
@@ -143,9 +187,12 @@ public class DefaultShooting : Shooting
                         Particle.Stop();
                         audioHandler.StopSFX("Spray");
                         canPlaySplat = true;
+                        reloading = true;
                     }
 
-                    }
+                    reloading = true;
+
+                }
                 if (Input.GetButton("Shoot" + Player.playerNum))
                 {
                     IsAxisInUse = false;
@@ -153,7 +200,19 @@ public class DefaultShooting : Shooting
 
             }
             //Ammo Regeneration
-            if (!Input.GetButton("Shoot" + Player.playerNum))
+            //if (!Input.GetButton("Shoot" + Player.playerNum))
+            //{
+            //    range = 1.0f; //Resetting Range when player isnt pressing button
+            //    Ammo += (ammoRegeneration + (AmmoRegenModifier)) * Time.deltaTime;
+            //    //Setting Maximum Cap on player ammo
+            //    if (Ammo >= 100)
+            //    {
+            //        Ammo = 100;
+            //    }
+            //    UpdateFillBar();
+
+            //}
+            if (reloading)
             {
                 range = 1.0f; //Resetting Range when player isnt pressing button
                 Ammo += (ammoRegeneration + (AmmoRegenModifier)) * Time.deltaTime;
@@ -161,6 +220,21 @@ public class DefaultShooting : Shooting
                 if (Ammo >= 100)
                 {
                     Ammo = 100;
+                    reloading = false;
+                }
+                UpdateFillBar();
+
+            }
+            else if (Input.GetButton("Shoot" + Player.playerNum) && reloading)
+            {
+
+                range = 1.0f; //Resetting Range when player isnt pressing button
+                Ammo += (ammoRegeneration + (AmmoRegenModifier)) * Time.deltaTime;
+                //Setting Maximum Cap on player ammo
+                if (Ammo >= 100)
+                {
+                    Ammo = 100;
+                    reloading = false;
                 }
                 UpdateFillBar();
 
