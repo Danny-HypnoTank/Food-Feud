@@ -8,6 +8,8 @@ public class GridManager : MonoBehaviour
     public int[] Scores { get; private set; }
     public float[] Percentages { get; private set; }
 
+    private float[] bonusPoints;
+
     private float totalScore;
 
     private int playerCount;
@@ -27,11 +29,18 @@ public class GridManager : MonoBehaviour
 
         Scores = new int[playerCount];
         Percentages = new float[playerCount];
+        bonusPoints = new float[count];
         for (int i = 0; i < playerCount; i++)
         {
 
             Scores[i] = 0;
             Percentages[i] = 0;
+            if(i < count)
+            {
+
+                bonusPoints[i] = 0;
+
+            }
 
         }
 
@@ -92,7 +101,7 @@ public class GridManager : MonoBehaviour
                         Scores[i]++;
                 }
                 else
-                    if (square.Value == i)
+                    if (square.Value == i-1)
                         Scores[i]++;
 
             }
