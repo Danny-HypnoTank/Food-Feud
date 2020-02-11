@@ -33,7 +33,7 @@ public class PlayerBase : MonoBehaviour
     private Powerup currentPowerUp;
     public DazeState Daze { get; private set; }
     public ObjectAudioHandler audioHandler { get; private set; }
-    private Shooting shooting;
+    //private Shooting shooting;
 
     [SerializeField]
     private GameObject[] weapons;
@@ -94,14 +94,14 @@ public class PlayerBase : MonoBehaviour
     {
         Daze = this.gameObject.GetComponent<DazeState>();
         bombPool = GameObject.Find("GameManager").GetComponent<ObjectPooling>();
-        shooting = this.gameObject.GetComponent<Shooting>();
+        //shooting = this.gameObject.GetComponent<Shooting>();
         drawColor = GameObject.Find("GameManager").GetComponent<DrawColor>();
         pCon = GetComponent<PlayerController>();
         audioHandler = GetComponent<ObjectAudioHandler>();
         //Reseting Weapons and Characteristics
         //ResetGodMode();
-        ResetWeapon();
-        DefaultWeaponSet();
+        //ResetWeapon();
+        //DefaultWeaponSet();
     }
 
     private void Update()
@@ -242,12 +242,12 @@ public class PlayerBase : MonoBehaviour
 
     }
 
-    public void DefaultWeaponSet()
+    /*public void DefaultWeaponSet()
     {
         currentWeaponId = 0;
         weapons[currentWeaponId].transform.position = weaponOffsetPos[0].transform.position;
         weapons[0].SetActive(true);
-    }
+    }*/
 
     public void SetSkin(int skinId)
     {

@@ -27,8 +27,8 @@ public class Respawn : MonoBehaviour
         PlayerBase player = playerToRespawn.GetComponent<PlayerBase>();
         player.LoseGodPower();
         player.ResetGodMode();
-        player.ResetWeapon();
-        player.DefaultWeaponSet();
+        //player.ResetWeapon();
+        //player.DefaultWeaponSet();
 
         playerToRespawn.SetActive(true);
     }

@@ -122,11 +122,11 @@ public class TwinSpray : Shooting
                 }
             }
 
-            if (Ammo <= 0)
+            /*if (Ammo <= 0)
             {
                 PlayerBase.ResetWeapon();
                 PlayerBase.DefaultWeaponSet();
-            }
+            }*/
         }
     }
 

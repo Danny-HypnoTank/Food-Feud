@@ -24,13 +24,13 @@ public class PlayerController : MonoBehaviour
     private Vector3 moveVelocity;
     private Vector3 lookInput;
 
-    private DefaultShooting dShooting;
+    //private DefaultShooting dShooting;
     public DazeState pStunned { get; private set; }
     private PlayerBase playerBase;
     [SerializeField]
     private float dashDuration = 0.2f;          //if dash duration too small it causes animation glitch
-    private float dashPower = 20;
-    private float dashDistance = 5;
+    [SerializeField]private float dashPower = 20;
+    [SerializeField]private float dashDistance = 5;
     [SerializeField] private float dashCooldownTime;
     private Vector3 dashPosition;
     private bool canDash;
@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour
         canDash = true;
         moveSpeed = Player.Speed;
         chc = GetComponent<CharacterController>();
-        dShooting = GetComponent<DefaultShooting>();
+        //dShooting = GetComponent<DefaultShooting>();
         pStunned = GetComponent<DazeState>();
         playerBase = GetComponent<PlayerBase>();
         drawColor = GameObject.Find("GameManager").GetComponent<DrawColor>();
