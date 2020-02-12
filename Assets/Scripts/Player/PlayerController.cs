@@ -7,38 +7,43 @@
  * Modified By: Dominik Waldowski, Danny Pym-Hember
  */
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     //Variables and References:
-    private float gravity = 300.0f;                      //stores value for gravity
+    private readonly float gravity = 300.0f;                      //stores value for gravity
     [SerializeField]
     private float moveSpeedModifier = 5;
-    private float moveSpeed;
 
     private CharacterController chc;
 
     private Vector3 moveInput;
     private Vector3 moveVelocity;
-    private Vector3 lookInput;
 
-    private DefaultShooting dShooting;
-    public DazeState pStunned { get; private set; }
+    public DazeState PlayerStun { get; private set; }
     private PlayerBase playerBase;
+
+    [Header("Dash Settings")]
     [SerializeField]
-    private float dashDuration = 0.2f;          //if dash duration too small it causes animation glitch
-    private float dashPower = 20;
-    private float dashDistance = 5;
+    private float dashDuration;          //if dash duration too small it causes animation glitch
+    [SerializeField]
+    private float dashPowerMin;
+    private float dashPower;
+    [SerializeField]
+    private float dashPowerMax;
+    [SerializeField]
+    private float dashDistanceMin;
+    [SerializeField]
+    private float dashDistanceMax;
     [SerializeField] private float dashCooldownTime;
     private Vector3 dashPosition;
     private bool canDash;
-    [SerializeField]
-    private GameObject[] trail;
+    private float dashAmount;
 
     [SerializeField]
-    private bool rotationLockOption;
+    private GameObject[] trail;
 
     [SerializeField]
     private float weaponSplashMultiplier = 1;
@@ -46,38 +51,37 @@ public class PlayerController : MonoBehaviour
     private Player player;                  //stores player data
 
     public Player Player { get => player; set => player = value; }
-    public bool IsDashing { get => isDashing; set => isDashing = value; }
+    public bool IsDashing { get; private set; }
 
     private ObjectAudioHandler audioHandler;
 
     private bool isDashing;
 
-    private Ray ray;
     private DrawColor drawColor;
     public DrawColor DrawColor { get { return drawColor; } private set { drawColor = value; } }
 
     public float MoveSpeedModifier { get => moveSpeedModifier; set => moveSpeedModifier = value; }
-    public float MoveSpeed { get => moveSpeed; set => moveSpeed = value; }
+    public float MoveSpeed { get; set; }
+
+    [SerializeField]
+    private Image fillBar;
 
     private void Start()
     {
-        foreach(GameObject t in trail)
-        {
-
-            t.gameObject.SetActive(false);
-
-        }
         isDashing = false;
         canDash = true;
-        moveSpeed = Player.Speed;
-        chc = GetComponent<CharacterController>();
-        dShooting = GetComponent<DefaultShooting>();
-        pStunned = GetComponent<DazeState>();
-        playerBase = GetComponent<PlayerBase>();
-        drawColor = GameObject.Find("GameManager").GetComponent<DrawColor>();
-        audioHandler = GetComponent<ObjectAudioHandler>();
+        dashAmount = 0;
+        MoveSpeed = Player.Speed;
 
-        Splat(20);
+        chc = GetComponent<CharacterController>();
+        PlayerStun = GetComponent<DazeState>();
+        playerBase = GetComponent<PlayerBase>();
+        audioHandler = GetComponent<ObjectAudioHandler>();
+        drawColor = ManageGame.instance.GetComponent<DrawColor>();
+
+        ToggleTrails(false);
+        UpdateFillBar();
+        Splat();
     }
 
     private void Update()
@@ -86,55 +90,48 @@ public class PlayerController : MonoBehaviour
         if (ManageGame.instance.IsTimingDown == true)
         {
 
-            if (!pStunned.Stunned)
+            if (!PlayerStun.Stunned)
             {
 
-                moveInput = new Vector3(Input.GetAxisRaw("Horizontal" + player.playerNum), 0f, Input.GetAxisRaw("Vertical" + player.playerNum));
+                moveInput = new Vector3(Input.GetAxisRaw($"Horizontal{player.playerNum}"), 0f, Input.GetAxisRaw($"Vertical{player.playerNum}"));
                 moveVelocity = moveInput * (MoveSpeed + (moveSpeedModifier));
 
 
-                if (Input.GetButtonDown("Dash" + player.playerNum) && isDashing == false && pStunned.Stunned == false && canDash)
+                if (Input.GetButton($"Dash{player.playerNum}") && !isDashing && !PlayerStun.Stunned && canDash)
                 {
 
-                    playerBase.audioHandler.SetSFX("Whoosh");
-                    dashPosition = (this.transform.position) + (this.transform.forward * dashDistance);
-                    isDashing = true;
-                    pStunned.CanShoot = false;
-                    foreach (GameObject t in trail)
-                    {
+                    if (dashAmount < 1)
+                        dashAmount += Time.deltaTime;
+                    else
+                        dashAmount = 1;
 
-                        t.gameObject.SetActive(true);
+                    UpdateFillBar();
 
-                    }
-                    StartCoroutine(DashTimer());
+                }
+                if(Input.GetButtonUp($"Dash{player.playerNum}") && !isDashing && !PlayerStun.Stunned && canDash)
+                {
+
+                    float distanceToDash = (dashAmount * (dashDistanceMax - dashDistanceMin)) + dashDistanceMin;
+                    dashPower = (dashAmount * (dashPowerMax - dashPowerMin)) + dashPowerMin;
+
+                    StartCoroutine(DashTimer(distanceToDash));
                     StartCoroutine(DashCooldown());
+
+                }
+                if(!Input.GetButton($"Dash{player.playerNum}"))
+                {
+
+                    if (dashAmount > 0)
+                        dashAmount -= Time.deltaTime;
+                    else
+                        dashAmount = 0;
+
+                    UpdateFillBar();
+
                 }
                 else
                 {
                     moveVelocity = moveInput * (player.Speed + (moveSpeedModifier));
-                }
-
-                //Player rotations with twin sticks
-                //lookInput = new Vector3(Input.GetAxisRaw("RHorizontal" + player.playerNum), 0f, Input.GetAxisRaw("RVertical" + player.playerNum));
-
-                //Player Rotation with only the left stick
-                if (rotationLockOption == true)
-                {
-                    if (moveInput.sqrMagnitude > 0.1f)
-                    {
-                        transform.rotation = Quaternion.LookRotation(moveInput);
-                    }
-                }
-
-                if (rotationLockOption == false)
-                {
-                    if (moveInput.sqrMagnitude > 0.1f)
-                    {
-                        if (!Input.GetButton("Shoot" + player.playerNum))
-                        {
-                            transform.rotation = Quaternion.LookRotation(moveInput);
-                        }
-                    }
                 }
 
             }
@@ -143,7 +140,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             if (isDashing)
             {
@@ -158,10 +155,10 @@ public class PlayerController : MonoBehaviour
                 if (!otherPlayer.IsDashing)
                 {
 
-                    if (!otherPlayer.pStunned.Stunned)
-                        StartCoroutine(otherPlayer.pStunned.Stun(otherPlayer.Player));
+                    if (!otherPlayer.PlayerStun.Stunned)
+                        StartCoroutine(otherPlayer.PlayerStun.Stun(otherPlayer.Player));
 
-                    Splat(20);
+                    Splat();
 
                 }
 
@@ -171,12 +168,12 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        moveVelocity.y -= gravity * Time.deltaTime;
+        moveVelocity.y -= gravity * Time.fixedDeltaTime;
         if (isDashing == true)
         {
             // Dashing();
             Vector3 direction = dashPosition - this.transform.position;
-            Vector3 movement = direction.normalized * dashPower * Time.deltaTime;
+            Vector3 movement = direction.normalized * dashPower * Time.fixedDeltaTime;
             if(movement.sqrMagnitude > 0.1f)
                 chc.transform.LookAt(chc.transform.position + movement);
 
@@ -184,33 +181,33 @@ public class PlayerController : MonoBehaviour
         }
         else if (isDashing == false)
         {
-            if(!pStunned.Stunned)
-                chc.Move(moveVelocity * Time.deltaTime);
-        }
+            if (!PlayerStun.Stunned)
+            {
+                chc.Move(moveVelocity * Time.fixedDeltaTime);
+                if (moveInput.sqrMagnitude > 0.1f)
+                    transform.rotation = Quaternion.LookRotation(moveInput);
+            }
+            }
     }
 
-    public void Splat(float size)
+    public void Splat()
     {
-        RaycastHit hit;
-        Debug.DrawRay(transform.position, -transform.up, Color.green, 90);
-        if (Physics.Raycast(transform.position + Vector3.up, -transform.up, out hit))
+
+        if (Physics.Raycast(transform.position + Vector3.up, -transform.up, out RaycastHit hit))
         {
 
-            if (hit.collider.gameObject.tag == "PaintableEnvironment")
+            if (hit.collider.gameObject.CompareTag("PaintableEnvironment"))
             {
 
                 //audioHandler.SetSFX("Splat");
 
-                float _smult;
+                PaintSizeMultiplier paintMultiplier = hit.collider.GetComponent<PaintSizeMultiplier>();
 
-                if (hit.collider.GetComponent<PaintSizeMultiplier>())
-                {
-                    _smult = hit.collider.GetComponent<PaintSizeMultiplier>().multiplier * weaponSplashMultiplier;
-                }
+                float _smult;
+                if (paintMultiplier)
+                    _smult = paintMultiplier.multiplier * weaponSplashMultiplier;
                 else
-                {
                     _smult = 1f * weaponSplashMultiplier;
-                }
 
                 int _id = Player.skinId;
                 for(int i = 0; i < 10; i++)
@@ -223,19 +220,22 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private IEnumerator DashTimer()
+    private IEnumerator DashTimer(float distance)
     {
+
+
+        Debug.Log(distance);
+        isDashing = true;
+        PlayerStun.CanShoot = false;
+        playerBase.audioHandler.SetSFX("Whoosh");
+        dashPosition = (this.transform.position) + (this.transform.forward * distance);
+        ToggleTrails(true);
         yield return new WaitForSeconds(dashDuration);
-        foreach (GameObject t in trail)
-        {
-
-            t.gameObject.SetActive(false);
-
-        }
         isDashing = false;
-        if (pStunned.Stunned == false)
+        ToggleTrails(false);
+        if (PlayerStun.Stunned == false)
         {
-            pStunned.CanShoot = true;
+            PlayerStun.CanShoot = true;
         }
     }
 
@@ -247,4 +247,27 @@ public class PlayerController : MonoBehaviour
         canDash = true;
 
     }
+
+    private void ToggleTrails(bool value)
+    {
+
+        foreach (GameObject t in trail)
+        {
+
+            t.gameObject.SetActive(value);
+
+        }
+
+    }
+
+    public void UpdateFillBar()
+    {
+        if (fillBar != null)
+        {
+            float newValue = dashAmount;
+
+            fillBar.fillAmount = newValue;
+        }
+    }
+
 }

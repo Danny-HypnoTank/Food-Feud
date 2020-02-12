@@ -307,7 +307,7 @@ public class PlayerBase : MonoBehaviour
         }
         else if (currentPowerUp.powerUpPower == Powerup.powerUps.godpowerup)
         {
-            pCon.Splat(25);
+            pCon.Splat();
             animationIDSet = 4;
             resetAnimTimer = 0;
             //StartTimer();

@@ -293,7 +293,7 @@ MonoBehaviour:
   m_FillMethod: 3
   m_FillAmount: 1
   m_FillClockwise: 0
-  m_FillOrigin: 2
+  m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!1 &584598225009078418
@@ -2876,6 +2876,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeedModifier: 5
   dashDuration: 0.2
+  dashPowerMin: 20
+  dashPowerMax: 50
+  dashDistanceMin: 5
+  dashDistanceMax: 10
   dashCooldownTime: 1
   trail:
   - {fileID: 8230786717279600726}
@@ -2883,8 +2887,8 @@ MonoBehaviour:
   - {fileID: 5964712388286506455}
   - {fileID: 7943211596268958685}
   - {fileID: 3372684936532918610}
-  rotationLockOption: 1
   weaponSplashMultiplier: 1
+  fillBar: {fileID: 0}
 --- !u!114 &-4909872721113032797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5533,11 +5537,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -6057140222963153312, guid: 83e9ea8e6f5e50f44810fd1a6257ff9a,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 41f41dc0e54f2554db6d64f314d54625, type: 2}
     - target: {fileID: -4216859302048453862, guid: 83e9ea8e6f5e50f44810fd1a6257ff9a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5593,6 +5592,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6057140222963153312, guid: 83e9ea8e6f5e50f44810fd1a6257ff9a,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 41f41dc0e54f2554db6d64f314d54625, type: 2}
     - target: {fileID: -531177335800049563, guid: 83e9ea8e6f5e50f44810fd1a6257ff9a,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
