@@ -1,10 +1,11 @@
-﻿/*
- * Created by:
+﻿/* Created by:
  * Name: Danny Pym-Hember
- * Sid: 1513999
+ * SID: 1513999
  * Date Created: 29/09/2019
- * Last Modified 06/10/2019
- * Modified By: Dominik Waldowski, Danny Pym-Hember
+ * Last Modified 12/02/2020
+ * Modified By: Dominik Waldowski,
+ *              Danny Pym-Hember,
+ *              James Sturdgess
  */
 using System.Collections;
 using UnityEngine;
@@ -12,72 +13,75 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    //Variables and References:
-    private readonly float gravity = 300.0f;                      //stores value for gravity
+
+    [Header("Player Attributes")]
     [SerializeField]
-    private float moveSpeedModifier = 5;
+    private float _moveSpeedModifier = 5;
+    //TODO: Add method to modify this property so it's not left exposed - public set BAD
+    public float MoveSpeedModifier { get { return _moveSpeedModifier; } set { _moveSpeedModifier = value; } }
+    [SerializeField]
+    private float weaponSplashMultiplier = 1;
 
-    private CharacterController chc;
-
+    private readonly float gravity = 300.0f;
     private Vector3 moveInput;
     private Vector3 moveVelocity;
 
-    public DazeState PlayerStun { get; private set; }
-    private PlayerBase playerBase;
+    //TODO: Add methods to modify these properties so they're not left exposed - public set BAD
+    public float MoveSpeed { get; set; }
+    public Player Player { get; set; }
 
     [Header("Dash Settings")]
     [SerializeField]
     private float dashDuration;          //if dash duration too small it causes animation glitch
     [SerializeField]
     private float dashPowerMin;
-    private float dashPower;
     [SerializeField]
     private float dashPowerMax;
     [SerializeField]
-    private float dashDistanceMin;
+    private float dashDistanceMin;      //Unsure if even necessary
     [SerializeField]
-    private float dashDistanceMax;
-    [SerializeField] private float dashCooldownTime;
-    private Vector3 dashPosition;
-    private bool canDash;
+    private float dashDistanceMax;      //Unsure if even necessary
+    [SerializeField]
+    private float dashCooldownMin;
+    [SerializeField]
+    private float dashCooldownMax;
+
+    private float dashPower;
     private float dashAmount;
-
-    [SerializeField]
-    private GameObject[] trail;
-
-    [SerializeField]
-    private float weaponSplashMultiplier = 1;
-
-    private Player player;                  //stores player data
-
-    public Player Player { get => player; set => player = value; }
+    private bool canDash;
+    private Vector3 dashPosition;
     public bool IsDashing { get; private set; }
 
-    private ObjectAudioHandler audioHandler;
-
-    private bool isDashing;
-
-    private DrawColor drawColor;
-    public DrawColor DrawColor { get { return drawColor; } private set { drawColor = value; } }
-
-    public float MoveSpeedModifier { get => moveSpeedModifier; set => moveSpeedModifier = value; }
-    public float MoveSpeed { get; set; }
-
+    [Header("Graphical Objects")]
+    [SerializeField]
+    private GameObject[] trail;
     [SerializeField]
     private Image fillBar;
 
+    //Fields
+    private ObjectAudioHandler audioHandler;
+    private CharacterController chc;
+
+    //Auto Properties
+    public DrawColor DrawColor { get; private set; }
+    public PlayerBase PlayerBase { get; private set; }
+    public DazeState PlayerStun { get; private set; }
+
+    private void Awake()
+    {
+        chc = GetComponent<CharacterController>();
+        PlayerStun = GetComponent<DazeState>();
+        PlayerBase = GetComponent<PlayerBase>();
+        audioHandler = GetComponent<ObjectAudioHandler>();
+        DrawColor = ManageGame.instance.GetComponent<DrawColor>();
+    }
+
     private void Start()
     {
-        isDashing = false;
+        IsDashing = false;
         canDash = true;
         dashAmount = 0;
         MoveSpeed = Player.Speed;
-
-        chc = GetComponent<CharacterController>();
-        PlayerStun = GetComponent<DazeState>();
-        playerBase = GetComponent<PlayerBase>();
-        audioHandler = GetComponent<ObjectAudioHandler>();
-        drawColor = ManageGame.instance.GetComponent<DrawColor>();
 
         ToggleTrails(false);
         UpdateFillBar();
@@ -86,54 +90,41 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        //Player Movement with joysticks or keyboard
         if (ManageGame.instance.IsTimingDown == true)
         {
-
             if (!PlayerStun.Stunned)
             {
+                moveInput = new Vector3(Input.GetAxisRaw($"Horizontal{Player.playerNum}"), 0f, Input.GetAxisRaw($"Vertical{Player.playerNum}"));
+                moveVelocity = moveInput * (MoveSpeed + (_moveSpeedModifier));
 
-                moveInput = new Vector3(Input.GetAxisRaw($"Horizontal{player.playerNum}"), 0f, Input.GetAxisRaw($"Vertical{player.playerNum}"));
-                moveVelocity = moveInput * (MoveSpeed + (moveSpeedModifier));
-
-
-                if (Input.GetButton($"Dash{player.playerNum}") && !isDashing && !PlayerStun.Stunned && canDash)
+                if (Input.GetButton($"Dash{Player.playerNum}") && !IsDashing && !PlayerStun.Stunned && canDash)
                 {
-
                     if (dashAmount < 1)
                         dashAmount += Time.deltaTime;
                     else
                         dashAmount = 1;
 
                     UpdateFillBar();
-
                 }
-                if(Input.GetButtonUp($"Dash{player.playerNum}") && !isDashing && !PlayerStun.Stunned && canDash)
-                {
 
-                    float distanceToDash = (dashAmount * (dashDistanceMax - dashDistanceMin)) + dashDistanceMin;
-                    dashPower = (dashAmount * (dashPowerMax - dashPowerMin)) + dashPowerMin;
+                if(Input.GetButtonUp($"Dash{Player.playerNum}") && !IsDashing && !PlayerStun.Stunned && canDash)
+                {
+                    float distanceToDash = CalculateFromPercentage(dashDistanceMin, dashDistanceMax, dashAmount);
+                    dashPower = CalculateFromPercentage(dashPowerMin, dashPowerMax, dashAmount);
 
                     StartCoroutine(DashTimer(distanceToDash));
                     StartCoroutine(DashCooldown());
-
                 }
-                if(!Input.GetButton($"Dash{player.playerNum}"))
-                {
 
+                if (!Input.GetButton($"Dash{Player.playerNum}"))
+                {
                     if (dashAmount > 0)
                         dashAmount -= Time.deltaTime;
                     else
                         dashAmount = 0;
 
                     UpdateFillBar();
-
                 }
-                else
-                {
-                    moveVelocity = moveInput * (player.Speed + (moveSpeedModifier));
-                }
-
             }
         }
     }
@@ -142,26 +133,20 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (isDashing)
+            if (IsDashing)
             {
+                SecondaryObjCollector objCollector = other.GetComponent<SecondaryObjCollector>();
+                if (objCollector.HasSecondaryObj && objCollector.SecondaryObj != null)
+                    objCollector.DropSecondaryObj();
 
                 PlayerController otherPlayer = other.gameObject.GetComponent<PlayerController>();
-                if (other.GetComponent<SecondaryObjCollector>().HasSecondaryObj == true &&
-                   other.GetComponent<SecondaryObjCollector>().SecondaryObj != null)
-                {
-                    other.GetComponent<SecondaryObjCollector>().DropSecondaryObj();
-                }
-
                 if (!otherPlayer.IsDashing)
                 {
-
                     if (!otherPlayer.PlayerStun.Stunned)
                         StartCoroutine(otherPlayer.PlayerStun.Stun(otherPlayer.Player));
 
                     Splat();
-
                 }
-
             }
         }
     }
@@ -169,36 +154,35 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         moveVelocity.y -= gravity * Time.fixedDeltaTime;
-        if (isDashing == true)
+
+        if (IsDashing)
         {
-            // Dashing();
             Vector3 direction = dashPosition - this.transform.position;
             Vector3 movement = direction.normalized * dashPower * Time.fixedDeltaTime;
+
             if(movement.sqrMagnitude > 0.1f)
                 chc.transform.LookAt(chc.transform.position + movement);
 
             chc.Move(movement);
         }
-        else if (isDashing == false)
+        else if (!IsDashing)
         {
             if (!PlayerStun.Stunned)
             {
                 chc.Move(moveVelocity * Time.fixedDeltaTime);
+
                 if (moveInput.sqrMagnitude > 0.1f)
                     transform.rotation = Quaternion.LookRotation(moveInput);
             }
-            }
+        }
     }
 
     public void Splat()
     {
-
         if (Physics.Raycast(transform.position + Vector3.up, -transform.up, out RaycastHit hit))
         {
-
             if (hit.collider.gameObject.CompareTag("PaintableEnvironment"))
             {
-
                 //audioHandler.SetSFX("Splat");
 
                 PaintSizeMultiplier paintMultiplier = hit.collider.GetComponent<PaintSizeMultiplier>();
@@ -212,27 +196,27 @@ public class PlayerController : MonoBehaviour
                 int _id = Player.skinId;
                 for(int i = 0; i < 10; i++)
                 {
-                    DrawColor.DrawOnSplatmap(hit, _id, player, _smult);
+                    DrawColor.DrawOnSplatmap(hit, _id, Player, _smult);
                 }
-
             }
-
         }
     }
 
     private IEnumerator DashTimer(float distance)
     {
-
-
-        Debug.Log(distance);
-        isDashing = true;
+        IsDashing = true;
         PlayerStun.CanShoot = false;
-        playerBase.audioHandler.SetSFX("Whoosh");
-        dashPosition = (this.transform.position) + (this.transform.forward * distance);
+        dashPosition = (this.transform.position) + (this.transform.forward * distance); //Unsure if even necessary
+
+        PlayerBase.audioHandler.SetSFX("Whoosh");
         ToggleTrails(true);
+
         yield return new WaitForSeconds(dashDuration);
-        isDashing = false;
+
+        IsDashing = false;
+
         ToggleTrails(false);
+
         if (PlayerStun.Stunned == false)
         {
             PlayerStun.CanShoot = true;
@@ -241,33 +225,29 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator DashCooldown()
     {
-
         canDash = false;
-        yield return new WaitForSeconds(dashCooldownTime);
+        float cooldown = CalculateFromPercentage(dashCooldownMin, dashCooldownMax, dashAmount);
+        yield return new WaitForSeconds(cooldown);
         canDash = true;
-
     }
 
     private void ToggleTrails(bool value)
     {
-
         foreach (GameObject t in trail)
         {
-
             t.gameObject.SetActive(value);
-
         }
-
     }
 
-    public void UpdateFillBar()
+    private void UpdateFillBar()
     {
         if (fillBar != null)
-        {
-            float newValue = dashAmount;
-
-            fillBar.fillAmount = newValue;
-        }
+            fillBar.fillAmount = dashAmount;
     }
 
+    private float CalculateFromPercentage(float min, float max, float percentage)
+    {
+        float value = (percentage * (max - min)) + min;
+        return value;
+    }
 }

@@ -98,10 +98,6 @@ public class PlayerBase : MonoBehaviour
         drawColor = GameObject.Find("GameManager").GetComponent<DrawColor>();
         pCon = GetComponent<PlayerController>();
         audioHandler = GetComponent<ObjectAudioHandler>();
-        //Reseting Weapons and Characteristics
-        //ResetGodMode();
-        ResetWeapon();
-        DefaultWeaponSet();
     }
 
     private void Update()
