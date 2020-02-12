@@ -20,14 +20,12 @@ public class GodPowerUpMovement : MonoBehaviour
     private bool usebounce;
     [SerializeField]
     private LayerMask bounceSurface;
-
     private void Awake()
     {
 
         nodes = GameObject.FindGameObjectsWithTag("NukeSpawn");
         isRepeating = false;
         spawnPos = transform.position;
-
     }
 
     private void OnEnable()
@@ -98,11 +96,16 @@ public class GodPowerUpMovement : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
+        {
+            Camera.main.GetComponent<CameraShaker>().ShakeCamera();
             if (other.gameObject.GetComponent<PlayerBase>().CurrentPowerUp == null)
             {
                 other.GetComponent<PlayerBase>().SetPowerUp(GetComponent<Power>().PowerHeld);
+
                 ManageGame.instance.GodPowerUp.SetActive(false);
             }
+
+        }
     }
 
 }
