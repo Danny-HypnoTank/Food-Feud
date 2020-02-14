@@ -370,7 +370,7 @@ public class PlayerBase : MonoBehaviour
         {
             if (ManageGame.instance.PlayerObjects[i].GetComponent<PlayerBase>().Player.playerNum != player.playerNum)
             {
-                ManageGame.instance.PlayerObjects[i].GetComponent<DazeState>().StartCoroutine(ManageGame.instance.PlayerObjects[i].GetComponent<DazeState>().Stun(ManageGame.instance.PlayerObjects[i].GetComponent<PlayerBase>().Player));
+                //ManageGame.instance.PlayerObjects[i].GetComponent<DazeState>().StartCoroutine(ManageGame.instance.PlayerObjects[i].GetComponent<DazeState>().Stun(ManageGame.instance.PlayerObjects[i].GetComponent<PlayerBase>().Player));
             }
         }
     }

@@ -109,8 +109,10 @@ public class PlayerController : MonoBehaviour
 
                 if(Input.GetButtonUp($"Dash{Player.playerNum}") && !IsDashing && !PlayerStun.Stunned && canDash)
                 {
-                    float distanceToDash = CalculateFromPercentage(dashDistanceMin, dashDistanceMax, dashAmount);
-                    dashPower = CalculateFromPercentage(dashPowerMin, dashPowerMax, dashAmount);
+                    float distanceToDash = 0;
+                        
+                    distanceToDash.CalculateFromPercentage(dashDistanceMin, dashDistanceMax, dashAmount);
+                    dashPower.CalculateFromPercentage(dashPowerMin, dashPowerMax, dashAmount);
 
                     StartCoroutine(DashTimer(distanceToDash));
                     StartCoroutine(DashCooldown());
@@ -143,7 +145,7 @@ public class PlayerController : MonoBehaviour
                 if (!otherPlayer.IsDashing)
                 {
                     if (!otherPlayer.PlayerStun.Stunned)
-                        StartCoroutine(otherPlayer.PlayerStun.Stun(otherPlayer.Player));
+                        StartCoroutine(otherPlayer.PlayerStun.Stun(dashAmount));
 
                     Splat();
                 }
@@ -205,7 +207,6 @@ public class PlayerController : MonoBehaviour
     private IEnumerator DashTimer(float distance)
     {
         IsDashing = true;
-        PlayerStun.CanShoot = false;
         dashPosition = (this.transform.position) + (this.transform.forward * distance); //Unsure if even necessary
 
         PlayerBase.audioHandler.SetSFX("Whoosh");
@@ -216,18 +217,17 @@ public class PlayerController : MonoBehaviour
         IsDashing = false;
 
         ToggleTrails(false);
-
-        if (PlayerStun.Stunned == false)
-        {
-            PlayerStun.CanShoot = true;
-        }
     }
 
     private IEnumerator DashCooldown()
     {
         canDash = false;
-        float cooldown = CalculateFromPercentage(dashCooldownMin, dashCooldownMax, dashAmount);
+
+        float cooldown = 0;
+        cooldown.CalculateFromPercentage(dashCooldownMin, dashCooldownMax, dashAmount);
+
         yield return new WaitForSeconds(cooldown);
+
         canDash = true;
     }
 
@@ -235,7 +235,7 @@ public class PlayerController : MonoBehaviour
     {
         foreach (GameObject t in trail)
         {
-            t.gameObject.SetActive(value);
+            t.SetActive(value);
         }
     }
 
@@ -243,11 +243,5 @@ public class PlayerController : MonoBehaviour
     {
         if (fillBar != null)
             fillBar.fillAmount = dashAmount;
-    }
-
-    private float CalculateFromPercentage(float min, float max, float percentage)
-    {
-        float value = (percentage * (max - min)) + min;
-        return value;
     }
 }
