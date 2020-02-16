@@ -25,8 +25,16 @@ public class EndGameScore : MonoBehaviour
     private Loading loading;
     private void Start()
     {
+
+        for(int i = 0; i < players.Length; i++)
+        {
+
+            Debug.Log($"P{i}: {players[i].scorePercentage}");
+
+        }
+
         loading = GameObject.Find("LoadingManager").GetComponent<Loading>();
-        sortedPlayers = players.OrderByDescending(o => o.playerScore).ToList();
+        sortedPlayers = players.OrderByDescending(o => o.scorePercentage).ToList();
         for (int i = 0; i < sortedPlayers.Count; i++)
         {
             sortedPlayers[i].scorePercentage = 0;
@@ -86,8 +94,12 @@ public class EndGameScore : MonoBehaviour
     {
         if (Input.GetButtonDown("BackButton"))
         {
+            ManageGame.instance.gridManager.UnloadGridList();
             MainMenuReturnBtn();
         }
+
+        //TODO: add replay option, remember to call "ManageGame.instance.gridManager.Reset();"
+
     }
 
     //returns to main menu button
