@@ -38,6 +38,7 @@ public class ManageGame : MonoBehaviour
     private GameObject godPowerUp;
     private List<GameObject> playerObjects = new List<GameObject>();
     private LevelManager layoutManager;
+    public GridManager gridManager { get; private set; }
     public DrawColor drawColor { get; private set; }
     [SerializeField]
     private ObjectPooling objectPooling;
@@ -51,6 +52,8 @@ public class ManageGame : MonoBehaviour
     public List<GameObject> PlayerObjects { get => playerObjects; set => playerObjects = value; }
     public List<GameObject> MapEdgesForGodPower { get => mapEdgesForGodPower; set => mapEdgesForGodPower = value; }
     public GameObject GodPowerUp { get => godPowerUp; set => godPowerUp = value; }
+    private float timeLimit = 60;
+
     //Creates instance of game manager
     private void Awake()
     {
@@ -92,16 +95,19 @@ public class ManageGame : MonoBehaviour
             //  string minutes = ((int)reverseTime / 60).ToString("00");
             //string seconds = ((int)reverseTime % 60).ToString("00");
             // timeRemaining.text = string.Format("{00:00}:{01:00}", minutes, seconds);
-            if (reverseTime >= 60)
+            if (reverseTime >= timeLimit)
             {
-                reverseTime = 60;
+                reverseTime = timeLimit;
                 if(OnGameWin != null)
                     OnGameWin();
                 objectPooling.DisableAll();
-               // loading.SetID(2);
-               // loading.InitializeLoading();
+                // loading.SetID(2);
+                // loading.InitializeLoading();
+                gridManager.CalculateFinalScore();
                 SceneManager.LoadScene("EndRoundScene");
             }
+            if (reverseTime % gridManager.TimeToCheck < 1) //Modulus operator to check if the value of reverseTime goes into TimeToCheck with a remainder that is less than 1, i.e. 60.23416 % 30 = 0.23416, 70.81674 % 30 = 10.81674 etc. -James
+                gridManager.UpdateUI();
         }
     }
 
@@ -110,6 +116,7 @@ public class ManageGame : MonoBehaviour
     {
         loading = GameObject.Find("LoadingManager").GetComponent<Loading>();
         layoutManager = GetComponent<LevelManager>();
+        gridManager = GetComponent<GridManager>();
         drawColor = GetComponent<DrawColor>();
         layoutManager.LayoutGeneration();
         deliveryManager = GameObject.Find("DeliveryPointManager").GetComponent<DeliveryPointsManager>();
@@ -131,6 +138,10 @@ public class ManageGame : MonoBehaviour
         PlacePlayers();
 
         SetUpSecondarySpawners();
+
+        gridManager.Initialisation(PlayerObjects.Count);
+        gridManager.PopulateGridList();
+        gridManager.UpdateUI();
     }
 
     private void SetUpSecondarySpawners()

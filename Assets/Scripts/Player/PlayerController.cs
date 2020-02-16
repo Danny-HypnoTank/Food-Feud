@@ -58,6 +58,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Image fillBar;
 
+    [Header("Layer Masks")]
+    [SerializeField]
+    private LayerMask scoreLayer;
+
     //Fields
     private ObjectAudioHandler audioHandler;
     private CharacterController chc;
@@ -181,6 +185,9 @@ public class PlayerController : MonoBehaviour
 
     public void Splat()
     {
+
+        Ray ray = new Ray(transform.position, -transform.up);
+
         if (Physics.Raycast(transform.position + Vector3.up, -transform.up, out RaycastHit hit))
         {
             if (hit.collider.gameObject.CompareTag("PaintableEnvironment"))
@@ -200,6 +207,17 @@ public class PlayerController : MonoBehaviour
                 {
                     DrawColor.DrawOnSplatmap(hit, _id, Player, _smult);
                 }
+            }
+        }
+
+        if(Physics.Raycast(ray, out hit, scoreLayer))
+        {
+            if(hit.collider.CompareTag("ScoreGrid"))
+            {
+                ScoreSquare square = hit.collider.GetComponent<ScoreSquare>();
+
+                if(square.Value != Player.skinId)
+                    square.SetValue(Player.skinId);
             }
         }
     }
