@@ -3,10 +3,11 @@
  * Name: Dominik Waldowski
  * Sid: 1604336
  * Date Created: 01/10/2019
- * Last Modified: 10/12/2019
- * Modified By: Antoni Gudejko, Dominik Waldowski
+ * Last Modified: 16/02/2020
+ * Modified By: Antoni Gudejko, Dominik Waldowski, Alex Watson
  */
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,89 +24,139 @@ public class EndGameScore : MonoBehaviour
     private int usedPodiums;
     private float total;
     private Loading loading;
+    [SerializeField]
+    private GameObject[] menuButtons;
+    [SerializeField]
+    private GameObject[] winningPlayer;
+
     private void Start()
     {
-
-        for(int i = 0; i < players.Length; i++)
+        //enables end score menu/rematch buttons
+        foreach (GameObject goMB in menuButtons)
         {
-
-            Debug.Log($"P{i}: {players[i].scorePercentage}");
-
+            goMB.SetActive(true);
         }
+        //enables player score texts
+        foreach (GameObject goWP in winningPlayer)
+        {
+            goWP.SetActive(true);
+        }
+
 
         loading = GameObject.Find("LoadingManager").GetComponent<Loading>();
-        sortedPlayers = players.OrderByDescending(o => o.scorePercentage).ToList();
-        for (int i = 0; i < sortedPlayers.Count; i++)
-        {
-            sortedPlayers[i].scorePercentage = 0;
-            if(i == 0)
-            {
-                sortedPlayers[i].hasWon = true;
-            }
-            else
-            {
-                sortedPlayers[i].hasWon = false;
-            }
-        }
-        foreach (Player p in players)
-        {
-
-            total += p.playerScore;
-
-        }
-        for (int i = 0; i < thePlayerData.Length; i++)
-        {
-            thePlayerData[i].gameObject.SetActive(false);
-        }
-        usedPodiums = 0;
-        for (int i = 0; i < players.Length; i++)
-        {
-            if(players[i].isActivated == true && players[i].isLocked == true)
-            {
-                thePlayerData[usedPodiums].GetComponent<PodiumController>().AddPlayer(players[i]);
-                thePlayerData[usedPodiums].transform.position = podiumLocations[usedPodiums].transform.position;
-                thePlayerData[usedPodiums].gameObject.SetActive(true);
-                thePlayerData[usedPodiums].GetComponent<PodiumController>().SetTotal(total);
-                usedPodiums++;
-                SoundManager.Instance.SetBGM("Win");
-            }
-        }
-        //Disables all score texts
-        
-
         sortedPlayers = players.OrderByDescending(o => o.playerScore).ToList();
-
-        for (int i = 0; i < sortedPlayers.Count; i++)
         {
-            if (sortedPlayers[i].isActivated == true)
+
+            for (int i = 0; i < players.Length; i++)
             {
-                if (sortedPlayers[i].isLocked == true)
+
+                Debug.Log($"P{i}: {players[i].scorePercentage}");
+
+            }
+
+            loading = GameObject.Find("LoadingManager").GetComponent<Loading>();
+            sortedPlayers = players.OrderByDescending(o => o.scorePercentage).ToList();
+
+            for (int i = 0; i < sortedPlayers.Count; i++)
+            {
+                sortedPlayers[i].scorePercentage = 0;
+                if (i == 0)
                 {
-                  //  playerScores[i].gameObject.SetActive(true);
-                   // playerScores[i].GetComponent<Text>().text = $"Player {sortedPlayers[i].playerNum} score: {(int)sortedPlayers[i].scorePercentage}%";
+                    sortedPlayers[i].hasWon = true;
+                }
+                else
+                {
+                    sortedPlayers[i].hasWon = false;
+                }
+            }
+            foreach (Player p in players)
+            {
+
+                total += p.playerScore;
+
+            }
+            for (int i = 0; i < thePlayerData.Length; i++)
+            {
+                thePlayerData[i].gameObject.SetActive(false);
+            }
+            usedPodiums = 0;
+            for (int i = 0; i < players.Length; i++)
+            {
+                if (players[i].isActivated == true && players[i].isLocked == true)
+                {
+                    thePlayerData[usedPodiums].GetComponent<PodiumController>().AddPlayer(players[i]);
+                    thePlayerData[usedPodiums].transform.position = podiumLocations[usedPodiums].transform.position;
+                    thePlayerData[usedPodiums].gameObject.SetActive(true);
+                    thePlayerData[usedPodiums].GetComponent<PodiumController>().SetTotal(total);
+                    usedPodiums++;
+                    SoundManager.Instance.SetBGM("Win");
+                }
+            }
+            //Disables all score texts
+
+
+            sortedPlayers = players.OrderByDescending(o => o.playerScore).ToList();
+
+            for (int i = 0; i < sortedPlayers.Count; i++)
+            {
+                if (sortedPlayers[i].isActivated == true)
+                {
+                    if (sortedPlayers[i].isLocked == true)
+                    {
+                        winningPlayer[i].gameObject.SetActive(true);
+                        winningPlayer[i].GetComponent<Text>().text = $"Player {sortedPlayers[i].playerNum} Score: {(int)sortedPlayers[i].scorePercentage}%";
+                    }
                 }
             }
         }
-    }
 
 
 
-    private void Update()
-    {
-        if (Input.GetButtonDown("BackButton"))
+        /*private void Update()
         {
-            ManageGame.instance.gridManager.UnloadGridList();
-            MainMenuReturnBtn();
-        }
-
-        //TODO: add replay option, remember to call "ManageGame.instance.gridManager.Reset();"
-
+            if (Input.GetButtonDown("BackButton"))
+            {
+                ManageGame.instance.gridManager.UnloadGridList();
+                MainMenuReturnBtn();
+            }
+        }*/
     }
 
-    //returns to main menu button
+    //returns to main menu
     public void MainMenuReturnBtn()
     {
         loading.InitializeLoading();
-        //SceneManager.LoadScene(0);
+
+        //disables player score texts and menu buttons when main menu button is pressed
+        foreach (GameObject goMB in menuButtons)
+        {
+            goMB.SetActive(false);
+        }
+        foreach (GameObject goWP in winningPlayer)
+        {
+            goWP.SetActive(false);
+        }
+
+        SceneManager.LoadScene(0);
+    }
+
+    //restarts the game
+    public void Rematch()
+    {
+        loading.InitializeLoading();
+
+        //disables player score texts and menu buttons when rematch button is pressed
+        foreach (GameObject goMB in menuButtons)
+        {
+            goMB.SetActive(false);
+        }
+        foreach (GameObject goWP in winningPlayer)
+        {
+            goWP.SetActive(false);
+        }
+
+        //reload characters
+
+        SceneManager.LoadScene(1);
     }
 }
