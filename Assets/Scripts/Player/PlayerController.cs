@@ -202,7 +202,7 @@ public class PlayerController : MonoBehaviour
                 else
                     _smult = 1f * weaponSplashMultiplier;
 
-                int _id = Player.skinId;
+                int _id = Player.playerNum;
                 for(int i = 0; i < 10; i++)
                 {
                     DrawColor.DrawOnSplatmap(hit, _id, Player, _smult);

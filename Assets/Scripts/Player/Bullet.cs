@@ -114,7 +114,7 @@ public class Bullet : MonoBehaviour
                 }
                 if (player != null)
                 {
-                    int _id = player.skinId;
+                    int _id = player.playerNum;
                     DrawColor.DrawOnSplatmap(hit, _id, player, _smult);
                 }
                 break;
