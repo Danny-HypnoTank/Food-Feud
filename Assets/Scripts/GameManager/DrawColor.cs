@@ -174,12 +174,12 @@ public class DrawColor : MonoBehaviour
                 }
             case ("Skin Orange"):
                 {
-                    color = new Color(1, 1, 0, 0);
+                    color = new Color(1, 0.6f, 0, 0);
                     break;
                 }
             case ("Skin Purple"):
                 {
-                    color = new Color(1, 1, 0, 0);
+                    color = new Color(0.6f, 0, 0.8f, 0);
                     break;
                 }
         }
