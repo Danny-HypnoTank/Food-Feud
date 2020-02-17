@@ -277,7 +277,7 @@ public class DefaultShooting : Shooting
                 {
                     _smult = 1f * weaponSplashMultiplier;
                 }
-                int _id = Player.skinId;
+                int _id = Player.playerNum;
                 DrawColor.DrawOnSplatmap(hit, _id, Player, _smult);
                 
                 break;

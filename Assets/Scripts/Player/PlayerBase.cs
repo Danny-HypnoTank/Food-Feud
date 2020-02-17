@@ -98,10 +98,6 @@ public class PlayerBase : MonoBehaviour
         drawColor = GameObject.Find("GameManager").GetComponent<DrawColor>();
         pCon = GetComponent<PlayerController>();
         audioHandler = GetComponent<ObjectAudioHandler>();
-        //Reseting Weapons and Characteristics
-        //ResetGodMode();
-        ResetWeapon();
-        DefaultWeaponSet();
     }
 
     private void Update()
@@ -307,7 +303,7 @@ public class PlayerBase : MonoBehaviour
         }
         else if (currentPowerUp.powerUpPower == Powerup.powerUps.godpowerup)
         {
-            pCon.Splat(25);
+            pCon.Splat();
             animationIDSet = 4;
             resetAnimTimer = 0;
             //StartTimer();
@@ -374,7 +370,7 @@ public class PlayerBase : MonoBehaviour
         {
             if (ManageGame.instance.PlayerObjects[i].GetComponent<PlayerBase>().Player.playerNum != player.playerNum)
             {
-                ManageGame.instance.PlayerObjects[i].GetComponent<DazeState>().StartCoroutine(ManageGame.instance.PlayerObjects[i].GetComponent<DazeState>().Stun(ManageGame.instance.PlayerObjects[i].GetComponent<PlayerBase>().Player));
+                //ManageGame.instance.PlayerObjects[i].GetComponent<DazeState>().StartCoroutine(ManageGame.instance.PlayerObjects[i].GetComponent<DazeState>().Stun(ManageGame.instance.PlayerObjects[i].GetComponent<PlayerBase>().Player));
             }
         }
     }

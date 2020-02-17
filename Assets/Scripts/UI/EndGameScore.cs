@@ -45,7 +45,18 @@ public class EndGameScore : MonoBehaviour
 
         loading = GameObject.Find("LoadingManager").GetComponent<Loading>();
         sortedPlayers = players.OrderByDescending(o => o.playerScore).ToList();
+    {
 
+        for(int i = 0; i < players.Length; i++)
+        {
+
+            Debug.Log($"P{i}: {players[i].scorePercentage}");
+
+        }
+
+        loading = GameObject.Find("LoadingManager").GetComponent<Loading>();
+        sortedPlayers = players.OrderByDescending(o => o.scorePercentage).ToList();
+        
         for (int i = 0; i < sortedPlayers.Count; i++)
         {
             sortedPlayers[i].scorePercentage = 0;
@@ -105,6 +116,7 @@ public class EndGameScore : MonoBehaviour
     {
         if (Input.GetButtonDown("BackButton"))
         {
+            ManageGame.instance.gridManager.UnloadGridList();
             MainMenuReturnBtn();
         }
     }*/

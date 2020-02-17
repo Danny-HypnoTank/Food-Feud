@@ -119,7 +119,7 @@ public class StunBehavior : MonoBehaviour
 
         Recovering = false;
 
-        daze.Stunned = false;
+        //daze.Stunned = false;
 
     }
 
