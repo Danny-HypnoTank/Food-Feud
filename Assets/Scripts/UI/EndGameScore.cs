@@ -3,10 +3,11 @@
  * Name: Dominik Waldowski
  * Sid: 1604336
  * Date Created: 01/10/2019
- * Last Modified: 10/12/2019
- * Modified By: Antoni Gudejko, Dominik Waldowski
+ * Last Modified: 16/02/2020
+ * Modified By: Antoni Gudejko, Dominik Waldowski, Alex Watson
  */
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,10 +24,28 @@ public class EndGameScore : MonoBehaviour
     private int usedPodiums;
     private float total;
     private Loading loading;
+    [SerializeField]
+    private GameObject[] menuButtons;
+    [SerializeField]
+    private GameObject[] winningPlayer;
+
     private void Start()
-    {
+    { 
+        //enables end score menu/rematch buttons
+        foreach (GameObject goMB in menuButtons)
+        {
+            goMB.SetActive(true);
+        }
+        //enables player score texts
+        foreach (GameObject goWP in winningPlayer)
+        {
+            goWP.SetActive(true);
+        }
+
+
         loading = GameObject.Find("LoadingManager").GetComponent<Loading>();
         sortedPlayers = players.OrderByDescending(o => o.playerScore).ToList();
+
         for (int i = 0; i < sortedPlayers.Count; i++)
         {
             sortedPlayers[i].scorePercentage = 0;
@@ -73,8 +92,8 @@ public class EndGameScore : MonoBehaviour
             {
                 if (sortedPlayers[i].isLocked == true)
                 {
-                  //  playerScores[i].gameObject.SetActive(true);
-                   // playerScores[i].GetComponent<Text>().text = $"Player {sortedPlayers[i].playerNum} score: {(int)sortedPlayers[i].scorePercentage}%";
+                  winningPlayer[i].gameObject.SetActive(true);
+                  winningPlayer[i].GetComponent<Text>().text = $"Player {sortedPlayers[i].playerNum} Score: {(int)sortedPlayers[i].scorePercentage}%";
                 }
             }
         }
@@ -82,18 +101,49 @@ public class EndGameScore : MonoBehaviour
 
 
 
-    private void Update()
+    /*private void Update()
     {
         if (Input.GetButtonDown("BackButton"))
         {
             MainMenuReturnBtn();
         }
-    }
+    }*/
 
-    //returns to main menu button
+    //returns to main menu
     public void MainMenuReturnBtn()
     {
         loading.InitializeLoading();
-        //SceneManager.LoadScene(0);
+
+        //disables player score texts and menu buttons when main menu button is pressed
+        foreach (GameObject goMB in menuButtons)
+        {
+            goMB.SetActive(false);
+        }
+        foreach (GameObject goWP in winningPlayer)
+        {
+            goWP.SetActive(false);
+        } 
+
+        SceneManager.LoadScene(0);
+    }
+
+    //restarts the game
+    public void Rematch()
+    {
+        loading.InitializeLoading();
+
+        //disables player score texts and menu buttons when rematch button is pressed
+        foreach (GameObject goMB in menuButtons)
+        {
+            goMB.SetActive(false);
+        }
+        foreach (GameObject goWP in winningPlayer)
+        {
+            goWP.SetActive(false);
+        }
+
+        //reload characters
+
+        SceneManager.LoadScene(1);
     }
 }
