@@ -46,7 +46,7 @@ public class PodiumController : MonoBehaviour
             models[player.skinId].gameObject.SetActive(true);
         podiumMesh.material = podiumAlternates[player.skinId];
             animator = models[player.skinId].GetComponent<Animator>();
-            models[player.skinId].GetComponent<ExpressionManager>().SetExpression(0);
+            //models[player.skinId].GetComponent<ExpressionManager>().SetExpression(0);
 
             animator.enabled = true;
             animator.SetInteger("Pos", 0);
