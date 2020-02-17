@@ -23,12 +23,15 @@ public class DrawColor : MonoBehaviour
     [SerializeField]
     Texture2D[] splatTexture = new Texture2D[12];
 
+    [SerializeField]
+    ManageGame manageGame;
     
 
     public List<GameObject> _Terrain { get => _terrain; set => _terrain = value; }
 
     private void Start()
     {
+
 
         //_terrain = GameObject.Find("Ground");
         drawMaterial = new Material(drawShader);
@@ -42,6 +45,7 @@ public class DrawColor : MonoBehaviour
             {
                 Material[] _tempMaterial = _terrain[i].GetComponent<MeshRenderer>().materials;
                 myMaterial = _tempMaterial[1];
+               
             }
             else
             {
@@ -54,6 +58,7 @@ public class DrawColor : MonoBehaviour
 
           //  Debug.Log(myMaterial);
             myMaterial.SetTexture("_SplatMap", _splatMap[i]);
+            MatchPaintToSkin(myMaterial);
         }
         
         
@@ -99,22 +104,22 @@ public class DrawColor : MonoBehaviour
 
         switch (id)
         {
-            case (0):
+            case (1):
                 {
                     color = new Color(1, 0, 0, 0);
                     break;
                 }
-            case (1):
+            case (2):
                 {
                     color = new Color(0, 1, 0, 0);
                     break;
                 }
-            case (2):
+            case (3):
                 {
                     color = new Color(0, 0, 1, 0);
                     break;
                 }
-            case (3):
+            case (4):
                 {
                     color = new Color(0, 0, 0, 1);
                     break;
@@ -128,6 +133,66 @@ public class DrawColor : MonoBehaviour
     private void OnGUI()
     {
         ////USE TO VIEW A SPLATMAP
-        //GUI.DrawTexture(new Rect(0, 0, 256, 128), _splatMap[0], ScaleMode.ScaleToFit, false, 1);
+        GUI.DrawTexture(new Rect(0, 0, 256, 128), _splatMap[0], ScaleMode.ScaleToFit, false, 1);
+    }
+
+    void MatchPaintToSkin(Material m)
+    {
+        for(int i = 1; i <= 4; i++)
+        {
+            Debug.Log("_Color_" + i);
+            if (manageGame.Players.Length < i)
+            {
+                break;
+            }
+            else
+            {
+                
+                m.SetColor("_Color_" + i, LookUpSkinColour(manageGame, i));
+            }
+        }
+    }
+
+    private Color LookUpSkinColour(ManageGame mg, int _iteration)
+    {
+        Color32 color = new Color(0, 0, 0, 0);
+
+        
+        string skinName = mg.Players[_iteration-1].namesOfSkins[mg.Players[_iteration - 1].skinId].ToString();
+        
+        switch (skinName)
+        {
+            case ("Skin Red"):
+                {
+                    color = new Color(1, 0, 0, 1);
+                    break;
+                }
+            case ("Skin Gree"):
+                {
+                    color = new Color(0, 1, 0, 1);
+                    break;
+                }
+            case ("Skin Blue"):
+                {
+                    color = new Color(0, 0, 1, 1);
+                    break;
+                }
+            case ("Skin Yellow"):
+                {
+                    color = new Color(1, 1, 0, 1);
+                    break;
+                }
+            case ("Skin Orange"):
+                {
+                    color = new Color(1, 0.6f, 0, 1);
+                    break;
+                }
+            case ("Skin Purple"):
+                {
+                    color = new Color(0.6f, 0, 0.8f, 1);
+                    break;
+                }
+        }
+        return color;
     }
 }
