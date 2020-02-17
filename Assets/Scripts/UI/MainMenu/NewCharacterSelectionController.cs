@@ -15,7 +15,7 @@ public class NewCharacterSelectionController : MonoBehaviour
     [SerializeField]
     private Transform doorHolder;
     [SerializeField]
-    private Transform cameraTransform, mainMenuCameraPoint;
+    private Transform cameraTransform, mainMenuCameraPoint, sinkPos;
     [SerializeField]
     private float waitBetweenAnimation = 0.5f;
     [SerializeField]
@@ -56,7 +56,7 @@ public class NewCharacterSelectionController : MonoBehaviour
             playerPins[i].gameObject.SetActive(true);
         }
         canPressBtn = true;
-        isTransition = false;   
+        isTransition = false;
     }
     //Default rotation(closed) 117.585 open rotation 45.021
 
@@ -82,7 +82,7 @@ public class NewCharacterSelectionController : MonoBehaviour
                     }
                 }
             }
-  
+
         }
     }
 
@@ -104,7 +104,7 @@ public class NewCharacterSelectionController : MonoBehaviour
                 }
             }
         }
-       // Debug.Log(canStart + " and ready players num: " + readyPlayers);
+        // Debug.Log(canStart + " and ready players num: " + readyPlayers);
         if (canStart == true && readyPlayers >= 2)
         {
             RandomMap();
@@ -113,10 +113,18 @@ public class NewCharacterSelectionController : MonoBehaviour
 
     private void RandomMap()
     {
-        doorAnimation.enabled = true;
-        doorAnimation.speed = animationSpeed;
-        doorAnimation.SetInteger("CloseAnim", 1);
-        StartCoroutine("OpenFridge");
+        int randomMap = Random.Range(0, 2);
+        if (randomMap == 0)
+        {
+            doorAnimation.enabled = true;
+            doorAnimation.speed = animationSpeed;
+            doorAnimation.SetInteger("CloseAnim", 1);
+            StartCoroutine("OpenFridge");
+        }
+        else
+        {
+            StartCoroutine("CameraSide");
+        }
     }
 
     private IEnumerator OpenFridge()
@@ -125,6 +133,7 @@ public class NewCharacterSelectionController : MonoBehaviour
         isTransition = true;
         yield return new WaitForSeconds(waitBetweenAnimation);
         isTransition = false;
+        loadingManager.SetID(1);
         loadingManager.InitializeLoading();
         yield return null;
     }
@@ -133,6 +142,33 @@ public class NewCharacterSelectionController : MonoBehaviour
     private void ReturnToMainMenu()
     {
         StartCoroutine("CameraUp");
+    }
+
+    private IEnumerator CameraSide()
+    {
+        canPressBtn = false;
+
+        bool arrived = false;
+        while (!arrived)
+        {
+            if (usingLerp == true)
+            {
+                cameraTransform.position = Vector3.Lerp(cameraTransform.position, sinkPos.position, cameraMoveSpeed);
+            }
+            else
+            {
+                cameraTransform.position = Vector3.MoveTowards(cameraTransform.position, sinkPos.position, cameraMoveSpeed);
+            }
+            cameraTransform.rotation = Quaternion.Slerp(cameraTransform.rotation, sinkPos.rotation, cameraMoveSpeed);
+            if (Vector3.Distance(cameraTransform.position, sinkPos.position) < 0.1f) arrived = true;
+            Debug.Log("Has arrived");
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(waitBetweenAnimation);
+        loadingManager.SetID(3);
+        loadingManager.InitializeLoading();
+        yield return null;
     }
 
     private IEnumerator CameraUp()
@@ -154,7 +190,7 @@ public class NewCharacterSelectionController : MonoBehaviour
             if (Vector3.Distance(cameraTransform.position, mainMenuCameraPoint.position) < 0.1f) arrived = true;
             yield return null;
         }
-       
+
         yield return new WaitForSeconds(waitBetweenAnimation);
         MenuController.instance.CharacterSelectionToMainMenu();
         yield return null;
