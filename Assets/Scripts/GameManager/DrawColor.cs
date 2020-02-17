@@ -23,12 +23,15 @@ public class DrawColor : MonoBehaviour
     [SerializeField]
     Texture2D[] splatTexture = new Texture2D[12];
 
+    [SerializeField]
+    ManageGame manageGame;
     
 
     public List<GameObject> _Terrain { get => _terrain; set => _terrain = value; }
 
     private void Start()
     {
+
 
         //_terrain = GameObject.Find("Ground");
         drawMaterial = new Material(drawShader);
@@ -42,6 +45,7 @@ public class DrawColor : MonoBehaviour
             {
                 Material[] _tempMaterial = _terrain[i].GetComponent<MeshRenderer>().materials;
                 myMaterial = _tempMaterial[1];
+               
             }
             else
             {
@@ -54,6 +58,7 @@ public class DrawColor : MonoBehaviour
 
           //  Debug.Log(myMaterial);
             myMaterial.SetTexture("_SplatMap", _splatMap[i]);
+            MatchPaintToSkin(myMaterial);
         }
         
         
@@ -129,5 +134,45 @@ public class DrawColor : MonoBehaviour
     {
         ////USE TO VIEW A SPLATMAP
         //GUI.DrawTexture(new Rect(0, 0, 256, 128), _splatMap[0], ScaleMode.ScaleToFit, false, 1);
+    }
+
+    void MatchPaintToSkin(Material m)
+    {
+        for(int i = 0; i < 4; i++)
+        {
+            m.SetColor("_Colour_" + i, LookUpSkinColour(manageGame, i));
+        }
+    }
+
+    private Color LookUpSkinColour(ManageGame mg, int _iteration)
+    {
+        Color color = new Color(0, 0, 0, 0);
+
+        string skinName = mg.Players[_iteration].namesOfSkins.ToString();
+
+        switch (skinName)
+        {
+            case ("Skin Red"):
+                {
+                    color = new Color(1, 0, 0, 0);
+                    break;
+                }
+            case ("Skin Gree"):
+                {
+                    color = new Color(0, 1, 0, 0);
+                    break;
+                }
+            case ("Skin Blue"):
+                {
+                    color = new Color(0, 0, 1, 0);
+                    break;
+                }
+            case ("Skin Yellow"):
+                {
+                    color = new Color(1, 1, 0, 0);
+                    break;
+                }
+        }
+        return color;
     }
 }
