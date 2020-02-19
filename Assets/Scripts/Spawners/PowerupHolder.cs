@@ -46,15 +46,7 @@ public class PowerupHolder : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            if (isSpawned == true)
-            {
-                if (other.gameObject.GetComponent<PlayerBase>().CurrentPowerUp == null)
-                {
-                    other.GetComponent<PlayerBase>().SetPowerUp(availablePowerups[randomPowerupId].spawnObject.GetComponent<Power>().PowerHeld);
-                    //ManageGame.instance.PowerIconUpdate(other.GetComponent<PlayerBase>().Player.playerNum, (int)availablePowerups[randomPowerupId].spawnObject.GetComponent<Power>().PowerHeld.powerUpId);
-                }
-                ResetPowerups();
-            }
+            
         }
     }
 

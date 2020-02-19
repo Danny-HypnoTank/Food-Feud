@@ -25,10 +25,6 @@ public class Respawn : MonoBehaviour
         int playerNum = playerToRespawn.GetComponent<PlayerController>().Player.playerNum - 1;
         playerToRespawn.transform.position = ManageGame.instance.PlayerSpawnPositions[playerNum].transform.position;
         PlayerBase player = playerToRespawn.GetComponent<PlayerBase>();
-        player.LoseGodPower();
-        player.ResetGodMode();
-        player.ResetWeapon();
-        player.DefaultWeaponSet();
 
         playerToRespawn.SetActive(true);
     }

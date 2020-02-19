@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public static class ExtensionMethods
 {
@@ -35,4 +33,18 @@ public static class ExtensionMethods
             Debug.LogError($"Property not found: {propertyName} on onbject: {obj}");
     }
 
+    /// <summary>
+    /// Extension method for setting an array of <see cref="GameObject"/>'s active to true or false
+    /// </summary>
+    /// <param name="objects">The array of <see cref="GameObject"/></param>
+    /// <param name="value">Whether active should be set to <see cref="true"/> or <see cref="false"/></param>
+    public static void ToggleGameObjects(this GameObject[] objects, bool value)
+    {
+        //Iterate through every element in the array
+        for (int i = 0; i < objects.Length; i++)
+        {
+            //Set active to the specified boolean value
+            objects[i].SetActive(value);
+        }
+    }
 }

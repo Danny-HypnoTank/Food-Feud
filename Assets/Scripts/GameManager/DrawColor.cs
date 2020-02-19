@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class DrawColor : MonoBehaviour
 {
+
+    [SerializeField]
+    private bool useSplatMap;
+
     public Shader drawShader;
     public Shader clearShader;
     public Material drawMaterial;
@@ -132,8 +136,11 @@ public class DrawColor : MonoBehaviour
 
     private void OnGUI()
     {
-        ////USE TO VIEW A SPLATMAP
-        GUI.DrawTexture(new Rect(0, 0, 256, 128), _splatMap[0], ScaleMode.ScaleToFit, false, 1);
+        if (useSplatMap)
+        {
+            ////USE TO VIEW A SPLATMAP
+            GUI.DrawTexture(new Rect(0, 0, 256, 128), _splatMap[0], ScaleMode.ScaleToFit, false, 1);
+        }
     }
 
     void MatchPaintToSkin(Material m)

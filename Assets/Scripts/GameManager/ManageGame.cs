@@ -182,11 +182,6 @@ public class ManageGame : MonoBehaviour
                     newPlayer.GetComponent<PlayerController>().Player = players[i];
                     PlayerBase playerBase = newPlayer.GetComponent<PlayerBase>();
                     playerBase.Player = players[i];
-                    for (int t = 0; t < playerBase.Weapons.Length; t++)
-                    {
-                        playerBase.Weapons[t].GetComponent<Shooting>().Player = players[i];
-                        playerBase.Weapons[t].GetComponent<Shooting>().PlayerBase = playerBase;
-                    }
                     players[i].Speed = players[i].DefaultSpeed;
                     playerObjects.Add(newPlayer);
                 }
