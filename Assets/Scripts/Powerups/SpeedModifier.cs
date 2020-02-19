@@ -1,30 +1,22 @@
-﻿using System.Collections;
-using UnityEngine;
-
-public class SpeedModifier : BuffDebuff
+﻿public class SpeedModifier : BuffDebuff
 {
 
     float originalSpeed;
 
-    public override void Start(PlayerController parent)
+    public override void Start(PlayerController parent, float dur = 5)
     {
-        Parent = parent;
-
+        base.Start(parent, 10);
         originalSpeed = Parent.MoveSpeedModifier;
-        Parent.SetProperty<float>(nameof(Parent.MoveSpeedModifier), 10);
-        Parent.StartCoroutine(Timer());
+        Parent.SetProperty<float>(nameof(Parent.MoveSpeedModifier), originalSpeed * 2);
     }
 
-    public override void OnUpdate() { }
-
+    public override void OnUpdate(float deltaTime)
+    {
+        base.OnUpdate(deltaTime);
+    }
     public override void End()
     {
         Parent.SetProperty<float>(nameof(Parent.MoveSpeedModifier), originalSpeed);
-        Parent.SetProperty<BuffDebuff>(nameof(Parent.CurrentPowerup), null);
-    }
-    public override IEnumerator Timer()
-    {
-        yield return new WaitForSeconds(10);
-        End();
+        base.End();
     }
 }

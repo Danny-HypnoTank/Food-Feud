@@ -136,10 +136,7 @@ public class PlayerController : MonoBehaviour
                 }
 
                 if (CurrentPowerup != null)
-                {
-                    if (CurrentPowerup.IsContinuous)
-                        CurrentPowerup.OnUpdate();
-                }
+                    CurrentPowerup.OnUpdate(Time.deltaTime);
             }
         }
     }

@@ -1,30 +1,20 @@
-﻿using System.Collections;
-using UnityEngine;
-
-public class TrailPowerup : BuffDebuff
+﻿public class TrailPowerup : BuffDebuff
 {
 
-    public override void Start(PlayerController parent)
+    public override void Start(PlayerController parent, float dur = 5)
     {
+        base.Start(parent);
         Parent = parent;
-        IsContinuous = true;
-        Parent.StartCoroutine(Timer());
     }
 
-    public override void OnUpdate()
+    public override void OnUpdate(float deltaTime)
     {
+        base.OnUpdate(deltaTime);
         Parent.Splat();
     }
 
     public override void End()
     {
-
-        Parent.SetProperty<BuffDebuff>(nameof(Parent.CurrentPowerup), null);
-    }
-
-    public override IEnumerator Timer()
-    {
-        yield return new WaitForSeconds(5);
-        End();
+        base.End();
     }
 }

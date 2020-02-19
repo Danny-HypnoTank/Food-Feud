@@ -1,6 +1,4 @@
-﻿using System.Collections;
-
-public abstract class BuffDebuff
+﻿public abstract class BuffDebuff
 {
 
     /// <summary>
@@ -8,27 +6,24 @@ public abstract class BuffDebuff
     /// </summary>
     public PlayerController Parent { get; protected set; }
 
-    /// <summary>
-    /// Is the powerup active - default: false
-    /// </summary>
-    public bool Active { get; protected set; } = false;
+    protected float duration; //Duration of the powerup
+    protected float elapsedTime; //How much time has elapsed
 
-    /// <summary>
-    /// Is the powerup continuous - default: false
-    /// </summary>
-    public bool IsContinuous { get; protected set; } = false;
-    public abstract void Start(PlayerController parent);
-
-    public abstract void OnUpdate();
-    public abstract void End();
-
-    public void Activate()
+    public virtual void Start(PlayerController parent, float dur = 5)
     {
-
-        Active = true;
-
+        Parent = parent;
+        elapsedTime = 0;
+        duration = dur;
     }
 
-    public abstract IEnumerator Timer();
+    public virtual void OnUpdate(float deltaTime)
+    {
+        elapsedTime += deltaTime;
+
+        if (elapsedTime >= duration)
+            End();
+    }
+
+    public virtual void End() => Parent.SetProperty<BuffDebuff>(nameof(Parent.CurrentPowerup), null);
 
 }

@@ -31,6 +31,8 @@ public static class ExtensionMethods
         //If the property is found, set the new value
         if (property != null)
             property.SetValue(obj, newValue);
+        else
+            Debug.LogError($"Property not found: {propertyName} on onbject: {obj}");
     }
 
 }
