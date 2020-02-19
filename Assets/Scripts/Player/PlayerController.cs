@@ -17,8 +17,8 @@ public class PlayerController : MonoBehaviour
     [Header("Player Attributes")]
     [SerializeField]
     private float _moveSpeedModifier = 5;
-    //TODO: Add method to modify this property so it's not left exposed - public set BAD
-    public float MoveSpeedModifier { get { return _moveSpeedModifier; } set { _moveSpeedModifier = value; } }
+    public float MoveSpeedModifier { get { return _moveSpeedModifier; } private set { _moveSpeedModifier = value; } }
+
     [SerializeField]
     private float weaponSplashMultiplier = 1;
 
@@ -26,8 +26,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 moveInput;
     private Vector3 moveVelocity;
 
-    //TODO: Add methods to modify these properties so they're not left exposed - public set BAD
-    public float MoveSpeed { get; set; }
+    public float MoveSpeed { get; private set; }
     public Player Player { get; set; }
 
     [Header("Dash Settings")]
@@ -70,6 +69,7 @@ public class PlayerController : MonoBehaviour
     public DrawColor DrawColor { get; private set; }
     public PlayerBase PlayerBase { get; private set; }
     public DazeState PlayerStun { get; private set; }
+    public BuffDebuff CurrentPowerup { get; private set; }
 
     private void Awake()
     {
@@ -90,10 +90,13 @@ public class PlayerController : MonoBehaviour
         ToggleTrails(false);
         UpdateFillBar();
         Splat();
+
+
     }
 
     private void Update()
     {
+
         if (ManageGame.instance.IsTimingDown == true)
         {
             if (!PlayerStun.Stunned)
@@ -130,6 +133,12 @@ public class PlayerController : MonoBehaviour
                         dashAmount = 0;
 
                     UpdateFillBar();
+                }
+
+                if (CurrentPowerup != null)
+                {
+                    if (CurrentPowerup.IsContinuous)
+                        CurrentPowerup.OnUpdate();
                 }
             }
         }
@@ -222,6 +231,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void PickUpPowerUp(BuffDebuff powerup)
+    {
+
+        CurrentPowerup = powerup;
+        CurrentPowerup.Start(this);
+
+    }
+
     private IEnumerator DashTimer(float distance)
     {
         IsDashing = true;
@@ -262,4 +279,5 @@ public class PlayerController : MonoBehaviour
         if (fillBar != null)
             fillBar.fillAmount = dashAmount;
     }
+
 }
