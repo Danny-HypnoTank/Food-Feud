@@ -17,17 +17,14 @@ public class PlayerController : MonoBehaviour
     [Header("Player Attributes")]
     [SerializeField]
     private float _moveSpeedModifier = 5;
-    //TODO: Add method to modify this property so it's not left exposed - public set BAD
-    public float MoveSpeedModifier { get { return _moveSpeedModifier; } set { _moveSpeedModifier = value; } }
+    public float MoveSpeedModifier { get { return _moveSpeedModifier; } private set { _moveSpeedModifier = value; } }
+
     [SerializeField]
     private float weaponSplashMultiplier = 1;
 
     private readonly float gravity = 300.0f;
-    private Vector3 moveInput;
-    private Vector3 moveVelocity;
 
-    //TODO: Add methods to modify these properties so they're not left exposed - public set BAD
-    public float MoveSpeed { get; set; }
+    public float MoveSpeed { get; private set; }
     public Player Player { get; set; }
 
     [Header("Dash Settings")]
@@ -63,6 +60,7 @@ public class PlayerController : MonoBehaviour
     private LayerMask scoreLayer;
 
     //Fields
+    private Vector3 moveInput;
     private ObjectAudioHandler audioHandler;
     private CharacterController chc;
 
@@ -70,6 +68,11 @@ public class PlayerController : MonoBehaviour
     public DrawColor DrawColor { get; private set; }
     public PlayerBase PlayerBase { get; private set; }
     public DazeState PlayerStun { get; private set; }
+    public BuffDebuff CurrentPowerup { get; private set; }
+
+    //Full properties
+    private Vector3 _moveVelocity;
+    public Vector3 MoveVelocity { get { return _moveVelocity; } private set { _moveVelocity = value; } }
 
     private void Awake()
     {
@@ -87,50 +90,23 @@ public class PlayerController : MonoBehaviour
         dashAmount = 0;
         MoveSpeed = Player.Speed;
 
-        ToggleTrails(false);
+        trail.ToggleGameObjects(false);
         UpdateFillBar();
         Splat();
+
+
     }
 
     private void Update()
     {
+
         if (ManageGame.instance.IsTimingDown == true)
         {
             if (!PlayerStun.Stunned)
             {
-                moveInput = new Vector3(Input.GetAxisRaw($"Horizontal{Player.playerNum}"), 0f, Input.GetAxisRaw($"Vertical{Player.playerNum}"));
-                moveVelocity = moveInput * (MoveSpeed + (_moveSpeedModifier));
-
-                if (Input.GetButton($"Dash{Player.playerNum}") && !IsDashing && !PlayerStun.Stunned && canDash)
-                {
-                    if (dashAmount < 1)
-                        dashAmount += Time.deltaTime;
-                    else
-                        dashAmount = 1;
-
-                    UpdateFillBar();
-                }
-
-                if(Input.GetButtonUp($"Dash{Player.playerNum}") && !IsDashing && !PlayerStun.Stunned && canDash)
-                {
-                    float distanceToDash = 0;
-                        
-                    distanceToDash.CalculateFromPercentage(dashDistanceMin, dashDistanceMax, dashAmount);
-                    dashPower.CalculateFromPercentage(dashPowerMin, dashPowerMax, dashAmount);
-
-                    StartCoroutine(DashTimer(distanceToDash));
-                    StartCoroutine(DashCooldown());
-                }
-
-                if (!Input.GetButton($"Dash{Player.playerNum}"))
-                {
-                    if (dashAmount > 0)
-                        dashAmount -= Time.deltaTime;
-                    else
-                        dashAmount = 0;
-
-                    UpdateFillBar();
-                }
+                GetMovementInput();
+                RunBuffDebuffLogic();
+                Dash();
             }
         }
     }
@@ -159,7 +135,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        moveVelocity.y -= gravity * Time.fixedDeltaTime;
+        _moveVelocity.y -= gravity * Time.fixedDeltaTime;
 
         if (IsDashing)
         {
@@ -175,7 +151,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!PlayerStun.Stunned)
             {
-                chc.Move(moveVelocity * Time.fixedDeltaTime);
+                chc.Move(_moveVelocity * Time.fixedDeltaTime);
 
                 if (moveInput.sqrMagnitude > 0.1f)
                     transform.rotation = Quaternion.LookRotation(moveInput);
@@ -183,9 +159,53 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void GetMovementInput()
+    {
+        moveInput = new Vector3(Input.GetAxisRaw($"Horizontal{Player.playerNum}"), 0f, Input.GetAxisRaw($"Vertical{Player.playerNum}"));
+        _moveVelocity = moveInput * (MoveSpeed + (_moveSpeedModifier));
+    }
+
+    private void RunBuffDebuffLogic()
+    {
+        if (CurrentPowerup != null)
+            CurrentPowerup.OnUpdate(Time.deltaTime);
+    }
+
+    private void Dash()
+    {
+        if (Input.GetButton($"Dash{Player.playerNum}") && !IsDashing && !PlayerStun.Stunned && canDash)
+        {
+            if (dashAmount < 1)
+                dashAmount += Time.deltaTime;
+            else
+                dashAmount = 1;
+
+            UpdateFillBar();
+        }
+
+        if (Input.GetButtonUp($"Dash{Player.playerNum}") && !IsDashing && !PlayerStun.Stunned && canDash)
+        {
+            float distanceToDash = 0;
+
+            distanceToDash.CalculateFromPercentage(dashDistanceMin, dashDistanceMax, dashAmount);
+            dashPower.CalculateFromPercentage(dashPowerMin, dashPowerMax, dashAmount);
+
+            StartCoroutine(DashTimer(distanceToDash));
+            StartCoroutine(DashCooldown());
+        }
+
+        if (!Input.GetButton($"Dash{Player.playerNum}"))
+        {
+            if (dashAmount > 0)
+                dashAmount -= Time.deltaTime;
+            else
+                dashAmount = 0;
+
+            UpdateFillBar();
+        }
+    }
     public void Splat()
     {
-
         Ray ray = new Ray(transform.position, -transform.up);
 
         if (Physics.Raycast(transform.position + Vector3.up, -transform.up, out RaycastHit hit))
@@ -222,19 +242,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void PickUpPowerUp(BuffDebuff powerup)
+    {
+
+        CurrentPowerup = powerup;
+        CurrentPowerup.Start(this);
+
+    }
+
     private IEnumerator DashTimer(float distance)
     {
         IsDashing = true;
         dashPosition = (this.transform.position) + (this.transform.forward * distance); //Unsure if even necessary
 
         PlayerBase.audioHandler.SetSFX("Whoosh");
-        ToggleTrails(true);
+        trail.ToggleGameObjects(true);
 
         yield return new WaitForSeconds(dashDuration);
 
         IsDashing = false;
 
-        ToggleTrails(false);
+        trail.ToggleGameObjects(false);
     }
 
     private IEnumerator DashCooldown()
@@ -249,17 +277,10 @@ public class PlayerController : MonoBehaviour
         canDash = true;
     }
 
-    private void ToggleTrails(bool value)
-    {
-        foreach (GameObject t in trail)
-        {
-            t.SetActive(value);
-        }
-    }
-
     private void UpdateFillBar()
     {
         if (fillBar != null)
             fillBar.fillAmount = dashAmount;
     }
+
 }

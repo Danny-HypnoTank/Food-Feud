@@ -79,13 +79,6 @@ public class Ricochet : Shooting
                     IsAxisInUse = false;
                 }
             }
-
-            //Reseting to Default Weapon when no ammo left
-            if (Ammo <= 0)
-            {
-                PlayerBase.ResetWeapon();
-                PlayerBase.DefaultWeaponSet();
-            }
         }
     }
 

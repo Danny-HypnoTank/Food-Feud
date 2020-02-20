@@ -251,16 +251,6 @@ public class DefaultShooting : Shooting
                 GameObject player = hit.transform.gameObject;
                 DazeState pDaze = player.GetComponent<DazeState>();
 
-                //hit.collider.gameObject.transform.Translate(ray.direction * 0.15f);
-                if (playerBase.GodModeKnockback == false)
-                {
-                    hit.transform.gameObject.GetComponent<DazeState>().KnockBackEffect(ray.direction, knockBackForce);
-                }
-                else
-                {
-                    hit.transform.gameObject.GetComponent<DazeState>().KnockBackEffect(ray.direction, knockBackForce);
-                }
-
                 break;
             case "PaintableEnvironment":
 

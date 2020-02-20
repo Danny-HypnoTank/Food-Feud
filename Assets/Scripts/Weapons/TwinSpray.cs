@@ -121,12 +121,6 @@ public class TwinSpray : Shooting
                     }
                 }
             }
-
-            if (Ammo <= 0)
-            {
-                PlayerBase.ResetWeapon();
-                PlayerBase.DefaultWeaponSet();
-            }
         }
     }
 
@@ -216,17 +210,7 @@ public class TwinSpray : Shooting
             case "Player":
                 GameObject player = hit.transform.gameObject;
                 DazeState pDaze = player.GetComponent<DazeState>();
-
-                //hit.collider.gameObject.transform.Translate(ray.direction * 0.15f);
-                if (playerBase.GodModeKnockback == false)
-                {
-                    hit.transform.gameObject.GetComponent<DazeState>().KnockBackEffect(ray.direction, knockBackForce);
-                }
-                else
-                {
-                    hit.transform.gameObject.GetComponent<DazeState>().KnockBackEffect(ray.direction, knockBackForce);
-                }
-
+                transform.gameObject.GetComponent<DazeState>().KnockBackEffect(ray.direction, knockBackForce);
 
                 break;
             case "PaintableEnvironment":
