@@ -64,6 +64,9 @@ public class PlayerBase : MonoBehaviour
     //Checking Input to then change animations and Expressions
     private void checkInput()
     {
+        float moveInputH = Input.GetAxisRaw("Horizontal" + Player.playerNum);
+        float moveInputV = Input.GetAxisRaw("Vertical" + Player.playerNum);
+        float input = moveInputH + moveInputV;
 
         if (pCon.IsDashing == true) //Check to see if player is dashing, if they are set animation to dash anim and Set expresiion
         {
@@ -99,7 +102,7 @@ public class PlayerBase : MonoBehaviour
                 expression.SetExpression(0);
             }
         }*/
-        else if (pCon.MoveVelocity != Vector3.zero) //Check to see if player is moving
+        else if (input != 0) //Check to see if player is moving
         {
             expression.SetExpression(0);
             if (currentWeaponId == 1) //If they are holding Bomb Launcher whilst walking
@@ -121,7 +124,7 @@ public class PlayerBase : MonoBehaviour
                 resetAnimTimer = 0;
             }
         }
-        else if (pCon.MoveVelocity == Vector3.zero) // if there is no movement input then run the idle animation
+        else if (input == 0) // if there is no movement input then run the idle animation
         {
             resetAnimTimer += Time.deltaTime;
             if (resetAnimTimer > 0.1f)
