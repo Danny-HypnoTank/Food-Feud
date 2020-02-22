@@ -18,7 +18,6 @@ public class SecondaryObjective : MonoBehaviour
 
     private void OnEnable()
     {
-        
         isHandicap = true;
         currentTimer = 0;
         if(boxCollision == null)

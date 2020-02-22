@@ -7,8 +7,6 @@
  * Modified By: Dominik Waldowski, Danny Pym-Hember
  */
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 public class PlayerBase : MonoBehaviour
 {
@@ -24,17 +22,12 @@ public class PlayerBase : MonoBehaviour
     public ObjectAudioHandler audioHandler { get; private set; }
     [SerializeField]
     private GameObject[] skins;
-
-    public List<Color> skinColours;
-
     [SerializeField]
     private int animationIDSet;
     [SerializeField]
     private int currentWeaponId = 0;
     private float resetAnimTimer;
     private ExpressionManager expression;
-
-
     #endregion
 
     private void OnEnable()

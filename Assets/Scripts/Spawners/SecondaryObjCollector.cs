@@ -15,17 +15,8 @@ public class SecondaryObjCollector : MonoBehaviour
     [SerializeField]
     private Transform pointAboveHead;
 
-    private PlayerBase playerBase;
-
     public GameObject SecondaryObj { get => secondaryObj; set => secondaryObj = value; }
     public bool HasSecondaryObj { get => hasSecondaryObj; set => this.hasSecondaryObj = value; }
-
-    [SerializeField]
-    Renderer rend;
-    private void Start()
-    {
-        playerBase = GetComponent<PlayerBase>();
-    }
 
     public void SetSpawner(SecondaryObjectiveSpawner _sapwner)
     {
@@ -57,7 +48,6 @@ public class SecondaryObjCollector : MonoBehaviour
         if(hasSecondaryObj == true && secondaryObj != null)
         {
             secondaryObj.transform.position = pointAboveHead.transform.position;
-            
         }
     }
 
@@ -68,12 +58,5 @@ public class SecondaryObjCollector : MonoBehaviour
         secondaryObj.transform.position = pointAboveHead.position;
         hasSecondaryObj = true;
         obj.GetComponent<SecondaryObjective>().BoxCollision.enabled = false;
-        rend = obj.GetComponentInChildren<Renderer>();
-
-        rend.material.SetColor("_BaseColor", playerBase.Player.skinColours[playerBase.Player.skinId]);
-
-        
-        
-        //Debug.Log()
     }
 }
