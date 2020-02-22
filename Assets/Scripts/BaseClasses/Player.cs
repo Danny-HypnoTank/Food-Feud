@@ -17,7 +17,6 @@ public class Player : ScriptableObject
     public int playerScore;     //Used for storing score for each individual player
     public float scorePercentage; //Percentage of total score
     public int skinId;          //Temporary will be replaced later based on how we choose to handle skins
-    public Color[] skinColours; //Set colours for objects that take their colours from the players
     public string[] namesOfSkins; //Temporary variable for testing
     [Header("In Game Values")]
     private float defaultSpeed = 5;
