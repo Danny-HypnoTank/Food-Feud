@@ -147,7 +147,7 @@ public class DrawColor : MonoBehaviour
     {
         for(int i = 1; i <= 4; i++)
         {
-            Debug.Log("_Color_" + i);
+            
             if (manageGame.Players.Length < i)
             {
                 break;
@@ -164,42 +164,10 @@ public class DrawColor : MonoBehaviour
     {
         Color32 color = new Color(0, 0, 0, 0);
 
+
+        color = mg.Players[_iteration - 1].skinColours[mg.Players[_iteration - 1].skinId];
+
         
-        string skinName = mg.Players[_iteration-1].namesOfSkins[mg.Players[_iteration - 1].skinId].ToString();
-        
-        switch (skinName)
-        {
-            case ("Skin Red"):
-                {
-                    color = new Color(1, 0, 0, 1);
-                    break;
-                }
-            case ("Skin Gree"):
-                {
-                    color = new Color(0, 1, 0, 1);
-                    break;
-                }
-            case ("Skin Blue"):
-                {
-                    color = new Color(0, 0, 1, 1);
-                    break;
-                }
-            case ("Skin Yellow"):
-                {
-                    color = new Color(1, 1, 0, 1);
-                    break;
-                }
-            case ("Skin Orange"):
-                {
-                    color = new Color(1, 0.6f, 0, 1);
-                    break;
-                }
-            case ("Skin Purple"):
-                {
-                    color = new Color(0.6f, 0, 0.8f, 1);
-                    break;
-                }
-        }
         return color;
     }
 }
