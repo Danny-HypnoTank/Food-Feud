@@ -36,7 +36,9 @@ public class Loading : MonoBehaviour
     private IEnumerator LoadingProgress()
     {
         //activate loading screen object and set scene
+        //suspend coroutine for 10 secs to loading screen to last longer
         loadingScreenPanel.SetActive(true);
+        yield return new WaitForSeconds(10);
         AsyncOperation async = SceneManager.LoadSceneAsync(sceneToLoadId);
         async.allowSceneActivation = false;
 
@@ -53,6 +55,7 @@ public class Loading : MonoBehaviour
             if (async.progress == 0.9f)
             {
                 slider.value = 1f;
+                
                 async.allowSceneActivation = true;
             }
 
