@@ -87,7 +87,7 @@ public class Bomb : MonoBehaviour
                         {
                            ParticleSystem _ps = child.GetComponent<ParticleSystem>();
                             var main = _ps.main;
-                            main.startColor = Color.red;
+                            main.startColor = parent.Player.SkinColours[parent.Player.skinId];
                         }
                     }
                     break;
@@ -102,7 +102,7 @@ public class Bomb : MonoBehaviour
                         {
                             ParticleSystem _ps = child.GetComponent<ParticleSystem>();
                             var main = _ps.main;
-                            main.startColor = Color.green;
+                            main.startColor = parent.Player.SkinColours[parent.Player.skinId];
                         }
                     }
                     break;
@@ -117,7 +117,7 @@ public class Bomb : MonoBehaviour
                         {
                             ParticleSystem _ps = child.GetComponent<ParticleSystem>();
                             var main = _ps.main;
-                            main.startColor = Color.blue;
+                            main.startColor = parent.Player.SkinColours[parent.Player.skinId];
                         }
                     }
                     break;
@@ -132,7 +132,7 @@ public class Bomb : MonoBehaviour
                         {
                             ParticleSystem _ps = child.GetComponent<ParticleSystem>();
                             var main = _ps.main;
-                            main.startColor = Color.yellow;
+                            main.startColor = parent.Player.SkinColours[parent.Player.skinId];
                         }
                     }
                     break;
@@ -167,30 +167,7 @@ public class Bomb : MonoBehaviour
 
         ParticleSystem ps = newExplosion.GetComponent<ParticleSystem>();
         var mainPs = ps.main;
-        switch (Parent.Player.skinId)
-        {
-            case 0:
-                {
-                    mainPs.startColor = Color.red;
-                    break;
-                }
-            case 1:
-                {
-                    mainPs.startColor = Color.green;
-                    break;
-                }
-            case 2:
-                {
-                    mainPs.startColor = Color.blue;
-                    break;
-                }
-            case 3:
-                {
-                    mainPs.startColor = Color.yellow;
-                    break;
-                }
-
-        }
+        mainPs.startColor = parent.Player.SkinColours[parent.Player.skinId];
 
         newExplosion.SetActive(true);
     }

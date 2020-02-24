@@ -10,7 +10,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 public class PlayerController : MonoBehaviour
 {
 
@@ -54,6 +54,8 @@ public class PlayerController : MonoBehaviour
     private GameObject[] trail;
     [SerializeField]
     private Image fillBar;
+    [SerializeField]
+    private GameObject scoreText;
 
     [Header("Layer Masks")]
     [SerializeField]
@@ -237,7 +239,12 @@ public class PlayerController : MonoBehaviour
                 ScoreSquare square = hit.collider.GetComponent<ScoreSquare>();
 
                 if (square.Value != Player.skinId)
+                {
                     square.SetValue(Player.skinId);
+                    GameObject _sg = Instantiate(scoreText, transform);
+                    _sg.GetComponent<TextMeshPro>().text = "+1";
+                    _sg.GetComponent<TextMeshPro>().color = Player.SkinColours[Player.skinId];
+                }
             }
         }
     }

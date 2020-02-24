@@ -18,6 +18,7 @@ public class Player : ScriptableObject
     public float scorePercentage; //Percentage of total score
     public int skinId;          //Temporary will be replaced later based on how we choose to handle skins
     public string[] namesOfSkins; //Temporary variable for testing
+    public Color[] SkinColours;
     [Header("In Game Values")]
     private float defaultSpeed = 5;
     public bool hasWon = false;
