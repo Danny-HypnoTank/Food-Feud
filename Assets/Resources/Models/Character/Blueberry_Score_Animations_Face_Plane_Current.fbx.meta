@@ -1,17 +1,20 @@
 fileFormatVersion: 2
-guid: c85e25cbbeee7d54abcd4762bfd64324
+guid: 17b61573b9c94b04b85672450be58105
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
-    second: Dancing
+    second: AllAnimations
   - first:
-      74: 4821609917503249430
-    second: Win
+      74: -886206124811307748
+    second: Dance
   - first:
       74: -1901335152038202995
     second: Lose
+  - first:
+      74: 4821609917503249430
+    second: Win
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -41,18 +44,18 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Dancing
+      name: AllAnimations
       takeName: Take 001
       internalID: 0
       firstFrame: 1
-      lastFrame: 49
+      lastFrame: 401
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -70,18 +73,18 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Win
+      name: Dance
       takeName: Take 001
       internalID: 0
-      firstFrame: 106
-      lastFrame: 144
+      firstFrame: 1
+      lastFrame: 49
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -102,15 +105,15 @@ ModelImporter:
       name: Lose
       takeName: Take 001
       internalID: 0
-      firstFrame: 190
-      lastFrame: 244
+      firstFrame: 193
+      lastFrame: 247
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -127,7 +130,36 @@ ModelImporter:
       maskType: 3
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
-    isReadable: 1
+    - serializedVersion: 16
+      name: Win
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 90
+      lastFrame: 175
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
   meshes:
     lODScreenPercentages: []
     globalScale: 200
