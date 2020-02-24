@@ -8,6 +8,7 @@ enum Powers
     Speedup,
     Trail,
     Splat,
+    StunImmunity
 }
 
 public class PowerupHolder : MonoBehaviour
@@ -28,7 +29,8 @@ public class PowerupHolder : MonoBehaviour
     {
             {"Speedup", typeof(SpeedUp)},
             {"Trail", typeof(TrailPowerup)},
-            {"Splat", typeof(SplatRelease)}
+            {"Splat", typeof(SplatRelease)},
+            {"StunImmunity", typeof(StunImmunity)}
     };
 
     private void Awake()

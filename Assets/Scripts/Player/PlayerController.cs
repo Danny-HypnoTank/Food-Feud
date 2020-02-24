@@ -56,6 +56,9 @@ public class PlayerController : MonoBehaviour
     private Image fillBar;
     [SerializeField]
     private GameObject scoreText;
+    [SerializeField]
+    private GameObject sImmunityObj;
+    public GameObject SImunnityObj { get { return sImmunityObj; } }
 
     [Header("Layer Masks")]
     [SerializeField]
@@ -71,6 +74,7 @@ public class PlayerController : MonoBehaviour
     public PlayerBase PlayerBase { get; private set; }
     public DazeState PlayerStun { get; private set; }
     public BuffDebuff CurrentPowerup { get; private set; }
+    public StunImmunity StunImmunityPowerup { get; private set; }
 
     //Full properties
     private Vector3 _moveVelocity;
@@ -251,8 +255,16 @@ public class PlayerController : MonoBehaviour
 
     public void PickUpPowerUp(BuffDebuff powerup)
     {
-        CurrentPowerup = powerup;
-        CurrentPowerup.Start(this);
+        if (powerup is StunImmunity)
+        {
+            StunImmunityPowerup = (StunImmunity)powerup;
+            StunImmunityPowerup.Start(this);
+        }
+        else
+        {
+            CurrentPowerup = powerup;
+            CurrentPowerup.Start(this);
+        }
     }
 
     private IEnumerator DashTimer(float distance)

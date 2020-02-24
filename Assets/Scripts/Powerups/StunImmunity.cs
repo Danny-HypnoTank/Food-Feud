@@ -5,16 +5,13 @@ public class StunImmunity : BuffDebuff
 {
     public override void Start(PlayerController parent, float dur = 5)
     {
-
-    }
-
-    public override void OnUpdate(float deltaTime)
-    {
-
+        base.Start(parent);
+        Parent.SImunnityObj.SetActive(true);
     }
 
     public override void End()
     {
-
+        Parent.SImunnityObj.SetActive(false);
+        Parent.SetProperty<StunImmunity>(nameof(Parent.StunImmunityPowerup), null);
     }
 }
