@@ -10,7 +10,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
+
 public class EndGameScore : MonoBehaviour
 {
     [SerializeField]
@@ -28,9 +30,13 @@ public class EndGameScore : MonoBehaviour
     private GameObject[] menuButtons;
     [SerializeField]
     private GameObject[] winningPlayer;
+    [SerializeField]
+    private GameObject[] winnerIcons;
 
     private void Start()
     {
+        StartCoroutine(WinnerCheck());
+
         //enables end score menu/rematch buttons
         foreach (GameObject goMB in menuButtons)
         {
@@ -158,5 +164,24 @@ public class EndGameScore : MonoBehaviour
         //reload characters
 
         SceneManager.LoadScene(1);
+    }
+
+    private void DisplayWinner()
+    {
+        for (int i = 0; i < sortedPlayers.Count; i++)
+        {
+            if (sortedPlayers[i].hasWon)
+            {
+                winnerIcons[i].SetActive(true);
+            }
+        }
+    }
+
+    private IEnumerator WinnerCheck()
+    {
+        yield return new WaitForSeconds(3f);
+        DisplayWinner();
+
+        yield return null;
     }
 }
