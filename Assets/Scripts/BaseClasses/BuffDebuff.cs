@@ -1,6 +1,10 @@
-﻿/// <summary>
+﻿using System;
+using UnityEngine;
+
+/// <summary>
 /// Base class for buffs and debuffs. Check <see cref="SpeedUp"/>, <see cref="TrailPowerup"/> and/or <see cref="SplatRelease"/> for examples.
 /// </summary>
+[Serializable]
 public abstract class BuffDebuff
 {
 
@@ -35,7 +39,7 @@ public abstract class BuffDebuff
     }
 
     /// <summary>
-    /// Method for ongoing logic while the buff/debuff is active. Call <see cref="base.OnUpdate()"/> at the very start.
+    /// Method for ongoing logic while the buff/debuff is active. Call <see cref="base.OnUpdate()"/> at the very start if the buff/debuff is timed.
     /// </summary>
     /// <param name="deltaTime"><see cref="Time.DeltaTime"/></param>
     public virtual void OnUpdate(float deltaTime)

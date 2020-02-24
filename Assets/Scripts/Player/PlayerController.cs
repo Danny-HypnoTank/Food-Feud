@@ -144,7 +144,7 @@ public class PlayerController : MonoBehaviour
             Vector3 direction = dashPosition - this.transform.position;
             Vector3 movement = direction.normalized * dashPower * Time.fixedDeltaTime;
 
-            if(movement.sqrMagnitude > 0.1f)
+            if (movement.sqrMagnitude > 0.1f)
                 chc.transform.LookAt(chc.transform.position + movement);
 
             chc.Move(movement);
@@ -225,16 +225,16 @@ public class PlayerController : MonoBehaviour
                     _smult = 1f * weaponSplashMultiplier;
 
                 int _id = Player.playerNum;
-                for(int i = 0; i < 10; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     DrawColor.DrawOnSplatmap(hit, _id, Player, _smult);
                 }
             }
         }
 
-        if(Physics.Raycast(ray, out hit, scoreLayer))
+        if (Physics.Raycast(ray, out hit, scoreLayer))
         {
-            if(hit.collider.CompareTag("ScoreGrid"))
+            if (hit.collider.CompareTag("ScoreGrid"))
             {
                 ScoreSquare square = hit.collider.GetComponent<ScoreSquare>();
 
@@ -251,10 +251,8 @@ public class PlayerController : MonoBehaviour
 
     public void PickUpPowerUp(BuffDebuff powerup)
     {
-
         CurrentPowerup = powerup;
         CurrentPowerup.Start(this);
-
     }
 
     private IEnumerator DashTimer(float distance)
