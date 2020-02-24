@@ -59,6 +59,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject sImmunityObj;
     public GameObject SImunnityObj { get { return sImmunityObj; } }
+    [SerializeField]
+    private GameObject teleportObject;
+    public GameObject TeleportObject { get { return teleportObject; } }
 
     [Header("Layer Masks")]
     [SerializeField]
@@ -67,7 +70,6 @@ public class PlayerController : MonoBehaviour
     //Fields
     private Vector3 moveInput;
     private ObjectAudioHandler audioHandler;
-    private CharacterController chc;
 
     //Auto Properties
     public DrawColor DrawColor { get; private set; }
@@ -75,6 +77,7 @@ public class PlayerController : MonoBehaviour
     public DazeState PlayerStun { get; private set; }
     public BuffDebuff CurrentPowerup { get; private set; }
     public StunImmunity StunImmunityPowerup { get; private set; }
+    public CharacterController chc { get; private set; }
 
     //Full properties
     private Vector3 _moveVelocity;
@@ -99,8 +102,6 @@ public class PlayerController : MonoBehaviour
         trail.ToggleGameObjects(false);
         UpdateFillBar();
         Splat();
-
-
     }
 
     private void Update()
@@ -137,6 +138,17 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+        /*else if (other.CompareTag("ObjectCollider"))
+        {
+            if (IsDashing)
+            {
+                if (!PlayerStun.Stunned)
+                {
+                    StartCoroutine(PlayerStun.Stun(dashAmount));
+                    Splat();
+                }
+            }
+        }*/
     }
 
     private void FixedUpdate()
