@@ -138,7 +138,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        /*else if (other.CompareTag("ObjectCollider"))
+        else if (other.CompareTag("ObjectCollider"))
         {
             if (IsDashing)
             {
@@ -148,7 +148,7 @@ public class PlayerController : MonoBehaviour
                     Splat();
                 }
             }
-        }*/
+        }
     }
 
     private void FixedUpdate()
