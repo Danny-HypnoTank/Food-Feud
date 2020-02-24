@@ -22,6 +22,7 @@ public class SpeedUp : BuffDebuff
         //Call the base implementation of OnUpdate
         base.OnUpdate(deltaTime);
     }
+
     public override void End()
     {
         //Set the player's speed modifier back to the default

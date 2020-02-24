@@ -98,7 +98,7 @@ public class GodPowerUpMovement : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             Camera.main.GetComponent<CameraShaker>().ShakeCamera();
-
+            ManageGame.instance.GodPowerUp.SetActive(false);
         }
     }
 

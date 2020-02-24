@@ -55,19 +55,11 @@ public class PowerupSpawner : MonoBehaviour
     {
         if (currentActivePowerUps < maxPowerupsOnMap)
         {
-
-            if (spawnedGodPower == false)
+            if (spawnedPowerUps >= godPowerTime && !spawnedGodPower)
             {
-                if (spawnedPowerUps >= godPowerTime)
-                {
-                    GodPowerUp();
-                }
-                else
-                {
-                    RandomPowerUp();
-                }
+                GodPowerUp();
             }
-            else if (spawnedGodPower == true)
+            else
             {
                 RandomPowerUp();
             }
@@ -76,19 +68,14 @@ public class PowerupSpawner : MonoBehaviour
 
     private void GodPowerUp()
     {
-
         if (!nukeHasBeenSpawned)
             nukeHasBeenSpawned = true;
         spawnedGodPower = true;
         ManageGame.instance.GodPowerUp.SetActive(true);
-
-        /*int randomLocation = Random.Range(0, godNodes.Length);
-        godNodes[randomLocation].GetComponent<EdgePowerUpGodPower>().EnablePowerGodPower();*/
     }
 
     private void RandomPowerUp()
     {
-
         if (nukeHasBeenSpawned)
         {
             if (!ManageGame.instance.GodPowerUp.activeSelf)
@@ -99,24 +86,20 @@ public class PowerupSpawner : MonoBehaviour
         }
 
         int randomLocation;
-
         randomLocation = Random.Range(0, powerupSpawnLocations.Count);
-        if (powerupSpawnLocations[randomLocation].GetComponent<PowerupHolder>().IsSpawned == false)
-        {
-            powerupSpawnLocations[randomLocation].GetComponent<PowerupHolder>().ActiveRandomPower();
-            currentActivePowerUps++;
-            spawnedPowerUps++;
-        }
+
+        PowerupNode chosenHolder = powerupSpawnLocations[randomLocation].GetComponent<PowerupNode>();
+        if (!chosenHolder.IsSpawned)
+            chosenHolder.SpawnPower();
+
+        spawnedPowerUps++;
     }
 
     private IEnumerator RespawnCooldown()
     {
-
         respawnStarted = true;
         yield return new WaitForSeconds(10);
         spawnedGodPower = false;
         respawnStarted = false;
-
     }
-    //Spawning of a powerup
 }

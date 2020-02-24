@@ -1,85 +1,99 @@
-﻿/* 
- * Created by:
- * Name: Dominik Waldowski
- * Sid: 1604336
- * Date Created: 01/10/2019
- * Last Modified: 22/10/2019
- */
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowerupHolder : MonoBehaviour
+//Enum with the names of buffs/debuffs
+enum Powers
 {
-    [SerializeField]
-    private List<SpawnChance> availablePowerups = new List<SpawnChance>();
-
-    private PowerupSpawner powerupSpawn;
-    private bool isSpawned;
-    private int randomPowerupId;
-    public bool IsSpawned { get => isSpawned; set => isSpawned = value; }
-    private int bounds = 0;
-
-    private void Start()
-    {
-        bounds = availablePowerups[availablePowerups.Count -1].MaxProbabilityRange;
-        powerupSpawn = this.GetComponentInParent<PowerupSpawner>();
-        ResetPowerups();
-    }
-    public void ActiveRandomPower()
-    {
-        isSpawned = true;
-        int randomPowerUp = Random.Range(0, bounds);
-        //randomPowerupId = randomPowerUp;
-        for (int i = 0; i < availablePowerups.Count; i++)
-        {
-            if (randomPowerUp >= availablePowerups[i].MinProbabilityRange && randomPowerUp <= availablePowerups[i].MaxProbabilityRange)
-            {
-                    availablePowerups[i].spawnObject.SetActive(true);
-                    randomPowerupId = i;
-            }
-        }
-    }
-
-    //Player Collision with power up
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            
-        }
-    }
-
-    private void ResetPowerups()
-    {
-        isSpawned = false;
-        powerupSpawn.PowerupCollected();
-
-        for (int i = 0; i < availablePowerups.Count; i++)
-        {
-            availablePowerups[i].spawnObject.SetActive(false);
-        }
-
-
-
-        /*foreach (Transform child in this.transform)
-        {
-
-            //availablePowerups.Add(child.gameObject.gameObject);
-            child.gameObject.SetActive(false);
-        }*/
-    }
+    Speedup,
+    Trail,
+    Splat,
 }
 
-[System.Serializable]
-public class SpawnChance
+public class PowerupHolder : MonoBehaviour
 {
-    public GameObject spawnObject;
-    [SerializeField]
-    private int minProbabilityRange = 0;
-    [SerializeField]
-    private int maxProbabilityRange = 0;
 
-    public int MinProbabilityRange { get => minProbabilityRange; }
-    public int MaxProbabilityRange { get => maxProbabilityRange; }
+    [Header("Powerup Properties")]
+    [SerializeField]
+    private Powers powerHeld; //Which buff/debuff does the object hold
+    [SerializeField]
+    private bool isDebuff; //Is the buff/debuff a debuff
+    [SerializeField]
+    private float speed; //The speed at which the object rotates and bobs up and down
+    private float originalY;
+    private PowerupNode parent;
+
+    //Dictionary to contain the buff/debuff classes
+    private readonly Dictionary<string, Type> powers = new Dictionary<string, Type>()
+    {
+            {"Speedup", typeof(SpeedUp)},
+            {"Trail", typeof(TrailPowerup)},
+            {"Splat", typeof(SplatRelease)}
+    };
+
+    private void Awake()
+    {
+        //Set the parent node
+        parent = transform.parent.gameObject.GetComponent<PowerupNode>();
+        //Set the original y position
+        originalY = transform.position.y;
+    }
+
+    private void Update()
+    {
+        //Set the current position of the object
+        Vector3 position = transform.position;
+        //Rotate the object by the specified speed on the Y-axis
+        transform.Rotate(0, speed, 0);
+        //Make the object bob up and down on a Sine wave
+        transform.position = new Vector3(position.x, originalY + Mathf.Sin(Time.time * speed), position.z);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+
+        //Check if player has entered trigger
+        if (other.CompareTag("Player"))
+        {
+            //Cache reference to player
+            PlayerController player = other.GetComponent<PlayerController>();
+            //Get String value of powerheld
+            string power = Enum.GetName(typeof(Powers), powerHeld);
+
+            //If this is a buff, give it to the player who entered the trigger, else give it to everyone else
+            if (!isDebuff)
+            {
+                if (player.CurrentPowerup == null)
+                {
+                    //Give player the buff
+                    player.PickUpPowerUp((BuffDebuff)Activator.CreateInstance(powers[power]));
+
+                    //Call the Collected method on the parent
+                    parent.Collected();
+                    //Disable this object
+                    gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                //Find all player objects
+                GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
+
+                //Loop through player objects
+                for (int i = 0; i < playerObjects.Length; i++)
+                {
+                    //Cache reference to currently checked player
+                    PlayerController playerToCheck = playerObjects[i].GetComponent<PlayerController>();
+                    //If the checked player is not the player who entered the trigger, give them the debuff
+                    if (playerToCheck != player)
+                        playerToCheck.PickUpPowerUp((BuffDebuff)Activator.CreateInstance(powers[power]));
+                }
+
+                //Call the Collected method on the parent
+                parent.Collected();
+                //Disable this object
+                gameObject.SetActive(false);
+            }  
+        }
+    }
 }
