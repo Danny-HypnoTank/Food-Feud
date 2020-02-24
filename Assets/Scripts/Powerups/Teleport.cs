@@ -2,28 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Teleport : MonoBehaviour
+public class Teleport : BuffDebuff
 {
-    /*public Transform teleportTarget;
-    public GameObject thePlayer;
 
-    private void OnTriggerEnter(Collider other)
+    //private TeleportObject teleportObject;
+    private Vector3 startLocation;
+
+    public override void Start(PlayerController parent, float dur = 5)
     {
-        thePlayer.transform.position = teleportTarget.transform.position;
+        base.Start(parent);
+        //teleportObject = Parent.TeleportObject.GetComponent<TeleportObject>();
     }
-}*/
 
-    public GameObject objToTP;
-    public Transform tpLoc;
-
-
-
-    void OnTrigerStay(Collider other)
+    public override void OnUpdate(float deltaTime)
     {
-
-        if ((other.gameObject.tag == "Player") && Input.GetButton("Special2"))
+        if(Input.GetButtonDown($"Shoot{Parent.Player.playerNum}"))
         {
-            objToTP.transform.position = tpLoc.transform.position;
+            Parent.chc.detectCollisions = false;
+            Parent.chc.Move(Parent.transform.forward * 25);
+            Parent.chc.detectCollisions = true;
+            End();
         }
     }
+
+    public override void End()
+    {
+        base.End();
+    }
+
 }
