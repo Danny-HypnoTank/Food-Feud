@@ -2845,12 +2845,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  currentPowerUp: {fileID: 0}
-  weapons:
-  - {fileID: 2894338760094151284}
-  - {fileID: 111508954716418415}
-  - {fileID: 4387234293583785232}
-  - {fileID: 7864719739655114800}
   skins:
   - {fileID: 169309472288236940}
   - {fileID: 7168301731376304094}
@@ -2858,23 +2852,6 @@ MonoBehaviour:
   - {fileID: 2660890527505546129}
   - {fileID: 8417036446408865441}
   - {fileID: 2660890527505546129}
-  weaponOffsetPos:
-  - {fileID: 1980502896318809075}
-  - {fileID: 5919348304798639908}
-  - {fileID: 718199882046594831}
-  - {fileID: 4816762914056367613}
-  - {fileID: 4183224180732222818}
-  - {fileID: 4816762914056367613}
-  weaponOffsetTwinGun:
-  - {fileID: 3390699884677933543}
-  - {fileID: 8407974441342457463}
-  - {fileID: 711818251053416638}
-  - {fileID: 5893735112304810746}
-  - {fileID: 1816953521438859735}
-  - {fileID: 5893735112304810746}
-  gunHolder: {fileID: 7828662610943177099}
-  twinGunLeft: {fileID: 8379798253633548237}
-  twinGunRight: {fileID: 5853987189592016628}
   animationIDSet: 0
   currentWeaponId: 0
 --- !u!114 &2765032384847205780
@@ -2905,6 +2882,8 @@ MonoBehaviour:
   - {fileID: 7943211596268958685}
   - {fileID: 3372684936532918610}
   fillBar: {fileID: 2383520243882524125}
+  scoreText: {fileID: 2049229641411236565, guid: e8a1868cb8ca25940acce2e879e2b55f,
+    type: 3}
   scoreLayer:
     serializedVersion: 2
     m_Bits: 4096
@@ -5762,6 +5741,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 69d090af895b4204d9518abc43145896, type: 2}
+    - target: {fileID: 5930819111160738081, guid: 83e9ea8e6f5e50f44810fd1a6257ff9a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83e9ea8e6f5e50f44810fd1a6257ff9a, type: 3}
 --- !u!1 &169309472288236940 stripped

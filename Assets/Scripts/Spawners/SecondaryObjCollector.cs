@@ -58,5 +58,6 @@ public class SecondaryObjCollector : MonoBehaviour
         secondaryObj.transform.position = pointAboveHead.position;
         hasSecondaryObj = true;
         obj.GetComponent<SecondaryObjective>().BoxCollision.enabled = false;
+        obj.GetComponentInChildren<Renderer>().material.SetColor("_BaseColor",this.GetComponent<PlayerBase>().Player.SkinColours[this.GetComponent<PlayerBase>().Player.skinId]);
     }
 }
