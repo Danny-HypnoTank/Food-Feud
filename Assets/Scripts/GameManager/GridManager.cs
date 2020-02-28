@@ -175,7 +175,7 @@ public class GridManager : MonoBehaviour
                 float percentage = Scores[i] / totalScore;
                 //percentage *= 100;
                 Percentages[i] = percentage;
-                ManageGame.instance.Players[i].scorePercentage = percentage;
+                ManageGame.instance.Players[i-1].scorePercentage = percentage;
             }
             else
                 Percentages[i] = 0;

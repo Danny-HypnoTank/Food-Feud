@@ -64,6 +64,9 @@ public class PlayerBase : MonoBehaviour
     //Checking Input to then change animations and Expressions
     private void checkInput()
     {
+        float moveInputH = Input.GetAxisRaw($"Horizontal{Player.playerNum}");
+        float moveInputV = Input.GetAxisRaw($"Vertical{Player.playerNum}");
+        float input = moveInputH + moveInputV;
 
         if (pCon.IsDashing == true) //Check to see if player is dashing, if they are set animation to dash anim and Set expresiion
         {
