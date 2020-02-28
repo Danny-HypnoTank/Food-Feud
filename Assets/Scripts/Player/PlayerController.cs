@@ -8,9 +8,9 @@
  *              James Sturdgess
  */
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 public class PlayerController : MonoBehaviour
 {
 
@@ -222,6 +222,7 @@ public class PlayerController : MonoBehaviour
             UpdateFillBar();
         }
     }
+
     public void Splat()
     {
         Ray ray = new Ray(transform.position, -transform.up);
@@ -252,15 +253,26 @@ public class PlayerController : MonoBehaviour
         {
             if (hit.collider.CompareTag("ScoreGrid"))
             {
-                ScoreSquare square = hit.collider.GetComponent<ScoreSquare>();
+                Collider[] squaresHit = Physics.OverlapSphere(hit.collider.gameObject.transform.position, 6);
 
-                if (square.Value != Player.skinId)
+                for (int i = 0; i < squaresHit.Length; i++)
                 {
-                    square.SetValue(Player.skinId);
-                    GameObject _sg = Instantiate(scoreText, transform);
-                    _sg.GetComponent<TextMeshPro>().text = "+1";
-                    _sg.GetComponent<TextMeshPro>().color = Player.SkinColours[Player.skinId];
+                    ScoreSquare square = squaresHit[i].GetComponent<ScoreSquare>();
+
+                    if (square)
+                    {
+                        if (square.Value != Player.skinId)
+                        {
+                            square.SetValue(Player.skinId);
+                            GameObject _sg = Instantiate(scoreText, transform);
+                            _sg.GetComponent<TextMeshPro>().text = "+1";
+                            _sg.GetComponent<TextMeshPro>().color = Player.SkinColours[Player.skinId];
+                        }
+
+                    }
+
                 }
+
             }
         }
     }
@@ -311,5 +323,4 @@ public class PlayerController : MonoBehaviour
         if (fillBar != null)
             fillBar.fillAmount = dashAmount;
     }
-
 }

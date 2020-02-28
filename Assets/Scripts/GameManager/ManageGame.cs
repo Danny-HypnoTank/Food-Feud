@@ -172,6 +172,7 @@ public class ManageGame : MonoBehaviour
                 {
                     GameObject newPlayer = Instantiate(emptyPlayer) as GameObject;
                     newPlayer.name = "Player: " + (i + 1);
+                    players[i].hasWon = false;
                     newPlayer.SetActive(false);
                     newPlayer.transform.position = playerSpawnPositions[i].transform.position;
                     newPlayer.transform.rotation = PlayerSpawnPositions[i].transform.rotation;
