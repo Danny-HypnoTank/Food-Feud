@@ -44,7 +44,6 @@ public class PlayerController : MonoBehaviour
     private float dashCooldownMax;
 
     private float dashPower;
-    private float dashAmount;
     private bool canDash;
     private Vector3 dashPosition;
     public bool IsDashing { get; private set; }
@@ -72,6 +71,7 @@ public class PlayerController : MonoBehaviour
     private ObjectAudioHandler audioHandler;
 
     //Auto Properties
+    public float dashAmount { get; private set; }
     public DrawColor DrawColor { get; private set; }
     public PlayerBase PlayerBase { get; private set; }
     public DazeState PlayerStun { get; private set; }

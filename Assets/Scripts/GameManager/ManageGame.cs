@@ -52,6 +52,7 @@ public class ManageGame : MonoBehaviour
     public List<GameObject> PlayerObjects { get => playerObjects; set => playerObjects = value; }
     public List<GameObject> MapEdgesForGodPower { get => mapEdgesForGodPower; set => mapEdgesForGodPower = value; }
     public GameObject GodPowerUp { get => godPowerUp; set => godPowerUp = value; }
+    private SpecialButton specialButton;
     private float timeLimit = 60;
 
     //Creates instance of game manager
@@ -67,6 +68,8 @@ public class ManageGame : MonoBehaviour
         }
 
         clockHand.eulerAngles = v3Rot;
+
+        specialButton = GameObject.FindGameObjectWithTag("Special").GetComponent<SpecialButton>();
     }
     //handles display and counting of round timer
     [SerializeField]
@@ -108,6 +111,8 @@ public class ManageGame : MonoBehaviour
             }
             if (reverseTime % gridManager.TimeToCheck < 1) //Modulus operator to check if the value of reverseTime goes into TimeToCheck with a remainder that is less than 1, i.e. 60.23416 % 30 = 0.23416, 70.81674 % 30 = 10.81674 etc. -James
                 gridManager.UpdateUI();
+            if (reverseTime >= specialButton.ActivationTime && !specialButton.IsActive && !specialButton.HasBeenUsed)
+                specialButton.ActivateButton();
         }
     }
 
