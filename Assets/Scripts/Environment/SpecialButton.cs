@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Rendering.PostProcessing;
 
 enum SpecialPowers
 {
@@ -20,10 +23,14 @@ public class SpecialButton : MonoBehaviour
     [SerializeField]
     private float _activationTime;
 
+    [Header("Graphics")]
+    [SerializeField]
+    private Image specialBar;
+    [SerializeField]
+    private GameObject imageToDisplay;
+
     //Fields
     private string powerName;
-    private Vector3 inactivePosition;
-    private Vector3 activePosition;
     private readonly Dictionary<string, Type> powers = new Dictionary<string, Type>
     {
 
@@ -44,8 +51,6 @@ public class SpecialButton : MonoBehaviour
         IsActive = false;
         HasBeenUsed = false;
         powerName = Enum.GetName(typeof(SpecialPowers), debuff);
-        inactivePosition = transform.position;
-        activePosition = new Vector3(-54.5f, 3, 0);
 
     }
 
@@ -76,8 +81,10 @@ public class SpecialButton : MonoBehaviour
                             playerToCheck.PickUpPowerUp((BuffDebuff)Activator.CreateInstance(powers[powerName]));
                     }
 
+                    //Start the coroutine to display the image for the special debuff
+                    StartCoroutine(DisplayTheImage());
+
                     //Set the button to inactive so it can't be triggered again
-                    transform.position = inactivePosition;
                     IsActive = false;
                     HasBeenUsed = true;
                 }
@@ -88,12 +95,22 @@ public class SpecialButton : MonoBehaviour
         }
     }
 
-    public void ActivateButton()
+    public void ActivateButton() => IsActive = true; //Set IsActive to true and put button in the active position
+
+    public void UpdateBar(float time)
     {
-        //Set IsActive to true and put button in the active position
-        IsActive = true;
-        transform.position = activePosition;
+        if (specialBar != null)
+        {
+            if (time < ActivationTime)
+            {
+                //Calculate the current progress of the in-game time towards activation time as a percentage, and set the value to that percentage
+                float value = 0;
+                value = time / ActivationTime;
+                specialBar.fillAmount = value;
+            }
+        }
     }
+
     private bool CanBeTriggered(float dashAmount)
     {
         //Default result is false
@@ -105,6 +122,13 @@ public class SpecialButton : MonoBehaviour
 
         //Return the result
         return result;
+    }
+
+    private IEnumerator DisplayTheImage()
+    {
+        imageToDisplay.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        imageToDisplay.SetActive(false);
     }
 
 }

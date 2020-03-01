@@ -113,6 +113,8 @@ public class ManageGame : MonoBehaviour
                 gridManager.UpdateUI();
             if (reverseTime >= specialButton.ActivationTime && !specialButton.IsActive && !specialButton.HasBeenUsed)
                 specialButton.ActivateButton();
+            if (reverseTime % 1 < 1)
+                specialButton.UpdateBar(reverseTime);
         }
     }
 
