@@ -134,7 +134,7 @@ public class PlayerController : MonoBehaviour
                     if (!otherPlayer.PlayerStun.Stunned)
                         StartCoroutine(otherPlayer.PlayerStun.Stun(dashAmount));
 
-                    Splat();
+                    Splat(dashAmount);
                 }
             }
         }
@@ -145,7 +145,7 @@ public class PlayerController : MonoBehaviour
                 if (!PlayerStun.Stunned)
                 {
                     StartCoroutine(PlayerStun.Stun(dashAmount));
-                    Splat();
+                    Splat(dashAmount);
                 }
             }
         }
@@ -223,7 +223,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void Splat()
+    public void Splat(float multiplier = 1)
     {
         Ray ray = new Ray(transform.position, -transform.up);
 
@@ -237,9 +237,9 @@ public class PlayerController : MonoBehaviour
 
                 float _smult;
                 if (paintMultiplier)
-                    _smult = paintMultiplier.multiplier * weaponSplashMultiplier;
+                    _smult = paintMultiplier.multiplier * multiplier;
                 else
-                    _smult = 1f * weaponSplashMultiplier;
+                    _smult = 1f * multiplier;
 
                 int _id = Player.playerNum;
                 for (int i = 0; i < 10; i++)
@@ -253,7 +253,7 @@ public class PlayerController : MonoBehaviour
         {
             if (hit.collider.CompareTag("ScoreGrid"))
             {
-                Collider[] squaresHit = Physics.OverlapSphere(hit.collider.gameObject.transform.position, 6);
+                Collider[] squaresHit = Physics.OverlapSphere(hit.collider.gameObject.transform.position, 6 * multiplier);
 
                 for (int i = 0; i < squaresHit.Length; i++)
                 {
