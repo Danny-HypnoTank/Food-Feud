@@ -19,7 +19,7 @@ public class TrailPowerup : BuffDebuff
         //Whenever the elapsed time can be divided by 0.25 with a remainder that is less than 0.1 (e.g. 6.253 % = 0.003)
         //and if the player is moving, call the splat method
         if (elapsedTime % 0.25 < 0.1 && Parent.MoveVelocity != Vector3.zero)
-            Parent.Splat();
+            Parent.Splat(0.25f);
     }
 
     public override void End()
