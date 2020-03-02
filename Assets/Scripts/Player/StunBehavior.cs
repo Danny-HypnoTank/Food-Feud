@@ -50,21 +50,21 @@ public class StunBehavior : MonoBehaviour
 
     private void Update()
     {
-        if (StunProgress >= 0.3f && StunProgress <= 0.69f)
+        if (StunProgress >= 0.4f && StunProgress <= 0.69f)
         {
             stunStars[0].SetActive(true);
             stunStars[1].SetActive(false);
             stunStars[2].SetActive(false);
             stunStars[3].SetActive(false);
         }
-        else if (StunProgress >= 0.7f && StunProgress <= 0.99f)
+        else if (StunProgress >= 0.8f && StunProgress <= 1f)
         {
             stunStars[0].SetActive(true);
             stunStars[1].SetActive(true);
             stunStars[2].SetActive(false);
             stunStars[3].SetActive(false);
         }
-        else if (StunProgress > 1)
+        else if (StunProgress > 1.1f)
         {
             stunStars[0].SetActive(true);
             stunStars[1].SetActive(true);
