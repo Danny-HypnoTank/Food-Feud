@@ -12,13 +12,9 @@ public class NewMainMenu : MonoBehaviour
 {
     [Header("Main menu buttons and sprites")]
     [SerializeField]
-    private Transform[] mainMenuButtons;
+    private UIElementController[] mainMenuButtons;
     [SerializeField]
     private Transform quitPanel;
-    [SerializeField]
-    private Sprite[] defaultSprites, hoverSprites;
-    [SerializeField]
-    private SpriteRenderer[] imageOfSprites;
     [Header("Logic")]
     [SerializeField]
     private int selectId;
@@ -47,10 +43,7 @@ public class NewMainMenu : MonoBehaviour
     private GameObject toolTip;
     private bool isTransition = false;
     private ObjectAudioHandler audioHandler;
-
-    private void Awake()
-    {
-    }
+    private UIElementController previousSelection;
 
     private void Start()
     {
@@ -82,7 +75,7 @@ public class NewMainMenu : MonoBehaviour
 
     private void InputSelect()
     {
-
+        mainMenuButtons[selectId].ChangeState(UIElementState.pressed);
         audioHandler.SetSFX("Accept");
         if (selectId == 0)
         {
@@ -210,12 +203,11 @@ public class NewMainMenu : MonoBehaviour
 
     private void SetHover()
     {
-        for (int i = 0; i < imageOfSprites.Length; i++)
-        {
-            imageOfSprites[i].sprite = defaultSprites[i];
-        }
-        imageOfSprites[selectId].sprite = hoverSprites[selectId];
+        if (previousSelection != null)
+            previousSelection.ChangeState(UIElementState.inactive);
 
+        mainMenuButtons[selectId].ChangeState(UIElementState.hover);
+        previousSelection = mainMenuButtons[selectId];
     }
 
     public void QuitGame()

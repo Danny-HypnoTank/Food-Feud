@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1989,6 +1989,7 @@ GameObject:
   m_Component:
   - component: {fileID: 279171615}
   - component: {fileID: 279171616}
+  - component: {fileID: 279171617}
   m_Layer: 0
   m_Name: OptionsStickerText
   m_TagString: Untagged
@@ -2059,6 +2060,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &279171617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 279171614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5b7198f41a4bb9418e84ae5588744c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleMultiplier: 1.1
+  lerpDuration: 1
+  lerpAngle: 10
+  inactiveSprite: {fileID: 21300000, guid: 5c9baf87349d6374a82113fe7a158f7e, type: 3}
+  activeSprite: {fileID: 21300000, guid: b563129e05618ca42b3d32b7921e9523, type: 3}
 --- !u!1001 &324658004
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6745,22 +6763,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMenuButtons:
-  - {fileID: 1755025634}
-  - {fileID: 557186205}
-  - {fileID: 1283779679}
+  - {fileID: 1983615654}
+  - {fileID: 279171617}
+  - {fileID: 2028431954}
   quitPanel: {fileID: 628190172}
-  defaultSprites:
-  - {fileID: 21300000, guid: 601d09fc4e3b76046934e8da71d06a15, type: 3}
-  - {fileID: 21300000, guid: 5c9baf87349d6374a82113fe7a158f7e, type: 3}
-  - {fileID: 21300000, guid: 1c22ec093a41c324383df354ce053e07, type: 3}
-  hoverSprites:
-  - {fileID: 21300000, guid: 033f51b9828fbd342b7de0a8b4f9e594, type: 3}
-  - {fileID: 21300000, guid: b563129e05618ca42b3d32b7921e9523, type: 3}
-  - {fileID: 21300000, guid: b223c83a7b45d584eb6fe751d0a2bd5f, type: 3}
-  imageOfSprites:
-  - {fileID: 1983615653}
-  - {fileID: 279171616}
-  - {fileID: 2028431953}
   selectId: 0
   isAxis: 0
   doorHolder: {fileID: 1441472199}
@@ -12711,6 +12717,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1983615652}
   - component: {fileID: 1983615653}
+  - component: {fileID: 1983615654}
   m_Layer: 0
   m_Name: StartStickerText
   m_TagString: Untagged
@@ -12725,13 +12732,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1983615651}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1755025634}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 67.394005, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1983615653
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12781,6 +12788,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1983615654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983615651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5b7198f41a4bb9418e84ae5588744c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleMultiplier: 1.1
+  lerpDuration: 1
+  lerpAngle: 10
+  inactiveSprite: {fileID: 21300000, guid: 601d09fc4e3b76046934e8da71d06a15, type: 3}
+  activeSprite: {fileID: 21300000, guid: 033f51b9828fbd342b7de0a8b4f9e594, type: 3}
 --- !u!1 &2007914053
 GameObject:
   m_ObjectHideFlags: 0
@@ -13217,6 +13241,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2028431952}
   - component: {fileID: 2028431953}
+  - component: {fileID: 2028431954}
   m_Layer: 0
   m_Name: ExitStickerText
   m_TagString: Untagged
@@ -13287,6 +13312,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2028431954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028431951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5b7198f41a4bb9418e84ae5588744c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleMultiplier: 1.1
+  lerpDuration: 1
+  lerpAngle: 10
+  inactiveSprite: {fileID: 21300000, guid: 1c22ec093a41c324383df354ce053e07, type: 3}
+  activeSprite: {fileID: 21300000, guid: b223c83a7b45d584eb6fe751d0a2bd5f, type: 3}
 --- !u!1001 &2049152769
 PrefabInstance:
   m_ObjectHideFlags: 0
