@@ -42,12 +42,19 @@ public class NewMainMenu : MonoBehaviour
     [SerializeField]
     private GameObject toolTip;
     private bool isTransition = false;
+    private int previousID;
     private ObjectAudioHandler audioHandler;
     private UIElementController previousSelection;
 
     private void Start()
     {
         cameraTransform.position = optionsCameraPoint.position;
+
+        doorAnimation = doorHolder.GetComponent<Animator>();
+        audioHandler = GetComponent<ObjectAudioHandler>();
+        doorAnimation.enabled = false;
+        selectId = 0;
+        SetHover();
     }
     private void OnEnable()
     {
@@ -76,7 +83,7 @@ public class NewMainMenu : MonoBehaviour
     private void InputSelect()
     {
         mainMenuButtons[selectId].ChangeState(UIElementState.pressed);
-        audioHandler.SetSFX("Accept");
+        //audioHandler.SetSFX("Accept");
         if (selectId == 0)
         {
             StartCoroutine("CameraDown");
@@ -141,6 +148,7 @@ public class NewMainMenu : MonoBehaviour
     {
         if (canPressBtn == true)
         {
+
             if (Input.GetButtonDown("Dash"))
             {
                 InputSelect();
@@ -153,7 +161,7 @@ public class NewMainMenu : MonoBehaviour
                     selectId++;
                     if (selectId > mainMenuButtons.Length -1)
                     {
-                        selectId = mainMenuButtons.Length -1;
+                        selectId = 0;
                     }
                     SetHover();
                 }
@@ -166,7 +174,32 @@ public class NewMainMenu : MonoBehaviour
                     selectId--;
                     if (selectId < 0)
                     {
-                        selectId = 0;
+                        selectId = mainMenuButtons.Length -1;
+                    }
+                    SetHover();
+                }
+            }
+            else if (Input.GetAxis("Vertical") < -0.3f)
+            {
+                if (isAxis == false)
+                {
+
+                    previousID = selectId;
+                    isAxis = true;
+                    if (selectId < 2)
+                        selectId = 2;
+                    SetHover();
+                }
+            }
+            else if (Input.GetAxis("Vertical") > 0.3f)
+            {
+                if (isAxis == false)
+                {
+
+                    isAxis = true;
+                    if (selectId == 2)
+                    {
+                        selectId = previousID;
                     }
                     SetHover();
                 }

@@ -8,7 +8,7 @@ public class MassFreeze : BuffDebuff
     public override void Start(PlayerController parent, float dur = 5)
     {
         base.Start(parent, dur);
-        parent.StartCoroutine(Parent.PlayerStun.Stun(2));
+        parent.StartCoroutine(Parent.PlayerStun.Freeze());
         End();
     }
 

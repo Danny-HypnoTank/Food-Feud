@@ -88,14 +88,14 @@ public class UIElementController : MonoBehaviour
         //Reset the scale/angle of the UI Element and set the sprite to the inactive sprite
         transform.localScale = Vector3.one;
         transform.eulerAngles = new Vector3(0, 180, 0);
-        spriteRender.sprite = inactiveSprite;
+        ChangeSprite(inactiveSprite);
     }
 
     private void SetHover()
     {
         //Scale the UI Element by the scale multiplier and set the sprite to the active sprite
         transform.localScale *= scaleMultiplier;
-        spriteRender.sprite = activeSprite;
+        ChangeSprite(activeSprite);
     }
 
     private void SetPressed()
@@ -103,6 +103,12 @@ public class UIElementController : MonoBehaviour
         //Reset the angle of the UI Element and scale it down from the original size by the scale multiplier
         transform.localScale = Vector3.one / scaleMultiplier;
         transform.eulerAngles = new Vector3(0, 180, 0);
+    }
+
+    private void ChangeSprite(Sprite sprite)
+    {
+        if (spriteRender.sprite != sprite)
+            spriteRender.sprite = sprite;
     }
 
     private void HoverAction()

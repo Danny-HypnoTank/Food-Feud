@@ -27,4 +27,9 @@ public class SplatRelease : BuffDebuff
         base.End();
     }
 
+    public override void RefreshDuration()
+    {
+        base.RefreshDuration();
+    }
+
 }

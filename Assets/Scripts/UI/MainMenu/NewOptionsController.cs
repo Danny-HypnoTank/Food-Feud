@@ -34,6 +34,8 @@ public class NewOptionsController : MonoBehaviour
     [SerializeField]
     private bool isAxis = false;
     private bool isSlider;
+    private int previousId;
+    private UIElementController previousSelection;
 
     private void OnEnable()
     {
@@ -48,6 +50,7 @@ public class NewOptionsController : MonoBehaviour
         canPressBtn = true;
         isAxis = false;
         selectId = 0;
+        SetHover();
         doorAnimation = doorHolder.GetComponent<Animator>();
         doorAnimation.enabled = false;
         ResetSliderHovers();
@@ -74,7 +77,7 @@ public class NewOptionsController : MonoBehaviour
                 }
                 else if(isSlider == true)
                 {
-                    Sliderbox[selectId].GetComponent<CustomSlider>().SaveSettings();
+                    SetHover();
                     ResetSliders();
                 }
             }
@@ -85,13 +88,15 @@ public class NewOptionsController : MonoBehaviour
                 {
                     if (isAxis == false)
                     {
+
                         isAxis = true;
                         selectId++;
                         if (selectId > Sliderbox.Length - 1)
                         {
-                            selectId = Sliderbox.Length - 1;
+                            selectId = 0;
                         }
                         ResetSliderHovers();
+                        SetHover();
                         sliderHover[selectId].SetActive(true);
                     }
                 }
@@ -99,15 +104,43 @@ public class NewOptionsController : MonoBehaviour
                 {
                     if (isAxis == false)
                     {
+
                         isAxis = true;
                         selectId--;
                         if (selectId < 0)
                         {
-                            selectId = 0;
+                            selectId = Sliderbox.Length -1;
                         }
                         ResetSliderHovers();
+                        SetHover();
                         sliderHover[selectId].SetActive(true);
 
+                    }
+                }
+                else if(Input.GetAxis("Vertical") > 0.3f)
+                {
+                    if (isAxis == false)
+                    {
+                        previousId = selectId;
+
+                        isAxis = true;
+                        if (selectId > 0)
+                        {
+                            selectId = 0;
+                        }
+                        SetHover();
+                    }
+                }
+                else if (Input.GetAxis("Vertical") < -0.3f)
+                {
+                    if (isAxis == false)
+                    {
+                        isAxis = true;
+                        if (selectId == 0)
+                        {
+                            selectId = previousId;
+                        }
+                        SetHover();
                     }
                 }
                 else
@@ -143,7 +176,18 @@ public class NewOptionsController : MonoBehaviour
     {
         isSlider = true;
         Sliderbox[selectId].GetComponent<CustomSlider>().enabled = true;
+        Sliderbox[selectId].GetComponentInChildren<UIElementController>().ChangeState(UIElementState.pressed);
     }
+
+    private void SetHover()
+    {
+        if(previousSelection != null)
+            previousSelection.ChangeState(UIElementState.inactive);
+
+        Sliderbox[selectId].GetComponentInChildren<UIElementController>().ChangeState(UIElementState.hover);
+        previousSelection = Sliderbox[selectId].GetComponentInChildren<UIElementController>();
+    }
+
     private void ReturnToMainMenu()
     {
         doorAnimation.enabled = true;
