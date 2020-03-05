@@ -93,6 +93,29 @@ public class DazeState : MonoBehaviour
         }
     }
 
+    public IEnumerator Freeze()
+    {
+        if (playerController.StunImmunityPowerup != null)
+        {
+            playerController.StunImmunityPowerup.End();
+        }
+        else
+        {
+            Stunned = true;
+            CanShoot = false;
+
+            stunDuration = stunDurationMax * 2;
+
+            yield return new WaitForSeconds(stunDuration);
+
+            Stunned = false;
+            CanShoot = true;
+            cooldownTime = cooldownTimeMax;
+
+            StartCoroutine(StunCooldown(cooldownTime));
+        }
+    }
+
     private IEnumerator StunCooldown(float time)
     {
 

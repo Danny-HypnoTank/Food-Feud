@@ -23,9 +23,6 @@ public class EndGameScore : MonoBehaviour
     private List<Player> sortedPlayers = new List<Player>();    //stores a sorted list of players by score
     [SerializeField]
     private Transform[] podiumLocations;
-    private int usedPodiums;
-    private float total;
-    private Loading loading;
     [SerializeField]
     private GameObject[] menuButtons;
     [SerializeField]
@@ -33,8 +30,14 @@ public class EndGameScore : MonoBehaviour
     [SerializeField]
     private GameObject[] winnerIcons;
 
+    private int usedPodiums;
+    private bool canUseInput;
+    private float total;
+    private Loading loading;
+
     private void Start()
     {
+        canUseInput = false;
         StartCoroutine(WinnerCheck());
 
         //enables end score menu/rematch buttons
@@ -104,53 +107,59 @@ public class EndGameScore : MonoBehaviour
     //returns to main menu
     public void MainMenuReturnBtn()
     {
-        loading.InitializeLoading();
-
-        //disables player score texts and menu buttons when main menu button is pressed
-        foreach (GameObject goMB in menuButtons)
+        if (canUseInput)
         {
-            goMB.SetActive(false);
+            loading.InitializeLoading();
+
+            //disables player score texts and menu buttons when main menu button is pressed
+            foreach (GameObject goMB in menuButtons)
+            {
+                goMB.SetActive(false);
+            }
+            foreach (GameObject goWP in winningPlayer)
+            {
+                goWP.SetActive(false);
+            }
+
+            foreach (Player p in players)
+            {
+
+                p.hasWon = false;
+
+            }
+
+            SceneManager.LoadScene(0);
         }
-        foreach (GameObject goWP in winningPlayer)
-        {
-            goWP.SetActive(false);
-        }
-
-        foreach (Player p in players)
-        {
-
-            p.hasWon = false;
-
-        }
-
-        SceneManager.LoadScene(0);
     }
 
     //restarts the game
     public void Rematch()
     {
-        loading.InitializeLoading();
-
-        //disables player score texts and menu buttons when rematch button is pressed
-        foreach (GameObject goMB in menuButtons)
+        if (canUseInput)
         {
-            goMB.SetActive(false);
+            loading.InitializeLoading();
+
+            //disables player score texts and menu buttons when rematch button is pressed
+            foreach (GameObject goMB in menuButtons)
+            {
+                goMB.SetActive(false);
+            }
+            foreach (GameObject goWP in winningPlayer)
+            {
+                goWP.SetActive(false);
+            }
+
+            foreach (Player p in sortedPlayers)
+            {
+
+                p.hasWon = false;
+
+            }
+
+            //reload characters
+
+            SceneManager.LoadScene(1);
         }
-        foreach (GameObject goWP in winningPlayer)
-        {
-            goWP.SetActive(false);
-        }
-
-        foreach(Player p in sortedPlayers)
-        {
-
-            p.hasWon = false;
-
-        }
-
-        //reload characters
-
-        SceneManager.LoadScene(1);
     }
 
     private void DisplayWinner()
@@ -168,6 +177,7 @@ public class EndGameScore : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         DisplayWinner();
+        canUseInput = true;
 
         yield return null;
     }

@@ -57,4 +57,9 @@ public abstract class BuffDebuff
     /// </summary>
     public virtual void End() => Parent.SetProperty<BuffDebuff>(nameof(Parent.CurrentPowerup), null); //Set the player's current buff/debuff to null
 
+    /// <summary>
+    /// Method for refreshing the powerup duration
+    /// </summary>
+    public virtual void RefreshDuration() => elapsedTime = 0; //Reset the timer
+
 }
