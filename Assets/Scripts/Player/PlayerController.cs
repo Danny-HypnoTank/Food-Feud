@@ -132,7 +132,11 @@ public class PlayerController : MonoBehaviour
                 if (!otherPlayer.IsDashing)
                 {
                     if (!otherPlayer.PlayerStun.Stunned)
-                        StartCoroutine(otherPlayer.PlayerStun.Stun(dashAmount));
+                    {
+                        Player.StunCount++;
+                        StartCoroutine(otherPlayer.PlayerStun.Stun(dashAmount,this));
+                    }
+                            
 
                     Splat(dashAmount);
                 }
@@ -144,7 +148,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (!PlayerStun.Stunned)
                 {
-                    StartCoroutine(PlayerStun.Stun(dashAmount));
+                    StartCoroutine(PlayerStun.Stun(dashAmount,this));
                     Splat(dashAmount);
                 }
             }
@@ -197,7 +201,7 @@ public class PlayerController : MonoBehaviour
                 dashAmount += Time.deltaTime;
             else
                 dashAmount = 1;
-
+            Player.DashCount++;
             UpdateFillBar();
         }
 
@@ -279,6 +283,7 @@ public class PlayerController : MonoBehaviour
 
     public void PickUpPowerUp(BuffDebuff powerup)
     {
+        Player.PowerUpsCount++;
         if (powerup is StunImmunity)
         {
             StunImmunityPowerup = (StunImmunity)powerup;
