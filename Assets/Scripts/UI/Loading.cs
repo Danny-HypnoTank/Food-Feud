@@ -38,7 +38,7 @@ public class Loading : MonoBehaviour
         //activate loading screen object and set scene
         //suspend coroutine for 10 secs to loading screen to last longer
         loadingScreenPanel.SetActive(true);
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(3);
         AsyncOperation async = SceneManager.LoadSceneAsync(sceneToLoadId);
         async.allowSceneActivation = false;
 
