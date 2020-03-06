@@ -14,6 +14,8 @@ public class NewMainMenu : MonoBehaviour
     [SerializeField]
     private UIElementController[] mainMenuButtons;
     [SerializeField]
+    private Transform confirmationMsg;
+    [SerializeField]
     private Transform quitPanel;
     [Header("Logic")]
     [SerializeField]
@@ -25,7 +27,7 @@ public class NewMainMenu : MonoBehaviour
     [SerializeField]
     private Transform doorHolder;
     [SerializeField]
-    private Transform cameraTransform, optionsCameraPoint, characterSelectPoint;
+    private Transform cameraTransform, optionsCameraPoint, characterSelectPoint, medalViewPoint, defaultCameraPoint;
     [Header("Handles animation for moving into upper fridge")]
     [SerializeField]
     private bool usingLerp = true;
@@ -36,6 +38,8 @@ public class NewMainMenu : MonoBehaviour
     [SerializeField]
     private float animationSpeed = 0.5f;
     [SerializeField]
+    private float cameraSpeedMedals = 0.4f, cameraSpeedReset = 0.6f;
+    [SerializeField]
     private bool canPressBtn = true;
     [SerializeField]
     private bool usingToolTips;
@@ -44,7 +48,9 @@ public class NewMainMenu : MonoBehaviour
     private bool isTransition = false;
     private int previousID;
     private ObjectAudioHandler audioHandler;
+    private ControllerNav controlNav;
     private UIElementController previousSelection;
+    private bool previewingMedals = false;
 
     private void Start()
     {
@@ -58,7 +64,9 @@ public class NewMainMenu : MonoBehaviour
     }
     private void OnEnable()
     {
+        previewingMedals = false;
         isTransition = false;
+        confirmationMsg.gameObject.SetActive(false);
         quitPanel.gameObject.SetActive(false);
         canPressBtn = true;
         //Closed door 115.504 open door 24.249
@@ -100,6 +108,12 @@ public class NewMainMenu : MonoBehaviour
             quitPanel.gameObject.SetActive(true);
             canPressBtn = false;
         }
+        else if(selectId == 3)
+        {
+            StopCoroutine("CameraSide");
+            StopCoroutine("CameraReset");
+            StartCoroutine("CameraSide");
+        }
     }
     private IEnumerator CameraDown()
     {
@@ -110,23 +124,76 @@ public class NewMainMenu : MonoBehaviour
         {
             if (usingLerp == true)
             {
-                cameraTransform.position = Vector3.Lerp(cameraTransform.position, characterSelectPoint.position, cameraMoveSpeed * Time.deltaTime);
+                cameraTransform.position = Vector3.Lerp(cameraTransform.position, characterSelectPoint.position, cameraSpeedMedals * Time.deltaTime);
             }
             else
             {
-                cameraTransform.position = Vector3.MoveTowards(cameraTransform.position, characterSelectPoint.position, cameraMoveSpeed * Time.deltaTime);
+                cameraTransform.position = Vector3.MoveTowards(cameraTransform.position, characterSelectPoint.position, cameraSpeedMedals * Time.deltaTime);
             }
-            cameraTransform.rotation = Quaternion.Slerp(cameraTransform.rotation, characterSelectPoint.rotation, cameraMoveSpeed * Time.deltaTime);
+            cameraTransform.rotation = Quaternion.Slerp(cameraTransform.rotation, characterSelectPoint.rotation, cameraSpeedMedals * Time.deltaTime);
             if (Vector3.Distance(cameraTransform.position, characterSelectPoint.position) < 0.01f) arrived = true;
             yield return null;
         }
+        yield return new WaitForSeconds(waitBetweenAnimation);
         isTransition = false;
         MenuController.instance.MainMenuToCharacterSelect();
         yield return null;
     }
 
-    
-        private IEnumerator CameraIn()
+    private IEnumerator CameraReset()
+    {
+        previewingMedals = false;
+        isTransition = true;
+        bool arrived = false;
+        while (!arrived)
+        {
+            if (usingLerp == true)
+            {
+                cameraTransform.position = Vector3.Lerp(cameraTransform.position, defaultCameraPoint.position, cameraMoveSpeed * Time.deltaTime);
+            }
+            else
+            {
+                cameraTransform.position = Vector3.MoveTowards(cameraTransform.position, defaultCameraPoint.position, cameraMoveSpeed * Time.deltaTime);
+            }
+            cameraTransform.rotation = Quaternion.Slerp(cameraTransform.rotation, defaultCameraPoint.rotation, cameraMoveSpeed * Time.deltaTime);
+            if (Vector3.Distance(cameraTransform.position, defaultCameraPoint.position) < 0.1f) arrived = true;
+            yield return null;
+        }
+        yield return new WaitForSeconds(waitBetweenAnimation);
+        cameraTransform.transform.position = defaultCameraPoint.transform.position;
+        isTransition = false;
+        canPressBtn = true;
+        yield return null;
+    }
+
+    private IEnumerator CameraSide()
+    {
+        previewingMedals = true;
+        isTransition = true;
+        canPressBtn = false;
+        bool arrived = false;
+        while (!arrived)
+        {
+            if (usingLerp == true)
+            {
+                cameraTransform.position = Vector3.Lerp(cameraTransform.position, medalViewPoint.position, cameraSpeedMedals * Time.deltaTime);
+            }
+            else
+            {
+                cameraTransform.position = Vector3.MoveTowards(cameraTransform.position, medalViewPoint.position, cameraSpeedMedals * Time.deltaTime);
+            }
+            cameraTransform.rotation = Quaternion.Slerp(cameraTransform.rotation, medalViewPoint.rotation, cameraSpeedMedals * Time.deltaTime);
+            if (Vector3.Distance(cameraTransform.position, medalViewPoint.position) < 0.01f) arrived = true;
+            yield return null;
+        }
+        yield return new WaitForSeconds(waitBetweenAnimation);
+        isTransition = false;
+        yield return null;
+    }
+
+
+
+    private IEnumerator CameraIn()
         {
         canPressBtn = false;
         isTransition = true;
@@ -146,89 +213,101 @@ public class NewMainMenu : MonoBehaviour
 
     private void Update()
     {
-        if (canPressBtn == true)
-        {
-
-            if (Input.GetButtonDown("Dash"))
-            {
-                InputSelect();
-            }
-            if (Input.GetAxis("Horizontal") < -0.3f)
-            {
-                if (isAxis == false)
-                {
-                    isAxis = true;
-                    selectId++;
-                    if (selectId > mainMenuButtons.Length -1)
-                    {
-                        selectId = 0;
-                    }
-                    SetHover();
-                }
-            }
-            else if (Input.GetAxis("Horizontal") > 0.3f)
-            {
-                if (isAxis == false)
-                {
-                    isAxis = true;
-                    selectId--;
-                    if (selectId < 0)
-                    {
-                        selectId = mainMenuButtons.Length -1;
-                    }
-                    SetHover();
-                }
-            }
-            else if (Input.GetAxis("Vertical") < -0.3f)
-            {
-                if (isAxis == false)
-                {
-
-                    previousID = selectId;
-                    isAxis = true;
-                    if (selectId < 2)
-                        selectId = 2;
-                    SetHover();
-                }
-            }
-            else if (Input.GetAxis("Vertical") > 0.3f)
-            {
-                if (isAxis == false)
-                {
-
-                    isAxis = true;
-                    if (selectId == 2)
-                    {
-                        selectId = previousID;
-                    }
-                    SetHover();
-                }
-            }
-            else
-            {
-                isAxis = false;
-            }
-        }
-
-        if (quitPanel.gameObject.activeInHierarchy == true)
+        if (previewingMedals == true)
         {
             if (Input.GetButtonDown("BackButton"))
             {
-                ResumeGame();
-
-                audioHandler.SetSFX("Cancel");
+                canPressBtn = true;
+                StopCoroutine("CameraSide");
+                StartCoroutine("CameraReset");
             }
         }
         else
         {
-            if (Input.GetButtonDown("BackButton"))
+            if (canPressBtn == true)
             {
-                if (isTransition == false)
+
+                if (Input.GetButtonDown("Dash"))
                 {
-                    quitPanel.gameObject.SetActive(true);
-                    canPressBtn = false;
+                    InputSelect();
+                }
+                if (Input.GetAxis("Horizontal") < -0.3f)
+                {
+                    if (isAxis == false)
+                    {
+                        isAxis = true;
+                        selectId++;
+                        if (selectId > mainMenuButtons.Length - 1)
+                        {
+                            selectId = 0;
+                        }
+                        SetHover();
+                    }
+                }
+                else if (Input.GetAxis("Horizontal") > 0.3f)
+                {
+                    if (isAxis == false)
+                    {
+                        isAxis = true;
+                        selectId--;
+                        if (selectId < 0)
+                        {
+                            selectId = mainMenuButtons.Length - 1;
+                        }
+                        SetHover();
+                    }
+                }
+                else if (Input.GetAxis("Vertical") < -0.3f)
+                {
+                    if (isAxis == false)
+                    {
+
+                        previousID = selectId;
+                        isAxis = true;
+                        if (selectId < 2)
+                            selectId = 2;
+                        SetHover();
+                    }
+                }
+                else if (Input.GetAxis("Vertical") > 0.3f)
+                {
+                    if (isAxis == false)
+                    {
+
+                        isAxis = true;
+                        if (selectId == 2)
+                        {
+                            selectId = previousID;
+                        }
+                        SetHover();
+                    }
+                }
+                else
+                {
+                    isAxis = false;
+                }
+            }
+
+            if (quitPanel.gameObject.activeInHierarchy == true)
+            {
+                if (Input.GetButtonDown("BackButton"))
+                {
+                    ResumeGame();
 
                     audioHandler.SetSFX("Cancel");
+                }
+            }
+            else
+            {
+                if (Input.GetButtonDown("BackButton"))
+                {
+                    if (isTransition == false)
+                    {
+                        quitPanel.gameObject.SetActive(true);
+                        canPressBtn = false;
+
+                        audioHandler.SetSFX("Cancel");
+                    }
                 }
             }
         }

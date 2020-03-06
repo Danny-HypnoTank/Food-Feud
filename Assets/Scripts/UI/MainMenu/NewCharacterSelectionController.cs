@@ -11,11 +11,15 @@ using UnityEngine;
 
 public class NewCharacterSelectionController : MonoBehaviour
 {
+    private ControllerNav controlNav;
+    private bool isConfirmation;
+    [SerializeField]
+    private Transform readyMsgBar;
     private bool canPressBtn = true;
     [SerializeField]
     private Transform doorHolder;
     [SerializeField]
-    private Transform cameraTransform, mainMenuCameraPoint;
+    private Transform cameraTransform, mainMenuCameraPoint, SinkPoint;
     [SerializeField]
     private float waitBetweenAnimation = 0.5f;
     [SerializeField]
@@ -34,9 +38,38 @@ public class NewCharacterSelectionController : MonoBehaviour
     private bool isTransition = false;
     private Loading loadingManager;
 
+    private void Awake()
+    {
+        controlNav = GameObject.Find("EventSystem").GetComponent<ControllerNav>();
+    }
     private void Start()
     {
         loadingManager = GameObject.Find("LoadingManager").GetComponent<Loading>();
+    }
+
+    public void CheckSubmission()
+    {
+        bool canStart = true;
+        int readyPlayers = 0;
+        for (int i = 0; i < pinController.Length; i++)
+        {
+            if (pinController[i].GetComponent<PinController>().IsActive == true)
+            {
+                if (pinController[i].GetComponent<PinController>().IsLocked == true)
+                {
+                    readyPlayers++;
+                }
+                else if (pinController[i].GetComponent<PinController>().IsLocked == false)
+                {
+                    canStart = false;
+                }
+            }
+        }
+        // Debug.Log(canStart + " and ready players num: " + readyPlayers);
+        if (canStart == true && readyPlayers >= 2)
+        {
+            DisplayReadyMSg();
+        }
     }
 
     private void OnEnable()
@@ -62,7 +95,18 @@ public class NewCharacterSelectionController : MonoBehaviour
 
     private void Update()
     {
-        if (canPressBtn == true)
+        if (isConfirmation == true)
+        {
+            if (Input.GetButtonDown("BackButton"))
+            {
+                ReadyCancel();
+            }
+            if (Input.GetButtonDown("Dash"))
+            {
+                ReadConfirm();
+            }
+        }
+        else if (canPressBtn == true)
         {
             if (Input.GetButtonDown("BackButton"))
             {
@@ -82,41 +126,51 @@ public class NewCharacterSelectionController : MonoBehaviour
                     }
                 }
             }
-  
+
         }
     }
 
-    public void CheckSubmission()
+    private void DisplayReadyMSg()
     {
-        bool canStart = true;
-        int readyPlayers = 0;
+        isConfirmation = true;
+        readyMsgBar.gameObject.SetActive(true);
+        controlNav.ButtonID = 1;
+    }
+
+    public void ReadConfirm()
+    {
+        readyMsgBar.gameObject.SetActive(false);
+        RandomMap();
+    }
+
+    public void ReadyCancel()
+    {
+        isConfirmation = false;
+        readyMsgBar.gameObject.SetActive(false);
         for (int i = 0; i < pinController.Length; i++)
         {
-            if (pinController[i].GetComponent<PinController>().IsActive == true)
-            {
-                if (pinController[i].GetComponent<PinController>().IsLocked == true)
-                {
-                    readyPlayers++;
-                }
-                else if (pinController[i].GetComponent<PinController>().IsLocked == false)
-                {
-                    canStart = false;
-                }
-            }
+            pinController[i].gameObject.SetActive(false);
         }
-       // Debug.Log(canStart + " and ready players num: " + readyPlayers);
-        if (canStart == true && readyPlayers >= 2)
+        for (int i = 0; i < pinController.Length; i++)
         {
-            RandomMap();
+            pinController[i].gameObject.SetActive(true);
         }
     }
 
     private void RandomMap()
     {
-        doorAnimation.enabled = true;
-        doorAnimation.speed = animationSpeed;
-        doorAnimation.SetInteger("CloseAnim", 1);
-        StartCoroutine("OpenFridge");
+        int randomMap = Random.Range(0, 2);
+        if (randomMap == 0)
+        {
+            doorAnimation.enabled = true;
+            doorAnimation.speed = animationSpeed;
+            doorAnimation.SetInteger("CloseAnim", 1);
+            StartCoroutine("OpenFridge");
+        }
+        else
+        {
+            StartCoroutine("CameraSide");
+        }
     }
 
     private IEnumerator OpenFridge()
@@ -125,6 +179,7 @@ public class NewCharacterSelectionController : MonoBehaviour
         isTransition = true;
         yield return new WaitForSeconds(waitBetweenAnimation);
         isTransition = false;
+        loadingManager.SetID(1);
         loadingManager.InitializeLoading();
         yield return null;
     }
@@ -133,6 +188,32 @@ public class NewCharacterSelectionController : MonoBehaviour
     private void ReturnToMainMenu()
     {
         StartCoroutine("CameraUp");
+    }
+
+    private IEnumerator CameraSide()
+    {
+        isTransition = true;
+        canPressBtn = false;
+        bool arrived = false;
+        while (!arrived)
+        {
+            if (usingLerp == true)
+            {
+                cameraTransform.position = Vector3.Lerp(cameraTransform.position, SinkPoint.position, cameraMoveSpeed * Time.deltaTime);
+            }
+            else
+            {
+                cameraTransform.position = Vector3.MoveTowards(cameraTransform.position, SinkPoint.position, cameraMoveSpeed * Time.deltaTime);
+            }
+            cameraTransform.rotation = Quaternion.Slerp(cameraTransform.rotation, SinkPoint.rotation, cameraMoveSpeed * Time.deltaTime);
+            if (Vector3.Distance(cameraTransform.position, SinkPoint.position) < 0.01f) arrived = true;
+            yield return null;
+        }
+        isTransition = false;
+        yield return new WaitForSeconds(2);
+        loadingManager.SetID(3);
+        loadingManager.InitializeLoading();
+        yield return null;
     }
 
     private IEnumerator CameraUp()
