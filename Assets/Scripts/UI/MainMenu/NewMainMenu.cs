@@ -110,6 +110,8 @@ public class NewMainMenu : MonoBehaviour
         }
         else if(selectId == 3)
         {
+            StopCoroutine("CameraSide");
+            StopCoroutine("CameraReset");
             StartCoroutine("CameraSide");
         }
     }
@@ -132,6 +134,7 @@ public class NewMainMenu : MonoBehaviour
             if (Vector3.Distance(cameraTransform.position, characterSelectPoint.position) < 0.01f) arrived = true;
             yield return null;
         }
+        yield return new WaitForSeconds(waitBetweenAnimation);
         isTransition = false;
         MenuController.instance.MainMenuToCharacterSelect();
         yield return null;
@@ -141,23 +144,25 @@ public class NewMainMenu : MonoBehaviour
     {
         previewingMedals = false;
         isTransition = true;
-        canPressBtn = false;
         bool arrived = false;
         while (!arrived)
         {
             if (usingLerp == true)
             {
-                cameraTransform.position = Vector3.Lerp(cameraTransform.position, defaultCameraPoint.position, cameraSpeedReset * Time.deltaTime);
+                cameraTransform.position = Vector3.Lerp(cameraTransform.position, defaultCameraPoint.position, cameraMoveSpeed * Time.deltaTime);
             }
             else
             {
-                cameraTransform.position = Vector3.MoveTowards(cameraTransform.position, defaultCameraPoint.position, cameraSpeedReset * Time.deltaTime);
+                cameraTransform.position = Vector3.MoveTowards(cameraTransform.position, defaultCameraPoint.position, cameraMoveSpeed * Time.deltaTime);
             }
-            cameraTransform.rotation = Quaternion.Slerp(cameraTransform.rotation, defaultCameraPoint.rotation, cameraSpeedReset * Time.deltaTime);
-            if (Vector3.Distance(cameraTransform.position, defaultCameraPoint.position) < 0.01f) arrived = true;
+            cameraTransform.rotation = Quaternion.Slerp(cameraTransform.rotation, defaultCameraPoint.rotation, cameraMoveSpeed * Time.deltaTime);
+            if (Vector3.Distance(cameraTransform.position, defaultCameraPoint.position) < 0.1f) arrived = true;
             yield return null;
         }
+        yield return new WaitForSeconds(waitBetweenAnimation);
+        cameraTransform.transform.position = defaultCameraPoint.transform.position;
         isTransition = false;
+        canPressBtn = true;
         yield return null;
     }
 
@@ -171,18 +176,18 @@ public class NewMainMenu : MonoBehaviour
         {
             if (usingLerp == true)
             {
-                cameraTransform.position = Vector3.Lerp(cameraTransform.position, medalViewPoint.position, cameraMoveSpeed * Time.deltaTime);
+                cameraTransform.position = Vector3.Lerp(cameraTransform.position, medalViewPoint.position, cameraSpeedMedals * Time.deltaTime);
             }
             else
             {
-                cameraTransform.position = Vector3.MoveTowards(cameraTransform.position, medalViewPoint.position, cameraMoveSpeed * Time.deltaTime);
+                cameraTransform.position = Vector3.MoveTowards(cameraTransform.position, medalViewPoint.position, cameraSpeedMedals * Time.deltaTime);
             }
-            cameraTransform.rotation = Quaternion.Slerp(cameraTransform.rotation, medalViewPoint.rotation, cameraMoveSpeed * Time.deltaTime);
+            cameraTransform.rotation = Quaternion.Slerp(cameraTransform.rotation, medalViewPoint.rotation, cameraSpeedMedals * Time.deltaTime);
             if (Vector3.Distance(cameraTransform.position, medalViewPoint.position) < 0.01f) arrived = true;
             yield return null;
         }
+        yield return new WaitForSeconds(waitBetweenAnimation);
         isTransition = false;
-      
         yield return null;
     }
 
@@ -212,6 +217,8 @@ public class NewMainMenu : MonoBehaviour
         {
             if (Input.GetButtonDown("BackButton"))
             {
+                canPressBtn = true;
+                StopCoroutine("CameraSide");
                 StartCoroutine("CameraReset");
             }
         }
