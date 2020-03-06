@@ -107,8 +107,11 @@ public class UIElementController : MonoBehaviour
 
     private void ChangeSprite(Sprite sprite)
     {
-        if (spriteRender.sprite != sprite)
-            spriteRender.sprite = sprite;
+        if (spriteRender != null)
+        {
+            if (spriteRender.sprite != sprite)
+                spriteRender.sprite = sprite;
+        }
     }
 
     private void HoverAction()
