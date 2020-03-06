@@ -23,11 +23,19 @@ public class SpecialButton : MonoBehaviour
     [SerializeField]
     private float _activationTime;
 
-    [Header("Graphics")]
-    [SerializeField]
+    [Header("Fridge Graphics")]
+    [SerializeField, Tooltip("Leave empty in Sink level")]
     private Image specialBar;
-    [SerializeField]
+    [SerializeField, Tooltip("Leave empty in Sink level")]
     private GameObject imageToDisplay;
+
+    [Header("Sink Graphics")]
+    [SerializeField, Tooltip("Leave empty in Fridge level")]
+    private SpriteRenderer light;
+    [SerializeField, Tooltip("Leave empty in Fridge level")]
+    private Sprite defaultLight;
+    [SerializeField, Tooltip("Leave empty in Fridge level")]
+    private Sprite litLight;
 
     //Fields
     private string powerName;
@@ -108,6 +116,11 @@ public class SpecialButton : MonoBehaviour
                 value = time / ActivationTime;
                 specialBar.fillAmount = value;
             }
+        }
+        else if(light != null)
+        {
+            if (time >= ActivationTime)
+                light.sprite = litLight;
         }
     }
 
