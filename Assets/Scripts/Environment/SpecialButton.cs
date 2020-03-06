@@ -89,7 +89,7 @@ public class SpecialButton : MonoBehaviour
                     HasBeenUsed = true;
                 }
                 else
-                    player.PlayerStun.Stun(player.dashAmount);
+                    player.PlayerStun.Stun(player.dashAmount, null);
 
             }
         }

@@ -23,7 +23,19 @@ public class Player : ScriptableObject
     private float defaultSpeed = 5;
     public bool hasWon = false;
     private float speed = 5;
+    [SerializeField]
+    private int dashCount;
+    [SerializeField]
+    private int stunCount;
+    [SerializeField]
+    private int powerUpsCount;
+    [SerializeField]
+    private int invulnerabilityCount;
 
     public float Speed { get => speed; set => speed = value; }
     public float DefaultSpeed { get => defaultSpeed; set => defaultSpeed = value; }
+    public int InvulnerabilityCount { get => invulnerabilityCount; set => invulnerabilityCount = value; }
+    public int PowerUpsCount { get => powerUpsCount; set => powerUpsCount = value; }
+    public int StunCount { get => stunCount; set => stunCount = value; }
+    public int DashCount { get => dashCount; set => dashCount = value; }
 }
