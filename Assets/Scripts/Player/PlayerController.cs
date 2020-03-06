@@ -238,6 +238,10 @@ public class PlayerController : MonoBehaviour
                 //audioHandler.SetSFX("Splat");
 
                 PaintSizeMultiplier paintMultiplier = hit.collider.GetComponent<PaintSizeMultiplier>();
+                if (multiplier < 0.5f)
+                {
+                    multiplier = 0.5f;
+                }
 
                 float _smult;
                 if (paintMultiplier)
