@@ -10,7 +10,7 @@ public class MoveSlowly : BuffDebuff
     public override void Start(PlayerController parent, float dur = 5)
     {
         //Call the base implementation of Start
-        base.Start(parent, 10);
+        base.Start(parent, 8);
         //Set the originalSpeed to the player's speed modifier
         originalSpeed = Parent.MoveSpeedModifier;
         //Double the player's speed modifier
