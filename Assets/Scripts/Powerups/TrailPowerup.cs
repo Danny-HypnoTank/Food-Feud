@@ -9,7 +9,7 @@ public class TrailPowerup : BuffDebuff
     public override void Start(PlayerController parent, float dur = 5)
     {
         //Call the base implementation of Start
-        base.Start(parent, 10);
+        base.Start(parent, 6);
     }
 
     public override void OnUpdate(float deltaTime)
