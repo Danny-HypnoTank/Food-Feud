@@ -18,10 +18,14 @@ public class GridManager : MonoBehaviour
     [SerializeField] private int _timeToCheck;
     public int TimeToCheck { get { return _timeToCheck; } }
 
+    [Header("Bar Graphics")]
+    [SerializeField]
+    private Image[] fillBars;
+
     public void Initialisation(int count)
     {
 
-        playerCount = count+1;
+        playerCount = count + 1;
 
         Scores = new int[playerCount];
         Percentages = new float[playerCount];
@@ -31,7 +35,7 @@ public class GridManager : MonoBehaviour
 
             Scores[i] = 0;
             Percentages[i] = 0;
-            if(i < count)
+            if (i < count)
             {
 
                 bonusPoints[i] = 0;
@@ -45,7 +49,7 @@ public class GridManager : MonoBehaviour
     public void Reset()
     {
 
-        foreach(GameObject grid in gridObjects)
+        foreach (GameObject grid in gridObjects)
         {
 
             ScoreSquare square = grid.GetComponent<ScoreSquare>();
@@ -54,7 +58,7 @@ public class GridManager : MonoBehaviour
 
         }
 
-        for(int i = 0; i < playerCount; i++)
+        for (int i = 0; i < playerCount; i++)
         {
 
             Scores[i] = 0;
@@ -93,12 +97,12 @@ public class GridManager : MonoBehaviour
 
                 if (i > 0)
                 {
-                    if (square.Value == ManageGame.instance.Players[i-1].skinId)
+                    if (square.Value == ManageGame.instance.Players[i - 1].skinId)
                         Scores[i]++;
                 }
                 else
-                    if (square.Value == i-1)
-                        Scores[i]++;
+                    if (square.Value == i - 1)
+                    Scores[i]++;
 
             }
         }
@@ -119,7 +123,7 @@ public class GridManager : MonoBehaviour
 
         CalcScores();
 
-        for(int i = 0; i < playerCount; i++)
+        for (int i = 0; i < playerCount; i++)
         {
 
             if (Scores[i] > 0)
@@ -137,6 +141,19 @@ public class GridManager : MonoBehaviour
     public void UpdateUI()
     {
         CalcPercentages();
+
+        for (int i = 0; i < playerCount; i++)
+        {
+
+            fillBars[i].fillAmount = Percentages[i];
+            if(i > 0)
+            {
+                RectTransform barTransform = fillBars[i].GetComponent<RectTransform>();
+                RectTransform previousBarTransform = fillBars[i-1].GetComponent<RectTransform>();
+                Vector2 newPos = new Vector2(barTransform.anchoredPosition.x + (previousBarTransform.rect.width * (Percentages[i - 1]/100)), barTransform.anchoredPosition.y);
+                barTransform.anchoredPosition = newPos;
+            }
+        }
 
         string scoreString = string.Empty;
 
@@ -175,7 +192,7 @@ public class GridManager : MonoBehaviour
                 float percentage = Scores[i] / totalScore;
                 //percentage *= 100;
                 Percentages[i] = percentage;
-                ManageGame.instance.Players[i-1].scorePercentage = percentage;
+                ManageGame.instance.Players[i - 1].scorePercentage = percentage;
             }
             else
                 Percentages[i] = 0;
