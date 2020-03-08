@@ -7,10 +7,15 @@ using UnityEngine.UI;
 public class FPSCounter : MonoBehaviour
 {
 
+    [Header("Settings")]
     [SerializeField]
     private bool active;
     [SerializeField]
+    private bool useDecimals;
+    [SerializeField]
     private int targetFPS;
+
+    [Header("Visual")]
     [SerializeField]
     private Text fpsText;
 
@@ -47,12 +52,21 @@ public class FPSCounter : MonoBehaviour
 
     private void UpdateText()
     {
+
+        if(!useDecimals)
+        {
+            currentFPS = Mathf.Round(currentFPS);
+            minFPS = Mathf.Round(minFPS);
+            maxFPS = Mathf.Round(maxFPS);
+            avgFPS = Mathf.Round(avgFPS);
+        }
+
         StringBuilder strBuilder = new StringBuilder();
 
-        strBuilder.AppendLine($"FPS: {Mathf.Round(currentFPS)}");
-        strBuilder.AppendLine($"Minimum: {Mathf.Round(minFPS)}");
-        strBuilder.AppendLine($"Maximum: {Mathf.Round(maxFPS)}");
-        strBuilder.AppendLine($"Average: {Mathf.Round(avgFPS)}");
+        strBuilder.AppendLine($"FPS: {currentFPS}");
+        strBuilder.AppendLine($"Minimum: {minFPS}");
+        strBuilder.AppendLine($"Maximum: {maxFPS}");
+        strBuilder.AppendLine($"Average: {avgFPS}");
 
         fpsText.text = strBuilder.ToString();
     }
