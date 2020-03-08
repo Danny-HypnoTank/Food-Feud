@@ -3,7 +3,8 @@
  * Name: Dominik Waldowski
  * Sid: 1604336
  * Date Created: 21/11/2019
- * Last Modified: 21/11/2019
+ * Modified by: Alex Watson
+ * Last Modified: 08/03/2020
  */
 using System.Collections;
 using UnityEngine;
@@ -51,6 +52,8 @@ public class NewMainMenu : MonoBehaviour
     private ControllerNav controlNav;
     private UIElementController previousSelection;
     private bool previewingMedals = false;
+    [SerializeField]
+    private Transform medalMenuDisplay;
 
     private void Start()
     {
@@ -65,6 +68,7 @@ public class NewMainMenu : MonoBehaviour
     private void OnEnable()
     {
         previewingMedals = false;
+        medalMenuDisplay.gameObject.SetActive(false);
         isTransition = false;
         confirmationMsg.gameObject.SetActive(false);
         quitPanel.gameObject.SetActive(false);
@@ -143,6 +147,7 @@ public class NewMainMenu : MonoBehaviour
     private IEnumerator CameraReset()
     {
         previewingMedals = false;
+        medalMenuDisplay.gameObject.SetActive(false);
         isTransition = true;
         bool arrived = false;
         while (!arrived)
@@ -169,6 +174,7 @@ public class NewMainMenu : MonoBehaviour
     private IEnumerator CameraSide()
     {
         previewingMedals = true;
+        medalMenuDisplay.gameObject.SetActive(true);
         isTransition = true;
         canPressBtn = false;
         bool arrived = false;
@@ -215,6 +221,7 @@ public class NewMainMenu : MonoBehaviour
     {
         if (previewingMedals == true)
         {
+            medalMenuDisplay.gameObject.SetActive(true);
             if (Input.GetButtonDown("BackButton"))
             {
                 canPressBtn = true;
