@@ -9,6 +9,7 @@ public class MassFreeze : BuffDebuff
     {
         base.Start(parent, dur);
         parent.StartCoroutine(Parent.PlayerStun.Freeze());
+        Camera.main.GetComponent<CameraShaker>().ShakeCamera();
         End();
     }
 
