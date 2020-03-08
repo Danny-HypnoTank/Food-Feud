@@ -10,11 +10,18 @@ public class Loading : MonoBehaviour
     [SerializeField]
     private GameObject loadingScreenPanel;
     [SerializeField]
-    private Slider slider;
+    private Image circleImg;
     [SerializeField]
-    private Text percentLoaded;
+    private RectTransform loadingFX;
+    /*[SerializeField]
+    private Slider slider;*/
+    [SerializeField]
+    private Text progressLoaded;
     [SerializeField]
     private int sceneToLoadId = 1;
+
+    [SerializeField]
+    [Range(0, 1)] float progress = 0f;
 
     private void Start()
     {
@@ -47,15 +54,18 @@ public class Loading : MonoBehaviour
         while (!async.isDone)
         {
             float progress = Mathf.Clamp01(async.progress / 0.9f);
-            slider.value = progress;
+            circleImg.fillAmount = progress;
+            //slider.value = progress;
 
             //set text
-            percentLoaded.text = Mathf.CeilToInt(progress * 100).ToString() + "%";
+            //progressLoaded.text = Mathf.CeilToInt(progress * 100).ToString();
+            progressLoaded.text = Mathf.Floor(progress * 100).ToString();
+            loadingFX.rotation = Quaternion.Euler(new Vector3(0f, 0f, -progress * 360));
 
             if (async.progress == 0.9f)
             {
-                slider.value = 1f;
-                
+                //slider.value = 1f;
+                circleImg.fillAmount = 1f;
                 async.allowSceneActivation = true;
             }
 
