@@ -3,7 +3,8 @@
  * Name: Dominik Waldowski
  * Sid: 1604336
  * Date Created: 21/11/2019
- * Last Modified: 21/11/2019
+ * Modified by: Alex Watson
+ * Last Modified: 08/03/2020
  */
 using UnityEngine;
 
@@ -19,6 +20,8 @@ public class MenuController : MonoBehaviour
     private Transform characterSelectScript;
     [SerializeField]
     private Transform loadingPage;
+    [SerializeField]
+    private Transform medalMenuDisplay;
 
     private void Awake()
     {
@@ -28,6 +31,7 @@ public class MenuController : MonoBehaviour
     private void Start()
     {
         loadingPage.gameObject.SetActive(false);
+        medalMenuDisplay.gameObject.SetActive(false);
         mainMenuScript.gameObject.SetActive(true);
         optionsScript.gameObject.SetActive(false);
         characterSelectScript.gameObject.SetActive(false);
