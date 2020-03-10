@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,8 @@ public class GridManager : MonoBehaviour
     private float totalScore;
     private int playerCount;
     private List<GameObject> gridObjects;
+    private bool updating;
+    private float originalBarWidth;
 
     [SerializeField]
     private Text scoreText;
@@ -20,12 +23,12 @@ public class GridManager : MonoBehaviour
 
     [Header("Bar Graphics")]
     [SerializeField]
-    private Image[] fillBars;
+    private RectTransform[] fillBars;
 
     public void Initialisation(int count)
     {
-
         playerCount = count + 1;
+        originalBarWidth = fillBars[0].rect.width;
 
         Scores = new int[playerCount];
         Percentages = new float[playerCount];
@@ -44,6 +47,7 @@ public class GridManager : MonoBehaviour
 
         }
 
+        updating = false;
     }
 
     public void Reset()
@@ -140,34 +144,40 @@ public class GridManager : MonoBehaviour
 
     public void UpdateUI()
     {
-        CalcPercentages();
-
-        for (int i = 0; i < playerCount; i++)
+        if (!updating)
         {
+            StartCoroutine(updateCooldown());
+            CalcPercentages();
 
-            fillBars[i].fillAmount = Percentages[i];
-            if(i > 0)
+            for (int i = 0; i < playerCount; i++)
             {
-                RectTransform barTransform = fillBars[i].GetComponent<RectTransform>();
-                RectTransform previousBarTransform = fillBars[i-1].GetComponent<RectTransform>();
-                Vector2 newPos = new Vector2(barTransform.anchoredPosition.x + (previousBarTransform.rect.width * (Percentages[i - 1]/100)), barTransform.anchoredPosition.y);
-                barTransform.anchoredPosition = newPos;
+
+                float newWidth = originalBarWidth * Percentages[i];
+                fillBars[i].SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, newWidth);
+
+                if (i > 0)
+                {
+                    RectTransform prevBar = fillBars[i - 1];
+                    float newX = prevBar.position.x+ prevBar.rect.width;
+                    Vector2 newPosition = new Vector2(newX, prevBar.position.y);
+                    fillBars[i].position = newPosition;
+                }
             }
+
+            string scoreString = string.Empty;
+
+            for (int i = 0; i < playerCount; i++)
+            {
+
+                if (i == 0)
+                    scoreString += $"{Percentages[i]:P2}";
+                else
+                    scoreString += $"\t\t\t{Percentages[i]:P2}";
+
+            }
+
+            scoreText.text = scoreString;
         }
-
-        string scoreString = string.Empty;
-
-        for (int i = 0; i < playerCount; i++)
-        {
-
-            if (i == 0)
-                scoreString += $"{Percentages[i]:P2}";
-            else
-                scoreString += $"\t\t\t{Percentages[i]:P2}";
-
-        }
-
-        scoreText.text = scoreString;
 
     }
     public void CalculateFinalScore()
@@ -205,6 +215,13 @@ public class GridManager : MonoBehaviour
 
         bonusPoints[playerID] += value;
 
+    }
+
+    private IEnumerator updateCooldown()
+    {
+        updating = true;
+        yield return new WaitForSeconds(1);
+        updating = false;
     }
 
 }
