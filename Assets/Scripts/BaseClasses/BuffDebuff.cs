@@ -52,6 +52,12 @@ public abstract class BuffDebuff
             End();
     }
 
+    //does thing when hitting other player
+    public virtual void OnHit(Collider other)
+    {
+
+    }
+
     /// <summary>
     /// Method for logic when the buff/debuff ends. Call <see cref="base.End()"/> at the very end.
     /// </summary>

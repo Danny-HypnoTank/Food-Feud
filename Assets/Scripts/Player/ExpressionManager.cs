@@ -11,19 +11,20 @@ using UnityEngine.UI;
 public class ExpressionManager : MonoBehaviour
 {
     [SerializeField]
-    private SpriteRenderer faceObj;
+    private Renderer faceRenderer;
 
     [SerializeField]
-    private Sprite[] listOfExpressions; //order of sprites normal/worried/happy/sad/angry
+    private Texture[] listOfExpressions; //order of sprites normal/worried/happy/sad/angry
 
     private void OnEnable()
     {
-        faceObj.sprite = listOfExpressions[0];
+        faceRenderer.material.mainTexture = listOfExpressions[0];
     }
 
     public void SetExpression(int passedExpression)
     {
-        faceObj.sprite = listOfExpressions[passedExpression];
+        faceRenderer.material.mainTexture = listOfExpressions[passedExpression];
     }
 
 }
+

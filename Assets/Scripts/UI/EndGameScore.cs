@@ -35,8 +35,12 @@ public class EndGameScore : MonoBehaviour
     private float total;
     private Loading loading;
 
+    MedalManager medalManager;
+
     private void Start()
     {
+        medalManager = MedalManager.Instance;
+
         canUseInput = false;
         StartCoroutine(WinnerCheck());
 
@@ -55,6 +59,21 @@ public class EndGameScore : MonoBehaviour
         loading = GameObject.Find("LoadingManager").GetComponent<Loading>();
         sortedPlayers = players.OrderByDescending(o => o.playerScore).ToList();
         {
+
+            #region stunMedal
+            int _currentPodium = 0;
+
+            foreach (Player p in sortedPlayers)
+            {
+                if (p.playerNum == medalManager.GetTopStunned())
+                {
+                    _currentPodium = p.playerNum;
+                }
+            }
+
+            medalManager.SpawnMedal(podiumLocations[_currentPodium].transform.position);
+
+            #endregion
 
             for (int i = 0; i < players.Length; i++)
             {
@@ -98,7 +117,7 @@ public class EndGameScore : MonoBehaviour
                     thePlayerData[usedPodiums].gameObject.SetActive(true);
                     thePlayerData[usedPodiums].GetComponent<PodiumController>().SetTotal(total);
                     usedPodiums++;
-                    SoundManager.Instance.SetBGM("Win");
+                    //SoundManager.Instance.SetBGM("Win");
                 }
             }
         }

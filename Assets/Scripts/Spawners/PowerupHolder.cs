@@ -10,7 +10,9 @@ enum Powers
     Splat,
     StunImmunity,
     Teleport,
-    SlowDown
+    SlowDown,
+    ExplodingPotato,
+    PullIn
 }
 
 public class PowerupHolder : MonoBehaviour
@@ -32,12 +34,15 @@ public class PowerupHolder : MonoBehaviour
     //Dictionary to contain the buff/debuff classes
     private readonly Dictionary<string, Type> powers = new Dictionary<string, Type>()
     {
-            {"Speedup", typeof(SpeedUp)},
-            {"Trail", typeof(TrailPowerup)},
-            {"Splat", typeof(SplatRelease)},
-            {"StunImmunity", typeof(StunImmunity)},
-            {"Teleport", typeof(Teleport)},
-            {"SlowDown", typeof(MoveSlowly)}
+        {"Speedup", typeof(SpeedUp)},
+        {"Trail", typeof(TrailPowerup)},
+        {"Splat", typeof(SplatRelease)},
+        {"StunImmunity", typeof(StunImmunity)},
+        {"Teleport", typeof(Teleport)},
+        {"SlowDown", typeof(MoveSlowly)},
+        {"ExplodingPotato", typeof(ExplodingPotato) },
+        {"PullIn",typeof(PullIn) }
+        
     };
 
     private void Awake()

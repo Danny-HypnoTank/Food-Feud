@@ -159,7 +159,7 @@ public class NewCharacterSelectionController : MonoBehaviour
 
     private void RandomMap()
     {
-        int randomMap = Random.Range(0, 2);
+        int randomMap = Random.Range(0, 1);
         if (randomMap == 0)
         {
             doorAnimation.enabled = true;
