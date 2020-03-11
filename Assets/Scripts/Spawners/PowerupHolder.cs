@@ -69,7 +69,6 @@ public class PowerupHolder : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
         //Check if player has entered trigger
         if (other.CompareTag("Player"))
         {
@@ -103,18 +102,22 @@ public class PowerupHolder : MonoBehaviour
                 //Find all player objects
                 GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
 
+                //Cach references to PlayerController component
+                List<PlayerController> playerToCheck = new List<PlayerController>();
+                for(int i = 0; i < playerObjects.Length; i++)
+                {
+                    playerToCheck.Add(playerObjects[i].GetComponent<PlayerController>());
+                }
+
                 //Loop through player objects
                 for (int i = 0; i < playerObjects.Length; i++)
                 {
-                    //Cache reference to currently checked player
-                    PlayerController playerToCheck = playerObjects[i].GetComponent<PlayerController>();
                     //If the checked player is not the player who entered the trigger, give them the debuff
-                    if (playerToCheck != player)
-                        playerToCheck.PickUpPowerUp(power);
+                    if (playerToCheck[i] != player)
+                        playerToCheck[i].PickUpPowerUp(power);
                 }
 
                 Collect();
-
             }
         }
     }
