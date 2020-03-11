@@ -30,10 +30,4 @@ public class SpeedUp : BuffDebuff
         //Call the base implementation of End
         base.End();
     }
-
-    public override void RefreshDuration()
-    {
-        base.RefreshDuration();
-    }
-
 }

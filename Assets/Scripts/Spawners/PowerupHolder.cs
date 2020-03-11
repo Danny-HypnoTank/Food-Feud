@@ -88,7 +88,7 @@ public class PowerupHolder : MonoBehaviour
                 }
                 else if (player.CurrentPowerup.GetType() == power.GetType())
                 {
-                    if (!(power is Teleport))
+                    if (!(power is Teleport) && !(power is StunImmunity))
                     {
                         //Refresh the duration on the player's buff
                         player.CurrentPowerup.RefreshDuration();

@@ -5,7 +5,6 @@
 /// </summary>
 public class TrailPowerup : BuffDebuff
 {
-
     public override void Start(PlayerController parent, float dur = 5)
     {
         //Call the base implementation of Start
@@ -27,10 +26,4 @@ public class TrailPowerup : BuffDebuff
         //Call the base implementation of End
         base.End();
     }
-
-    public override void RefreshDuration()
-    {
-        base.RefreshDuration();
-    }
-
 }

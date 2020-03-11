@@ -7,7 +7,6 @@ using UnityEngine;
 [Serializable]
 public abstract class BuffDebuff
 {
-
     /// <summary>
     /// The player using the powerup
     /// </summary>
@@ -66,6 +65,5 @@ public abstract class BuffDebuff
     /// <summary>
     /// Method for refreshing the powerup duration
     /// </summary>
-    public virtual void RefreshDuration() => elapsedTime = 0; //Reset the timer
-
+    public void RefreshDuration() => elapsedTime = 0; //Reset the timer
 }
