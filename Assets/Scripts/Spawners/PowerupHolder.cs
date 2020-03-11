@@ -30,6 +30,7 @@ public class PowerupHolder : MonoBehaviour
     private string powerName; //The string value of the power
     private BuffDebuff power; //The object of the powerup
     private PowerupNode parent; //The parent node
+    List<PlayerController> playerToCheck; //List to store references to all players
 
     //Dictionary to contain the buff/debuff classes
     private readonly Dictionary<string, Type> powers = new Dictionary<string, Type>()
@@ -55,6 +56,16 @@ public class PowerupHolder : MonoBehaviour
         powerName = Enum.GetName(typeof(Powers), powerHeld);
         //Instantiate new instance of power
         power = (BuffDebuff)Activator.CreateInstance(powers[powerName]);
+
+        //Find all player objects
+        GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
+
+        //Cache references to all PlayerControllers
+        playerToCheck = new List<PlayerController>();
+        foreach(GameObject po in playerObjects)
+        {
+            playerToCheck.Add(po.GetComponent<PlayerController>());
+        }
     }
 
     private void Update()
@@ -98,19 +109,9 @@ public class PowerupHolder : MonoBehaviour
                 }
             }
             else
-            {
-                //Find all player objects
-                GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
-
-                //Cach references to PlayerController component
-                List<PlayerController> playerToCheck = new List<PlayerController>();
-                for(int i = 0; i < playerObjects.Length; i++)
-                {
-                    playerToCheck.Add(playerObjects[i].GetComponent<PlayerController>());
-                }
-
+            {   
                 //Loop through player objects
-                for (int i = 0; i < playerObjects.Length; i++)
+                for (int i = 0; i < playerToCheck.Count; i++)
                 {
                     //If the checked player is not the player who entered the trigger, give them the debuff
                     if (playerToCheck[i] != player)
