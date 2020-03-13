@@ -48,13 +48,22 @@ public class GridManager : MonoBehaviour
 
         //Updating defaults to false
         updating = false;
+
+        for (int i = 1; i < playerCount; i++)
+        {
+            Image currentImage = fillBars[i].GetComponent<Image>();
+            int id = ManageGame.instance.Players[i - 1].skinId;
+            currentImage.color = ManageGame.instance.Players[i - 1].SkinColours[id];
+            Color colour = new Color(currentImage.color.r, currentImage.color.g, currentImage.color.b, 1);
+            currentImage.color = colour;
+        }
     }
 
     //Reset method
     public void Reset()
     {
         //Reset the values of the score squares
-        for (int i = 0; i< gridObjects.Count; i++)
+        for (int i = 0; i < gridObjects.Count; i++)
         {
             gridObjects[i].SetValue(-1);
         }
@@ -73,7 +82,7 @@ public class GridManager : MonoBehaviour
         //Temporary array of score grid objects
         GameObject[] tempGrid = GameObject.FindGameObjectsWithTag("ScoreGrid");
         //Populate list with the score square component from each grid object
-        for(int i = 0; i < tempGrid.Length; i++)
+        for (int i = 0; i < tempGrid.Length; i++)
         {
             gridObjects.Add(tempGrid[i].GetComponent<ScoreSquare>());
         }
@@ -155,8 +164,9 @@ public class GridManager : MonoBehaviour
                 //Initialise a value for the new width
                 float newWidth = originalBarWidth;
                 newWidth *= Percentages[i];
-                float extra = 60 * Percentages[i];
-                if (newWidth < originalBarWidth && newWidth > 0)
+                float extra = 12 * (playerCount);
+                extra *= Percentages[i];
+                if (newWidth < originalBarWidth && newWidth > extra)
                     newWidth += extra;
 
                 //Set the width of the bar
