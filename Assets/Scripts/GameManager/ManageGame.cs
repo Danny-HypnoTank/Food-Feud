@@ -54,6 +54,8 @@ public class ManageGame : MonoBehaviour
     public GameObject GodPowerUp { get => godPowerUp; set => godPowerUp = value; }
     private SpecialButton specialButton;
     private float timeLimit = 60;
+    public CameraShaker camShake { get; private set; }
+    public List<PlayerController> allPlayerControllers { get; private set; }
 
     //Creates instance of game manager
     private void Awake()
@@ -70,6 +72,8 @@ public class ManageGame : MonoBehaviour
         clockHand.eulerAngles = v3Rot;
 
         specialButton = GameObject.FindGameObjectWithTag("Special").GetComponent<SpecialButton>();
+        camShake = Camera.main.GetComponent<CameraShaker>();
+        allPlayerControllers = new List<PlayerController>();
     }
     //handles display and counting of round timer
     [SerializeField]
@@ -146,6 +150,10 @@ public class ManageGame : MonoBehaviour
 
         SetUpSecondarySpawners();
 
+        PopulatePlayerControllerList();
+
+        specialButton.Initialisation();
+
         gridManager.Initialisation(PlayerObjects.Count);
         gridManager.PopulateGridList();
         gridManager.UpdateUI();
@@ -201,6 +209,14 @@ public class ManageGame : MonoBehaviour
         }
     }
 
+    private void PopulatePlayerControllerList()
+    {
+        GameObject[] temp = GameObject.FindGameObjectsWithTag("Player");
+        for (int i = 0; i < temp.Length; i++)
+        {
+            allPlayerControllers.Add(temp[i].GetComponent<PlayerController>());
+        }
+    }
     //updates scores of the player
     /*public void UpdateScore(int playerNum, int scoreReceived)
     {

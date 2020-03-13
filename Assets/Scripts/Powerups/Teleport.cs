@@ -8,9 +8,9 @@ public class Teleport : BuffDebuff
     //private TeleportObject teleportObject;
     private Vector3 startLocation;
 
-    public override void Start(PlayerController parent, float dur = 5)
+    public override void Start(PlayerController parent, float dur = 5, bool refresh = true)
     {
-        base.Start(parent);
+        base.Start(parent, refresh: false);
         //teleportObject = Parent.TeleportObject.GetComponent<TeleportObject>();
     }
 

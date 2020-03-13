@@ -26,24 +26,26 @@ public class SpecialButton : MonoBehaviour
     [Header("Fridge Graphics")]
     [SerializeField, Tooltip("Leave empty in Sink level")]
     private Image specialBar;
-    [SerializeField, Tooltip("Leave empty in Sink level")]
-    private GameObject imageToDisplay;
 
     [Header("Sink Graphics")]
     [SerializeField, Tooltip("Leave empty in Fridge level")]
-    private SpriteRenderer light;
-    [SerializeField, Tooltip("Leave empty in Fridge level")]
+    private SpriteRenderer lightObject;
+    [SerializeField]
     private Sprite defaultLight;
-    [SerializeField, Tooltip("Leave empty in Fridge level")]
+    [SerializeField]
     private Sprite litLight;
+
+    [Header("Overlay Graphics")]
+    [SerializeField]
+    private GameObject[] imageToDisplay;
 
     //Fields
     private string powerName;
+    private BuffDebuff power;
+    private List<PlayerController> playerToCheck;
     private readonly Dictionary<string, Type> powers = new Dictionary<string, Type>
     {
-
         {"MassFreeze", typeof(MassFreeze)}
-
     };
 
     //Auto Properties
@@ -53,13 +55,20 @@ public class SpecialButton : MonoBehaviour
     //Full Properties
     public float ActivationTime { get { return _activationTime; } }
 
-    private void Awake()
+    public  void Initialisation()
     {
-        //Set IsActive to false and get the string value of power
+        //Set initial values
         IsActive = false;
         HasBeenUsed = false;
-        powerName = Enum.GetName(typeof(SpecialPowers), debuff);
+        if(lightObject != null)
+            lightObject.sprite = defaultLight;
 
+        //Instantiate an object based on the special power
+        powerName = Enum.GetName(typeof(SpecialPowers), debuff);
+        power = (BuffDebuff)Activator.CreateInstance(powers[powerName]);
+
+        //Instantiate the list of players
+        playerToCheck = ManageGame.instance.allPlayerControllers;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -72,21 +81,14 @@ public class SpecialButton : MonoBehaviour
 
             if (player.IsDashing)
             {
-
                 //If the button can be triggered give all other players the debuff else stun the colliding player
                 if (CanBeTriggered(player.dashAmount))
                 {
-                    //Find all the players
-                    GameObject[] allPlayers = GameObject.FindGameObjectsWithTag("Player");
-
-                    for (int i = 0; i < allPlayers.Length; i++)
+                    for (int i = 0; i < playerToCheck.Count; i++)
                     {
-                        //Cache a reference to the current player to check
-                        PlayerController playerToCheck = allPlayers[i].GetComponent<PlayerController>();
-
                         //If the player to check isn't the colliding player, give them the debuff
-                        if (playerToCheck != player)
-                            playerToCheck.PickUpPowerUp((BuffDebuff)Activator.CreateInstance(powers[powerName]));
+                        if (playerToCheck[i] != player)
+                            playerToCheck[i].PickUpPowerUp(power);
                     }
 
                     //Start the coroutine to display the image for the special debuff
@@ -98,7 +100,6 @@ public class SpecialButton : MonoBehaviour
                 }
                 else
                     player.PlayerStun.Stun(player.dashAmount, null);
-
             }
         }
     }
@@ -117,11 +118,13 @@ public class SpecialButton : MonoBehaviour
                 specialBar.fillAmount = value;
             }
         }
-        else if(light != null)
+        else if (lightObject != null)
         {
             if (time >= ActivationTime)
-                light.sprite = litLight;
+                lightObject.sprite = litLight;
         }
+        else
+            Debug.LogError("Error in SpecialButton.cs: No power-up indicator set!");
     }
 
     private bool CanBeTriggered(float dashAmount)
@@ -139,9 +142,9 @@ public class SpecialButton : MonoBehaviour
 
     private IEnumerator DisplayTheImage()
     {
-        imageToDisplay.SetActive(true);
+        imageToDisplay.ToggleGameObjects(true);
         yield return new WaitForSeconds(1.5f);
-        imageToDisplay.SetActive(false);
+        imageToDisplay.ToggleGameObjects(false);
     }
 
 }

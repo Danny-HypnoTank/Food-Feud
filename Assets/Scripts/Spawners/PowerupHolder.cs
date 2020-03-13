@@ -23,26 +23,27 @@ public class PowerupHolder : MonoBehaviour
     private Powers powerHeld; //Which buff/debuff does the object hold
     [SerializeField]
     private bool isDebuff; //Is the buff/debuff a debuff
+
+    [Header("Object Properties")]
     [SerializeField]
     private float speed; //The speed at which the object rotates and bobs up and down
 
     private float originalY; //The original value of the objects Y position
-    private string powerName; //The string value of the power
     private BuffDebuff power; //The object of the powerup
     private PowerupNode parent; //The parent node
+    List<PlayerController> playerToCheck; //List to store references to all players
 
     //Dictionary to contain the buff/debuff classes
-    private readonly Dictionary<string, Type> powers = new Dictionary<string, Type>()
+    private readonly Dictionary<Powers, Type> powers = new Dictionary<Powers, Type>()
     {
-        {"Speedup", typeof(SpeedUp)},
-        {"Trail", typeof(TrailPowerup)},
-        {"Splat", typeof(SplatRelease)},
-        {"StunImmunity", typeof(StunImmunity)},
-        {"Teleport", typeof(Teleport)},
-        {"SlowDown", typeof(MoveSlowly)},
-        {"ExplodingPotato", typeof(ExplodingPotato) },
-        {"PullIn",typeof(PullIn) }
-        
+        {Powers.Speedup, typeof(SpeedUp)},
+        {Powers.Trail, typeof(TrailPowerup)},
+        {Powers.Splat, typeof(SplatRelease)},
+        {Powers.StunImmunity, typeof(StunImmunity)},
+        {Powers.Teleport, typeof(Teleport)},
+        {Powers.SlowDown, typeof(MoveSlowly)},
+        {Powers.ExplodingPotato, typeof(ExplodingPotato)},
+        {Powers.PullIn, typeof(PullIn)}
     };
 
     private void Awake()
@@ -51,10 +52,12 @@ public class PowerupHolder : MonoBehaviour
         parent = transform.parent.gameObject.GetComponent<PowerupNode>();
         //Set the original y position
         originalY = transform.position.y;
-        //Get String value of powerheld
-        powerName = Enum.GetName(typeof(Powers), powerHeld);
+
         //Instantiate new instance of power
-        power = (BuffDebuff)Activator.CreateInstance(powers[powerName]);
+        power = (BuffDebuff)Activator.CreateInstance(powers[powerHeld]);
+
+        //Cache references to all PlayerControllers
+        playerToCheck = ManageGame.instance.allPlayerControllers;
     }
 
     private void Update()
@@ -69,7 +72,6 @@ public class PowerupHolder : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
         //Check if player has entered trigger
         if (other.CompareTag("Player"))
         {
@@ -89,7 +91,8 @@ public class PowerupHolder : MonoBehaviour
                 }
                 else if (player.CurrentPowerup.GetType() == power.GetType())
                 {
-                    if (!(power is Teleport))
+                    //Check if the player's buff can be refreshed
+                    if (power.canRefresh)
                     {
                         //Refresh the duration on the player's buff
                         player.CurrentPowerup.RefreshDuration();
@@ -100,30 +103,23 @@ public class PowerupHolder : MonoBehaviour
             }
             else
             {
-                //Find all player objects
-                GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
-
                 //Loop through player objects
-                for (int i = 0; i < playerObjects.Length; i++)
+                for (int i = 0; i < playerToCheck.Count; i++)
                 {
-                    //Cache reference to currently checked player
-                    PlayerController playerToCheck = playerObjects[i].GetComponent<PlayerController>();
                     //If the checked player is not the player who entered the trigger, give them the debuff
-                    if (playerToCheck != player)
-                        playerToCheck.PickUpPowerUp(power);
+                    if (playerToCheck[i] != player)
+                        playerToCheck[i].PickUpPowerUp((BuffDebuff)Activator.CreateInstance(powers[powerHeld]));
                 }
 
                 Collect();
-
             }
         }
     }
 
     private void Collect()
     {
-        //Call the Collected method on the parent
+        //Call the Collected method on the parent and disable object
         parent.Collected();
-        //Disable this object
         gameObject.SetActive(false);
     }
 }

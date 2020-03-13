@@ -7,7 +7,6 @@ using UnityEngine;
 [Serializable]
 public abstract class BuffDebuff
 {
-
     /// <summary>
     /// The player using the powerup
     /// </summary>
@@ -22,13 +21,18 @@ public abstract class BuffDebuff
     /// How much time has elapsed since the buff/debuff became active
     /// </summary>
     protected float elapsedTime;
+    /// <summary>
+    /// Can the buff/debuff be refreshed
+    /// </summary>
+    public bool canRefresh { get; protected set; }
 
     /// <summary>
     /// Start method for logic when the pickup is picked up. Call <see cref="base.Start()"/> at the very start.
     /// </summary>
-    /// <param name="parent">The player the buff/debuff applies to</param>
+    /// <param name="parent">The player the buff/debuff applies to.</param>
     /// <param name="dur">Duration of the buff/debuff. Default is 5.</param>
-    public virtual void Start(PlayerController parent, float dur = 5)
+    /// <param name="refresh">Whether or not the buff/debuff can be refreshed. Default is true.</param>
+    public virtual void Start(PlayerController parent, float dur = 5, bool refresh = true)
     {
         //Set the parent of the buff/debuff
         Parent = parent;
@@ -36,6 +40,8 @@ public abstract class BuffDebuff
         elapsedTime = 0;
         //Set duration to the duration specified in the parameters
         duration = dur;
+        //Set whether or not the buff/debuff can be refreshed
+        canRefresh = refresh;
     }
 
     /// <summary>
@@ -52,12 +58,6 @@ public abstract class BuffDebuff
             End();
     }
 
-    //does thing when hitting other player
-    public virtual void OnHit(Collider other)
-    {
-
-    }
-
     /// <summary>
     /// Method for logic when the buff/debuff ends. Call <see cref="base.End()"/> at the very end.
     /// </summary>
@@ -66,6 +66,5 @@ public abstract class BuffDebuff
     /// <summary>
     /// Method for refreshing the powerup duration
     /// </summary>
-    public virtual void RefreshDuration() => elapsedTime = 0; //Reset the timer
-
+    public void RefreshDuration() => elapsedTime = 0; //Reset the timer
 }
