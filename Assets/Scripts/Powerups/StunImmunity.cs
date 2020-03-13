@@ -3,9 +3,9 @@
 /// </summary>
 public class StunImmunity : BuffDebuff
 {
-    public override void Start(PlayerController parent, float dur = 5)
+    public override void Start(PlayerController parent, float dur = 5, bool refresh = true)
     {
-        base.Start(parent);
+        base.Start(parent, refresh: false);
         Parent.SImunnityObj.SetActive(true);
     }
 

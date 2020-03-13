@@ -69,6 +69,7 @@ public class PlayerController : MonoBehaviour
     //Fields
     private Vector3 moveInput;
     private ObjectAudioHandler audioHandler;
+    private ExplodingPotato potato;
 
     //Auto Properties
     public float dashAmount { get; private set; }
@@ -136,9 +137,11 @@ public class PlayerController : MonoBehaviour
                         Player.StunCount++;
                         StartCoroutine(otherPlayer.PlayerStun.Stun(dashAmount,this));
                     }
-                            
 
                     Splat(dashAmount);
+
+                    if (potato != null)
+                        potato.OnHit(otherPlayer);
                 }
             }
         }
@@ -296,7 +299,8 @@ public class PlayerController : MonoBehaviour
         else
         {
             CurrentPowerup = powerup;
-            CurrentPowerup.Start(this);
+            if(CurrentPowerup != null)
+                CurrentPowerup.Start(this);
         }
     }
 

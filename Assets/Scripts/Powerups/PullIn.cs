@@ -7,7 +7,7 @@ public class PullIn : BuffDebuff
 
     //Field to store the original speed of the player
     GameObject[] playerObjects;
-    public override void Start(PlayerController parent, float dur = 5)
+    public override void Start(PlayerController parent, float dur = 5, bool refresh = true)
     {
         //Call the base implementation of Start
         base.Start(parent, 10);

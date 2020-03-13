@@ -54,9 +54,9 @@ public class GridManager : MonoBehaviour
     public void Reset()
     {
         //Reset the values of the score squares
-        foreach (ScoreSquare square in gridObjects)
+        for (int i = 0; i< gridObjects.Count; i++)
         {
-            square.SetValue(-1);
+            gridObjects[i].SetValue(-1);
         }
 
         //Reset the scores and percentages
@@ -73,9 +73,9 @@ public class GridManager : MonoBehaviour
         //Temporary array of score grid objects
         GameObject[] tempGrid = GameObject.FindGameObjectsWithTag("ScoreGrid");
         //Populate list with the score square component from each grid object
-        foreach (GameObject go in tempGrid)
+        for(int i = 0; i < tempGrid.Length; i++)
         {
-            gridObjects.Add(go.GetComponent<ScoreSquare>());
+            gridObjects.Add(tempGrid[i].GetComponent<ScoreSquare>());
         }
     }
 
@@ -95,17 +95,17 @@ public class GridManager : MonoBehaviour
             Scores[i] = 0;
 
             //Loop through the list of score squares
-            foreach (ScoreSquare square in gridObjects)
+            for (int j = 0; j < gridObjects.Count; j++)
             {
                 //If the index is > 0
                 if (i > 0)
                 {
                     //If the value of the score square is the player's skinId - 1 increment their score
-                    if (square.Value == ManageGame.instance.Players[i - 1].skinId)
+                    if (gridObjects[j].Value == ManageGame.instance.Players[i - 1].skinId)
                         Scores[i]++;
                 }
                 else
-                    if (square.Value == i - 1)
+                    if (gridObjects[j].Value == i - 1)
                     Scores[i]++;
             }
         }
@@ -114,9 +114,9 @@ public class GridManager : MonoBehaviour
         totalScore = 0;
 
         //Add each score to total score
-        foreach (float s in Scores)
+        for (int i = 0; i < Scores.Length; i++)
         {
-            totalScore += s;
+            totalScore += Scores[i];
         }
     }
 
@@ -153,8 +153,11 @@ public class GridManager : MonoBehaviour
             for (int i = 0; i < playerCount; i++)
             {
                 //Initialise a value for the new width
-                float newWidth = originalBarWidth + 15;
+                float newWidth = originalBarWidth;
                 newWidth *= Percentages[i];
+                float extra = 60 * Percentages[i];
+                if (newWidth < originalBarWidth && newWidth > 0)
+                    newWidth += extra;
 
                 //Set the width of the bar
                 fillBars[i].SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, newWidth);
