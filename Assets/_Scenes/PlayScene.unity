@@ -1205,6 +1205,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8085008286149055492, guid: f613b033d0aa9cf48ab67502a2398b0d,
         type: 3}
+      propertyPath: imageToDisplay.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8085008286149055492, guid: f613b033d0aa9cf48ab67502a2398b0d,
+        type: 3}
       propertyPath: specialBar
       value: 
       objectReference: {fileID: 756935987}
@@ -1217,7 +1222,17 @@ PrefabInstance:
         type: 3}
       propertyPath: imageToDisplay
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8085008286149055492, guid: f613b033d0aa9cf48ab67502a2398b0d,
+        type: 3}
+      propertyPath: imageToDisplay.Array.data[0]
+      value: 
       objectReference: {fileID: 707508739}
+    - target: {fileID: 8085008286149055492, guid: f613b033d0aa9cf48ab67502a2398b0d,
+        type: 3}
+      propertyPath: imageToDisplay.Array.data[1]
+      value: 
+      objectReference: {fileID: 2103078726}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f613b033d0aa9cf48ab67502a2398b0d, type: 3}
 --- !u!1 &439621612
@@ -4296,7 +4311,6 @@ MonoBehaviour:
   pointA: {fileID: 674161201}
   pointB: {fileID: 339408973}
   journeyLength: 0
-  allPlayerControllers: []
   v3Rot: {x: -270, y: 90, z: 0}
   v3Dest: {x: 0, y: 0, z: 90}
 --- !u!4 &1661300555
