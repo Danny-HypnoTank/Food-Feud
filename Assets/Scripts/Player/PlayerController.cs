@@ -59,8 +59,8 @@ public class PlayerController : MonoBehaviour
     private GameObject sImmunityObj;
     public GameObject SImunnityObj { get { return sImmunityObj; } }
     [SerializeField]
-    private GameObject teleportObject;
-    public GameObject TeleportObject { get { return teleportObject; } }
+    private GameObject _iceCube;
+    public GameObject IceCube { get { return _iceCube; } }
 
     [Header("Layer Masks")]
     [SerializeField]

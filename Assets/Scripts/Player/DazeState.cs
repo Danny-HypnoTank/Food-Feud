@@ -114,12 +114,14 @@ public class DazeState : MonoBehaviour
             CanShoot = false;
             playerbase.Player.StunCount++;
             stunDuration = stunDurationMax * 2;
+            playerController.IceCube.SetActive(true);
 
             yield return new WaitForSeconds(stunDuration);
 
             Stunned = false;
             CanShoot = true;
             cooldownTime = cooldownTimeMax;
+            playerController.IceCube.SetActive(false);
 
             StartCoroutine(StunCooldown(cooldownTime));
         }
