@@ -144,6 +144,9 @@ public class EndGameScore : MonoBehaviour
             {
 
                 p.hasWon = false;
+                p.isLocked = false;
+                p.isActivated = false;
+                p.skinId = 0;
 
             }
 

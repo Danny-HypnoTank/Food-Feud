@@ -145,6 +145,13 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+        else if (other.CompareTag("ObjectCollider"))
+        {
+            if (IsDashing)
+            {
+                Splat(dashAmount);
+            }
+        }
     }
 
     private void FixedUpdate()
