@@ -29,7 +29,9 @@ public class NewCharacterSelectionController : MonoBehaviour
     [SerializeField]
     private bool usingLerp = true;
     [SerializeField]
-    private Transform[] pinLocations, playerPins, pinController;
+    private Transform[] pinLocations, playerPins;
+    [SerializeField]
+    private PinController[] pinController;
     [SerializeField]
     private Player[] players;
     private int minPlayers = 2;
@@ -149,7 +151,7 @@ public class NewCharacterSelectionController : MonoBehaviour
         readyMsgBar.gameObject.SetActive(false);
         for (int i = 0; i < pinController.Length; i++)
         {
-            pinController[i].gameObject.SetActive(false);
+            pinController[i].UnlockPlayer();
         }
         for (int i = 0; i < pinController.Length; i++)
         {
