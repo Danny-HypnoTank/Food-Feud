@@ -90,12 +90,12 @@ public class PodiumController : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         if(player.hasWon == true)
         {
-            animator.SetInteger("Pos", 1);
+            animator.SetInteger("Pos", 2);
             models[player.skinId].GetComponent<ExpressionManager>().SetExpression(1);
         }
         else if(player.hasWon == false)
         {
-            animator.SetInteger("Pos", 2);
+            animator.SetInteger("Pos", 1);
             models[player.skinId].GetComponent<ExpressionManager>().SetExpression(2);
         }
     }
