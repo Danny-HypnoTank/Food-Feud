@@ -145,17 +145,6 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        else if (other.CompareTag("ObjectCollider"))
-        {
-            if (IsDashing)
-            {
-                if (!PlayerStun.Stunned)
-                {
-                    //StartCoroutine(PlayerStun.Stun(dashAmount,this));
-                    Splat(dashAmount);
-                }
-            }
-        }
     }
 
     private void FixedUpdate()
