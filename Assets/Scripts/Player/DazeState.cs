@@ -36,10 +36,8 @@ public class DazeState : MonoBehaviour
     private Vector3 impact = Vector3.zero;
 
     private PlayerController playerController;
-    private DefaultShooting dShooting;
     private CharacterController character;
     private PlayerBase playerbase;
-    private StunBehavior stunBehavior;
 
     public bool Stunned { get; private set; }
     public bool CanShoot { get; private set; }
@@ -51,8 +49,6 @@ public class DazeState : MonoBehaviour
     {
         playerbase = GetComponent<PlayerBase>();
         character = GetComponent<CharacterController>();
-        dShooting = GetComponent<DefaultShooting>();
-        stunBehavior = GetComponent<StunBehavior>();
         playerController = GetComponent<PlayerController>();
 
         canBeStunned = true;
@@ -114,12 +110,14 @@ public class DazeState : MonoBehaviour
             CanShoot = false;
             playerbase.Player.StunCount++;
             stunDuration = stunDurationMax * 2;
+            playerController.IceCube.SetActive(true);
 
             yield return new WaitForSeconds(stunDuration);
 
             Stunned = false;
             CanShoot = true;
             cooldownTime = cooldownTimeMax;
+            playerController.IceCube.SetActive(false);
 
             StartCoroutine(StunCooldown(cooldownTime));
         }

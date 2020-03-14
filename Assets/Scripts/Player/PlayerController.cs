@@ -59,8 +59,8 @@ public class PlayerController : MonoBehaviour
     private GameObject sImmunityObj;
     public GameObject SImunnityObj { get { return sImmunityObj; } }
     [SerializeField]
-    private GameObject teleportObject;
-    public GameObject TeleportObject { get { return teleportObject; } }
+    private GameObject _iceCube;
+    public GameObject IceCube { get { return _iceCube; } }
 
     [Header("Layer Masks")]
     [SerializeField]
@@ -149,11 +149,7 @@ public class PlayerController : MonoBehaviour
         {
             if (IsDashing)
             {
-                if (!PlayerStun.Stunned)
-                {
-                    //StartCoroutine(PlayerStun.Stun(dashAmount,this));
-                    Splat(dashAmount);
-                }
+                Splat(dashAmount);
             }
         }
     }

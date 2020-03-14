@@ -75,13 +75,6 @@ public class EndGameScore : MonoBehaviour
 
             #endregion
 
-            for (int i = 0; i < players.Length; i++)
-            {
-
-                Debug.Log($"P{i}: {players[i].scorePercentage}");
-
-            }
-
             loading = GameObject.Find("LoadingManager").GetComponent<Loading>();
             sortedPlayers = players.OrderByDescending(o => o.scorePercentage).ToList();
 
@@ -144,6 +137,9 @@ public class EndGameScore : MonoBehaviour
             {
 
                 p.hasWon = false;
+                p.isLocked = false;
+                p.isActivated = false;
+                p.skinId = 0;
 
             }
 
@@ -183,9 +179,9 @@ public class EndGameScore : MonoBehaviour
 
     private void DisplayWinner()
     {
-        for (int i = 0; i < sortedPlayers.Count; i++)
+        for (int i = 0; i < players.Length; i++)
         {
-            if (sortedPlayers[i].hasWon)
+            if (players[i].hasWon)
             {
                 winnerIcons[i].SetActive(true);
             }
