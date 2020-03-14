@@ -35,9 +35,11 @@ public class SpecialButton : MonoBehaviour
     [SerializeField]
     private Sprite litLight;
 
-    [Header("Overlay Graphics")]
+    [Header("Graphics")]
     [SerializeField]
     private GameObject[] imageToDisplay;
+    [SerializeField]
+    private GameObject indicator;
 
     //Fields
     private string powerName;
@@ -97,6 +99,7 @@ public class SpecialButton : MonoBehaviour
                     //Set the button to inactive so it can't be triggered again
                     IsActive = false;
                     HasBeenUsed = true;
+                    indicator.SetActive(false);
                 }
                 else
                     player.PlayerStun.Stun(player.dashAmount, null);
@@ -104,7 +107,11 @@ public class SpecialButton : MonoBehaviour
         }
     }
 
-    public void ActivateButton() => IsActive = true; //Set IsActive to true and put button in the active position
+    public void ActivateButton()
+    {
+        IsActive = true; //Set IsActive to true and put button in the active position
+        indicator.SetActive(true);
+    }
 
     public void UpdateBar(float time)
     {
