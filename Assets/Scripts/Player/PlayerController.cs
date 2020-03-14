@@ -151,7 +151,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (!PlayerStun.Stunned)
                 {
-                    StartCoroutine(PlayerStun.Stun(dashAmount,this));
+                    //StartCoroutine(PlayerStun.Stun(dashAmount,this));
                     Splat(dashAmount);
                 }
             }
