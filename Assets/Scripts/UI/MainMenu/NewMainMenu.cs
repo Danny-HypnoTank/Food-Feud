@@ -28,7 +28,7 @@ public class NewMainMenu : MonoBehaviour
     [SerializeField]
     private Transform doorHolder;
     [SerializeField]
-    private Transform cameraTransform, optionsCameraPoint, characterSelectPoint, medalViewPoint, defaultCameraPoint;
+    private Transform cameraTransform, optionsCameraPoint, characterSelectPoint, medalViewPoint, defaultCameraPoint, controlsCameraPoint;
     [Header("Handles animation for moving into upper fridge")]
     [SerializeField]
     private bool usingLerp = true;
@@ -52,6 +52,7 @@ public class NewMainMenu : MonoBehaviour
     private ControllerNav controlNav;
     private UIElementController previousSelection;
     private bool previewingMedals = false;
+    private bool previewingControls = false;
     [SerializeField]
     private Transform medalMenuDisplay;
 
@@ -68,6 +69,7 @@ public class NewMainMenu : MonoBehaviour
     private void OnEnable()
     {
         previewingMedals = false;
+        previewingControls = false;
         medalMenuDisplay.gameObject.SetActive(false);
         isTransition = false;
         confirmationMsg.gameObject.SetActive(false);
@@ -100,23 +102,29 @@ public class NewMainMenu : MonoBehaviour
         {
             StartCoroutine("CameraDown");
         }
-        else if(selectId == 1)
+        else if (selectId == 1)
         {
-                doorAnimation.enabled = true;
-                doorAnimation.speed = animationSpeed;
-                doorAnimation.SetInteger("DoorAnim", 0);
-                StartCoroutine("CameraIn");
+            doorAnimation.enabled = true;
+            doorAnimation.speed = animationSpeed;
+            doorAnimation.SetInteger("DoorAnim", 0);
+            StartCoroutine("CameraIn");
         }
-        else if(selectId == 2)
+        else if (selectId == 2)
         {
             quitPanel.gameObject.SetActive(true);
             canPressBtn = false;
         }
-        else if(selectId == 3)
+        else if (selectId == 3)
         {
             StopCoroutine("CameraSide");
             StopCoroutine("CameraReset");
             StartCoroutine("CameraSide");
+        }
+        else if (selectId == 4)
+        {
+            StopCoroutine("CameraSide");
+            StopCoroutine("CameraReset");
+            StartCoroutine("CameraControls");
         }
     }
     private IEnumerator CameraDown()
@@ -147,6 +155,7 @@ public class NewMainMenu : MonoBehaviour
     private IEnumerator CameraReset()
     {
         previewingMedals = false;
+        previewingControls = false;
         medalMenuDisplay.gameObject.SetActive(false);
         isTransition = true;
         bool arrived = false;
@@ -197,7 +206,30 @@ public class NewMainMenu : MonoBehaviour
         yield return null;
     }
 
-
+    private IEnumerator CameraControls()
+    {
+        previewingControls = true;
+        isTransition = true;
+        canPressBtn = false;
+        bool arrived = false;
+        while (!arrived)
+        {
+            if (usingLerp == true)
+            {
+                cameraTransform.position = Vector3.Lerp(cameraTransform.position, controlsCameraPoint.position, cameraMoveSpeed * Time.deltaTime);
+            }
+            else
+            {
+                cameraTransform.position = Vector3.MoveTowards(cameraTransform.position, controlsCameraPoint.position, cameraMoveSpeed * Time.deltaTime);
+            }
+            cameraTransform.rotation = Quaternion.Slerp(cameraTransform.rotation, controlsCameraPoint.rotation, cameraMoveSpeed * Time.deltaTime);
+            if (Vector3.Distance(cameraTransform.position, controlsCameraPoint.position) < 0.01f) arrived = true;
+            yield return null;
+        }
+        yield return new WaitForSeconds(waitBetweenAnimation);
+        isTransition = false;
+        yield return null;
+    }
 
     private IEnumerator CameraIn()
         {
@@ -226,6 +258,15 @@ public class NewMainMenu : MonoBehaviour
             {
                 canPressBtn = true;
                 StopCoroutine("CameraSide");
+                StartCoroutine("CameraReset");
+            }
+        }
+        else if (previewingControls == true)
+        {
+            if (Input.GetButtonDown("BackButton"))
+            {
+                canPressBtn = true;
+                StopCoroutine("CameraControls");
                 StartCoroutine("CameraReset");
             }
         }
