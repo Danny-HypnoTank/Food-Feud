@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Rendering.PostProcessing;
 
 enum SpecialPowers
 {
@@ -41,8 +40,17 @@ public class SpecialButton : MonoBehaviour
     [SerializeField]
     private GameObject indicator;
 
+    [Header("Settings")]
+    [SerializeField]
+    private Vector3 activePosition;
+    [SerializeField]
+    private float lerpTime;
+
     //Fields
     private string powerName;
+    private float timer;
+    private bool finishedUI;
+    private Vector3 inactivePosition;
     private BuffDebuff power;
     private List<PlayerController> playerToCheck;
     private readonly Dictionary<string, Type> powers = new Dictionary<string, Type>
@@ -57,12 +65,14 @@ public class SpecialButton : MonoBehaviour
     //Full Properties
     public float ActivationTime { get { return _activationTime; } }
 
-    public  void Initialisation()
+    public void Initialisation()
     {
         //Set initial values
         IsActive = false;
         HasBeenUsed = false;
-        if(lightObject != null)
+        finishedUI = false;
+        inactivePosition = transform.localPosition;
+        if (lightObject != null)
             lightObject.sprite = defaultLight;
 
         //Instantiate an object based on the special power
@@ -99,6 +109,7 @@ public class SpecialButton : MonoBehaviour
                     //Set the button to inactive so it can't be triggered again
                     IsActive = false;
                     HasBeenUsed = true;
+                    transform.localPosition = inactivePosition;
                     indicator.SetActive(false);
                 }
                 else
@@ -110,28 +121,42 @@ public class SpecialButton : MonoBehaviour
     public void ActivateButton()
     {
         IsActive = true; //Set IsActive to true and put button in the active position
+        transform.localPosition = activePosition;
+        finishedUI = true;
         indicator.SetActive(true);
     }
 
     public void UpdateBar(float time)
     {
-        if (specialBar != null)
+        if (!finishedUI)
         {
-            if (time < ActivationTime)
+
+            MoveButton();
+
+            if (specialBar != null)
             {
-                //Calculate the current progress of the in-game time towards activation time as a percentage, and set the value to that percentage
-                float value = 0;
-                value = time / ActivationTime;
-                specialBar.fillAmount = value;
+                if (time < ActivationTime)
+                {
+                    //Calculate the current progress of the in-game time towards activation time as a percentage, and set the value to that percentage
+                    float value;
+                    value = time / ActivationTime;
+                    specialBar.fillAmount = value;
+                }
             }
+            else if (lightObject != null)
+            {
+                if (time >= ActivationTime)
+                    lightObject.sprite = litLight;
+            }
+            else
+                Debug.LogError("Error in SpecialButton.cs: No power-up indicator set!");
         }
-        else if (lightObject != null)
-        {
-            if (time >= ActivationTime)
-                lightObject.sprite = litLight;
-        }
-        else
-            Debug.LogError("Error in SpecialButton.cs: No power-up indicator set!");
+    }
+
+    private void MoveButton()
+    {
+        timer += Time.deltaTime;
+        transform.localPosition = Vector3.Lerp(inactivePosition, activePosition, timer / lerpTime);
     }
 
     private bool CanBeTriggered(float dashAmount)
