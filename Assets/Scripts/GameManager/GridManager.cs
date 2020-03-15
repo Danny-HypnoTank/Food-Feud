@@ -14,11 +14,16 @@ public class GridManager : MonoBehaviour
     [SerializeField]
     private RectTransform[] fillBars; //The bars for the score bar
 
+    [Header("Debug")]
+    [SerializeField]
+    private bool usePercentages;
+
     private float totalScore; //Contains the combined total of all player's scores
     private int playerCount; //The amount of players (+1)
     private bool updating; //Is something being updated
     private float originalBarWidth; //The value of the original width of the score bar
     private List<ScoreSquare> gridObjects; //List to store the grid objects
+    private StringBuilder scoreString;
 
     public int[] Scores { get; private set; } //Array to store the scores for the players + the unpainted areas
     public float[] Percentages { get; private set; } //Array to store the percentages for the players + unpainted areas
@@ -30,8 +35,13 @@ public class GridManager : MonoBehaviour
     //Initialisation method
     public void Initialisation(int count)
     {
+        //Set the scoreText to active or inactive based on if we're using the percentages debug
+        scoreText.gameObject.SetActive(usePercentages);
+
         //Instantiate grid
         gridObjects = new List<ScoreSquare>();
+        //Instantiate scorestring
+        scoreString = new StringBuilder();
         //Set default values
         playerCount = count + 1;
         originalBarWidth = fillBars[0].rect.width;
@@ -164,9 +174,11 @@ public class GridManager : MonoBehaviour
                 //Initialise a value for the new width
                 float newWidth = originalBarWidth;
                 newWidth *= Percentages[i];
+                //Calculate the extra width to account for the extra bar image
                 float extra = 12 * (playerCount);
                 extra *= Percentages[i];
-                if (newWidth < originalBarWidth && newWidth > extra)
+                //if the new width is less than 
+                if (newWidth + extra < originalBarWidth)
                     newWidth += extra;
 
                 //Set the width of the bar
@@ -187,22 +199,21 @@ public class GridManager : MonoBehaviour
                 }
             }
 
-            #region maybe keep idk
-            //Instantiate string builder
-            StringBuilder scoreString = new StringBuilder();
-
-            //Loop through the percentage array and append to the string builder
-            for (int i = 0; i < playerCount; i++)
+            //Check if we're using the percentages or not
+            if (usePercentages)
             {
-                if (i == 0)
-                    scoreString.Append($"{Percentages[i]:P2}");
-                else
-                    scoreString.Append($"\t\t\t{Percentages[i]:P2}");
-            }
+                //Loop through the percentage array and append to the string builder
+                for (int i = 0; i < playerCount; i++)
+                {
+                    if (i == 0)
+                        scoreString.Append($"{Percentages[i]:P2}");
+                    else
+                        scoreString.Append($"\t\t\t{Percentages[i]:P2}");
+                }
 
-            //Set the string value of the text
-            scoreText.text = scoreString.ToString();
-            #endregion
+                //Set the string value of the text
+                scoreText.text = scoreString.ToString();
+            }
         }
     }
 
