@@ -30,6 +30,6 @@ public class LevelManager : MonoBehaviour
         PaintableObjects.AddRange(GameObject.FindGameObjectsWithTag("PaintableEnvironment"));
         var index = PaintableObjects.FindIndex(x => x.name == "Floor");
         var item = PaintableObjects[index];
-        PaintableObjects[0] = item;
+        //PaintableObjects[0] = item;
     }
 }
