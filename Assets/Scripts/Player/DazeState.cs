@@ -75,7 +75,7 @@ public class DazeState : MonoBehaviour
             {
                 stunStars.ToggleGameObjects(true);
 
-                //StunCounter(playerbase.Player.playerNum);
+                StunCounter(playerbase.Player.playerNum);
 
                 Stunned = true;
                 if(stunnedBy != null)

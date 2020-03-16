@@ -61,17 +61,37 @@ public class EndGameScore : MonoBehaviour
         {
 
             #region stunMedal
-            int _currentPodium = 0;
+            int _currentPodiumStun = 0;
+            int _currentPodiumStunOthers = 0;
+            int _currentPodiumDash = 0;
+            int _currentPodiumPickUp = 0;
 
             foreach (Player p in sortedPlayers)
             {
                 if (p.playerNum == medalManager.GetTopStunned())
                 {
-                    _currentPodium = p.playerNum;
+                    _currentPodiumStun = p.playerNum;
+                }
+
+                if (p.playerNum == medalManager.GetTopStunOther())
+                {
+                    _currentPodiumStunOthers = p.playerNum;
+                }
+
+                if (p.playerNum == medalManager.GetTopDashes())
+                {
+                    _currentPodiumDash = p.playerNum;
+                }
+
+                if (p.playerNum == medalManager.GetTopPowerPickup())
+                {
+                    _currentPodiumPickUp = p.playerNum;
                 }
             }
 
-            medalManager.SpawnMedal(podiumLocations[_currentPodium].transform.position);
+            medalManager.SpawnMedal(podiumLocations[_currentPodiumStun].transform.position, podiumLocations[_currentPodiumStunOthers].transform.position, 
+                podiumLocations[_currentPodiumDash].transform.position, podiumLocations[_currentPodiumPickUp].transform.position);
+
 
             #endregion
 
