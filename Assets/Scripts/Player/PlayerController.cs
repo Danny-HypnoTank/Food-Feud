@@ -56,7 +56,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     public ParticleSystem smokeParticles;
     [SerializeField]
+    private Sprite[] fillBarSprites;
+    [SerializeField]
     private Image fillBar;
+    [SerializeField]
+    private Sprite[] bgBarSprites;
+    [SerializeField]
+    private Image bgBar;
     [SerializeField]
     private GameObject scoreText;
     [SerializeField]
@@ -115,15 +121,22 @@ public class PlayerController : MonoBehaviour
         dashAmount = 0;
         MoveSpeed = Player.Speed;
 
+        #region colourSetting
         impactParticles.startColor = Player.SkinColours[Player.skinId];
 
         smokeParticles.startColor = Player.SkinColours[Player.skinId];
+
+        fillBar.sprite = fillBarSprites[Player.skinId];
+
+        bgBar.sprite = bgBarSprites[Player.skinId];
 
         foreach (Transform t in impactParticles.GetComponentInChildren<Transform>())
         {
             t.GetComponent<ParticleSystem>().startColor = Player.SkinColours[Player.skinId];
         }
 
+
+        #endregion
         trail.ToggleGameObjects(false);
         UpdateFillBar();
         Splat();
