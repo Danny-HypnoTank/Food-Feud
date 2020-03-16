@@ -33,6 +33,8 @@ public class PowerupHolder : MonoBehaviour
     private PowerupNode parent; //The parent node
     List<PlayerController> playerToCheck; //List to store references to all players
 
+   
+
     //Dictionary to contain the buff/debuff classes
     private readonly Dictionary<Powers, Type> powers = new Dictionary<Powers, Type>()
     {
@@ -87,7 +89,7 @@ public class PowerupHolder : MonoBehaviour
                     //Give player the buff
                     player.PickUpPowerUp(power);
 
-                    Collect();
+                    Collect(other);
                 }
                 else if (player.CurrentPowerup.GetType() == power.GetType())
                 {
@@ -97,7 +99,7 @@ public class PowerupHolder : MonoBehaviour
                         //Refresh the duration on the player's buff
                         player.CurrentPowerup.RefreshDuration();
 
-                        Collect();
+                        Collect(other);
                     }
                 }
             }
@@ -111,15 +113,19 @@ public class PowerupHolder : MonoBehaviour
                         playerToCheck[i].PickUpPowerUp((BuffDebuff)Activator.CreateInstance(powers[powerHeld]));
                 }
 
-                Collect();
+                Collect(other);
             }
         }
     }
 
-    private void Collect()
+    private void Collect(Collider other)
     {
         //Call the Collected method on the parent and disable object
+        
+
         parent.Collected();
         gameObject.SetActive(false);
     }
+
+    
 }

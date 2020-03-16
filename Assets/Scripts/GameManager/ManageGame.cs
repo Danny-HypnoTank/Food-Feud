@@ -71,9 +71,10 @@ public class ManageGame : MonoBehaviour
 
         clockHand.eulerAngles = v3Rot;
 
-        specialButton = GameObject.FindGameObjectWithTag("Special").GetComponent<SpecialButton>();
+        
         camShake = Camera.main.GetComponent<CameraShaker>();
         allPlayerControllers = new List<PlayerController>();
+        specialButton = GameObject.FindGameObjectWithTag("Special").GetComponent<SpecialButton>();
     }
     //handles display and counting of round timer
     [SerializeField]
