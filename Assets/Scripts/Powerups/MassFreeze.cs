@@ -1,15 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class MassFreeze : BuffDebuff
+﻿public class MassFreeze : BuffDebuff
 {
 
-    public override void Start(PlayerController parent, float dur = 5)
+    public override void Start(PlayerController parent, float dur = 5, bool refresh = true)
     {
-        base.Start(parent, dur);
+        base.Start(parent, refresh: false);
         parent.StartCoroutine(Parent.PlayerStun.Freeze());
-        Camera.main.GetComponent<CameraShaker>().ShakeCamera();
+        ManageGame.instance.camShake.ShakeCamera();
         End();
     }
 

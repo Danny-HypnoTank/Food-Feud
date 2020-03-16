@@ -65,17 +65,7 @@ public class PinController : MonoBehaviour
                 {
                     if (characters[position].GetComponent<CharacterPin>().OwnedBy == null)
                     {
-                        isLocked = true;
-                        characters[position].GetComponent<CharacterPin>().OwnedBy = pin;
-                       // Debug.Log("Click! OWN PIN " + characters[position].name);
-                        characters[position].GetComponent<CharacterPin>().OwnPin();
-                        player.isLocked = true;
-                        player.isActivated = true;
-                        player.skinId = position;
-                        pinDirection = characters[position];
-                        StopCoroutine("MovePinAround");
-                        StartCoroutine("MovePinAround");
-                        newSelection.CheckSubmission();
+                        LockPlayer();
                     }
                 }
             }
@@ -83,24 +73,7 @@ public class PinController : MonoBehaviour
             {
                 if (isActive == true)
                 {
-                    if (isLocked == true)
-                    {
-                        target.GetComponentInParent<CharacterPin>().OwnedBy = null;
-                        isLocked = false;
-                        player.isLocked = false;
-                        player.isActivated = false;
-                        pinDirection = target.GetComponentInParent<CharacterPin>().PlayerPinLocations[player.playerNum - 1];
-                        StopCoroutine("MovePinAround");
-                        StartCoroutine("MovePinAround");
-                        target.GetComponentInParent<CharacterPin>().UnOwnPin();
-                    }
-                    else if (isLocked == false)
-                    {
-                        isActive = false;
-                        target.GetComponentInParent<CharacterPin>().UnOwnPin();
-                        CancelPlayer();
-                    }
-
+                    UnlockPlayer();
                 }
             }
         }
@@ -267,5 +240,41 @@ public class PinController : MonoBehaviour
         StopCoroutine("MovePin");
         StartCoroutine("MovePin");
         isOnFridge = true;
+    }
+
+    public void LockPlayer()
+    {
+        isLocked = true;
+        characters[position].GetComponent<CharacterPin>().OwnedBy = pin;
+        // Debug.Log("Click! OWN PIN " + characters[position].name);
+        characters[position].GetComponent<CharacterPin>().OwnPin();
+        player.isLocked = true;
+        player.isActivated = true;
+        player.skinId = position;
+        pinDirection = characters[position];
+        StopCoroutine("MovePinAround");
+        StartCoroutine("MovePinAround");
+        newSelection.CheckSubmission();
+    }
+
+    public void UnlockPlayer()
+    {
+        if (isLocked == true)
+        {
+            target.GetComponentInParent<CharacterPin>().OwnedBy = null;
+            isLocked = false;
+            player.isLocked = false;
+            player.isActivated = false;
+            pinDirection = target.GetComponentInParent<CharacterPin>().PlayerPinLocations[player.playerNum - 1];
+            StopCoroutine("MovePinAround");
+            StartCoroutine("MovePinAround");
+            target.GetComponentInParent<CharacterPin>().UnOwnPin();
+        }
+        else if (isLocked == false)
+        {
+            isActive = false;
+            target.GetComponentInParent<CharacterPin>().UnOwnPin();
+            CancelPlayer();
+        }
     }
 }

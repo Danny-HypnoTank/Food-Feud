@@ -1,17 +1,13 @@
 ﻿/// <summary>
-using UnityEngine;
-/// <summary>
-/// Class for the speedup buff
+/// Class for the exploding potato mechanic
 /// </summary>
 public class ExplodingPotato : BuffDebuff
 {
 
-    //Field to store the original speed of the player
-
-    public override void Start(PlayerController parent, float dur = 5)
+    public override void Start(PlayerController parent, float dur = 5, bool refresh = true)
     {
         //Call the base implementation of Start
-        base.Start(parent, 10);
+        base.Start(parent, 10, false);
 
     }
 
@@ -21,18 +17,17 @@ public class ExplodingPotato : BuffDebuff
         base.OnUpdate(deltaTime);
     }
 
-    public override void OnHit(Collider other)
-    {
-        base.OnHit(other);
-        other.GetComponent<PlayerController>().PickUpPowerUp(this);
-        Parent.SetProperty<BuffDebuff>(nameof(Parent.CurrentPowerup), null);
-    }
-
 
     public override void End()
     {
         Parent.PlayerStun.StartCoroutine("Stun", 5);
         //Call the base implementation of End
         base.End();
+    }
+
+    public void OnHit(PlayerController other)
+    {
+        other.PickUpPowerUp(this);
+        Parent.PickUpPowerUp(null);
     }
 }

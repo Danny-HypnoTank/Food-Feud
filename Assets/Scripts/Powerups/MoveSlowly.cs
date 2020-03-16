@@ -7,7 +7,7 @@ public class MoveSlowly : BuffDebuff
     //Field to store the original speed of the player
     float originalSpeed;
 
-    public override void Start(PlayerController parent, float dur = 5)
+    public override void Start(PlayerController parent, float dur = 5, bool refresh = true)
     {
         //Call the base implementation of Start
         base.Start(parent, 8);

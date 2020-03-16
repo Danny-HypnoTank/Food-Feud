@@ -52,6 +52,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject[] trail;
     [SerializeField]
+    ParticleSystem impactParticles;
+    [SerializeField]
+    public ParticleSystem smokeParticles;
+    [SerializeField]
     private Image fillBar;
     [SerializeField]
     private GameObject scoreText;
@@ -59,8 +63,8 @@ public class PlayerController : MonoBehaviour
     private GameObject sImmunityObj;
     public GameObject SImunnityObj { get { return sImmunityObj; } }
     [SerializeField]
-    private GameObject teleportObject;
-    public GameObject TeleportObject { get { return teleportObject; } }
+    private GameObject _iceCube;
+    public GameObject IceCube { get { return _iceCube; } }
 
     [Header("Layer Masks")]
     [SerializeField]
@@ -69,6 +73,7 @@ public class PlayerController : MonoBehaviour
     //Fields
     private Vector3 moveInput;
     private ObjectAudioHandler audioHandler;
+    private ExplodingPotato potato;
 
     //Auto Properties
     public float dashAmount { get; private set; }
@@ -83,6 +88,16 @@ public class PlayerController : MonoBehaviour
     private Vector3 _moveVelocity;
     public Vector3 MoveVelocity { get { return _moveVelocity; } private set { _moveVelocity = value; } }
 
+    //MedalEvents
+    public delegate int DashDelegate(int id);
+    public event DashDelegate dashEvent;
+
+    public delegate int StunOtherDelegate(int id);
+    public event StunOtherDelegate stunOtherEvent;
+
+    public delegate int CollectDelegate(int id);
+    public event CollectDelegate collectEvent;
+
     private void Awake()
     {
         chc = GetComponent<CharacterController>();
@@ -90,6 +105,7 @@ public class PlayerController : MonoBehaviour
         PlayerBase = GetComponent<PlayerBase>();
         audioHandler = GetComponent<ObjectAudioHandler>();
         DrawColor = ManageGame.instance.GetComponent<DrawColor>();
+        
     }
 
     private void Start()
@@ -98,6 +114,15 @@ public class PlayerController : MonoBehaviour
         canDash = true;
         dashAmount = 0;
         MoveSpeed = Player.Speed;
+
+        impactParticles.startColor = Player.SkinColours[Player.skinId];
+
+        smokeParticles.startColor = Player.SkinColours[Player.skinId];
+
+        foreach (Transform t in impactParticles.GetComponentInChildren<Transform>())
+        {
+            t.GetComponent<ParticleSystem>().startColor = Player.SkinColours[Player.skinId];
+        }
 
         trail.ToggleGameObjects(false);
         UpdateFillBar();
@@ -133,12 +158,17 @@ public class PlayerController : MonoBehaviour
                 {
                     if (!otherPlayer.PlayerStun.Stunned)
                     {
+                        StunOtherCounter(Player.playerNum);
+
                         Player.StunCount++;
                         StartCoroutine(otherPlayer.PlayerStun.Stun(dashAmount,this));
                     }
-                            
 
                     Splat(dashAmount);
+                    impactParticles.Play();
+
+                    if (potato != null)
+                        potato.OnHit(otherPlayer);
                 }
             }
         }
@@ -146,11 +176,8 @@ public class PlayerController : MonoBehaviour
         {
             if (IsDashing)
             {
-                if (!PlayerStun.Stunned)
-                {
-                    StartCoroutine(PlayerStun.Stun(dashAmount,this));
-                    Splat(dashAmount);
-                }
+                Splat(dashAmount);
+                impactParticles.Play();
             }
         }
     }
@@ -202,12 +229,17 @@ public class PlayerController : MonoBehaviour
             else
                 dashAmount = 1;
             Player.DashCount++;
+
+            
+
             UpdateFillBar();
         }
 
         if (Input.GetButtonUp($"Dash{Player.playerNum}") && !IsDashing && !PlayerStun.Stunned && canDash)
         {
             float distanceToDash = 0;
+
+            DashCounter(Player.playerNum);
 
             distanceToDash.CalculateFromPercentage(dashDistanceMin, dashDistanceMax, dashAmount);
             dashPower.CalculateFromPercentage(dashPowerMin, dashPowerMax, dashAmount);
@@ -288,6 +320,9 @@ public class PlayerController : MonoBehaviour
     public void PickUpPowerUp(BuffDebuff powerup)
     {
         Player.PowerUpsCount++;
+
+        CollectCounter(Player.playerNum);
+
         if (powerup is StunImmunity)
         {
             StunImmunityPowerup = (StunImmunity)powerup;
@@ -296,7 +331,8 @@ public class PlayerController : MonoBehaviour
         else
         {
             CurrentPowerup = powerup;
-            CurrentPowerup.Start(this);
+            if(CurrentPowerup != null)
+                CurrentPowerup.Start(this);
         }
     }
 
@@ -331,5 +367,59 @@ public class PlayerController : MonoBehaviour
     {
         if (fillBar != null)
             fillBar.fillAmount = dashAmount;
+    }
+
+    void DashCounter(int playerID)
+    {
+        Debug.Log(playerID);
+        if (dashEvent != null)
+        {
+            dashEvent(playerID);
+
+            if (dashEvent.GetInvocationList() != null)
+            {
+                Debug.Log(dashEvent.GetInvocationList());
+            }
+            else
+            {
+                Debug.Log("No Invocators");
+            }
+        }
+    }
+
+    void StunOtherCounter(int playerID)
+    {
+        Debug.Log(playerID);
+        if (stunOtherEvent != null)
+        {
+            stunOtherEvent(playerID);
+
+            if (stunOtherEvent.GetInvocationList() != null)
+            {
+                Debug.Log(stunOtherEvent.GetInvocationList());
+            }
+            else
+            {
+                Debug.Log("No Invocators");
+            }
+        }
+    }
+
+    void CollectCounter(int playerID)
+    {
+        Debug.Log(playerID);
+        if (collectEvent != null)
+        {
+            collectEvent(playerID);
+
+            if (collectEvent.GetInvocationList() != null)
+            {
+                Debug.Log(collectEvent.GetInvocationList());
+            }
+            else
+            {
+                Debug.Log("No Invocators");
+            }
+        }
     }
 }
