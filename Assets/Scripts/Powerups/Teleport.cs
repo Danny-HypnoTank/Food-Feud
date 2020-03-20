@@ -20,13 +20,10 @@ public class Teleport : BuffDebuff
         if(Input.GetButtonDown($"Shoot{Parent.Player.playerNum}"))
         {
             Parent.chc.detectCollisions = false;
-
-            ParticleSystem smokeSystem;
-            smokeSystem = Parent.smokeParticles;
-            smokeSystem.Play();
+            Parent.SmokeParticles.Play();
             Parent.chc.Move(Parent.transform.forward * 25);
             Parent.chc.detectCollisions = true;
-            smokeSystem.Play();
+            Parent.SmokeParticles.Play();
             End();
         }
     }

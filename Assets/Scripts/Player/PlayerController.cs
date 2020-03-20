@@ -52,19 +52,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject[] trail;
     [SerializeField]
-    ParticleSystem impactParticles;
+    private ParticleSystem[] impactParticles;
     [SerializeField]
-    public ParticleSystem smokeParticles;
+    private ParticleSystem _smokeParticles;
     [SerializeField]
     private Image fillBar;
     [SerializeField]
     private GameObject scoreText;
     [SerializeField]
-    private GameObject sImmunityObj;
-    public GameObject SImunnityObj { get { return sImmunityObj; } }
+    private GameObject _sImmunityObj;
     [SerializeField]
     private GameObject _iceCube;
-    public GameObject IceCube { get { return _iceCube; } }
 
     [Header("Layer Masks")]
     [SerializeField]
@@ -74,6 +72,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 moveInput;
     private ObjectAudioHandler audioHandler;
     private ExplodingPotato potato;
+
 
     //Auto Properties
     public float dashAmount { get; private set; }
@@ -87,6 +86,9 @@ public class PlayerController : MonoBehaviour
     //Full properties
     private Vector3 _moveVelocity;
     public Vector3 MoveVelocity { get { return _moveVelocity; } private set { _moveVelocity = value; } }
+    public GameObject IceCube { get { return _iceCube; } }
+    public GameObject SImunnityObj { get { return _sImmunityObj; } }
+    public ParticleSystem SmokeParticles { get { return _smokeParticles; } }
 
     //MedalEvents
     public delegate int DashDelegate(int id);
@@ -105,7 +107,6 @@ public class PlayerController : MonoBehaviour
         PlayerBase = GetComponent<PlayerBase>();
         audioHandler = GetComponent<ObjectAudioHandler>();
         DrawColor = ManageGame.instance.GetComponent<DrawColor>();
-        
     }
 
     private void Start()
@@ -114,17 +115,16 @@ public class PlayerController : MonoBehaviour
         canDash = true;
         dashAmount = 0;
         MoveSpeed = Player.Speed;
+        var smokeMain = SmokeParticles.main;
+        smokeMain.startColor = Player.SkinColours[Player.skinId];
 
-        impactParticles.startColor = Player.SkinColours[Player.skinId];
-
-        smokeParticles.startColor = Player.SkinColours[Player.skinId];
-
-        foreach (Transform t in impactParticles.GetComponentInChildren<Transform>())
+        for(int i = 0; i < impactParticles.Length; i++)
         {
-            t.GetComponent<ParticleSystem>().startColor = Player.SkinColours[Player.skinId];
+            var impactMain = impactParticles[i].main;
+            impactMain.startColor = Player.SkinColours[Player.skinId];
         }
 
-        trail.ToggleGameObjects(false);
+            trail.ToggleGameObjects(false);
         UpdateFillBar();
         Splat();
     }
@@ -165,7 +165,7 @@ public class PlayerController : MonoBehaviour
                     }
 
                     Splat(dashAmount);
-                    impactParticles.Play();
+                    impactParticles[0].Play();
 
                     if (potato != null)
                         potato.OnHit(otherPlayer);
@@ -177,7 +177,7 @@ public class PlayerController : MonoBehaviour
             if (IsDashing)
             {
                 Splat(dashAmount);
-                impactParticles.Play();
+                impactParticles[0].Play();
             }
         }
     }
