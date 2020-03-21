@@ -53,7 +53,7 @@ public class GridManager : MonoBehaviour
         for (int i = 0; i < playerCount; i++)
         {
             Scores[i] = 1;
-            Percentages[i] = 0.25f;
+            Percentages[i] = 0f;
         }
 
         InitialiseBars();
@@ -77,7 +77,7 @@ public class GridManager : MonoBehaviour
         for (int i = 0; i < playerCount; i++)
         {
             Scores[i] = 1;
-            Percentages[i] = 0.25f;
+            Percentages[i] = 0f;
         }
     }
 
@@ -241,6 +241,8 @@ public class GridManager : MonoBehaviour
         //Check if we're using the percentages or not
         if (usePercentages)
         {
+            scoreString.Clear();
+
             //Loop through the percentage array and append to the string builder
             for (int i = 0; i < playerCount; i++)
             {
