@@ -114,7 +114,7 @@ public class ManageGame : MonoBehaviour
                 gridManager.CalculateFinalScore();
                 SceneManager.LoadScene("EndRoundScene");
             }
-            if (reverseTime % gridManager.TimeToCheck < 1) //Modulus operator to check if the value of reverseTime goes into TimeToCheck with a remainder that is less than 1, i.e. 60.23416 % 30 = 0.23416, 70.81674 % 30 = 10.81674 etc. -James
+            if (reverseTime % gridManager.TimeToCheck < 1 && reverseTime > 1) //Modulus operator to check if the value of reverseTime goes into TimeToCheck with a remainder that is less than 1, i.e. 60.23416 % 30 = 0.23416, 70.81674 % 30 = 10.81674 etc. -James
                 gridManager.UpdateUI();
             if (reverseTime >= specialButton.ActivationTime && !specialButton.IsActive && !specialButton.HasBeenUsed)
                 specialButton.ActivateButton();
@@ -157,7 +157,6 @@ public class ManageGame : MonoBehaviour
 
         gridManager.Initialisation(PlayerObjects.Count);
         gridManager.PopulateGridList();
-        gridManager.UpdateUI();
     }
 
     private void SetUpSecondarySpawners()
