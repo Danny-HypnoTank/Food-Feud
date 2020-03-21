@@ -56,29 +56,10 @@ public class GridManager : MonoBehaviour
             Percentages[i] = 0.25f;
         }
 
+        InitialiseBars();
+
         //Updating defaults to false
         updating = false;
-
-        for (int i = 0; i < playerCount + 1; i++)
-        {
-
-            Image currentImage = fillBars[i].GetComponent<Image>();
-            if (i < playerCount)
-            {
-                int id = ManageGame.instance.Players[i].skinId;
-                currentImage.color = ManageGame.instance.Players[i].SkinColours[id];
-                Color colour = new Color(currentImage.color.r, currentImage.color.g, currentImage.color.b, 1);
-                currentImage.color = colour;
-            }
-            else
-            {
-                int id = ManageGame.instance.Players[0].skinId;
-                currentImage.color = ManageGame.instance.Players[0].SkinColours[id];
-                Color colour = new Color(currentImage.color.r, currentImage.color.g, currentImage.color.b, 1);
-                currentImage.color = colour;
-            }
-
-        }
 
         UpdateUI();
     }
@@ -119,6 +100,31 @@ public class GridManager : MonoBehaviour
         gridObjects = null;
     }
 
+    private void InitialiseBars()
+    {
+        Image currentImage;
+        int playerID;
+        Color newColour;
+        for (int i = 0; i < playerCount + 1; i++)
+        {
+            fillBars[i].gameObject.SetActive(true);
+            currentImage = fillBars[i].GetComponent<Image>();
+            if (i < playerCount)
+            {
+                playerID = ManageGame.instance.Players[i].skinId;
+                currentImage.color = ManageGame.instance.Players[i].SkinColours[playerID];
+                newColour = new Color(currentImage.color.r, currentImage.color.g, currentImage.color.b, 1);
+                currentImage.color = newColour;
+            }
+
+        }
+        currentImage = fillBars[4].GetComponent<Image>();
+        playerID = ManageGame.instance.Players[0].skinId;
+        currentImage.color = ManageGame.instance.Players[0].SkinColours[playerID];
+        newColour = new Color(currentImage.color.r, currentImage.color.g, currentImage.color.b, 1);
+        currentImage.color = newColour;
+    }
+
     //Method for calculating scores
     private void CalcScores()
     {
@@ -130,13 +136,9 @@ public class GridManager : MonoBehaviour
             //Loop through the list of score squares
             for (int j = 0; j < gridObjects.Count; j++)
             {
-                //If the index is > 0
-                if (i > 0)
-                {
-                    //If the value of the score square is the player's skinId - 1 increment their score
-                    if (gridObjects[j].Value == ManageGame.instance.Players[i - 1].skinId)
-                        Scores[i]++;
-                }
+                //If the value of the score square is the player's skinId - 1 increment their score
+                if (gridObjects[j].Value == ManageGame.instance.Players[i].skinId)
+                    Scores[i]++;
             }
         }
 
@@ -181,22 +183,8 @@ public class GridManager : MonoBehaviour
             CalcPercentages();
             //Calculate and set bar widths
             CalculateBarWidth();
-
-            //Check if we're using the percentages or not
-            if (usePercentages)
-            {
-                //Loop through the percentage array and append to the string builder
-                for (int i = 0; i < playerCount; i++)
-                {
-                    if (i == 0)
-                        scoreString.Append($"{Percentages[i]:P2}");
-                    else
-                        scoreString.Append($"\t\t\t{Percentages[i]:P2}");
-                }
-
-                //Set the string value of the text
-                scoreText.text = scoreString.ToString();
-            }
+            //Calculate the score text
+            CalculateScoreText();
         }
     }
 
@@ -221,11 +209,13 @@ public class GridManager : MonoBehaviour
             float newWidth = originalBarWidth;
             newWidth *= Percentages[i];
             //Calculate the extra width to account for the extra bar image
-            float extra = 12 * (playerCount);
+            /*float extra = 15 * (playerCount);
             extra *= Percentages[i];
             //if the new width is less than 
             if (newWidth + extra < originalBarWidth)
-                newWidth += extra;
+                newWidth += extra;*/
+            if (i > 0)
+                newWidth += 15;
 
             //Set the width of the bar
             fillBars[i].SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, newWidth);
@@ -243,6 +233,25 @@ public class GridManager : MonoBehaviour
                 //Set the position of the bar
                 fillBars[i].localPosition = newPosition;
             }
+        }
+    }
+
+    private void CalculateScoreText()
+    {
+        //Check if we're using the percentages or not
+        if (usePercentages)
+        {
+            //Loop through the percentage array and append to the string builder
+            for (int i = 0; i < playerCount; i++)
+            {
+                if (i == 0)
+                    scoreString.Append($"{Percentages[i]:P2}");
+                else
+                    scoreString.Append($"\t\t\t{Percentages[i]:P2}");
+            }
+
+            //Set the string value of the text
+            scoreText.text = scoreString.ToString();
         }
     }
 
