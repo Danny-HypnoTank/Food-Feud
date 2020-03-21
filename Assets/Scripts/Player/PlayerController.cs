@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour
             impactMain.startColor = Player.SkinColours[Player.skinId];
         }
 
-            trail.ToggleGameObjects(false);
+        trail.ToggleGameObjects(false);
         UpdateFillBar();
         Splat();
     }
