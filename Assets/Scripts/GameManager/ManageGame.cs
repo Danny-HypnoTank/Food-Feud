@@ -108,7 +108,6 @@ public class ManageGame : MonoBehaviour
                 reverseTime = timeLimit;
                 if(OnGameWin != null)
                     OnGameWin();
-                objectPooling.DisableAll();
                 // loading.SetID(2);
                 // loading.InitializeLoading();
                 gridManager.CalculateFinalScore();

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO;
+using System;
+
 public class MedalManager : MonoBehaviour
 {
     private static MedalManager _instance;
@@ -24,6 +27,8 @@ public class MedalManager : MonoBehaviour
 
     public GameObject MostPowersCollected;
 
+    public int[] totalMedalCounts { get; private set; }
+
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -36,6 +41,7 @@ public class MedalManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+        totalMedalCounts = new int[4];
     }
 
     private void Start()
@@ -113,9 +119,7 @@ public class MedalManager : MonoBehaviour
                 current = i;
             }
         }
-
-
-
+        totalMedalCounts[0] += 1;
 
         return current;
     }
@@ -132,6 +136,7 @@ public class MedalManager : MonoBehaviour
                 current = i;
             }
         }
+        totalMedalCounts[1] += 1;
 
         return current;
     }
@@ -148,6 +153,7 @@ public class MedalManager : MonoBehaviour
                 current = i;
             }
         }
+        totalMedalCounts[2] += 1;
 
         return current;
     }
@@ -164,6 +170,7 @@ public class MedalManager : MonoBehaviour
                 current = i;
             }
         }
+        totalMedalCounts[3] += 1;
 
         return current;
     }
@@ -181,5 +188,30 @@ public class MedalManager : MonoBehaviour
 
         GameObject _medal4 = Instantiate(MostPowersCollected, pos4 + (Vector3.up * 14), Quaternion.Euler(0, -90, 90));
         _medal4.transform.localScale = new Vector3(5, 5, 5);
+    }
+
+    public void WriteMedalSaveFile()
+    {
+        using (StreamWriter medalFile = new StreamWriter("Medal.csv"))
+        {
+            for (int i = 0; i < totalMedalCounts.Length; i++)
+            {
+                //Order of medals Saved -- 0 = Most Stunned, 1 = Most Stuns, 2 = Most Dashes, 3 =  most power ups used
+                medalFile.WriteLine(totalMedalCounts[i]);
+            }
+        }
+    }
+
+    public void ReadMedalSaveFile()
+    {
+        using (StreamReader medalFileR = new StreamReader("Medal.csv"))
+        {
+            List<int> medalOrder = new List<int>();
+            while (!medalFileR.EndOfStream)
+            {
+                medalOrder.Add(Convert.ToInt32(medalFileR.ReadLine()));
+            }
+            totalMedalCounts = medalOrder.ToArray();
+        }
     }
 }
