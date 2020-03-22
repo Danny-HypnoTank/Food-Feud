@@ -134,6 +134,7 @@ public class EndGameScore : MonoBehaviour
                 }
             }
         }
+        medalManager.WriteMedalSaveFile();
     }
 
     //returns to main menu
