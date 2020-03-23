@@ -24,6 +24,8 @@ public class MedalManager : MonoBehaviour
 
     public GameObject MostPowersCollected;
 
+    public GameObject UntouchableMedal;
+
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -113,10 +115,20 @@ public class MedalManager : MonoBehaviour
                 current = i;
             }
         }
+        return current;
+    }
 
-
-
-
+    public int GetUntouchable()
+    {
+        int max = 0;
+        int current = 0;
+        for (int i = 0; i < timesStunned.Count; i++)
+        {
+            if (timesStunned[i] == 0)
+            {
+                current = i;
+            }
+        }
         return current;
     }
 
