@@ -52,28 +52,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject[] trail;
     [SerializeField]
-    ParticleSystem impactParticles;
+    private ParticleSystem[] impactParticles;
     [SerializeField]
-    public ParticleSystem smokeParticles;
-    [SerializeField]
-    private Sprite[] fillBarSprites;
+    private ParticleSystem _smokeParticles;
     [SerializeField]
     private Image fillBar;
     [SerializeField]
-    private Sprite[] bgBarSprites;
-    [SerializeField]
-    private Image bgBar;
-    [SerializeField]
     private GameObject scoreText;
     [SerializeField]
-    private GameObject scoreTextInstance;
-    int scoreAdditive = 0;
-    [SerializeField]
-    private GameObject sImmunityObj;
-    public GameObject SImunnityObj { get { return sImmunityObj; } }
+    private GameObject _sImmunityObj;
     [SerializeField]
     private GameObject _iceCube;
-    public GameObject IceCube { get { return _iceCube; } }
 
     [Header("Layer Masks")]
     [SerializeField]
@@ -83,6 +72,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 moveInput;
     private ObjectAudioHandler audioHandler;
     private ExplodingPotato potato;
+
 
     //Auto Properties
     public float dashAmount { get; private set; }
@@ -96,6 +86,9 @@ public class PlayerController : MonoBehaviour
     //Full properties
     private Vector3 _moveVelocity;
     public Vector3 MoveVelocity { get { return _moveVelocity; } private set { _moveVelocity = value; } }
+    public GameObject IceCube { get { return _iceCube; } }
+    public GameObject SImunnityObj { get { return _sImmunityObj; } }
+    public ParticleSystem SmokeParticles { get { return _smokeParticles; } }
 
     //MedalEvents
     public delegate int DashDelegate(int id);
@@ -114,7 +107,6 @@ public class PlayerController : MonoBehaviour
         PlayerBase = GetComponent<PlayerBase>();
         audioHandler = GetComponent<ObjectAudioHandler>();
         DrawColor = ManageGame.instance.GetComponent<DrawColor>();
-        
     }
 
     private void Start()
@@ -123,23 +115,15 @@ public class PlayerController : MonoBehaviour
         canDash = true;
         dashAmount = 0;
         MoveSpeed = Player.Speed;
+        var smokeMain = SmokeParticles.main;
+        smokeMain.startColor = Player.SkinColours[Player.skinId];
 
-        #region colourSetting
-        impactParticles.startColor = Player.SkinColours[Player.skinId];
-
-        smokeParticles.startColor = Player.SkinColours[Player.skinId];
-
-        fillBar.sprite = fillBarSprites[Player.skinId];
-
-        bgBar.sprite = bgBarSprites[Player.skinId];
-
-        foreach (Transform t in impactParticles.GetComponentInChildren<Transform>())
+        for(int i = 0; i < impactParticles.Length; i++)
         {
-            t.GetComponent<ParticleSystem>().startColor = Player.SkinColours[Player.skinId];
+            var impactMain = impactParticles[i].main;
+            impactMain.startColor = Player.SkinColours[Player.skinId];
         }
 
-
-        #endregion
         trail.ToggleGameObjects(false);
         UpdateFillBar();
         Splat();
@@ -181,7 +165,7 @@ public class PlayerController : MonoBehaviour
                     }
 
                     Splat(dashAmount);
-                    impactParticles.Play();
+                    impactParticles[0].Play();
 
                     if (potato != null)
                         potato.OnHit(otherPlayer);
@@ -193,7 +177,7 @@ public class PlayerController : MonoBehaviour
             if (IsDashing)
             {
                 Splat(dashAmount);
-                impactParticles.Play();
+                impactParticles[0].Play();
             }
         }
     }
@@ -279,14 +263,6 @@ public class PlayerController : MonoBehaviour
     {
         Ray ray = new Ray(transform.position, -transform.up);
 
-        if (scoreTextInstance != null)
-        {
-            if (scoreTextInstance.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("End") == true)
-            {
-                scoreAdditive = 0;
-            }
-        }
-
         if (Physics.Raycast(transform.position + Vector3.up, -transform.up, out RaycastHit hit))
         {
             if (hit.collider.gameObject.CompareTag("PaintableEnvironment"))
@@ -325,26 +301,12 @@ public class PlayerController : MonoBehaviour
 
                     if (square)
                     {
-                        
                         if (square.Value != Player.skinId)
                         {
-                            
                             square.SetValue(Player.skinId);
-
-                            
-
-                            if (scoreTextInstance == null)
-                            {
-                                scoreTextInstance = Instantiate(scoreText, transform);
-                                AddScore();
-                            }
-                            else
-                            {
-                                AddScore();
-                            }
-                           
-
-
+                            GameObject _sg = Instantiate(scoreText, transform);
+                            _sg.GetComponent<TextMeshPro>().text = "+1";
+                            _sg.GetComponent<TextMeshPro>().color = Player.SkinColours[Player.skinId];
                         }
 
                     }
@@ -353,13 +315,6 @@ public class PlayerController : MonoBehaviour
 
             }
         }
-    }
-
-    void AddScore()
-    {
-        scoreAdditive++;
-        scoreTextInstance.GetComponent<TextMeshPro>().text = "+" + scoreAdditive;
-        scoreTextInstance.GetComponent<Animator>().SetTrigger("GoBack");
     }
 
     public void PickUpPowerUp(BuffDebuff powerup)
