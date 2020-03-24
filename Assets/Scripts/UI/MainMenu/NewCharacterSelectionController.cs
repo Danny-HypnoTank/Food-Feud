@@ -8,6 +8,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class NewCharacterSelectionController : MonoBehaviour
 {
@@ -43,6 +44,13 @@ public class NewCharacterSelectionController : MonoBehaviour
     private Animator doorAnimation;
     private bool isTransition = false;
     private Loading loadingManager;
+    [SerializeField]
+    private bool forceload;
+
+    [SerializeField]
+    [Range(0,2)]
+    private int forceLevel;
+
 
     private void Awake()
     {
@@ -51,6 +59,7 @@ public class NewCharacterSelectionController : MonoBehaviour
     private void Start()
     {
         loadingManager = GameObject.Find("LoadingManager").GetComponent<Loading>();
+        readyMsgBar.gameObject.SetActive(false);
         readyImage1.SetActive(true);
         readyImage2.SetActive(false);
     }
@@ -172,19 +181,33 @@ public class NewCharacterSelectionController : MonoBehaviour
 
     private void RandomMap()
     {
-        int randomMap = Random.Range(0, 10);
-        Debug.Log(randomMap);
-        if (randomMap <= 4)
+        int mapID = -1;
+
+        if (forceload)
         {
-            StartCoroutine("OpenFridge");
-        }
-        else if (randomMap >= 6 && randomMap <= 10)
-        {
-            StartCoroutine("CameraBin");
+            mapID = forceLevel;
         }
         else
         {
-            StartCoroutine("CameraSide");
+            mapID = UnityEngine.Random.Range(0, 3);
+        }
+
+        switch (mapID)
+        {
+            case 0:
+                StartCoroutine("OpenFridge");
+                break;
+
+            case 1:
+                StartCoroutine("CameraBin");
+                break;
+
+            case 2:
+                StartCoroutine("CameraSide");
+                break;
+
+            default:
+                throw new ArgumentOutOfRangeException();
         }
     }
 

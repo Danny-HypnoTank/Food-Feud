@@ -20,8 +20,6 @@ public class MenuController : MonoBehaviour
     private Transform characterSelectScript;
     [SerializeField]
     private Transform loadingPage;
-    [SerializeField]
-    private Transform medalMenuDisplay;
 
     private void Awake()
     {
@@ -31,7 +29,6 @@ public class MenuController : MonoBehaviour
     private void Start()
     {
         loadingPage.gameObject.SetActive(false);
-        medalMenuDisplay.gameObject.SetActive(false);
         mainMenuScript.gameObject.SetActive(true);
         optionsScript.gameObject.SetActive(false);
         characterSelectScript.gameObject.SetActive(false);

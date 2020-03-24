@@ -54,8 +54,6 @@ public class NewMainMenu : MonoBehaviour
     private UIElementController previousSelection;
     private bool previewingMedals = false;
     private bool previewingControls = false;
-    [SerializeField]
-    private Transform medalMenuDisplay;
 
     [SerializeField]
     private Text[] medalTexts;
@@ -76,7 +74,6 @@ public class NewMainMenu : MonoBehaviour
         UpdateMedalCounts();
         previewingMedals = false;
         previewingControls = false;
-        medalMenuDisplay.gameObject.SetActive(false);
         isTransition = false;
         confirmationMsg.gameObject.SetActive(false);
         quitPanel.gameObject.SetActive(false);
@@ -162,7 +159,6 @@ public class NewMainMenu : MonoBehaviour
     {
         previewingMedals = false;
         previewingControls = false;
-        medalMenuDisplay.gameObject.SetActive(false);
         isTransition = true;
         bool arrived = false;
         while (!arrived)
@@ -189,7 +185,6 @@ public class NewMainMenu : MonoBehaviour
     private IEnumerator CameraSide()
     {
         previewingMedals = true;
-        medalMenuDisplay.gameObject.SetActive(true);
         isTransition = true;
         canPressBtn = false;
         bool arrived = false;
@@ -259,7 +254,6 @@ public class NewMainMenu : MonoBehaviour
     {
         if (previewingMedals == true)
         {
-            medalMenuDisplay.gameObject.SetActive(true);
             if (Input.GetButtonDown("BackButton"))
             {
                 canPressBtn = true;
