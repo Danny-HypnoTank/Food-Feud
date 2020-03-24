@@ -15,11 +15,15 @@ public class NewCharacterSelectionController : MonoBehaviour
     private bool isConfirmation;
     [SerializeField]
     private Transform readyMsgBar;
+    [SerializeField]
+    private GameObject readyImage1;
+    [SerializeField]
+    private GameObject readyImage2;
     private bool canPressBtn = true;
     [SerializeField]
     private Transform doorHolder;
     [SerializeField]
-    private Transform cameraTransform, mainMenuCameraPoint, SinkPoint;
+    private Transform cameraTransform, mainMenuCameraPoint, SinkPoint, BinPoint;
     [SerializeField]
     private float waitBetweenAnimation = 0.5f;
     [SerializeField]
@@ -47,6 +51,8 @@ public class NewCharacterSelectionController : MonoBehaviour
     private void Start()
     {
         loadingManager = GameObject.Find("LoadingManager").GetComponent<Loading>();
+        readyImage1.SetActive(true);
+        readyImage2.SetActive(false);
     }
 
     public void CheckSubmission()
@@ -135,19 +141,24 @@ public class NewCharacterSelectionController : MonoBehaviour
     private void DisplayReadyMSg()
     {
         isConfirmation = true;
+        readyImage1.SetActive(true);
+        readyImage2.SetActive(false);
         readyMsgBar.gameObject.SetActive(true);
         controlNav.ButtonID = 1;
     }
 
     public void ReadConfirm()
     {
-        readyMsgBar.gameObject.SetActive(false);
+        readyImage1.SetActive(false);
+        readyImage2.SetActive(true);
         RandomMap();
     }
 
     public void ReadyCancel()
     {
         isConfirmation = false;
+        readyImage1.SetActive(true);
+        readyImage2.SetActive(false);
         readyMsgBar.gameObject.SetActive(false);
         for (int i = 0; i < pinController.Length; i++)
         {
@@ -161,13 +172,15 @@ public class NewCharacterSelectionController : MonoBehaviour
 
     private void RandomMap()
     {
-        int randomMap = Random.Range(0, 1);
-        if (randomMap == 0)
+        int randomMap = Random.Range(0, 10);
+        Debug.Log(randomMap);
+        if (randomMap <= 4)
         {
-            doorAnimation.enabled = true;
-            doorAnimation.speed = animationSpeed;
-            doorAnimation.SetInteger("CloseAnim", 1);
             StartCoroutine("OpenFridge");
+        }
+        else if (randomMap >= 6 && randomMap <= 10)
+        {
+            StartCoroutine("CameraBin");
         }
         else
         {
@@ -177,6 +190,11 @@ public class NewCharacterSelectionController : MonoBehaviour
 
     private IEnumerator OpenFridge()
     {
+        yield return new WaitForSeconds(0.7f);
+        readyMsgBar.gameObject.SetActive(false);
+        doorAnimation.enabled = true;
+        doorAnimation.speed = animationSpeed;
+        doorAnimation.SetInteger("CloseAnim", 1);
         canPressBtn = false;
         isTransition = true;
         yield return new WaitForSeconds(waitBetweenAnimation);
@@ -192,8 +210,38 @@ public class NewCharacterSelectionController : MonoBehaviour
         StartCoroutine("CameraUp");
     }
 
+    private IEnumerator CameraBin()
+    {
+        yield return new WaitForSeconds(0.7f);
+        readyMsgBar.gameObject.SetActive(false);
+        isTransition = true;
+        canPressBtn = false;
+        bool arrived = false;
+        while (!arrived)
+        {
+            if (usingLerp == true)
+            {
+                cameraTransform.position = Vector3.Lerp(cameraTransform.position, BinPoint.position, cameraMoveSpeed * Time.deltaTime);
+            }
+            else
+            {
+                cameraTransform.position = Vector3.MoveTowards(cameraTransform.position, BinPoint.position, cameraMoveSpeed * Time.deltaTime);
+            }
+            cameraTransform.rotation = Quaternion.Slerp(cameraTransform.rotation, BinPoint.rotation, cameraMoveSpeed * Time.deltaTime);
+            if (Vector3.Distance(cameraTransform.position, BinPoint.position) < 0.01f) arrived = true;
+            yield return null;
+        }
+        isTransition = false;
+        yield return new WaitForSeconds(2);
+        loadingManager.SetID(4);
+        loadingManager.InitializeLoading();
+        yield return null;
+    }
+
     private IEnumerator CameraSide()
     {
+        yield return new WaitForSeconds(0.7f);
+        readyMsgBar.gameObject.SetActive(false);
         isTransition = true;
         canPressBtn = false;
         bool arrived = false;

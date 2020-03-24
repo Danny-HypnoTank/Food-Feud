@@ -103,8 +103,8 @@ public class PodiumController : MonoBehaviour
     private void Scale()
     {
         minScale = transform.localScale;
-        maxScale = new Vector3(1, 0.7f + ((float)player.scorePercentage /100) , 1);
-        minScale = new Vector3(1, 0.7f, 1);
+        maxScale = new Vector3(1, 0.6f + (((float)player.scorePercentage /100) / 2f) , 1);
+        minScale = new Vector3(1, 0.6f, 1);
         StartCoroutine(RepeatLerp(minScale, maxScale, duration, podium.gameObject));
     }
 

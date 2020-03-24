@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 185120821436280617}
   - component: {fileID: 9208358029835359519}
   - component: {fileID: 3239814074757294566}
-  - component: {fileID: 1718034581975993713}
-  - component: {fileID: 3180351434470456367}
   m_Layer: 0
   m_Name: SwissRollVanilla_MM
   m_TagString: Untagged
@@ -41,7 +39,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3804125174541458746}
-  m_Mesh: {fileID: 1035024802490453830, guid: 4614e879787902043a846f3ce2067ac2, type: 3}
+  m_Mesh: {fileID: 1035024802490453830, guid: aa468c1bd5a9df34284e5dc2aedf5d42, type: 3}
 --- !u!23 &3239814074757294566
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -80,30 +78,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &1718034581975993713
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3804125174541458746}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 402807824658409394, guid: 3a465924f600283449433c7624c7d40b, type: 3}
---- !u!114 &3180351434470456367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3804125174541458746}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cd52ca8e58615b4a99d64c8a88795ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  multiplier: 0
