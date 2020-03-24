@@ -27,6 +27,8 @@ public class MedalManager : MonoBehaviour
 
     public GameObject MostPowersCollected;
 
+    public GameObject UntouchableMedal;
+
     public int[] totalMedalCounts { get; private set; }
 
     private void Awake()
@@ -124,6 +126,20 @@ public class MedalManager : MonoBehaviour
         return current;
     }
 
+    public int GetUntouchable()
+    {
+        int max = 0;
+        int current = 0;
+        for (int i = 0; i < timesStunned.Count; i++)
+        {
+            if (timesStunned[i] == 0)
+            {
+                current = i;
+            }
+        }
+        return current;
+    }
+
     public int GetTopStunOther()
     {
         int max = 0;
@@ -175,7 +191,7 @@ public class MedalManager : MonoBehaviour
         return current;
     }
 
-    public void SpawnMedal(Vector3 pos1, Vector3 pos2, Vector3 pos3, Vector3 pos4)
+    public void SpawnMedal(Vector3 pos1, Vector3 pos2, Vector3 pos3, Vector3 pos4, Vector3 pos5)
     {
         GameObject _medal1 = Instantiate(GotStunnedMedal, pos1 + (Vector3.up * 14), Quaternion.Euler(0, -90, 90));
         _medal1.transform.localScale = new Vector3(5, 5, 5);
@@ -188,6 +204,9 @@ public class MedalManager : MonoBehaviour
 
         GameObject _medal4 = Instantiate(MostPowersCollected, pos4 + (Vector3.up * 14), Quaternion.Euler(0, -90, 90));
         _medal4.transform.localScale = new Vector3(5, 5, 5);
+
+        GameObject _medal5 = Instantiate(MostPowersCollected, pos5 + (Vector3.up * 14), Quaternion.Euler(0, -90, 90));
+        _medal5.transform.localScale = new Vector3(5, 5, 5);
     }
 
     public void WriteMedalSaveFile()
