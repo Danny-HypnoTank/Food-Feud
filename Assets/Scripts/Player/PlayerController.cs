@@ -60,6 +60,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject scoreText;
     [SerializeField]
+    private GameObject scoreTextInstance;
+    int scoreAdditive = 0;
+    [SerializeField]
     private GameObject _sImmunityObj;
     [SerializeField]
     private GameObject _iceCube;
@@ -263,6 +266,14 @@ public class PlayerController : MonoBehaviour
     {
         Ray ray = new Ray(transform.position, -transform.up);
 
+        if (scoreTextInstance != null)
+        {
+            if (scoreTextInstance.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("End") == true)
+            {
+                scoreAdditive = 0;
+            }
+        }
+
         if (Physics.Raycast(transform.position + Vector3.up, -transform.up, out RaycastHit hit))
         {
             if (hit.collider.gameObject.CompareTag("PaintableEnvironment"))
@@ -304,9 +315,15 @@ public class PlayerController : MonoBehaviour
                         if (square.Value != Player.skinId)
                         {
                             square.SetValue(Player.skinId);
-                            GameObject _sg = Instantiate(scoreText, transform);
-                            _sg.GetComponent<TextMeshPro>().text = "+1";
-                            _sg.GetComponent<TextMeshPro>().color = Player.SkinColours[Player.skinId];
+                            if (scoreTextInstance == null)
+                            {
+                                scoreTextInstance = Instantiate(scoreText, transform);
+                                AddScore();
+                            }
+                            else
+                            {
+                                AddScore();
+                            }
                         }
 
                     }
@@ -315,6 +332,13 @@ public class PlayerController : MonoBehaviour
 
             }
         }
+    }
+
+    void AddScore()
+    {
+        scoreAdditive++;
+        scoreTextInstance.GetComponent<TextMeshPro>().text = "+" + scoreAdditive;
+        scoreTextInstance.GetComponent<Animator>().SetTrigger("GoBack");
     }
 
     public void PickUpPowerUp(BuffDebuff powerup)
