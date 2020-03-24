@@ -30,18 +30,15 @@ public class PauseMenu : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (ManageGame.instance.IsTimingDown)
+        if (Input.GetButtonDown("Activate"))
         {
-            if (Input.GetButtonDown("Activate"))
+            if (GameIsPaused)
             {
-                if (GameIsPaused)
-                {
-                    Resume();
-                }
-                else
-                {
-                    Pause();
-                }
+                Resume();
+            }
+            else
+            {
+                Pause();
             }
         }
     }
@@ -51,6 +48,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
+        ManageGame.instance.IsTimingDown = true;
     }
 
     private void Pause()
@@ -58,6 +56,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
+        ManageGame.instance.IsTimingDown = false;
     }
 
     public void QuitGame()

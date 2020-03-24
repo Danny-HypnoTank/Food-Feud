@@ -8,7 +8,6 @@
  */
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class NewMainMenu : MonoBehaviour
 {
@@ -57,12 +56,8 @@ public class NewMainMenu : MonoBehaviour
     [SerializeField]
     private Transform medalMenuDisplay;
 
-    [SerializeField]
-    private Text[] medalTexts;
-
     private void Start()
     {
-        MedalManager.Instance.ReadMedalSaveFile();
         cameraTransform.position = optionsCameraPoint.position;
 
         doorAnimation = doorHolder.GetComponent<Animator>();
@@ -73,7 +68,6 @@ public class NewMainMenu : MonoBehaviour
     }
     private void OnEnable()
     {
-        UpdateMedalCounts();
         previewingMedals = false;
         previewingControls = false;
         medalMenuDisplay.gameObject.SetActive(false);
@@ -393,13 +387,5 @@ public class NewMainMenu : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         canPressBtn = true;
         yield return null;
-    }
-
-    private void UpdateMedalCounts()
-    {
-        medalTexts[0].text = ("Stuned Most: " + MedalManager.Instance.totalMedalCounts[0].ToString());
-        medalTexts[1].text = ("Most Stuns: " + MedalManager.Instance.totalMedalCounts[1].ToString());
-        medalTexts[2].text = ("Most Dashes: " + MedalManager.Instance.totalMedalCounts[2].ToString());
-        medalTexts[3].text = ("Most Power Ups: " + MedalManager.Instance.totalMedalCounts[3].ToString());
     }
 }

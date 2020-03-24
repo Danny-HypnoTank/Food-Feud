@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 4492744591719981582}
   - component: {fileID: 8214551540897143642}
   - component: {fileID: 1824412208776019306}
+  - component: {fileID: 3374708231084447109}
+  - component: {fileID: 8650641089142342506}
   m_Layer: 9
   m_Name: ZBrush_defualt_group7
   m_TagString: PaintableEnvironment
@@ -78,6 +80,33 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &3374708231084447109
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141163265397371649}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 1896021313292230658, guid: af89e3f9d3ac86a4c83e93f35d60d671, type: 3}
+--- !u!114 &8650641089142342506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141163265397371649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cd52ca8e58615b4a99d64c8a88795ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  multiplier: 2
 --- !u!1 &8253458626027050152
 GameObject:
   m_ObjectHideFlags: 0

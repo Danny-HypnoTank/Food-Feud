@@ -87,6 +87,11 @@ public class EndGameScore : MonoBehaviour
                 {
                     _currentPodiumPickUp = p.playerNum;
                 }
+
+                if (p.playerNum == medalManager.GetUntouchable())
+                {
+                    _currentPodiumPickUp = p.playerNum;
+                }
             }
 
             medalManager.SpawnMedal(podiumLocations[_currentPodiumStun].transform.position, podiumLocations[_currentPodiumStunOthers].transform.position, 
@@ -134,7 +139,6 @@ public class EndGameScore : MonoBehaviour
                 }
             }
         }
-        medalManager.WriteMedalSaveFile();
     }
 
     //returns to main menu

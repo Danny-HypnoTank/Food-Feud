@@ -23,7 +23,7 @@ public class NewCharacterSelectionController : MonoBehaviour
     [SerializeField]
     private Transform doorHolder;
     [SerializeField]
-    private Transform cameraTransform, mainMenuCameraPoint, SinkPoint, BinPoint;
+    private Transform cameraTransform, mainMenuCameraPoint, SinkPoint;
     [SerializeField]
     private float waitBetweenAnimation = 0.5f;
     [SerializeField]
@@ -178,10 +178,10 @@ public class NewCharacterSelectionController : MonoBehaviour
         {
             StartCoroutine("OpenFridge");
         }
-        else if (randomMap >= 6 && randomMap <= 10)
-        {
-            StartCoroutine("CameraBin");
-        }
+        //else if (randomMap >= 6 && randomMap <= 10)
+        //{
+        //    StartCoroutine("CameraSide");
+        //}
         else
         {
             StartCoroutine("CameraSide");
@@ -208,34 +208,6 @@ public class NewCharacterSelectionController : MonoBehaviour
     private void ReturnToMainMenu()
     {
         StartCoroutine("CameraUp");
-    }
-
-    private IEnumerator CameraBin()
-    {
-        yield return new WaitForSeconds(0.7f);
-        readyMsgBar.gameObject.SetActive(false);
-        isTransition = true;
-        canPressBtn = false;
-        bool arrived = false;
-        while (!arrived)
-        {
-            if (usingLerp == true)
-            {
-                cameraTransform.position = Vector3.Lerp(cameraTransform.position, BinPoint.position, cameraMoveSpeed * Time.deltaTime);
-            }
-            else
-            {
-                cameraTransform.position = Vector3.MoveTowards(cameraTransform.position, BinPoint.position, cameraMoveSpeed * Time.deltaTime);
-            }
-            cameraTransform.rotation = Quaternion.Slerp(cameraTransform.rotation, BinPoint.rotation, cameraMoveSpeed * Time.deltaTime);
-            if (Vector3.Distance(cameraTransform.position, BinPoint.position) < 0.01f) arrived = true;
-            yield return null;
-        }
-        isTransition = false;
-        yield return new WaitForSeconds(2);
-        loadingManager.SetID(4);
-        loadingManager.InitializeLoading();
-        yield return null;
     }
 
     private IEnumerator CameraSide()

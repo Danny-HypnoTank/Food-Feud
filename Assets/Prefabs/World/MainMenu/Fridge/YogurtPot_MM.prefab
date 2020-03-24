@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 5770827904554151196}
   - component: {fileID: 6595382335101146111}
   - component: {fileID: 3030975320951489449}
+  - component: {fileID: 8321624736463552614}
+  - component: {fileID: 2438607586871738344}
   m_Layer: 0
   m_Name: YogurtPot_MM
   m_TagString: Untagged
@@ -39,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6305004694465146600}
-  m_Mesh: {fileID: -6873714610864330249, guid: 0a782152bfb48ab4e92791443daf7efe, type: 3}
+  m_Mesh: {fileID: 5302568919011541938, guid: 5f5dae821aa6afa48928aa0a2daf757e, type: 3}
 --- !u!23 &3030975320951489449
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -78,3 +80,30 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &8321624736463552614
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6305004694465146600}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 5302568919011541938, guid: 5f5dae821aa6afa48928aa0a2daf757e, type: 3}
+--- !u!114 &2438607586871738344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6305004694465146600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cd52ca8e58615b4a99d64c8a88795ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  multiplier: 1
