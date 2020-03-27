@@ -65,6 +65,7 @@ public class EndGameScore : MonoBehaviour
             int _currentPodiumStunOthers = 0;
             int _currentPodiumDash = 0;
             int _currentPodiumPickUp = 0;
+            int _currentPodiumUntouchable = 0;
 
             foreach (Player p in sortedPlayers)
             {
@@ -87,10 +88,15 @@ public class EndGameScore : MonoBehaviour
                 {
                     _currentPodiumPickUp = p.playerNum;
                 }
+
+                if (p.playerNum == medalManager.GetUntouchable())
+                {
+                    _currentPodiumUntouchable = p.playerNum;
+                }
             }
 
             medalManager.SpawnMedal(podiumLocations[_currentPodiumStun].transform.position, podiumLocations[_currentPodiumStunOthers].transform.position, 
-                podiumLocations[_currentPodiumDash].transform.position, podiumLocations[_currentPodiumPickUp].transform.position);
+            podiumLocations[_currentPodiumDash].transform.position, podiumLocations[_currentPodiumPickUp].transform.position, podiumLocations[_currentPodiumUntouchable].transform.position);
 
 
             #endregion

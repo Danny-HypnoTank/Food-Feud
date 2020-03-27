@@ -40,6 +40,7 @@ public class DazeState : MonoBehaviour
     private PlayerBase playerbase;
 
     public bool Stunned { get; private set; }
+    public bool Frozen { get; private set; }
     public bool CanShoot { get; private set; }
 
     public delegate int StunDelegate(int id);
@@ -106,7 +107,7 @@ public class DazeState : MonoBehaviour
         }
         else
         {
-            Stunned = true;
+            Frozen = true;
             CanShoot = false;
             playerbase.Player.StunCount++;
             stunDuration = stunDurationMax * 2;
@@ -114,7 +115,7 @@ public class DazeState : MonoBehaviour
 
             yield return new WaitForSeconds(stunDuration);
 
-            Stunned = false;
+            Frozen = false;
             CanShoot = true;
             cooldownTime = cooldownTimeMax;
             playerController.IceCube.SetActive(false);
