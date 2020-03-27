@@ -191,22 +191,42 @@ public class MedalManager : MonoBehaviour
         return current;
     }
 
-    public void SpawnMedal(Vector3 pos1, Vector3 pos2, Vector3 pos3, Vector3 pos4, Vector3 pos5)
+    public void SpawnMedal(Vector3 pos, int whichMedal)
     {
-        GameObject _medal1 = Instantiate(GotStunnedMedal, pos1 + (Vector3.up * 14), Quaternion.Euler(0, -90, 90));
-        _medal1.transform.localScale = new Vector3(5, 5, 5);
 
-        GameObject _medal2 = Instantiate(StunnedOthersMedal, pos2 + (Vector3.up * 14), Quaternion.Euler(0, -90, 90));
-        _medal2.transform.localScale = new Vector3(5, 5, 5);
-
-        GameObject _medal3 = Instantiate(MostDashesMedal, pos3 + (Vector3.up * 14), Quaternion.Euler(0, -90, 90));
-        _medal3.transform.localScale = new Vector3(5, 5, 5);
-
-        GameObject _medal4 = Instantiate(MostPowersCollected, pos4 + (Vector3.up * 14), Quaternion.Euler(0, -90, 90));
-        _medal4.transform.localScale = new Vector3(5, 5, 5);
-
-        GameObject _medal5 = Instantiate(MostPowersCollected, pos5 + (Vector3.up * 14), Quaternion.Euler(0, -90, 90));
-        _medal5.transform.localScale = new Vector3(5, 5, 5);
+        switch(whichMedal)
+        {
+            case (0):
+                {
+                    GameObject _medal1 = Instantiate(GotStunnedMedal, pos + (Vector3.up * 14), Quaternion.Euler(0, -90, 90));
+                    _medal1.transform.localScale = new Vector3(5, 5, 5);
+                    break;
+                }
+            case (1):
+                {
+                    GameObject _medal2 = Instantiate(StunnedOthersMedal, pos + (Vector3.up * 14), Quaternion.Euler(0, -90, 90));
+                    _medal2.transform.localScale = new Vector3(5, 5, 5);
+                    break;
+                }
+            case (2):
+                {
+                    GameObject _medal3 = Instantiate(MostDashesMedal, pos + (Vector3.up * 14), Quaternion.Euler(0, -90, 90));
+                    _medal3.transform.localScale = new Vector3(5, 5, 5);
+                    break;
+                }
+            case (3):
+                {
+                    GameObject _medal4 = Instantiate(MostPowersCollected, pos + (Vector3.up * 14), Quaternion.Euler(0, -90, 90));
+                    _medal4.transform.localScale = new Vector3(5, 5, 5);
+                    break;
+                }
+            case (4):
+                {
+                    GameObject _medal5 = Instantiate(MostPowersCollected, pos + (Vector3.up * 14), Quaternion.Euler(0, -90, 90));
+                    _medal5.transform.localScale = new Vector3(5, 5, 5);
+                    break;
+                }
+        } 
     }
 
     public void WriteMedalSaveFile()
