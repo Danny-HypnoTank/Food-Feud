@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,8 +6,9 @@ using UnityEngine.UI;
 enum SpecialPowers
 {
     MassFreeze,
+    Flood,
+    Trash
 }
-
 public class SpecialButton : MonoBehaviour
 {
 
@@ -22,17 +22,21 @@ public class SpecialButton : MonoBehaviour
     [SerializeField]
     private float _activationTime;
 
-    [Header("Fridge Graphics")]
-    [SerializeField, Tooltip("Leave empty in Sink level")]
+    [Header("Bar Graphics")]
+    [SerializeField]
     private Image specialBar;
 
-    [Header("Sink Graphics")]
-    [SerializeField, Tooltip("Leave empty in Fridge level")]
+    [Header("Light Graphics")]
+    [SerializeField]
     private SpriteRenderer lightObject;
     [SerializeField]
     private Sprite defaultLight;
     [SerializeField]
     private Sprite litLight;
+
+    [Header("Trash Objects")]
+    [SerializeField]
+    private TrashDropper dropper;
 
     [Header("Graphics")]
     [SerializeField]
@@ -47,16 +51,18 @@ public class SpecialButton : MonoBehaviour
     private float lerpTime;
 
     //Fields
-    private string powerName;
     private float timer;
     private bool finishedUI;
     private Vector3 inactivePosition;
     private BuffDebuff power;
-    private List<PlayerController> playerToCheck;
-    private readonly Dictionary<string, Type> powers = new Dictionary<string, Type>
+
+    private readonly Dictionary<SpecialPowers, BuffDebuff> powers = new Dictionary<SpecialPowers, BuffDebuff>
     {
-        {"MassFreeze", typeof(MassFreeze)}
+        {SpecialPowers.MassFreeze, new MassFreeze()},
+        {SpecialPowers.Flood, new MassFreeze()},
+        {SpecialPowers.Trash, null}
     };
+
 
     //Auto Properties
     public bool IsActive { get; private set; }
@@ -76,11 +82,7 @@ public class SpecialButton : MonoBehaviour
             lightObject.sprite = defaultLight;
 
         //Instantiate an object based on the special power
-        powerName = Enum.GetName(typeof(SpecialPowers), debuff);
-        power = (BuffDebuff)Activator.CreateInstance(powers[powerName]);
-
-        //Instantiate the list of players
-        playerToCheck = ManageGame.instance.allPlayerControllers;
+        power = powers[debuff];
     }
 
     private void OnTriggerEnter(Collider other)
@@ -96,11 +98,16 @@ public class SpecialButton : MonoBehaviour
                 //If the button can be triggered give all other players the debuff else stun the colliding player
                 if (CanBeTriggered(player.dashAmount))
                 {
-                    for (int i = 0; i < playerToCheck.Count; i++)
+                    if (debuff == SpecialPowers.Trash && dropper != null)
+                        dropper.DropTrash();
+                    else
                     {
-                        //If the player to check isn't the colliding player, give them the debuff
-                        if (playerToCheck[i] != player)
-                            playerToCheck[i].PickUpPowerUp(power);
+                        for (int i = 0; i < ManageGame.instance.allPlayerControllers.Count; i++)
+                        {
+                            //If the player to check isn't the colliding player, give them the debuff
+                            if (ManageGame.instance.allPlayerControllers[i] != player)
+                                ManageGame.instance.allPlayerControllers[i].PickUpPowerUp(power);
+                        }
                     }
 
                     //Start the coroutine to display the image for the special debuff
@@ -112,8 +119,6 @@ public class SpecialButton : MonoBehaviour
                     transform.localPosition = inactivePosition;
                     indicator.SetActive(false);
                 }
-                else
-                    player.PlayerStun.Stun(player.dashAmount, null);
             }
         }
     }
@@ -126,30 +131,48 @@ public class SpecialButton : MonoBehaviour
         indicator.SetActive(true);
     }
 
-    public void UpdateBar(float time)
+    public void UpdateVisuals(float time)
     {
         if (!finishedUI)
         {
 
             MoveButton();
 
-            if (specialBar != null)
+            switch (debuff)
             {
-                if (time < ActivationTime)
-                {
-                    //Calculate the current progress of the in-game time towards activation time as a percentage, and set the value to that percentage
-                    float value;
-                    value = time / ActivationTime;
-                    specialBar.fillAmount = value;
-                }
+                case SpecialPowers.MassFreeze:
+                    if (specialBar != null)
+                    {
+                        if (time < ActivationTime)
+                        {
+                            //Calculate the current progress of the in-game time towards activation time as a percentage, and set the value to that percentage
+                            float value;
+                            value = time / ActivationTime;
+                            specialBar.fillAmount = value;
+                        }
+                    }
+                    break;
+
+                case SpecialPowers.Flood:
+                    if (lightObject != null)
+                    {
+                        if (Mathf.RoundToInt(time) >= ActivationTime)
+                            lightObject.sprite = litLight;
+                    }
+                    break;
+
+                case SpecialPowers.Trash:
+                    if (lightObject != null)
+                    {
+                        if (Mathf.RoundToInt(time) >= ActivationTime)
+                            lightObject.sprite = litLight;
+                    }
+                    break;
+
+                default:
+                    Debug.LogError("Error in SpecialButton.cs: No power-up indicator set! (Somehow)");
+                    break;
             }
-            else if (lightObject != null)
-            {
-                if (time >= ActivationTime)
-                    lightObject.sprite = litLight;
-            }
-            else
-                Debug.LogError("Error in SpecialButton.cs: No power-up indicator set!");
         }
     }
 
@@ -178,5 +201,4 @@ public class SpecialButton : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         imageToDisplay.ToggleGameObjects(false);
     }
-
 }
