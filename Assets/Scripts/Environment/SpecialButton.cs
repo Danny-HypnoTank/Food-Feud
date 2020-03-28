@@ -22,11 +22,13 @@ public class SpecialButton : MonoBehaviour
     [SerializeField]
     private float _activationTime;
 
-    [Header("Bar Graphics")]
+    [Header("Bar Properties")]
     [SerializeField]
-    private Image specialBar;
+    private GameObject handle;
+    [SerializeField]
+    private Vector3 endRot;
 
-    [Header("Light Graphics")]
+    [Header("Light Properties")]
     [SerializeField]
     private SpriteRenderer lightObject;
     [SerializeField]
@@ -34,7 +36,7 @@ public class SpecialButton : MonoBehaviour
     [SerializeField]
     private Sprite litLight;
 
-    [Header("Trash Objects")]
+    [Header("Trash properties")]
     [SerializeField]
     private TrashDropper dropper;
 
@@ -52,7 +54,9 @@ public class SpecialButton : MonoBehaviour
 
     //Fields
     private float timer;
+    private float handleTimer;
     private bool finishedUI;
+    private Vector3 handleStartRot;
     private Vector3 inactivePosition;
     private BuffDebuff power;
 
@@ -78,6 +82,7 @@ public class SpecialButton : MonoBehaviour
         HasBeenUsed = false;
         finishedUI = false;
         inactivePosition = transform.localPosition;
+        handleStartRot = handle.transform.localEulerAngles;
         if (lightObject != null)
             lightObject.sprite = defaultLight;
 
@@ -141,14 +146,11 @@ public class SpecialButton : MonoBehaviour
             switch (debuff)
             {
                 case SpecialPowers.MassFreeze:
-                    if (specialBar != null)
+                    if (handle != null)
                     {
                         if (time < ActivationTime)
                         {
-                            //Calculate the current progress of the in-game time towards activation time as a percentage, and set the value to that percentage
-                            float value;
-                            value = time / ActivationTime;
-                            specialBar.fillAmount = value;
+                            handle.transform.eulerAngles = Vector3.Lerp(handleStartRot, endRot, timer / lerpTime);
                         }
                     }
                     break;
