@@ -22,20 +22,6 @@ public class SpecialButton : MonoBehaviour
     [SerializeField]
     private float _activationTime;
 
-    [Header("Bar Properties")]
-    [SerializeField]
-    private GameObject handle;
-    [SerializeField]
-    private Vector3 endRot;
-
-    [Header("Light Properties")]
-    [SerializeField]
-    private SpriteRenderer lightObject;
-    [SerializeField]
-    private Sprite defaultLight;
-    [SerializeField]
-    private Sprite litLight;
-
     [Header("Trash properties")]
     [SerializeField]
     private TrashDropper dropper;
@@ -54,11 +40,10 @@ public class SpecialButton : MonoBehaviour
 
     //Fields
     private float timer;
-    private float handleTimer;
     private bool finishedUI;
-    private Vector3 handleStartRot;
     private Vector3 inactivePosition;
     private BuffDebuff power;
+    private ISpecialUI specialUILogic;
 
     private readonly Dictionary<SpecialPowers, BuffDebuff> powers = new Dictionary<SpecialPowers, BuffDebuff>
     {
@@ -67,13 +52,17 @@ public class SpecialButton : MonoBehaviour
         {SpecialPowers.Trash, null}
     };
 
-
     //Auto Properties
     public bool IsActive { get; private set; }
     public bool HasBeenUsed { get; private set; }
 
     //Full Properties
     public float ActivationTime { get { return _activationTime; } }
+
+    private void Awake()
+    {
+        specialUILogic = GetComponent<ISpecialUI>();
+    }
 
     public void Initialisation()
     {
@@ -82,12 +71,7 @@ public class SpecialButton : MonoBehaviour
         HasBeenUsed = false;
         finishedUI = false;
         inactivePosition = transform.localPosition;
-        if (handle != null)
-        {
-            handleStartRot = handle.transform.localEulerAngles;
-        }
-        if (lightObject != null)
-            lightObject.sprite = defaultLight;
+        specialUILogic.GetActivationTime(ActivationTime);
 
         //Instantiate an object based on the special power
         power = powers[debuff];
@@ -143,41 +127,8 @@ public class SpecialButton : MonoBehaviour
     {
         if (!finishedUI)
         {
-
             MoveButton();
-
-            switch (debuff)
-            {
-                case SpecialPowers.MassFreeze:
-                    if (handle != null)
-                    {
-                        if (time < ActivationTime)
-                        {
-                            handle.transform.eulerAngles = Vector3.Lerp(handleStartRot, endRot, timer / lerpTime);
-                        }
-                    }
-                    break;
-
-                case SpecialPowers.Flood:
-                    if (lightObject != null)
-                    {
-                        if (Mathf.RoundToInt(time) >= ActivationTime)
-                            lightObject.sprite = litLight;
-                    }
-                    break;
-
-                case SpecialPowers.Trash:
-                    if (lightObject != null)
-                    {
-                        if (Mathf.RoundToInt(time) >= ActivationTime)
-                            lightObject.sprite = litLight;
-                    }
-                    break;
-
-                default:
-                    Debug.LogError("Error in SpecialButton.cs: No power-up indicator set! (Somehow)");
-                    break;
-            }
+            specialUILogic.UpdateUI(time);
         }
     }
 
