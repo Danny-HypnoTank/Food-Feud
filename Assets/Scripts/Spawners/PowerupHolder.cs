@@ -23,6 +23,8 @@ public class PowerupHolder : MonoBehaviour
     private Powers powerHeld; //Which buff/debuff does the object hold
     [SerializeField]
     private bool isDebuff; //Is the buff/debuff a debuff
+    [SerializeField]
+    private Sprite powerSprite;
 
     [Header("Object Properties")]
     [SerializeField]
@@ -88,7 +90,7 @@ public class PowerupHolder : MonoBehaviour
                 {
                     //Give player the buff
                     player.PickUpPowerUp(power);
-
+                    player.BuffSprite.sprite = powerSprite;
                     Collect(other);
                 }
                 else if (player.CurrentPowerup.GetType() == power.GetType())
@@ -110,7 +112,10 @@ public class PowerupHolder : MonoBehaviour
                 {
                     //If the checked player is not the player who entered the trigger, give them the debuff
                     if (playerToCheck[i] != player)
+                    {
                         playerToCheck[i].PickUpPowerUp((BuffDebuff)Activator.CreateInstance(powers[powerHeld]));
+                        playerToCheck[i].DeBuffSprite.sprite = powerSprite;
+                    }
                 }
 
                 Collect(other);

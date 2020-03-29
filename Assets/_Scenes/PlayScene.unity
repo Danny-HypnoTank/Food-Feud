@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 112000000, guid: b137b2507e51bdd48917b35d84159954,
     type: 2}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -341,6 +341,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -4
       objectReference: {fileID: 0}
+    - target: {fileID: 7553824164395918041, guid: 6bbf727faf0490d499f0716a71dc7d18,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4492657082117447848, guid: 6bbf727faf0490d499f0716a71dc7d18,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4492657082117447848, guid: 6bbf727faf0490d499f0716a71dc7d18,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.9443749
+      objectReference: {fileID: 0}
     - target: {fileID: 259652022309489129, guid: 6bbf727faf0490d499f0716a71dc7d18,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -581,11 +596,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 2.3910146
       objectReference: {fileID: 0}
-    - target: {fileID: 7553824164395918041, guid: 6bbf727faf0490d499f0716a71dc7d18,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -5
-      objectReference: {fileID: 0}
     - target: {fileID: 8173897960493593175, guid: 6bbf727faf0490d499f0716a71dc7d18,
         type: 3}
       propertyPath: m_IsActive
@@ -620,16 +630,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.b
       value: 0.9716981
-      objectReference: {fileID: 0}
-    - target: {fileID: 4492657082117447848, guid: 6bbf727faf0490d499f0716a71dc7d18,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4492657082117447848, guid: 6bbf727faf0490d499f0716a71dc7d18,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.9443749
       objectReference: {fileID: 0}
     - target: {fileID: 120265184727077607, guid: 6bbf727faf0490d499f0716a71dc7d18,
         type: 3}
@@ -3606,6 +3606,7 @@ MonoBehaviour:
   emptyPlayer: {fileID: 7828662610638031457, guid: f1cdabd3090319445a37e92c86e24979,
     type: 3}
   timeRemaining: {fileID: 0}
+  reverseTime: 0
   mapEdgesForGodPower:
   - {fileID: 664013954}
   - {fileID: 1100443814}
@@ -3627,8 +3628,10 @@ MonoBehaviour:
   pointA: {fileID: 674161201}
   pointB: {fileID: 339408973}
   journeyLength: 0
+  scoreLevelID: 2
   v3Rot: {x: -270, y: 90, z: 0}
   v3Dest: {x: 0, y: 0, z: 90}
+  speed: 3.8
 --- !u!4 &1661300555
 Transform:
   m_ObjectHideFlags: 0
@@ -4825,26 +4828,6 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 332134786355535164, guid: 2b18d84211baf2048939e9a38770ab96,
-        type: 3}
-      propertyPath: m_TagString
-      value: PaintableEnvironment
-      objectReference: {fileID: 0}
-    - target: {fileID: 332134786355535164, guid: 2b18d84211baf2048939e9a38770ab96,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 1215884880797703313, guid: 2b18d84211baf2048939e9a38770ab96,
-        type: 3}
-      propertyPath: m_Layer
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1215884880797703313, guid: 2b18d84211baf2048939e9a38770ab96,
-        type: 3}
-      propertyPath: m_TagString
-      value: ObjectCollider
-      objectReference: {fileID: 0}
     - target: {fileID: 2294781416496884485, guid: 2b18d84211baf2048939e9a38770ab96,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4859,6 +4842,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1215884880797703313, guid: 2b18d84211baf2048939e9a38770ab96,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1215884880797703313, guid: 2b18d84211baf2048939e9a38770ab96,
+        type: 3}
+      propertyPath: m_TagString
+      value: ObjectCollider
+      objectReference: {fileID: 0}
+    - target: {fileID: 332134786355535164, guid: 2b18d84211baf2048939e9a38770ab96,
+        type: 3}
+      propertyPath: m_TagString
+      value: PaintableEnvironment
+      objectReference: {fileID: 0}
+    - target: {fileID: 332134786355535164, guid: 2b18d84211baf2048939e9a38770ab96,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b18d84211baf2048939e9a38770ab96, type: 3}
@@ -5642,11 +5645,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4981320338406244729, guid: ea0716ba9c652084f90eeae84385bd55,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3318384713300352055, guid: ea0716ba9c652084f90eeae84385bd55,
         type: 3}
       propertyPath: m_Name
@@ -5663,6 +5661,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8697564397631047997, guid: ea0716ba9c652084f90eeae84385bd55,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4981320338406244729, guid: ea0716ba9c652084f90eeae84385bd55,
         type: 3}
       propertyPath: m_IsActive
       value: 0

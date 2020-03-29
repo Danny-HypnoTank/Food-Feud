@@ -51,7 +51,6 @@ public class NewCharacterSelectionController : MonoBehaviour
     [Range(0,2)]
     private int forceLevel;
 
-
     private void Awake()
     {
         controlNav = GameObject.Find("EventSystem").GetComponent<ControllerNav>();
@@ -191,7 +190,6 @@ public class NewCharacterSelectionController : MonoBehaviour
         {
             mapID = UnityEngine.Random.Range(0, 3);
         }
-
         switch (mapID)
         {
             case 0:

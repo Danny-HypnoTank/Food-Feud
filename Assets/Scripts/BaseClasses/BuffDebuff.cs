@@ -61,8 +61,12 @@ public abstract class BuffDebuff
     /// <summary>
     /// Method for logic when the buff/debuff ends. Call <see cref="base.End()"/> at the very end.
     /// </summary>
-    public virtual void End() => Parent.SetProperty<BuffDebuff>(nameof(Parent.CurrentPowerup), null); //Set the player's current buff/debuff to null
-
+    public virtual void End()
+    {
+        Parent.SetProperty<BuffDebuff>(nameof(Parent.CurrentPowerup), null); //Set the player's current buff/debuff to null
+        Parent.BuffSprite.sprite = null;
+        Parent.DeBuffSprite.sprite = null;
+    }
     /// <summary>
     /// Method for refreshing the powerup duration
     /// </summary>
