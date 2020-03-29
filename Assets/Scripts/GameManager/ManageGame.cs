@@ -30,6 +30,7 @@ public class ManageGame : MonoBehaviour
     [Header("Clock")]
     [SerializeField]
     private TextMesh timeRemaining;                                 //text that displays remaining time
+    [SerializeField]
     private float reverseTime = 0;                             //actual timer 
     [SerializeField]
     private List<GameObject> mapEdgesForGodPower = new List<GameObject>();
@@ -81,7 +82,7 @@ public class ManageGame : MonoBehaviour
     Vector3 v3Rot;
     [SerializeField]
     Vector3 v3Dest;
-
+    [SerializeField]
     float speed = 3.8f; //2.5f
 
     private void Update()
@@ -118,7 +119,7 @@ public class ManageGame : MonoBehaviour
             if (reverseTime >= specialButton.ActivationTime && !specialButton.IsActive && !specialButton.HasBeenUsed)
                 specialButton.ActivateButton();
             if (reverseTime % 1 < 1)
-                specialButton.UpdateBar(reverseTime);
+                specialButton.UpdateVisuals(reverseTime);
         }
     }
 
