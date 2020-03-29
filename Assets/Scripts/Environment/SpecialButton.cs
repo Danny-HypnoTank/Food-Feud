@@ -82,7 +82,10 @@ public class SpecialButton : MonoBehaviour
         HasBeenUsed = false;
         finishedUI = false;
         inactivePosition = transform.localPosition;
-        handleStartRot = handle.transform.localEulerAngles;
+        if (handle != null)
+        {
+            handleStartRot = handle.transform.localEulerAngles;
+        }
         if (lightObject != null)
             lightObject.sprite = defaultLight;
 
