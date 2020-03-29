@@ -72,6 +72,10 @@ public class PlayerController : MonoBehaviour
     private GameObject _sImmunityObj;
     [SerializeField]
     private GameObject _iceCube;
+    [SerializeField]
+    private SpriteRenderer buffSprite;
+    [SerializeField]
+    private SpriteRenderer debuffSprite;
 
     [Header("Layer Masks")]
     [SerializeField]
@@ -82,7 +86,6 @@ public class PlayerController : MonoBehaviour
     private ObjectAudioHandler audioHandler;
     private ExplodingPotato potato;
 
-
     //Auto Properties
     public float dashAmount { get; private set; }
     public DrawColor DrawColor { get; private set; }
@@ -91,13 +94,15 @@ public class PlayerController : MonoBehaviour
     public BuffDebuff CurrentPowerup { get; private set; }
     public StunImmunity StunImmunityPowerup { get; private set; }
     public CharacterController chc { get; private set; }
-
+    
     //Full properties
     private Vector3 _moveVelocity;
     public Vector3 MoveVelocity { get { return _moveVelocity; } private set { _moveVelocity = value; } }
     public GameObject IceCube { get { return _iceCube; } }
     public GameObject SImunnityObj { get { return _sImmunityObj; } }
     public ParticleSystem SmokeParticles { get { return _smokeParticles; } }
+    public SpriteRenderer BuffSprite { get { return buffSprite; } }
+    public SpriteRenderer DeBuffSprite { get { return debuffSprite; } }
 
     //MedalEvents
     public delegate int DashDelegate(int id);

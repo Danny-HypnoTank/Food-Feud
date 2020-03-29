@@ -57,6 +57,8 @@ public class ManageGame : MonoBehaviour
     private float timeLimit = 60;
     public CameraShaker camShake { get; private set; }
     public List<PlayerController> allPlayerControllers { get; private set; }
+    [SerializeField]
+    private int scoreLevelID;
 
     //Creates instance of game manager
     private void Awake()
@@ -112,7 +114,7 @@ public class ManageGame : MonoBehaviour
                 // loading.SetID(2);
                 // loading.InitializeLoading();
                 gridManager.CalculateFinalScore();
-                SceneManager.LoadScene("EndRoundScene");
+                SceneManager.LoadScene(scoreLevelID);
             }
             if (reverseTime % gridManager.TimeToCheck < 1 && reverseTime > 1) //Modulus operator to check if the value of reverseTime goes into TimeToCheck with a remainder that is less than 1, i.e. 60.23416 % 30 = 0.23416, 70.81674 % 30 = 10.81674 etc. -James
                 gridManager.UpdateUI();
