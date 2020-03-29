@@ -58,6 +58,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Image fillBar;
     [SerializeField]
+    private Sprite[] fillBarSprites;
+    [SerializeField]
+    private Image fillBarBg;
+    [SerializeField]
+    private Sprite[] fillBarBgSprites;
+    [SerializeField]
     private GameObject scoreText;
     [SerializeField]
     private GameObject scoreTextInstance;
@@ -121,7 +127,10 @@ public class PlayerController : MonoBehaviour
         var smokeMain = SmokeParticles.main;
         smokeMain.startColor = Player.SkinColours[Player.skinId];
 
-        for(int i = 0; i < impactParticles.Length; i++)
+        fillBarBg.sprite = fillBarBgSprites[Player.skinId];
+        fillBar.sprite = fillBarSprites[Player.skinId];
+
+        for (int i = 0; i < impactParticles.Length; i++)
         {
             var impactMain = impactParticles[i].main;
             impactMain.startColor = Player.SkinColours[Player.skinId];
