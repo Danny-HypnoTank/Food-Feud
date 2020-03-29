@@ -12,6 +12,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
+using System;
 
 public class EndGameScore : MonoBehaviour
 {
@@ -61,42 +62,98 @@ public class EndGameScore : MonoBehaviour
         {
 
             #region stunMedal
-            int _currentPodiumStun = 0;
-            int _currentPodiumStunOthers = 0;
-            int _currentPodiumDash = 0;
-            int _currentPodiumPickUp = 0;
-            int _currentPodiumUntouchable = 0;
+            
+
+            int _currentPlayer = 0;
+
+            int[] _medalChosen = { 0, 0, 0, 0, 0 };
+
+            bool[] _medalClaimed = { false, false, false, false, false };
+
+            //int[] _medalsPerPlayer = { 0, 0, 0, 0 };
+
+            Dictionary<int, int> _medalsPerPlayer = new Dictionary<int, int>();
+
+            Dictionary<int, int> _medalForPlayer = new Dictionary<int, int>();
+
+
 
             foreach (Player p in sortedPlayers)
             {
+                int _medalAmount = 0;
+
                 if (p.playerNum == medalManager.GetTopStunned())
                 {
-                    _currentPodiumStun = p.playerNum;
+                    _medalAmount++;
                 }
 
                 if (p.playerNum == medalManager.GetTopStunOther())
                 {
-                    _currentPodiumStunOthers = p.playerNum;
+                    _medalAmount++;
                 }
 
                 if (p.playerNum == medalManager.GetTopDashes())
                 {
-                    _currentPodiumDash = p.playerNum;
+                    _medalAmount++;
                 }
 
                 if (p.playerNum == medalManager.GetTopPowerPickup())
                 {
-                    _currentPodiumPickUp = p.playerNum;
+                    _medalAmount++;
                 }
 
                 if (p.playerNum == medalManager.GetUntouchable())
                 {
-                    _currentPodiumUntouchable = p.playerNum;
+                    _medalAmount++;
+                }
+
+                _medalsPerPlayer.Add(p.playerNum, _medalAmount);
+
+
+
+            }
+
+            var _medalList = from pair in _medalsPerPlayer
+                             orderby pair.Value ascending
+                             select pair;
+
+
+            foreach(KeyValuePair<int,int> pair in _medalList)
+            {
+                if (pair.Key== medalManager.GetTopStunned() && _medalClaimed[0] == false)
+                {
+                    _medalClaimed[0] = true;
+                    _medalForPlayer.Add(pair.Key, 0);
+                }
+                else if (pair.Key == medalManager.GetTopStunOther() && _medalClaimed[1] == false)
+                {
+                    _medalClaimed[1] = true;
+                    _medalForPlayer.Add(pair.Key, 1);
+                }
+                else if (pair.Key == medalManager.GetTopDashes() && _medalClaimed[2] == false)
+                {
+                    _medalClaimed[2] = true;
+                    _medalForPlayer.Add(pair.Key, 2);
+                }
+                else if (pair.Key == medalManager.GetTopPowerPickup() && _medalClaimed[3] == false)
+                {
+                    _medalClaimed[3] = true;
+                    _medalForPlayer.Add(pair.Key, 3);
+                }
+                else if (pair.Key == medalManager.GetUntouchable() && _medalClaimed[4] == false)
+                {
+                    _medalClaimed[4] = true;
+                    _medalForPlayer.Add(pair.Key, 4);
                 }
             }
 
-            medalManager.SpawnMedal(podiumLocations[_currentPodiumStun].transform.position, podiumLocations[_currentPodiumStunOthers].transform.position, 
-            podiumLocations[_currentPodiumDash].transform.position, podiumLocations[_currentPodiumPickUp].transform.position, podiumLocations[_currentPodiumUntouchable].transform.position);
+            foreach(KeyValuePair<int,int> pair in _medalForPlayer)
+            {
+                medalManager.SpawnMedal(podiumLocations[pair.Key].transform.position, pair.Value);
+            }
+            
+
+            
 
 
             #endregion
