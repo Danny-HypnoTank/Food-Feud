@@ -64,7 +64,7 @@ public class DazeState : MonoBehaviour
         }
     }
 
-    public IEnumerator Stun(float dashAmount, PlayerController stunnedBy)
+    public IEnumerator Stun(float dashAmount, PlayerController stunnedBy = null)
     {
         if (playerController.StunImmunityPowerup != null)
         {
