@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9093599197168329374}
   - component: {fileID: 281129191334093456}
   - component: {fileID: 8962915483918891377}
+  - component: {fileID: 1633697099961564404}
   m_Layer: 9
   m_Name: pCylinder1
   m_TagString: PaintableEnvironment
@@ -78,6 +79,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &1633697099961564404
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 716729131923868541}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -5076798556035486163, guid: f85d76c4de57cee459122fba11d8201c, type: 3}
 --- !u!1 &1161808716318702291
 GameObject:
   m_ObjectHideFlags: 0
@@ -89,6 +104,7 @@ GameObject:
   - component: {fileID: 500076841309837238}
   - component: {fileID: 3507481445427197949}
   - component: {fileID: 8921444884411760924}
+  - component: {fileID: 7136975584553200857}
   m_Layer: 9
   m_Name: pSphere1
   m_TagString: PaintableEnvironment
@@ -156,6 +172,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &7136975584553200857
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161808716318702291}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 2540817853737639666, guid: f85d76c4de57cee459122fba11d8201c, type: 3}
 --- !u!1 &4891915713424596025
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,9 +195,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8482752775519071786}
-  - component: {fileID: 9169510760263797231}
   m_Layer: 0
-  m_Name: strawberries__current
+  m_Name: cleanstrawberries__current
   m_TagString: PaintableEnvironment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -190,20 +219,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &9169510760263797231
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4891915713424596025}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 0}
 --- !u!1 &7495079573042323404
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,9 +229,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1941485437334878892}
   - component: {fileID: 4907587196746248819}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Collider
-  m_TagString: Untagged
+  m_TagString: ObjectCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

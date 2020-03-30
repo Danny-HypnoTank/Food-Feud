@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1303764822241559607}
   - component: {fileID: 2614996837702165628}
   - component: {fileID: 8009670442822472349}
+  - component: {fileID: 2892577481937106441}
   m_Layer: 9
   m_Name: pSphere1
   m_TagString: PaintableEnvironment
@@ -78,6 +79,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &2892577481937106441
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 358270165895817554}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 2540817853737639666, guid: f85d76c4de57cee459122fba11d8201c, type: 3}
 --- !u!1 &2095602467982596348
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,6 +105,7 @@ GameObject:
   - component: {fileID: 1657750779387310353}
   - component: {fileID: 7531683423461747440}
   - component: {fileID: 8777721152078277195}
+  - component: {fileID: 8894116408637721897}
   m_Layer: 9
   m_Name: pCylinder1
   m_TagString: PaintableEnvironment
@@ -171,6 +187,20 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: -5076798556035486163, guid: f85d76c4de57cee459122fba11d8201c, type: 3}
+--- !u!64 &8894116408637721897
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2095602467982596348}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -5076798556035486163, guid: f85d76c4de57cee459122fba11d8201c, type: 3}
 --- !u!1 &6270371198813917112
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,7 +244,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8841812537516252797}
   - component: {fileID: 7104842997294673673}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Collider
   m_TagString: ObjectCollider
   m_Icon: {fileID: 0}
