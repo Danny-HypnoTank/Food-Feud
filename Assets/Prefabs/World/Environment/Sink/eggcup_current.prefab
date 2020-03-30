@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 8042660309241549839}
   - component: {fileID: 1352841646948412985}
   - component: {fileID: 4754335712784749248}
-  m_Layer: 0
+  - component: {fileID: 3494935158533975925}
+  m_Layer: 9
   m_Name: eggcup_current
-  m_TagString: Untagged
+  m_TagString: PaintableEnvironment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -79,6 +80,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &3494935158533975925
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6468889974865339932}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -1618609507553844122, guid: 043661a1895a81a4789bae76109058da, type: 3}
 --- !u!1 &7242320839237294258
 GameObject:
   m_ObjectHideFlags: 0
@@ -89,9 +104,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1522764648704955421}
   - component: {fileID: 1114720195491075560}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Collider
-  m_TagString: Untagged
+  m_TagString: ObjectCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
