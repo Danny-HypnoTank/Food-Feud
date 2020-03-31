@@ -3779,7 +3779,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 7.2000003, y: 6.4, z: -8, w: 6.4}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -4983,6 +4983,7 @@ GameObject:
   - component: {fileID: 2520289732244596745}
   - component: {fileID: 2032179335370755470}
   - component: {fileID: 1617600800547030547}
+  - component: {fileID: 1617600800547030548}
   m_Layer: 9
   m_Name: Drain_Cover_UV:polySurface1
   m_TagString: PaintableEnvironment
@@ -5003,6 +5004,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 6.1138215, y: 0.50958824, z: 6.113825}
   m_Center: {x: 0.028505325, y: 18.414825, z: -8.267346}
+--- !u!114 &1617600800547030548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1617600800547030546}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40af7a7b620880f4da5c4ac96edbeb45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerObjects: []
 --- !u!1001 &1817828018574520721
 PrefabInstance:
   m_ObjectHideFlags: 0
