@@ -92,7 +92,7 @@ public class SpecialButton : MonoBehaviour
             if (player.IsDashing)
             {
                 //If the button can be triggered give all other players the debuff else stun the colliding player
-                if (CanBeTriggered(player.dashAmount))
+                if (CanBeTriggered(player.DashAmount))
                 {
                     if (debuff == SpecialPowers.Trash && dropper != null)
                     {

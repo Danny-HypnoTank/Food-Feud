@@ -2354,7 +2354,7 @@ PrefabInstance:
     - target: {fileID: 1378592313708008022, guid: 9f7ba8c21f95a104da053838d73e2e6d,
         type: 3}
       propertyPath: _activationTime
-      value: 25
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8354884952241502000, guid: 9f7ba8c21f95a104da053838d73e2e6d,
         type: 3}
@@ -3780,7 +3780,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40af7a7b620880f4da5c4ac96edbeb45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 5
+  duration: 10
+  slowDownStart: 0.5
+  pullInStart: 5
   waterPlane: {fileID: 1180858681}
   baseWaterSpeed: 2
   pullInSpeed: 0.008
