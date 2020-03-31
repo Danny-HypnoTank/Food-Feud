@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class SpecialButtonLogic : ScriptableObject
-{  
-    
+public abstract class SpecialButtonLogic : ScriptableObject
+{
+    public abstract void Initialisation();
+    public abstract void DoAction();
 }
