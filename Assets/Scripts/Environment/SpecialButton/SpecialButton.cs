@@ -26,6 +26,10 @@ public class SpecialButton : MonoBehaviour
     [SerializeField]
     private TrashDropper dropper;
 
+    [Header("Flood Properties")]
+    [SerializeField]
+    private SinkPullIn massFlood;
+
     [Header("Graphics")]
     [SerializeField]
     private GameObject[] imageToDisplay;
@@ -91,7 +95,13 @@ public class SpecialButton : MonoBehaviour
                 if (CanBeTriggered(player.dashAmount))
                 {
                     if (debuff == SpecialPowers.Trash && dropper != null)
+                    {
                         dropper.DropTrash();
+                    }
+                    else if (debuff == SpecialPowers.Flood)
+                    {
+                        massFlood.gameObject.SetActive(true);
+                    }
                     else
                     {
                         for (int i = 0; i < ManageGame.instance.allPlayerControllers.Count; i++)
