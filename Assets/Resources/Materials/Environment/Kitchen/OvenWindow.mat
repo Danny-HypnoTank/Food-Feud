@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5008051556183808998
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
 --- !u!21 &2100000
 Material:
   serializedVersion: 6
@@ -7,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TunaCan
-  m_Shader: {fileID: -6465566751694194690, guid: a30030d9e94f9b94f8d1a81f164b6fe3,
+  m_Name: OvenWindow
+  m_Shader: {fileID: -6465566751694194690, guid: 344658999f30fa247bb5ed4f606ae406,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -25,31 +38,31 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_5FB74270:
-        m_Texture: {fileID: 2800000, guid: 5e7849442000aa242bf9a66905ff4f71, type: 3}
+        m_Texture: {fileID: 2800000, guid: 55c21072310b6d54d918a0571cc7ed6e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_799A8A90:
-        m_Texture: {fileID: 2800000, guid: fa5709559916d9348bb63620cb8836f1, type: 3}
+        m_Texture: {fileID: 2800000, guid: f8713ad70eaf2e146a8e2e381cc1f5af, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_8E994CBA:
-        m_Texture: {fileID: 2800000, guid: b4fc33b39aa81dd4b984cd4df358f6e1, type: 3}
+        m_Texture: {fileID: 2800000, guid: 9cbc76961144c634eba89957ea4c7e41, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_B2568FE2:
-        m_Texture: {fileID: 2800000, guid: 5e5bdbbd3dd64f848b1471f11df41180, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_BE3E4A1D:
-        m_Texture: {fileID: 2800000, guid: b666a67170281d142b47ca24d4e481b3, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5d4d69629000745499ecf23d70e672b3, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_D047207:
-        m_Texture: {fileID: 2800000, guid: 5de747fdf97dd0042a543602a1bfc4d9, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_E0F51C11:
-        m_Texture: {fileID: 2800000, guid: 259f78c291beca54aa2f597b00ac06f8, type: 3}
+        m_Texture: {fileID: 2800000, guid: e7fbfcb93f31caa4a99c340071cb21dd, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -85,9 +98,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_653241E1: 10000
+    - Vector1_40DFA428: 0.75
+    - Vector1_653241E1: 100000
     - Vector1_C45933A3: 10
-    - Vector1_F00527CA: 0
+    - Vector1_F00527CA: 0.5
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -116,9 +130,9 @@ Material:
     - Color_9ED8AFDA: {r: 1, g: 1, b: 0, a: 0}
     - Color_AD3B9B12: {r: 0, g: 0, b: 0, a: 0}
     - Color_BA22FFD6: {r: 1, g: 1, b: 1, a: 0}
-    - Color_EBB01552: {r: 0, g: 0, b: 0, a: 0}
+    - Color_EBB01552: {r: 1, g: 1, b: 1, a: 0}
     - Color_FC294058: {r: 0, g: 0, b: 1, a: 0}
-    - Vector2_F06130C2: {r: 1, g: 1, b: 0, a: 0}
+    - Vector2_F06130C2: {r: 0.01, g: 0.02, b: 0, a: 0}
     - _BaseColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Color_1: {r: 1, g: 0, b: 0, a: 0}
@@ -127,16 +141,3 @@ Material:
     - _Color_4: {r: 1, g: 1, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
---- !u!114 &7616558185028163417
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1
