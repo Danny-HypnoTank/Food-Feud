@@ -4,30 +4,51 @@ using UnityEngine;
 
 public class SinkPullIn : MonoBehaviour
 {
+
     [SerializeField]
-    GameObject[] playerObjects;
-    // Start is called before the first frame update
-    void Start()
+    private float duration;
+    [SerializeField]
+    private GameObject waterPlane;
+    [SerializeField]
+    private float baseWaterSpeed;
+    private float waterSpeed;
+    [SerializeField]
+    private float pullInSpeed;
+
+    private bool isPulling = false;
+
+    private void OnEnable()
     {
         StartCoroutine(LateStart());
+        waterSpeed = baseWaterSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        for (int i = 0; i < playerObjects.Length; i++)
+        if (isPulling)
         {
-            PlayerController playerToCheck = playerObjects[i].GetComponent<PlayerController>();
-            Vector3 forceDirection = this.transform.position - playerToCheck.transform.position;
-            playerToCheck.GetComponent<CharacterController>().Move(forceDirection * 0.002f);
-                
-            
+            for (int i = 0; i < ManageGame.instance.allPlayerControllers.Count; i++)
+            {
+                Vector3 forceDirection = this.transform.position - ManageGame.instance.allPlayerControllers[i].transform.position;
+                ManageGame.instance.allPlayerControllers[i].chc.Move(forceDirection * pullInSpeed);
+            }
         }
+        waterPlane.transform.Translate(Vector3.up * waterSpeed * Time.deltaTime);
     }
 
     IEnumerator LateStart()
     {
-        yield return new WaitForSeconds(2);
-        playerObjects = GameObject.FindGameObjectsWithTag("Player");
+        yield return new WaitForSeconds(duration);
+        isPulling = true;
+        StartCoroutine(ResetTimer());
+    }
+
+    IEnumerator ResetTimer()
+    {
+        waterSpeed = -baseWaterSpeed;
+        yield return new WaitForSeconds(duration);
+        gameObject.SetActive(false);
+        isPulling = false;
     }
 }
