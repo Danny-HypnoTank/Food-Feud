@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 112000000, guid: b137b2507e51bdd48917b35d84159954,
     type: 2}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -6279,6 +6279,12 @@ Transform:
   m_Father: {fileID: 374800761431315627}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1517520729437328466 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8354884952241502000, guid: 9f7ba8c21f95a104da053838d73e2e6d,
+    type: 3}
+  m_PrefabInstance: {fileID: 7421319247449236322}
+  m_PrefabAsset: {fileID: 0}
 --- !u!33 &2143206296113574749
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -7351,21 +7357,25 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Special
       objectReference: {fileID: 0}
+    - target: {fileID: 5704867346787292415, guid: 9f7ba8c21f95a104da053838d73e2e6d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ff3db8990c4254f41bf3d87756a0daa9, type: 2}
+    - target: {fileID: 3584260151616739119, guid: 9f7ba8c21f95a104da053838d73e2e6d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 22897a4ec995e10419d81c6634bd078d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f7ba8c21f95a104da053838d73e2e6d, type: 3}
---- !u!1 &7421319247449236323 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8354884952241502000, guid: 9f7ba8c21f95a104da053838d73e2e6d,
-    type: 3}
-  m_PrefabInstance: {fileID: 7421319247449236322}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7421319247449236324
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7421319247449236323}
+  m_GameObject: {fileID: 1517520729437328466}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7b6a0312b18bf14385f5e86d1b3a4c0, type: 3}
