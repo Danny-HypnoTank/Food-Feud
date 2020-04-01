@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class SinkPullIn : MonoBehaviour
+public class SinkPullIn : MonoBehaviour, ICanBeActivated
 {
     [Header("Timer Settings")]
     [SerializeField]
@@ -29,31 +29,30 @@ public class SinkPullIn : MonoBehaviour
     private bool isPulling;
     private bool hasSlowed;
     private int playerCount;
+    private bool isActive;
 
     private void Awake()
     {
-        playerCount = ManageGame.instance.allPlayerControllers.Count;
-    }
-
-    private void OnDisable()
-    {
-        ResetValues();
+        isActive = false;
     }
 
     // Update is called once per frame
     private void Update()
     {
-        Timer();
-
-        if (isPulling)
+        if (isActive)
         {
-            for (int i = 0; i < playerCount; i++)
+            Timer();
+
+            if (isPulling)
             {
-                Vector3 forceDirection = transform.position - ManageGame.instance.allPlayerControllers[i].transform.position;
-                ManageGame.instance.allPlayerControllers[i].chc.Move(forceDirection * pullInSpeed);
+                for (int i = 0; i < playerCount; i++)
+                {
+                    Vector3 forceDirection = transform.position - ManageGame.instance.allPlayerControllers[i].transform.position;
+                    ManageGame.instance.allPlayerControllers[i].chc.Move(forceDirection * pullInSpeed);
+                }
             }
+            waterPlane.transform.Translate(Vector3.up * waterSpeed * Time.deltaTime);
         }
-        waterPlane.transform.Translate(Vector3.up * waterSpeed * Time.deltaTime);
     }
 
     private void Timer()
@@ -84,7 +83,7 @@ public class SinkPullIn : MonoBehaviour
         {
             ModifySpeed();
 
-            gameObject.SetActive(false);
+            isActive = false;
         }
     }
 
@@ -103,5 +102,12 @@ public class SinkPullIn : MonoBehaviour
             PlayerController currentPlayer = ManageGame.instance.allPlayerControllers[i];
             currentPlayer.SetProperty<float>(nameof(currentPlayer.MoveSpeedModifier), currentPlayer.BaseSpeed * multiplier);
         }
+    }
+
+    public void Activate()
+    {
+        playerCount = ManageGame.instance.allPlayerControllers.Count;
+        isActive = true;
+        ResetValues();
     }
 }
