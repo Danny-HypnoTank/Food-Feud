@@ -87,7 +87,8 @@ public class PlayerController : MonoBehaviour
     private ExplodingPotato potato;
 
     //Auto Properties
-    public float dashAmount { get; private set; }
+    public float BaseSpeed { get; private set; }
+    public float DashAmount { get; private set; }
     public DrawColor DrawColor { get; private set; }
     public PlayerBase PlayerBase { get; private set; }
     public DazeState PlayerStun { get; private set; }
@@ -127,7 +128,8 @@ public class PlayerController : MonoBehaviour
     {
         IsDashing = false;
         canDash = true;
-        dashAmount = 0;
+        DashAmount = 0;
+        BaseSpeed = MoveSpeedModifier;
         MoveSpeed = Player.Speed;
         var smokeMain = SmokeParticles.main;
         smokeMain.startColor = Player.SkinColours[Player.skinId];
@@ -178,10 +180,10 @@ public class PlayerController : MonoBehaviour
                         StunOtherCounter(Player.playerNum);
 
                         Player.StunCount++;
-                        StartCoroutine(otherPlayer.PlayerStun.Stun(dashAmount,this));
+                        StartCoroutine(otherPlayer.PlayerStun.Stun(DashAmount,this));
                     }
 
-                    Splat(dashAmount);
+                    Splat(DashAmount);
                     impactParticles[0].Play();
 
                     if (potato != null)
@@ -193,7 +195,7 @@ public class PlayerController : MonoBehaviour
         {
             if (IsDashing)
             {
-                Splat(dashAmount);
+                Splat(DashAmount);
                 impactParticles[0].Play();
             }
         }
@@ -241,10 +243,10 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetButton($"Dash{Player.playerNum}") && !IsDashing && !PlayerStun.Stunned && canDash)
         {
-            if (dashAmount < 1)
-                dashAmount += Time.deltaTime;
+            if (DashAmount < 1)
+                DashAmount += Time.deltaTime;
             else
-                dashAmount = 1;
+                DashAmount = 1;
             Player.DashCount++;
 
             
@@ -258,8 +260,8 @@ public class PlayerController : MonoBehaviour
 
             DashCounter(Player.playerNum);
 
-            distanceToDash.CalculateFromPercentage(dashDistanceMin, dashDistanceMax, dashAmount);
-            dashPower.CalculateFromPercentage(dashPowerMin, dashPowerMax, dashAmount);
+            distanceToDash.CalculateFromPercentage(dashDistanceMin, dashDistanceMax, DashAmount);
+            dashPower.CalculateFromPercentage(dashPowerMin, dashPowerMax, DashAmount);
 
             StartCoroutine(DashTimer(distanceToDash));
             StartCoroutine(DashCooldown());
@@ -267,10 +269,10 @@ public class PlayerController : MonoBehaviour
 
         if (!Input.GetButton($"Dash{Player.playerNum}"))
         {
-            if (dashAmount > 0)
-                dashAmount -= Time.deltaTime;
+            if (DashAmount > 0)
+                DashAmount -= Time.deltaTime;
             else
-                dashAmount = 0;
+                DashAmount = 0;
 
             UpdateFillBar();
         }
@@ -394,7 +396,7 @@ public class PlayerController : MonoBehaviour
         canDash = false;
 
         float cooldown = 0;
-        cooldown.CalculateFromPercentage(dashCooldownMin, dashCooldownMax, dashAmount);
+        cooldown.CalculateFromPercentage(dashCooldownMin, dashCooldownMax, DashAmount);
 
         yield return new WaitForSeconds(cooldown);
 
@@ -404,7 +406,7 @@ public class PlayerController : MonoBehaviour
     private void UpdateFillBar()
     {
         if (fillBar != null)
-            fillBar.fillAmount = dashAmount;
+            fillBar.fillAmount = DashAmount;
     }
 
     void DashCounter(int playerID)

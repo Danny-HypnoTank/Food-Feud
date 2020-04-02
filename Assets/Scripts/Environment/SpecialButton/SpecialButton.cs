@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,9 +23,11 @@ public class SpecialButton : MonoBehaviour
     [SerializeField]
     private float _activationTime;
 
-    [Header("Trash properties")]
+    [Header("Special Logic")]
     [SerializeField]
-    private TrashDropper dropper;
+    private SpecialUILogic UILogic;
+    [SerializeField]
+    private SpecialButtonLogic logic;
 
     [Header("Graphics")]
     [SerializeField]
@@ -35,15 +38,17 @@ public class SpecialButton : MonoBehaviour
     [Header("Settings")]
     [SerializeField]
     private Vector3 activePosition;
+
     [SerializeField]
-    private float lerpTime;
+    private Type test;
 
     //Fields
     private float timer;
     private bool finishedUI;
     private Vector3 inactivePosition;
     private BuffDebuff power;
-    private ISpecialUI specialUILogic;
+    
+    public PlayerController ActivatorPlayer { get; private set; }
 
     private readonly Dictionary<SpecialPowers, BuffDebuff> powers = new Dictionary<SpecialPowers, BuffDebuff>
     {
@@ -59,11 +64,6 @@ public class SpecialButton : MonoBehaviour
     //Full Properties
     public float ActivationTime { get { return _activationTime; } }
 
-    private void Awake()
-    {
-        specialUILogic = GetComponent<ISpecialUI>();
-    }
-
     public void Initialisation()
     {
         //Set initial values
@@ -71,7 +71,9 @@ public class SpecialButton : MonoBehaviour
         HasBeenUsed = false;
         finishedUI = false;
         inactivePosition = transform.localPosition;
-        specialUILogic.GetActivationTime(ActivationTime);
+
+        UILogic.Initialisation(ActivationTime);
+        logic.Initialisation();
 
         //Instantiate an object based on the special power
         power = powers[debuff];
@@ -82,25 +84,15 @@ public class SpecialButton : MonoBehaviour
         //If the colliding object is a player
         if (other.CompareTag("Player"))
         {
-            //Cache reference to the player
-            PlayerController player = other.GetComponent<PlayerController>();
+            //Cache reference to the player = other.GetComponent<PlayerController>();
+            ActivatorPlayer = other.GetComponent<PlayerController>();
 
-            if (player.IsDashing)
+            if (ActivatorPlayer.IsDashing)
             {
                 //If the button can be triggered give all other players the debuff else stun the colliding player
-                if (CanBeTriggered(player.dashAmount))
+                if (CanBeTriggered(ActivatorPlayer.DashAmount))
                 {
-                    if (debuff == SpecialPowers.Trash && dropper != null)
-                        dropper.DropTrash();
-                    else
-                    {
-                        for (int i = 0; i < ManageGame.instance.allPlayerControllers.Count; i++)
-                        {
-                            //If the player to check isn't the colliding player, give them the debuff
-                            if (ManageGame.instance.allPlayerControllers[i] != player)
-                                ManageGame.instance.allPlayerControllers[i].PickUpPowerUp(power);
-                        }
-                    }
+                    logic.DoAction();
 
                     //Start the coroutine to display the image for the special debuff
                     StartCoroutine(DisplayTheImage());
@@ -128,14 +120,14 @@ public class SpecialButton : MonoBehaviour
         if (!finishedUI)
         {
             MoveButton();
-            specialUILogic.UpdateUI(time);
+            UILogic.UpdateUI(time);
         }
     }
 
     private void MoveButton()
     {
         timer += Time.deltaTime;
-        transform.localPosition = Vector3.Lerp(inactivePosition, activePosition, timer / lerpTime);
+        transform.localPosition = Vector3.Lerp(inactivePosition, activePosition, timer / ActivationTime);
     }
 
     private bool CanBeTriggered(float dashAmount)
