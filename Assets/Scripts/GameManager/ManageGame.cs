@@ -30,6 +30,7 @@ public class ManageGame : MonoBehaviour
     [Header("Clock")]
     [SerializeField]
     private TextMesh timeRemaining;                                 //text that displays remaining time
+    [SerializeField]
     private float reverseTime = 0;                             //actual timer 
     [SerializeField]
     private List<GameObject> mapEdgesForGodPower = new List<GameObject>();
@@ -52,10 +53,12 @@ public class ManageGame : MonoBehaviour
     public List<GameObject> PlayerObjects { get => playerObjects; set => playerObjects = value; }
     public List<GameObject> MapEdgesForGodPower { get => mapEdgesForGodPower; set => mapEdgesForGodPower = value; }
     public GameObject GodPowerUp { get => godPowerUp; set => godPowerUp = value; }
-    private SpecialButton specialButton;
+    public SpecialButton SpecialButton { get; private set; }
     private float timeLimit = 60;
     public CameraShaker camShake { get; private set; }
     public List<PlayerController> allPlayerControllers { get; private set; }
+    [SerializeField]
+    private int scoreLevelID;
 
     //Creates instance of game manager
     private void Awake()
@@ -74,14 +77,14 @@ public class ManageGame : MonoBehaviour
         
         camShake = Camera.main.GetComponent<CameraShaker>();
         allPlayerControllers = new List<PlayerController>();
-        specialButton = GameObject.FindGameObjectWithTag("Special").GetComponent<SpecialButton>();
+        SpecialButton = GameObject.FindGameObjectWithTag("Special").GetComponent<SpecialButton>();
     }
     //handles display and counting of round timer
     [SerializeField]
     Vector3 v3Rot;
     [SerializeField]
     Vector3 v3Dest;
-
+    [SerializeField]
     float speed = 3.8f; //2.5f
 
     private void Update()
@@ -111,14 +114,14 @@ public class ManageGame : MonoBehaviour
                 // loading.SetID(2);
                 // loading.InitializeLoading();
                 gridManager.CalculateFinalScore();
-                SceneManager.LoadScene("EndRoundScene");
+                SceneManager.LoadScene(scoreLevelID);
             }
             if (reverseTime % gridManager.TimeToCheck < 1 && reverseTime > 1) //Modulus operator to check if the value of reverseTime goes into TimeToCheck with a remainder that is less than 1, i.e. 60.23416 % 30 = 0.23416, 70.81674 % 30 = 10.81674 etc. -James
                 gridManager.UpdateUI();
-            if (reverseTime >= specialButton.ActivationTime && !specialButton.IsActive && !specialButton.HasBeenUsed)
-                specialButton.ActivateButton();
+            if (reverseTime >= SpecialButton.ActivationTime && !SpecialButton.IsActive && !SpecialButton.HasBeenUsed)
+                SpecialButton.ActivateButton();
             if (reverseTime % 1 < 1)
-                specialButton.UpdateBar(reverseTime);
+                SpecialButton.UpdateVisuals(reverseTime);
         }
     }
 
@@ -152,7 +155,7 @@ public class ManageGame : MonoBehaviour
 
         PopulatePlayerControllerList();
 
-        specialButton.Initialisation();
+        SpecialButton.Initialisation();
 
         gridManager.Initialisation(PlayerObjects.Count);
         gridManager.PopulateGridList();
