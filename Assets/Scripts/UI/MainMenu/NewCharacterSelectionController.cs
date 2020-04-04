@@ -21,6 +21,7 @@ public class NewCharacterSelectionController : MonoBehaviour
     private GameObject readyImage1;
     [SerializeField]
     private GameObject readyImage2;
+    [SerializeField]
     private bool canPressBtn = true;
     [SerializeField]
     private Transform doorHolder;
@@ -51,6 +52,8 @@ public class NewCharacterSelectionController : MonoBehaviour
     [SerializeField]
     [Range(0,2)]
     private int forceLevel;
+
+    public bool CanPressBtn { get => canPressBtn; set => canPressBtn = value; }
 
     private void Awake()
     {
@@ -89,10 +92,29 @@ public class NewCharacterSelectionController : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        if (doorAnimation != null)
+        {
+            doorAnimation.enabled = false;
+        }
+        canPressBtn = false;
+        isTransition = false;
+        ResetPlayers();
+    }
+
     private void OnEnable()
     {
         doorAnimation = doorHolder.GetComponent<Animator>();
         doorAnimation.enabled = false;
+        ResetPlayers();
+        //ReadyCancel();
+        canPressBtn = true;
+        isTransition = false;   
+    }
+
+    private void ResetPlayers()
+    {
         for (int i = 0; i < players.Length; i++)
         {
             players[i].isActivated = false;
@@ -105,9 +127,6 @@ public class NewCharacterSelectionController : MonoBehaviour
             playerPins[i].transform.position = pinLocations[i].transform.position;
             playerPins[i].gameObject.SetActive(true);
         }
-        //ReadyCancel();
-        canPressBtn = true;
-        isTransition = false;   
     }
     //Default rotation(closed) 117.585 open rotation 45.021
 
@@ -150,6 +169,7 @@ public class NewCharacterSelectionController : MonoBehaviour
 
     private void DisplayReadyMSg()
     {
+        canPressBtn = false;
         isConfirmation = true;
         readyImage1.SetActive(true);
         readyImage2.SetActive(false);
@@ -166,6 +186,7 @@ public class NewCharacterSelectionController : MonoBehaviour
 
     public void ReadyCancel()
     {
+        canPressBtn = true;
         isConfirmation = false;
         readyImage1.SetActive(true);
         readyImage2.SetActive(false);
