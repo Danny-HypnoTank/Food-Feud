@@ -17250,12 +17250,13 @@ MonoBehaviour:
   readyMsgBar: {fileID: 205147651}
   readyImage1: {fileID: 1552362307}
   readyImage2: {fileID: 1099865192}
+  canPressBtn: 1
   doorHolder: {fileID: 836192791}
   cameraTransform: {fileID: 254859330}
   mainMenuCameraPoint: {fileID: 876354913}
   SinkPoint: {fileID: 793156233}
   BinPoint: {fileID: 1341334989}
-  waitBetweenAnimation: 2
+  waitBetweenAnimation: 0.2
   animationSpeed: 0.5
   cameraMoveSpeed: 5
   usingLerp: 1
@@ -23961,6 +23962,41 @@ PrefabInstance:
       propertyPath: m_Name
       value: LoadingManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8567091327837823207, guid: e26a49ce5b305c948a727add3b2c470f,
+        type: 3}
+      propertyPath: loadingScreenPanel
+      value: 
+      objectReference: {fileID: 1598276280}
+    - target: {fileID: 8567091327837823207, guid: e26a49ce5b305c948a727add3b2c470f,
+        type: 3}
+      propertyPath: slider
+      value: 
+      objectReference: {fileID: 2049915530}
+    - target: {fileID: 8567091327837823207, guid: e26a49ce5b305c948a727add3b2c470f,
+        type: 3}
+      propertyPath: percentLoaded
+      value: 
+      objectReference: {fileID: 47759953}
+    - target: {fileID: 8567091327837823207, guid: e26a49ce5b305c948a727add3b2c470f,
+        type: 3}
+      propertyPath: circleImg
+      value: 
+      objectReference: {fileID: 241269457}
+    - target: {fileID: 8567091327837823207, guid: e26a49ce5b305c948a727add3b2c470f,
+        type: 3}
+      propertyPath: loadingFX
+      value: 
+      objectReference: {fileID: 151634862}
+    - target: {fileID: 8567091327837823207, guid: e26a49ce5b305c948a727add3b2c470f,
+        type: 3}
+      propertyPath: progressLoaded
+      value: 
+      objectReference: {fileID: 47759953}
+    - target: {fileID: 8567091327837823207, guid: e26a49ce5b305c948a727add3b2c470f,
+        type: 3}
+      propertyPath: progress
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8567091327837823204, guid: e26a49ce5b305c948a727add3b2c470f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -24014,41 +24050,6 @@ PrefabInstance:
     - target: {fileID: 8567091327837823204, guid: e26a49ce5b305c948a727add3b2c470f,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8567091327837823207, guid: e26a49ce5b305c948a727add3b2c470f,
-        type: 3}
-      propertyPath: loadingScreenPanel
-      value: 
-      objectReference: {fileID: 1598276280}
-    - target: {fileID: 8567091327837823207, guid: e26a49ce5b305c948a727add3b2c470f,
-        type: 3}
-      propertyPath: slider
-      value: 
-      objectReference: {fileID: 2049915530}
-    - target: {fileID: 8567091327837823207, guid: e26a49ce5b305c948a727add3b2c470f,
-        type: 3}
-      propertyPath: percentLoaded
-      value: 
-      objectReference: {fileID: 47759953}
-    - target: {fileID: 8567091327837823207, guid: e26a49ce5b305c948a727add3b2c470f,
-        type: 3}
-      propertyPath: circleImg
-      value: 
-      objectReference: {fileID: 241269457}
-    - target: {fileID: 8567091327837823207, guid: e26a49ce5b305c948a727add3b2c470f,
-        type: 3}
-      propertyPath: loadingFX
-      value: 
-      objectReference: {fileID: 151634862}
-    - target: {fileID: 8567091327837823207, guid: e26a49ce5b305c948a727add3b2c470f,
-        type: 3}
-      propertyPath: progressLoaded
-      value: 
-      objectReference: {fileID: 47759953}
-    - target: {fileID: 8567091327837823207, guid: e26a49ce5b305c948a727add3b2c470f,
-        type: 3}
-      propertyPath: progress
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
