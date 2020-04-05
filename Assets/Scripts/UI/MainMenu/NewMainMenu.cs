@@ -93,8 +93,10 @@ public class NewMainMenu : MonoBehaviour
             toolTip.SetActive(false);
         }
 
-        if(SoundManager.Instance != null)
-            SoundManager.Instance.PlayMainTheme();
+        if (SoundManager.Instance != null)
+        {
+            //SoundManager.Instance.PlayMainTheme();
+        }
     }
 
     private void InputSelect()
