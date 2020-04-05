@@ -76,7 +76,7 @@ public class TwinSpray : Shooting
                 IsAxisInUse = false;
                 if (Ammo > 0)
                 {
-                    if (dazeState.CanShoot == true)
+                    if (dazeState.CanMove == true)
                     {
                         if (IsAxisInUse == false)
                         {

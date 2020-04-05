@@ -1,54 +1,117 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class SinkPullIn : MonoBehaviour
+public class SinkPullIn : MonoBehaviour, ICanBeActivated
 {
-
+    [Header("Timer Settings")]
     [SerializeField]
     private float duration;
     [SerializeField]
+    private float slowDownStart;
+    [SerializeField]
+    private float pullInStart;
+
+    [Header("Object Settings")]
+    [SerializeField]
     private GameObject waterPlane;
     [SerializeField]
+    private GameObject tapWater;
+
+    [Header("Speed Settings")]
+    [SerializeField]
     private float baseWaterSpeed;
-    private float waterSpeed;
     [SerializeField]
     private float pullInSpeed;
 
-    private bool isPulling = false;
+    [Header("Modifiers")]
+    [SerializeField, Range(0, 1)]
+    private float speedDownModifier;
 
-    private void OnEnable()
+    private float elapsedTime;
+    private float waterSpeed;
+    private bool isPulling;
+    private bool hasSlowed;
+    private int playerCount;
+    private bool isActive;
+
+    private void Awake()
     {
-        StartCoroutine(LateStart());
-        waterSpeed = baseWaterSpeed;
+        isActive = false;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (isPulling)
+        if (isActive)
         {
-            for (int i = 0; i < ManageGame.instance.allPlayerControllers.Count; i++)
+            Timer();
+
+            if (isPulling)
             {
-                Vector3 forceDirection = this.transform.position - ManageGame.instance.allPlayerControllers[i].transform.position;
-                ManageGame.instance.allPlayerControllers[i].chc.Move(forceDirection * pullInSpeed);
+                for (int i = 0; i < playerCount; i++)
+                {
+                    Vector3 forceDirection = transform.position - ManageGame.instance.allPlayerControllers[i].transform.position;
+                    ManageGame.instance.allPlayerControllers[i].chc.Move(forceDirection * pullInSpeed);
+                }
             }
+            waterPlane.transform.Translate(Vector3.up * waterSpeed * Time.deltaTime);
         }
-        waterPlane.transform.Translate(Vector3.up * waterSpeed * Time.deltaTime);
     }
 
-    IEnumerator LateStart()
+    private void Timer()
     {
-        yield return new WaitForSeconds(duration);
-        isPulling = true;
-        StartCoroutine(ResetTimer());
+        if (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+
+            if (elapsedTime >= slowDownStart && !hasSlowed)
+            {
+                hasSlowed = true;
+                ModifySpeed(speedDownModifier);
+            }
+
+            if (elapsedTime >= pullInStart && !isPulling)
+            {
+                tapWater.SetActive(false);
+                isPulling = true;
+                waterSpeed = -baseWaterSpeed;
+            }
+
+            CheckTimerEnd();
+        }
     }
 
-    IEnumerator ResetTimer()
+    private void CheckTimerEnd()
     {
-        waterSpeed = -baseWaterSpeed;
-        yield return new WaitForSeconds(duration);
-        gameObject.SetActive(false);
+        if (elapsedTime >= duration)
+        {
+            ModifySpeed();
+
+            isActive = false;
+        }
+    }
+
+    private void ResetValues()
+    {
+        elapsedTime = 0;
+        waterSpeed = baseWaterSpeed;
         isPulling = false;
+        hasSlowed = false;
+    }
+
+    private void ModifySpeed(float multiplier = 1)
+    {
+        for (int i = 0; i < playerCount; i++)
+        {
+            PlayerController currentPlayer = ManageGame.instance.allPlayerControllers[i];
+            currentPlayer.SetProperty<float>(nameof(currentPlayer.MoveSpeedModifier), currentPlayer.BaseSpeed * multiplier);
+        }
+    }
+
+    public void Activate()
+    {
+        playerCount = ManageGame.instance.allPlayerControllers.Count;
+        isActive = true;
+        tapWater.SetActive(true);
+        ResetValues();
     }
 }
