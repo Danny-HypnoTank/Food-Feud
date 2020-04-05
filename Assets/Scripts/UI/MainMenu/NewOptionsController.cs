@@ -53,7 +53,6 @@ public class NewOptionsController : MonoBehaviour
         SetHover();
         doorAnimation = doorHolder.GetComponent<Animator>();
         doorAnimation.enabled = false;
-        ResetSliderHovers();
         sliderHover[0].SetActive(true);
     }
 
