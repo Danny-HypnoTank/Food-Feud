@@ -153,7 +153,7 @@ public class PlayerController : MonoBehaviour
 
         if (ManageGame.instance.IsTimingDown == true)
         {
-            if (!PlayerStun.Stunned)
+            if (PlayerStun.CanMove)
             {
                 GetMovementInput();
                 RunBuffDebuffLogic();
@@ -175,7 +175,7 @@ public class PlayerController : MonoBehaviour
                 PlayerController otherPlayer = other.gameObject.GetComponent<PlayerController>();
                 if (!otherPlayer.IsDashing)
                 {
-                    if (!otherPlayer.PlayerStun.Stunned)
+                    if (otherPlayer.PlayerStun.CanMove)
                     {
                         StunOtherCounter(Player.playerNum);
 
@@ -217,7 +217,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (!IsDashing)
         {
-            if (!PlayerStun.Stunned)
+            if (PlayerStun.CanMove)
             {
                 chc.Move(_moveVelocity * Time.fixedDeltaTime);
 
@@ -241,7 +241,7 @@ public class PlayerController : MonoBehaviour
 
     private void Dash()
     {
-        if (Input.GetButton($"Dash{Player.playerNum}") && !IsDashing && !PlayerStun.Stunned && canDash)
+        if (Input.GetButton($"Dash{Player.playerNum}") && !IsDashing && PlayerStun.CanMove && canDash)
         {
             if (DashAmount < 1)
                 DashAmount += Time.deltaTime;
@@ -254,7 +254,7 @@ public class PlayerController : MonoBehaviour
             UpdateFillBar();
         }
 
-        if (Input.GetButtonUp($"Dash{Player.playerNum}") && !IsDashing && !PlayerStun.Stunned && canDash)
+        if (Input.GetButtonUp($"Dash{Player.playerNum}") && !IsDashing && PlayerStun.CanMove && canDash)
         {
             float distanceToDash = 0;
 
