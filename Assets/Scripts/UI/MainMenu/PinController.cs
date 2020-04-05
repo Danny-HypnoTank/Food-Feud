@@ -280,7 +280,10 @@ public class PinController : MonoBehaviour
             if (target != null)
             {
                 Debug.Log(target);
-                target.GetComponentInParent<CharacterPin>().UnOwnPin();
+                if (target.GetComponentInParent<CharacterPin>() != null)
+                {
+                    target.GetComponentInParent<CharacterPin>().UnOwnPin();
+                }
             }
             CancelPlayer();
         }

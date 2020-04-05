@@ -16,11 +16,15 @@ public class LevelSelector : MonoBehaviour
     [Header("Movement Properties")]
     [SerializeField]
     private float cameraMoveSpeed;
+    [SerializeField]
     private int levelIndex;
     private int previousIndex;
 
+    [SerializeField]
     private bool canPressButton = true;
+    [SerializeField]
     private bool isAxis = false;
+    [SerializeField]
     private bool inTransition = false;
 
     [Header("Door Controls and Animation")]
@@ -33,7 +37,9 @@ public class LevelSelector : MonoBehaviour
 
     private void OnEnable()
     {
-        //StartCoroutine(OpenFridge());
+        levelIndex = 0;
+        StopCoroutine("OpenFridge");
+        StartCoroutine(OpenFridge());
         canPressButton = true;
         isAxis = false;
         inTransition = false;
@@ -41,7 +47,41 @@ public class LevelSelector : MonoBehaviour
 
     private void Update()
     {
-        GetControllerInput();
+        if (Input.GetButtonDown("Dash"))
+        {
+            SelectLevel();
+        }
+        if (Input.GetButton("BackButton"))
+        {
+            StartCoroutine(CloseFridge());
+
+        }
+        InputLevelSelect();
+    }
+
+    private void InputLevelSelect()
+    {
+        if (Input.GetAxis("Horizontal") > 0.5f)
+        {
+            if (isAxis == false)
+            {
+                if (canPressButton == true)
+                {
+                    isAxis = true;
+                    levelIndex++;
+                    if (levelIndex == levelViewPoints.Length)
+                    {
+                        levelIndex = 0;
+                    }
+                    CameraMovement();
+                }
+            }
+        }
+        else
+        {
+            isAxis = false;
+        }
+       
     }
 
     private void GetControllerInput()
@@ -49,7 +89,7 @@ public class LevelSelector : MonoBehaviour
         if (!isAxis)
         {
             int selection = (int)Input.GetAxis("Horizontal1");
-            isAxis = true;
+           // isAxis = true;
             if (canPressButton == true)
             {
                 previousIndex = levelIndex;
@@ -63,15 +103,6 @@ public class LevelSelector : MonoBehaviour
                     levelIndex = 0;
                 }
                 CameraMovement();
-            }
-            if (Input.GetButtonDown("Dash"))
-            {
-                SelectLevel();
-            }
-            if (Input.GetButton("BackButton"))
-            {
-                //StartCoroutine(CloseFridge());
-                
             }
         }
     }
@@ -111,6 +142,7 @@ public class LevelSelector : MonoBehaviour
         inTransition = true;
         yield return new WaitForSeconds(waitBetweenAnimation);
         inTransition = false;
+        canPressButton = true;
         yield return null;
     }
 
@@ -124,7 +156,6 @@ public class LevelSelector : MonoBehaviour
         inTransition = true;
         yield return new WaitForSeconds(waitBetweenAnimation);
         inTransition = false;
-        yield return null;
         yield return new WaitForSeconds(4);
         ReturnToCharacterSelect();
     }
