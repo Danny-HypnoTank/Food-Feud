@@ -18,7 +18,7 @@ public class SaveData : MonoBehaviour
     //save function saves all data
     public void Save()
     {
-       soundVal =  (int)SoundManager.Instance.SoundVol;
+        soundVal =  (int)SoundManager.Instance.SoundVol;
         musicVal = (int)SoundManager.Instance.MusicVol;
         SaveLoadManager.SavePlayerData(this);
     }
@@ -28,7 +28,7 @@ public class SaveData : MonoBehaviour
     {
         //applying loaded values
         int[] loadedSettings = SaveLoadManager.LoadSettings();
-        SoundManager.Instance.MusicVol = loadedSettings[0];
-        SoundManager.Instance.SoundVol = loadedSettings[1];
+        //SoundManager.Instance.MusicVol = loadedSettings[0];
+        //SoundManager.Instance.SoundVol = loadedSettings[1];
     }
 }

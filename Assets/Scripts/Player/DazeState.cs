@@ -41,7 +41,7 @@ public class DazeState : MonoBehaviour
 
     public bool Stunned { get; private set; }
     public bool Frozen { get; private set; }
-    public bool CanShoot { get; private set; }
+    public bool CanMove { get; private set; }
 
     public delegate int StunDelegate(int id);
     public event StunDelegate stunEvent;
@@ -51,7 +51,7 @@ public class DazeState : MonoBehaviour
         playerbase = GetComponent<PlayerBase>();
         character = GetComponent<CharacterController>();
         playerController = GetComponent<PlayerController>();
-
+        CanMove = true;
         canBeStunned = true;
     }
 
@@ -83,7 +83,7 @@ public class DazeState : MonoBehaviour
                     stunnedBy.Player.StunCount++;
 
                 playerbase.Player.InvulnerabilityCount++;
-                CanShoot = false;
+                CanMove = false;
                 stunDuration.CalculateFromPercentage(stunDurationMin, stunDurationMax, dashAmount);
 
                 yield return new WaitForSeconds(stunDuration);
@@ -91,7 +91,7 @@ public class DazeState : MonoBehaviour
                 stunStars.ToggleGameObjects(false);
 
                 Stunned = false;
-                CanShoot = true;
+                CanMove = true;
                 cooldownTime.CalculateFromPercentage(cooldownTimeMin, cooldownTimeMax, dashAmount);
 
                 StartCoroutine(StunCooldown(cooldownTime));
@@ -108,7 +108,7 @@ public class DazeState : MonoBehaviour
         else
         {
             Frozen = true;
-            CanShoot = false;
+            CanMove = false;
             playerbase.Player.StunCount++;
             stunDuration = stunDurationMax * 2;
             playerController.IceCube.SetActive(true);
@@ -116,7 +116,7 @@ public class DazeState : MonoBehaviour
             yield return new WaitForSeconds(stunDuration);
 
             Frozen = false;
-            CanShoot = true;
+            CanMove = true;
             cooldownTime = cooldownTimeMax;
             playerController.IceCube.SetActive(false);
 

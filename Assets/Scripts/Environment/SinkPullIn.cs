@@ -13,6 +13,8 @@ public class SinkPullIn : MonoBehaviour, ICanBeActivated
     [Header("Object Settings")]
     [SerializeField]
     private GameObject waterPlane;
+    [SerializeField]
+    private GameObject tapWater;
 
     [Header("Speed Settings")]
     [SerializeField]
@@ -69,6 +71,7 @@ public class SinkPullIn : MonoBehaviour, ICanBeActivated
 
             if (elapsedTime >= pullInStart && !isPulling)
             {
+                tapWater.SetActive(false);
                 isPulling = true;
                 waterSpeed = -baseWaterSpeed;
             }
@@ -108,6 +111,7 @@ public class SinkPullIn : MonoBehaviour, ICanBeActivated
     {
         playerCount = ManageGame.instance.allPlayerControllers.Count;
         isActive = true;
+        tapWater.SetActive(true);
         ResetValues();
     }
 }

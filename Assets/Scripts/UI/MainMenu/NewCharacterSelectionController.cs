@@ -1,4 +1,5 @@
-﻿/* 
+﻿
+/* 
  * Created by:
  * Name: Dominik Waldowski
  * Sid: 1604336
@@ -20,6 +21,7 @@ public class NewCharacterSelectionController : MonoBehaviour
     private GameObject readyImage1;
     [SerializeField]
     private GameObject readyImage2;
+    [SerializeField]
     private bool canPressBtn = true;
     [SerializeField]
     private Transform doorHolder;
@@ -50,6 +52,8 @@ public class NewCharacterSelectionController : MonoBehaviour
     [SerializeField]
     [Range(0,2)]
     private int forceLevel;
+
+    public bool CanPressBtn { get => canPressBtn; set => canPressBtn = value; }
 
     private void Awake()
     {
@@ -88,10 +92,31 @@ public class NewCharacterSelectionController : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        if (doorAnimation != null)
+        {
+            doorAnimation.enabled = false;
+        }
+        canPressBtn = false;
+        isTransition = false;
+       // ResetPlayers();
+    }
+
     private void OnEnable()
     {
         doorAnimation = doorHolder.GetComponent<Animator>();
         doorAnimation.enabled = false;
+        canPressBtn = true;
+        isTransition = false;
+        ResetPlayers();
+        //ReadyCancel();
+        canPressBtn = true;
+        isTransition = false;   
+    }
+
+    private void ResetPlayers()
+    {
         for (int i = 0; i < players.Length; i++)
         {
             players[i].isActivated = false;
@@ -104,8 +129,6 @@ public class NewCharacterSelectionController : MonoBehaviour
             playerPins[i].transform.position = pinLocations[i].transform.position;
             playerPins[i].gameObject.SetActive(true);
         }
-        canPressBtn = true;
-        isTransition = false;   
     }
     //Default rotation(closed) 117.585 open rotation 45.021
 
@@ -148,6 +171,7 @@ public class NewCharacterSelectionController : MonoBehaviour
 
     private void DisplayReadyMSg()
     {
+        canPressBtn = false;
         isConfirmation = true;
         readyImage1.SetActive(true);
         readyImage2.SetActive(false);
@@ -159,11 +183,12 @@ public class NewCharacterSelectionController : MonoBehaviour
     {
         readyImage1.SetActive(false);
         readyImage2.SetActive(true);
-        RandomMap();
+        StartCoroutine(GoToLevelSelect());
     }
 
     public void ReadyCancel()
     {
+        canPressBtn = true;
         isConfirmation = false;
         readyImage1.SetActive(true);
         readyImage2.SetActive(false);
@@ -178,115 +203,22 @@ public class NewCharacterSelectionController : MonoBehaviour
         }
     }
 
-    private void RandomMap()
+    //Coroutine for going to the level select
+    private IEnumerator GoToLevelSelect()
     {
-        int mapID = -1;
-
-        if (forceload)
-        {
-            mapID = forceLevel;
-        }
-        else
-        {
-            mapID = UnityEngine.Random.Range(0, 3);
-        }
-        switch (mapID)
-        {
-            case 0:
-                StartCoroutine("OpenFridge");
-                break;
-
-            case 1:
-                StartCoroutine("CameraBin");
-                break;
-
-            case 2:
-                StartCoroutine("CameraSide");
-                break;
-
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
+        yield return new WaitForSeconds(2);
+        readyImage2.SetActive(false);
+        //Call method for enabling level select UI
+        MenuController.instance.CharacterSelectionToLevelSelect();
     }
 
-    private IEnumerator OpenFridge()
-    {
-        yield return new WaitForSeconds(0.7f);
-        readyMsgBar.gameObject.SetActive(false);
-        doorAnimation.enabled = true;
-        doorAnimation.speed = animationSpeed;
-        doorAnimation.SetInteger("CloseAnim", 1);
-        canPressBtn = false;
-        isTransition = true;
-        yield return new WaitForSeconds(waitBetweenAnimation);
-        isTransition = false;
-        loadingManager.SetID(1);
-        loadingManager.InitializeLoading();
-        yield return null;
-    }
-
-
+    //Movement of camera to main menu
     private void ReturnToMainMenu()
     {
         StartCoroutine("CameraUp");
     }
 
-    private IEnumerator CameraBin()
-    {
-        yield return new WaitForSeconds(0.7f);
-        readyMsgBar.gameObject.SetActive(false);
-        isTransition = true;
-        canPressBtn = false;
-        bool arrived = false;
-        while (!arrived)
-        {
-            if (usingLerp == true)
-            {
-                cameraTransform.position = Vector3.Lerp(cameraTransform.position, BinPoint.position, cameraMoveSpeed * Time.deltaTime);
-            }
-            else
-            {
-                cameraTransform.position = Vector3.MoveTowards(cameraTransform.position, BinPoint.position, cameraMoveSpeed * Time.deltaTime);
-            }
-            cameraTransform.rotation = Quaternion.Slerp(cameraTransform.rotation, BinPoint.rotation, cameraMoveSpeed * Time.deltaTime);
-            if (Vector3.Distance(cameraTransform.position, BinPoint.position) < 0.01f) arrived = true;
-            yield return null;
-        }
-        isTransition = false;
-        yield return new WaitForSeconds(2);
-        loadingManager.SetID(4);
-        loadingManager.InitializeLoading();
-        yield return null;
-    }
-
-    private IEnumerator CameraSide()
-    {
-        yield return new WaitForSeconds(0.7f);
-        readyMsgBar.gameObject.SetActive(false);
-        isTransition = true;
-        canPressBtn = false;
-        bool arrived = false;
-        while (!arrived)
-        {
-            if (usingLerp == true)
-            {
-                cameraTransform.position = Vector3.Lerp(cameraTransform.position, SinkPoint.position, cameraMoveSpeed * Time.deltaTime);
-            }
-            else
-            {
-                cameraTransform.position = Vector3.MoveTowards(cameraTransform.position, SinkPoint.position, cameraMoveSpeed * Time.deltaTime);
-            }
-            cameraTransform.rotation = Quaternion.Slerp(cameraTransform.rotation, SinkPoint.rotation, cameraMoveSpeed * Time.deltaTime);
-            if (Vector3.Distance(cameraTransform.position, SinkPoint.position) < 0.01f) arrived = true;
-            yield return null;
-        }
-        isTransition = false;
-        yield return new WaitForSeconds(2);
-        loadingManager.SetID(3);
-        loadingManager.InitializeLoading();
-        yield return null;
-    }
-
+    //Movement of camera to main menu
     private IEnumerator CameraUp()
     {
         canPressBtn = false;
@@ -306,9 +238,111 @@ public class NewCharacterSelectionController : MonoBehaviour
             if (Vector3.Distance(cameraTransform.position, mainMenuCameraPoint.position) < 0.1f) arrived = true;
             yield return null;
         }
-       
+
         yield return new WaitForSeconds(waitBetweenAnimation);
         MenuController.instance.CharacterSelectionToMainMenu();
         yield return null;
     }
+
+    private IEnumerator OpenFridge()
+    {
+        yield return new WaitForSeconds(0.7f);
+        doorAnimation.enabled = true;
+        doorAnimation.speed = animationSpeed;
+        doorAnimation.SetInteger("CloseAnim", 1);
+        canPressBtn = false;
+        isTransition = true;
+        yield return new WaitForSeconds(waitBetweenAnimation);
+        isTransition = false;
+        yield return null;
+    }
+
+    #region Old Code DO NOT TOUCH
+    //private void RandomMap()
+    //{
+    //    int mapID = -1;
+
+    //    if (forceload)
+    //    {
+    //        mapID = forceLevel;
+    //    }
+    //    else
+    //    {
+    //        mapID = UnityEngine.Random.Range(0, 3);
+    //    }
+    //    switch (mapID)
+    //    {
+    //        case 0:
+    //            StartCoroutine("OpenFridge");
+    //            break;
+
+    //        case 1:
+    //            StartCoroutine("CameraBin");
+    //            break;
+
+    //        case 2:
+    //            StartCoroutine("CameraSide");
+    //            break;
+
+    //        default:
+    //            throw new ArgumentOutOfRangeException();
+    //    }
+    //}
+
+    //private IEnumerator CameraBin()
+    //{
+    //    yield return new WaitForSeconds(0.7f);
+    //    readyMsgBar.gameObject.SetActive(false);
+    //    isTransition = true;
+    //    canPressBtn = false;
+    //    bool arrived = false;
+    //    while (!arrived)
+    //    {
+    //        if (usingLerp == true)
+    //        {
+    //            cameraTransform.position = Vector3.Lerp(cameraTransform.position, BinPoint.position, cameraMoveSpeed * Time.deltaTime);
+    //        }
+    //        else
+    //        {
+    //            cameraTransform.position = Vector3.MoveTowards(cameraTransform.position, BinPoint.position, cameraMoveSpeed * Time.deltaTime);
+    //        }
+    //        cameraTransform.rotation = Quaternion.Slerp(cameraTransform.rotation, BinPoint.rotation, cameraMoveSpeed * Time.deltaTime);
+    //        if (Vector3.Distance(cameraTransform.position, BinPoint.position) < 0.01f) arrived = true;
+    //        yield return null;
+    //    }
+    //    isTransition = false;
+    //    yield return new WaitForSeconds(2);
+    //    loadingManager.SetID(4);
+    //    loadingManager.InitializeLoading();
+    //    yield return null;
+    //}
+
+    //private IEnumerator CameraSide()
+    //{
+    //    yield return new WaitForSeconds(0.7f);
+    //    readyMsgBar.gameObject.SetActive(false);
+    //    isTransition = true;
+    //    canPressBtn = false;
+    //    bool arrived = false;
+    //    while (!arrived)
+    //    {
+    //        if (usingLerp == true)
+    //        {
+    //            cameraTransform.position = Vector3.Lerp(cameraTransform.position, SinkPoint.position, cameraMoveSpeed * Time.deltaTime);
+    //        }
+    //        else
+    //        {
+    //            cameraTransform.position = Vector3.MoveTowards(cameraTransform.position, SinkPoint.position, cameraMoveSpeed * Time.deltaTime);
+    //        }
+    //        cameraTransform.rotation = Quaternion.Slerp(cameraTransform.rotation, SinkPoint.rotation, cameraMoveSpeed * Time.deltaTime);
+    //        if (Vector3.Distance(cameraTransform.position, SinkPoint.position) < 0.01f) arrived = true;
+    //        yield return null;
+    //    }
+    //    isTransition = false;
+    //    yield return new WaitForSeconds(2);
+    //    loadingManager.SetID(3);
+    //    loadingManager.InitializeLoading();
+    //    yield return null;
+    //}
+    #endregion
 }

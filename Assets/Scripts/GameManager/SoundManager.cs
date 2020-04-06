@@ -73,6 +73,8 @@ public class SoundManager : MonoBehaviour
     private List<AudioSource> allMusic = new List<AudioSource>();
     void Awake()
     {
+        
+
 
         if (_instance != null && _instance != this)
             Destroy(this.gameObject);
@@ -86,22 +88,40 @@ public class SoundManager : MonoBehaviour
             //  newSound.transform.SetParent(this.gameObject.transform);
             a.SetSource(this.gameObject.AddComponent<AudioSource>());
             a.Source.clip = a.GetAudio();
+            a.Source.loop = true;
+            
         }
-
         mute = false;
 
+        
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
         //TODO: Load values from save once implemented
-        SetBGMVol(1);
+        
+
         SetSFXVol(1);
 
         DontDestroyOnLoad(gameObject);
 
     }
 
+    
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "NewMainMenu")
+        {
+            PlayMainTheme();
+        }
+    }
+
+
     #region Dom's additions
     public void PlayMainTheme()
     {
         SetBGM("Main Menu");
+        backgroundM[0].Source.Play();
+        SetBGMVol(1);
     }
 
     public void PlayGameTheme()

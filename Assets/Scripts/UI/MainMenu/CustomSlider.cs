@@ -39,7 +39,7 @@ public class CustomSlider : MonoBehaviour
         // totalLength = Vector3.Distance(startPoint.position, endPoint.position);
         //  Debug.Log(totalLength);
         DetectMusicSetting();
-        adjustedValue = value / 100;
+        
         knob.transform.position = Vector3.Lerp(startPoint.position, endPoint.position, adjustedValue);
         coveredAreaSlider.transform.localScale = new Vector3(adjustedValue, 1, 1);
     }
@@ -59,23 +59,27 @@ public class CustomSlider : MonoBehaviour
             value = SoundManager.Instance.SoundVol * 100; 
         }
         previousValue = value;
+        adjustedValue = (float)value / 100;
     }
 
     public void SaveSettings()
     {
-        if (sliderType == typeOfSlider.master)
+        if (SoundManager.Instance.MasterVol != adjustedValue)
         {
-            SoundManager.Instance.SetMasterVol(value / 100);
+            if (sliderType == typeOfSlider.master)
+            {
+                SoundManager.Instance.SetMasterVol(value / 100);
+            }
+            else if (sliderType == typeOfSlider.music)
+            {
+                SoundManager.Instance.SetBGMVol(value / 100);
+            }
+            else if (sliderType == typeOfSlider.sound)
+            {
+                SoundManager.Instance.SetSFXVol(value / 100);
+            }
+            save.Save();
         }
-        else if (sliderType == typeOfSlider.music)
-        {
-            SoundManager.Instance.SetBGMVol(value/100);
-        }
-        else if (sliderType == typeOfSlider.sound)
-        {
-            SoundManager.Instance.SetSFXVol(value / 100);
-        }
-        save.Save();
     }
 
     public void CancelChanges()
@@ -98,6 +102,7 @@ public class CustomSlider : MonoBehaviour
                 value = 100;
             }
             adjustedValue = value / 100;
+            SaveSettings();
         }
         else if (Input.GetAxis("Horizontal") < -0.3f)
         {
@@ -108,6 +113,7 @@ public class CustomSlider : MonoBehaviour
                 value = 0;
             }
             adjustedValue = value / 100;
+            SaveSettings();
         }
         else
         {
@@ -115,6 +121,8 @@ public class CustomSlider : MonoBehaviour
         }
         knob.transform.position = Vector3.Lerp(startPoint.position, endPoint.position, adjustedValue);
         coveredAreaSlider.transform.localScale = new Vector3(adjustedValue, 1, 1);
+
+        
     }
 
     #region Depricated

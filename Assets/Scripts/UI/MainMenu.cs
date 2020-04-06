@@ -23,7 +23,7 @@ public class MainMenu : MonoBehaviour
     {
         controllerInput = GameObject.Find("EventSystem").GetComponent<ControllerInputDetection>();
         InitializeMenu();
-        SoundManager.Instance.PlayMainTheme();
+        //SoundManager.Instance.PlayMainTheme();
     }
     private void Update()
     {
