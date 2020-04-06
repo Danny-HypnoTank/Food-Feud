@@ -32,6 +32,13 @@ public class CharacterPin : MonoBehaviour
     [SerializeField]
     private Transform right, left, up, down;
 
+    private ParticleSystem pSystem;
+
+    private void Start()
+    {
+        pSystem = GetComponent<ParticleSystem>();
+    }
+
     private void OnEnable()
     {
         characterSprite.sprite = unSelectedImage;
@@ -40,6 +47,7 @@ public class CharacterPin : MonoBehaviour
     public void OwnPin()
     {
         characterSprite.sprite = selectedImg;
+        pSystem.Play();
     }
     public void UnOwnPin()
     {

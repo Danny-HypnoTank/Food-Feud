@@ -100,13 +100,15 @@ public class NewCharacterSelectionController : MonoBehaviour
         }
         canPressBtn = false;
         isTransition = false;
-        ResetPlayers();
+       // ResetPlayers();
     }
 
     private void OnEnable()
     {
         doorAnimation = doorHolder.GetComponent<Animator>();
         doorAnimation.enabled = false;
+        canPressBtn = true;
+        isTransition = false;
         ResetPlayers();
         //ReadyCancel();
         canPressBtn = true;
