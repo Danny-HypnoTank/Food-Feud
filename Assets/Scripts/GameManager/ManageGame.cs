@@ -133,7 +133,6 @@ public class ManageGame : MonoBehaviour
         gridManager = GetComponent<GridManager>();
         drawColor = GetComponent<DrawColor>();
         layoutManager.LayoutGeneration();
-        deliveryManager = GameObject.Find("DeliveryPointManager").GetComponent<DeliveryPointsManager>();
         for (int i = 0; i < layoutManager.SpawnPoints.Length; i++)
         {
             PlayerSpawnPositions[i] = layoutManager.SpawnPoints[i].transform;
@@ -151,32 +150,12 @@ public class ManageGame : MonoBehaviour
         // timeRemaining.gameObject.SetActive(false);
         PlacePlayers();
 
-        SetUpSecondarySpawners();
-
         PopulatePlayerControllerList();
 
         SpecialButton.Initialisation();
 
         gridManager.Initialisation(PlayerObjects.Count);
         gridManager.PopulateGridList();
-    }
-
-    private void SetUpSecondarySpawners()
-    {
-        SecondaryObjectiveSpawner spawner = GameObject.Find("SecondaryObjSpawner").GetComponent<SecondaryObjectiveSpawner>();
-        if (deliveryManager == null)
-        {
-            deliveryManager = FindObjectOfType<DeliveryPointsManager>();
-
-        }
-        deliveryManager.SetDeliveryPoints();
-        for (int i = 0; i < PlayerObjects.Count; i++)
-        {
-            PlayerObjects[i].GetComponent<SecondaryObjCollector>().SetSpawner(spawner);
-            deliveryManager.DeliveryPoints[i].gameObject.SetActive(true);
-            deliveryManager.DeliveryPoints[i].GetComponent<DeliveryPoint>().Owner = playerObjects[i];
-            deliveryManager.DeliveryPoints[i].GetComponent<Renderer>().material = coloursForPlatforms[playerObjects[i].GetComponent<PlayerBase>().Player.skinId];
-        }
     }
 
     private void PlacePlayers()
