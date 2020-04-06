@@ -82,6 +82,11 @@ public class EndGameScore : MonoBehaviour
             {
                 int _medalAmount = 0;
 
+                if(p.playerNum == 1)
+                {
+                    _medalAmount++;
+                }
+
                 if (p.playerNum == medalManager.GetTopStunned())
                 {
                     _medalAmount++;
@@ -94,6 +99,7 @@ public class EndGameScore : MonoBehaviour
 
                 if (p.playerNum == medalManager.GetTopDashes())
                 {
+
                     _medalAmount++;
                 }
 
@@ -109,6 +115,7 @@ public class EndGameScore : MonoBehaviour
 
                 _medalsPerPlayer.Add(p.playerNum, _medalAmount);
 
+                
 
 
             }
@@ -120,32 +127,49 @@ public class EndGameScore : MonoBehaviour
 
             foreach(KeyValuePair<int,int> pair in _medalList)
             {
-                if (pair.Key== medalManager.GetTopStunned() && _medalClaimed[0] == false)
+                
+
+                if (pair.Key == medalManager.GetTopStunned() && _medalClaimed[0] == false)
                 {
-                    _medalClaimed[0] = true;
-                    _medalForPlayer.Add(pair.Key, 0);
+                    if (pair.Key != 0)
+                    {
+                        _medalClaimed[0] = true;
+                        _medalForPlayer.Add(pair.Key, 0);
+                    }
                 }
                 else if (pair.Key == medalManager.GetTopStunOther() && _medalClaimed[1] == false)
                 {
-                    _medalClaimed[1] = true;
-                    _medalForPlayer.Add(pair.Key, 1);
+                    if (pair.Key != 0)
+                    {
+                        _medalClaimed[1] = true;
+                        _medalForPlayer.Add(pair.Key, 1);
+                    }
                 }
                 else if (pair.Key == medalManager.GetTopDashes() && _medalClaimed[2] == false)
                 {
-                    _medalClaimed[2] = true;
-                    _medalForPlayer.Add(pair.Key, 2);
+                    if (pair.Key != 0)
+                    {
+                        _medalClaimed[2] = true;
+                        _medalForPlayer.Add(pair.Key, 2);
+                    }
                 }
                 else if (pair.Key == medalManager.GetTopPowerPickup() && _medalClaimed[3] == false)
                 {
-                    _medalClaimed[3] = true;
-                    _medalForPlayer.Add(pair.Key, 3);
+                    if (pair.Key != 0)
+                    {
+                        _medalClaimed[3] = true;
+                        _medalForPlayer.Add(pair.Key, 3);
+                    }
                 }
                 else if (pair.Key == medalManager.GetUntouchable() && _medalClaimed[4] == false)
                 {
-                    _medalClaimed[4] = true;
-                    _medalForPlayer.Add(pair.Key, 4);
+                   
+                        _medalClaimed[4] = true;
+                        _medalForPlayer.Add(pair.Key, 4);
+                    
                 }
             }
+
 
             foreach(KeyValuePair<int,int> pair in _medalForPlayer)
             {
