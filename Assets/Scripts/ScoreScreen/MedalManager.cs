@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
 using System;
-
+using TMPro;
 public class MedalManager : MonoBehaviour
 {
     private static MedalManager _instance;
@@ -31,6 +31,8 @@ public class MedalManager : MonoBehaviour
 
     public int[] totalMedalCounts { get; private set; }
 
+    public List<UnityEngine.UI.Text> medalCounts;
+
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -44,6 +46,15 @@ public class MedalManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
         totalMedalCounts = new int[4];
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "NewMainMenu")
+        {
+            SetTotalMedalCount();
+        }
     }
 
     private void Start()
@@ -112,7 +123,7 @@ public class MedalManager : MonoBehaviour
     public int GetTopStunned()
     {
         int max = 0;
-        int current = 0;
+        int current = timesStunned[0];
         for (int i = 0; i < timesStunned.Count; i++)
         {
             if (timesStunned[i] > max)
@@ -123,6 +134,7 @@ public class MedalManager : MonoBehaviour
         }
         totalMedalCounts[0] += 1;
 
+        
         return current;
     }
 
@@ -170,7 +182,6 @@ public class MedalManager : MonoBehaviour
             }
         }
         totalMedalCounts[2] += 1;
-
         return current;
     }
 
@@ -222,7 +233,7 @@ public class MedalManager : MonoBehaviour
                 }
             case (4):
                 {
-                    GameObject _medal5 = Instantiate(MostPowersCollected, pos + (Vector3.up * 14), Quaternion.Euler(0, -90, 90));
+                    GameObject _medal5 = Instantiate(UntouchableMedal, pos + (Vector3.up * 14), Quaternion.Euler(0, -90, 90));
                     _medal5.transform.localScale = new Vector3(5, 5, 5);
                     break;
                 }
@@ -251,6 +262,36 @@ public class MedalManager : MonoBehaviour
                 medalOrder.Add(Convert.ToInt32(medalFileR.ReadLine()));
             }
             totalMedalCounts = medalOrder.ToArray();
+        }
+    }
+
+    public void SetTotalMedalCount()
+    {
+        for(int i = 0; i <totalMedalCounts.Length; i++)
+        {
+            switch(i)
+            {
+                case (0):
+                    {
+                        medalCounts[i].text = "Stunned: " + totalMedalCounts[i].ToString();
+                        break;
+                    }
+                case (1):
+                    {
+                        medalCounts[i].text = "Most Dashes: " + totalMedalCounts[i].ToString();
+                        break;
+                    }
+                case (2):
+                    {
+                        medalCounts[i].text = "Most Stuns: " + totalMedalCounts[i].ToString();
+                        break;
+                    }
+                case (3):
+                    {
+                        medalCounts[i].text = "Powerup Master: " + totalMedalCounts[i].ToString();
+                        break;
+                    }
+            }
         }
     }
 }

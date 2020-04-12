@@ -119,7 +119,7 @@ public class DefaultShooting : Shooting
                     if (!Particle.isPlaying)
                         Particle.Play();
 
-                    if (dazeState.CanShoot == true)
+                    if (dazeState.CanMove == true)
                     {
                         //if it's equal to false
                         if (IsAxisInUse == false)

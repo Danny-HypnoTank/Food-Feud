@@ -20,6 +20,9 @@ public class MenuController : MonoBehaviour
     private Transform characterSelectScript;
     [SerializeField]
     private Transform loadingPage;
+    [SerializeField]
+    private Transform levelSelectScript;
+
 
     private void Awake()
     {
@@ -32,6 +35,7 @@ public class MenuController : MonoBehaviour
         mainMenuScript.gameObject.SetActive(true);
         optionsScript.gameObject.SetActive(false);
         characterSelectScript.gameObject.SetActive(false);
+        levelSelectScript.gameObject.SetActive(false);
     }
 
     public void MainMenuToOptionsTransition()
@@ -56,6 +60,18 @@ public class MenuController : MonoBehaviour
 
         mainMenuScript.gameObject.SetActive(true);
         characterSelectScript.gameObject.SetActive(false);
+    }
+
+    public void CharacterSelectionToLevelSelect()
+    {
+        levelSelectScript.gameObject.SetActive(true);
+        characterSelectScript.gameObject.SetActive(false);
+    }
+
+    public void LevelSelectToCharacterSelection()
+    {
+        levelSelectScript.gameObject.SetActive(false);
+        characterSelectScript.gameObject.SetActive(true);
     }
 
 }

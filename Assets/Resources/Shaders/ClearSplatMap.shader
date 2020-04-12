@@ -9,6 +9,7 @@
 		_ClearColor("ClearColor", color) = (1,1,1,1)
 		_Size("Size", Range(0,500)) = 1
 		_TexSize("TexSize", Range(0,1)) = 1
+			_Rotation("Rotation", Float) = 0
 
 		_Strength("Strength", Range(0,1)) = 1
 	}
@@ -43,6 +44,7 @@
 				fixed4 _Coordinate, _Color, _ClearColor;
 				half _Size, _Strength, _TexSize;
 				sampler2D _SplatTex;
+				float _Rotation;
 				float2 s;
 				v2f vert(appdata v)
 				{
@@ -62,6 +64,17 @@
 					//get position and size
 					s = float2(0.5, 0.5);
 					s = s + (i.uv - _Coordinate.xy)/_Size;
+
+					s.xy -= 0.5;
+					float sn = -sin(_Rotation);
+					float cs = cos(_Rotation);
+					float2x2 rotationMatrix = float2x2 (cs, -sn, sn, cs);
+					rotationMatrix *= 0.5;
+					rotationMatrix += 0.5;
+					rotationMatrix = rotationMatrix * 2 - 1;
+					s.xy = mul(s.xy, rotationMatrix);
+					s.xy += 0.5;
+
 					fixed4 drawcol = tex2D(_SplatTex, s.xy);
 					
 					//create mask

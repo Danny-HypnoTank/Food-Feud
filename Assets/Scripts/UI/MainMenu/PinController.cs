@@ -52,147 +52,150 @@ public class PinController : MonoBehaviour
 
     private void Update()
     {
-        if (isPinMoving == false)
+        if (newSelection.CanPressBtn == true)
         {
-            if (Input.GetButtonDown("Dash" + player.playerNum))
+            if (isPinMoving == false)
             {
-                if (isActive == false)
+                if (Input.GetButtonDown("Dash" + player.playerNum))
                 {
-                    isActive = true;
-                    InsertPlayer();
-                }
-                else if (isActive == true)
-                {
-                    if (characters[position].GetComponent<CharacterPin>().OwnedBy == null)
+                    if (isActive == false)
                     {
-                        LockPlayer();
+                        isActive = true;
+                        InsertPlayer();
                     }
-                }
-            }
-            if (Input.GetButtonDown("BackButton" + player.playerNum))
-            {
-                if (isActive == true)
-                {
-                    UnlockPlayer();
-                }
-            }
-        }
-        if (isOnFridge == true && isPinMoving == false && isLocked == false)
-        { 
-            if (Input.GetAxis("Horizontal" + player.playerNum) > 0.3f)
-            {
-                if (isAxis == false)
-                {
-                    isAxis = true;
-                    if (target != null)
+                    else if (isActive == true)
                     {
-                        Transform oldTarget = target;
-                        if (target.GetComponentInParent<CharacterPin>().TakeDirection("Right", (player.playerNum - 1)) != null)
-                        { 
-                            pinDirection = target.GetComponentInParent<CharacterPin>().TakeDirection("Right", (player.playerNum - 1));
-                            target = target.GetComponentInParent<CharacterPin>().Right;
-                            position = target.GetComponentInParent<CharacterPin>().PinId;
-                            if (target != null)
-                            {
-                                StopCoroutine("MovePinAround");
-                                StartCoroutine("MovePinAround");
-
-                            }
-                            else
-                            {
-                                target = oldTarget;
-                            }
-                        }
-                    }
-
-                }
-
-            }
-            else if (Input.GetAxis("Horizontal" + player.playerNum) < -0.3f)
-            {
-                if (isAxis == false)
-                {
-                    isAxis = true;
-                    if (target != null)
-                    {
-                        Transform oldTarget = target;
-                        if (target.GetComponentInParent<CharacterPin>().TakeDirection("Left", (player.playerNum - 1)) != null)
+                        if (characters[position].GetComponent<CharacterPin>().OwnedBy == null)
                         {
-                            pinDirection = target.GetComponentInParent<CharacterPin>().TakeDirection("Left", (player.playerNum - 1));
-                            target = target.GetComponentInParent<CharacterPin>().Left;
-                            position = target.GetComponentInParent<CharacterPin>().PinId;
-                            if (target != null)
-                            {
-                                StopCoroutine("MovePinAround");
-                                StartCoroutine("MovePinAround");
-                            }
-                            else
-                            {
-                                target = oldTarget;
-                            }
+                            LockPlayer();
                         }
                     }
-
                 }
-            }
-            else if (Input.GetAxis("Vertical" + player.playerNum) > 0.3f)
-            {
-                if (isAxis == false)
+                if (Input.GetButtonDown("BackButton" + player.playerNum))
                 {
-                    isAxis = true;
-                    if (target != null)
+                    if (isActive == true)
                     {
-                        Transform oldTarget = target;
-                        if (target.GetComponentInParent<CharacterPin>().TakeDirection("Up", (player.playerNum - 1)) != null)
-                        {
-                            pinDirection = target.GetComponentInParent<CharacterPin>().TakeDirection("Up", (player.playerNum - 1));
-                            target = target.GetComponentInParent<CharacterPin>().Up;
-                            position = target.GetComponentInParent<CharacterPin>().PinId;
-                            if (target != null)
-                            {
-                                StopCoroutine("MovePinAround");
-                                StartCoroutine("MovePinAround");
-                            }
-                            else
-                            {
-                                target = oldTarget;
-                            }
-                        }
+                        UnlockPlayer();
                     }
-
                 }
             }
-            else if (Input.GetAxis("Vertical" + player.playerNum) < -0.3f)
+            if (isOnFridge == true && isPinMoving == false && isLocked == false)
             {
-                if (isAxis == false)
+                if (Input.GetAxis("Horizontal" + player.playerNum) > 0.3f)
                 {
-                    isAxis = true;
-                    if (target != null)
+                    if (isAxis == false)
                     {
-                        Transform oldTarget = target;
-                        if (target.GetComponentInParent<CharacterPin>().TakeDirection("Down", (player.playerNum - 1)) != null)
+                        isAxis = true;
+                        if (target != null)
                         {
-                            
-                            pinDirection = target.GetComponentInParent<CharacterPin>().TakeDirection("Down", (player.playerNum - 1));
-                            target = target.GetComponentInParent<CharacterPin>().Down;
-                            position = target.GetComponentInParent<CharacterPin>().PinId;
-                            if (target != null)
+                            Transform oldTarget = target;
+                            if (target.GetComponentInParent<CharacterPin>().TakeDirection("Right", (player.playerNum - 1)) != null)
                             {
-                                StopCoroutine("MovePinAround");
-                                StartCoroutine("MovePinAround");
-                            }
-                            else
-                            {
-                                target = oldTarget;
+                                pinDirection = target.GetComponentInParent<CharacterPin>().TakeDirection("Right", (player.playerNum - 1));
+                                target = target.GetComponentInParent<CharacterPin>().Right;
+                                position = target.GetComponentInParent<CharacterPin>().PinId;
+                                if (target != null)
+                                {
+                                    StopCoroutine("MovePinAround");
+                                    StartCoroutine("MovePinAround");
+
+                                }
+                                else
+                                {
+                                    target = oldTarget;
+                                }
                             }
                         }
+
                     }
 
                 }
-            }
-            else
-            {
-                   isAxis = false;
+                else if (Input.GetAxis("Horizontal" + player.playerNum) < -0.3f)
+                {
+                    if (isAxis == false)
+                    {
+                        isAxis = true;
+                        if (target != null)
+                        {
+                            Transform oldTarget = target;
+                            if (target.GetComponentInParent<CharacterPin>().TakeDirection("Left", (player.playerNum - 1)) != null)
+                            {
+                                pinDirection = target.GetComponentInParent<CharacterPin>().TakeDirection("Left", (player.playerNum - 1));
+                                target = target.GetComponentInParent<CharacterPin>().Left;
+                                position = target.GetComponentInParent<CharacterPin>().PinId;
+                                if (target != null)
+                                {
+                                    StopCoroutine("MovePinAround");
+                                    StartCoroutine("MovePinAround");
+                                }
+                                else
+                                {
+                                    target = oldTarget;
+                                }
+                            }
+                        }
+
+                    }
+                }
+                else if (Input.GetAxis("Vertical" + player.playerNum) > 0.3f)
+                {
+                    if (isAxis == false)
+                    {
+                        isAxis = true;
+                        if (target != null)
+                        {
+                            Transform oldTarget = target;
+                            if (target.GetComponentInParent<CharacterPin>().TakeDirection("Up", (player.playerNum - 1)) != null)
+                            {
+                                pinDirection = target.GetComponentInParent<CharacterPin>().TakeDirection("Up", (player.playerNum - 1));
+                                target = target.GetComponentInParent<CharacterPin>().Up;
+                                position = target.GetComponentInParent<CharacterPin>().PinId;
+                                if (target != null)
+                                {
+                                    StopCoroutine("MovePinAround");
+                                    StartCoroutine("MovePinAround");
+                                }
+                                else
+                                {
+                                    target = oldTarget;
+                                }
+                            }
+                        }
+
+                    }
+                }
+                else if (Input.GetAxis("Vertical" + player.playerNum) < -0.3f)
+                {
+                    if (isAxis == false)
+                    {
+                        isAxis = true;
+                        if (target != null)
+                        {
+                            Transform oldTarget = target;
+                            if (target.GetComponentInParent<CharacterPin>().TakeDirection("Down", (player.playerNum - 1)) != null)
+                            {
+
+                                pinDirection = target.GetComponentInParent<CharacterPin>().TakeDirection("Down", (player.playerNum - 1));
+                                target = target.GetComponentInParent<CharacterPin>().Down;
+                                position = target.GetComponentInParent<CharacterPin>().PinId;
+                                if (target != null)
+                                {
+                                    StopCoroutine("MovePinAround");
+                                    StartCoroutine("MovePinAround");
+                                }
+                                else
+                                {
+                                    target = oldTarget;
+                                }
+                            }
+                        }
+
+                    }
+                }
+                else
+                {
+                    isAxis = false;
+                }
             }
         }
     }
@@ -273,7 +276,15 @@ public class PinController : MonoBehaviour
         else if (isLocked == false)
         {
             isActive = false;
-            target.GetComponentInParent<CharacterPin>().UnOwnPin();
+            // Debug.Log(target.parent.name);
+            if (target != null)
+            {
+                Debug.Log(target);
+                if (target.GetComponentInParent<CharacterPin>() != null)
+                {
+                    target.GetComponentInParent<CharacterPin>().UnOwnPin();
+                }
+            }
             CancelPlayer();
         }
     }
