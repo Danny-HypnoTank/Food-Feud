@@ -17,7 +17,7 @@ public class Teleport : BuffDebuff
 
     public override void OnUpdate(float deltaTime)
     {
-        if(Input.GetButtonDown($"Shoot{Parent.Player.playerNum}"))
+        if(Input.GetButtonDown($"Dash{Parent.Player.playerNum}"))
         {
             Parent.chc.detectCollisions = false;
             Parent.SmokeParticles.Play();

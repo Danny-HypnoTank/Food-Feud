@@ -68,19 +68,22 @@ public class DrawColor : MonoBehaviour
         
     }
 
-    public void DrawOnSplatmap(RaycastHit hit, int id, Player player, float _sizeMultiplier = 1f)
+    public void DrawOnSplatmap(RaycastHit hit, int id, Player player, float _sizeMultiplier = 1f, float _rotation = 0)
     {
 
         int terrainNum = _terrain.IndexOf(hit.collider.gameObject);
 
-        int _currentSplat = UnityEngine.Random.Range(0, 10);
+        //int _currentSplat = UnityEngine.Random.Range(0, splatTexture.Length);
+        int _currentSplat = 3;
 
         //coreCalc.Instance.CircleLogic(hit, (UInt16)id, terrainNum);
 
         drawMaterial.SetFloat("_Size", 0.1f * _sizeMultiplier);
+        drawMaterial.SetFloat("_Rotation", _rotation);
         drawMaterial.SetTexture("_SplatTex", splatTexture[_currentSplat]);
 
         clearMaterial.SetFloat("_Size", 0.1f * _sizeMultiplier);
+        clearMaterial.SetFloat("_Rotation", _rotation);
         clearMaterial.SetTexture("_SplatTex", splatTexture[_currentSplat]);
 
 
@@ -172,4 +175,6 @@ public class DrawColor : MonoBehaviour
        
         return color;
     }
+
+    
 }
