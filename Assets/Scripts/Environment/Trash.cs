@@ -7,7 +7,12 @@ public class Trash : MonoBehaviour
 
     [SerializeField]
     private float timeoutTime = 5;
+    [SerializeField]
+    private int fadeSpeed;
 
+    private float fadeValue;
+    private bool isFading;
+    private Vector3 startLoc;
     private MeshRenderer mRender;
     private Rigidbody rigidBody;
 
@@ -15,11 +20,28 @@ public class Trash : MonoBehaviour
     {
         mRender = GetComponent<MeshRenderer>();
         rigidBody = GetComponent<Rigidbody>();
+        startLoc = transform.position;
+    }
+
+    private void OnEnable()
+    {
+        fadeValue = 1;
+        transform.position = startLoc;
+        isFading = false;
     }
 
     private void Update()
     {
-        Debug.Log(rigidBody.velocity.y);
+        if(isFading)
+        {
+            if (mRender.material.GetFloat("_Transparency") > 0)
+            {
+                fadeValue -= Time.deltaTime * fadeSpeed;
+                mRender.material.SetFloat("_Transparency", fadeValue);
+            }
+            else
+                gameObject.SetActive(false);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -40,12 +62,9 @@ public class Trash : MonoBehaviour
     private IEnumerator Timeout()
     {
         yield return new WaitForSeconds(timeoutTime);
-
-        /*Color temp = mRender.material.color;
-        temp.a = Mathf.MoveTowards(1, 0, Time.deltaTime);
-        mRender.material.color = temp;
-
-        if (mRender.material.color.a == 1)*/
-        gameObject.SetActive(false);
+        isFading = true;    
     }    
+
+
+
 }
