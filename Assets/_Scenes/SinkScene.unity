@@ -3512,11 +3512,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SinkPlug_current
       objectReference: {fileID: 0}
-    - target: {fileID: -6283877591383234665, guid: 3e9922a2bcd93a443b7b21a7e5d6c34c,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 73177c6fd9480564e91027b60bcd355d, type: 2}
     - target: {fileID: -4216859302048453862, guid: 3e9922a2bcd93a443b7b21a7e5d6c34c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3572,6 +3567,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6283877591383234665, guid: 3e9922a2bcd93a443b7b21a7e5d6c34c,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 73177c6fd9480564e91027b60bcd355d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e9922a2bcd93a443b7b21a7e5d6c34c, type: 3}
 --- !u!1 &1452996141
@@ -4131,7 +4131,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 2.919e-42, y: 0, z: 0, w: 2.1e-44}
+  m_BoundingSphereOverride: {x: 0, y: 1.83672e-40, z: -1.14e-42, w: 6.6e-44}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -4343,18 +4343,18 @@ MonoBehaviour:
   _brushSize: 400
   _texSize: 0.015
   _brushStrength: 1
-  splatTexture:
-  - {fileID: 2800000, guid: 26525c7df084a744dbe47f242b1b5166, type: 3}
-  - {fileID: 2800000, guid: 1ef8620832a4e3e498c55dd6e148c212, type: 3}
-  - {fileID: 2800000, guid: 433f111e14b4df4469cd8e59c3212066, type: 3}
-  - {fileID: 2800000, guid: 2cf6e68cbd31ed241a0ef92726a8e0a5, type: 3}
-  - {fileID: 2800000, guid: 400d8749b3635bc46a2901b51662af3e, type: 3}
-  - {fileID: 2800000, guid: a2d3ad05a39daf848b9ac2864260cd53, type: 3}
-  - {fileID: 2800000, guid: e9ccc1b8e3de01246b027eed9cf2a646, type: 3}
-  - {fileID: 2800000, guid: 5ea6f96cff51910439c775d89dc46436, type: 3}
-  - {fileID: 2800000, guid: e0b85ea8be11668488b6abae511a4115, type: 3}
-  - {fileID: 2800000, guid: fd53c6196fb0456439fd35d6f0fc8022, type: 3}
-  - {fileID: 2800000, guid: 2e3a1d665d380d64daa230f025fa24f0, type: 3}
+  splatSprite:
+  - {fileID: 6528942973877478045, guid: 93464996def19b94ba8fb002844fd414, type: 3}
+  - {fileID: 5999772164633039279, guid: 93464996def19b94ba8fb002844fd414, type: 3}
+  - {fileID: -4541514115970121797, guid: 93464996def19b94ba8fb002844fd414, type: 3}
+  - {fileID: 3084587816425710329, guid: 93464996def19b94ba8fb002844fd414, type: 3}
+  - {fileID: 8695208597843730350, guid: 93464996def19b94ba8fb002844fd414, type: 3}
+  - {fileID: -3103930061309551161, guid: 93464996def19b94ba8fb002844fd414, type: 3}
+  - {fileID: -1370410895363375805, guid: 93464996def19b94ba8fb002844fd414, type: 3}
+  - {fileID: -6269163443240169127, guid: 93464996def19b94ba8fb002844fd414, type: 3}
+  - {fileID: 1240359582775723767, guid: 93464996def19b94ba8fb002844fd414, type: 3}
+  - {fileID: 898163626802229378, guid: 93464996def19b94ba8fb002844fd414, type: 3}
+  - {fileID: -6773368958259952631, guid: 93464996def19b94ba8fb002844fd414, type: 3}
   manageGame: {fileID: 1661300554}
 --- !u!114 &1661300561
 MonoBehaviour:
@@ -6200,7 +6200,7 @@ Transform:
   - {fileID: 8749256066445217403}
   - {fileID: 8512893929220413956}
   - {fileID: 530702583}
-  - {fileID: 4345555608135667508}
+  - {fileID: 4296223230829257094}
   - {fileID: 1928951969938309750}
   - {fileID: 3188788970258410783}
   - {fileID: 7478599592949160091}
@@ -6286,11 +6286,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3826230236017547346}
     m_Modifications:
-    - target: {fileID: 3569835330354748578, guid: e1788f2f28ae7a24d88757d8811d0d1a,
-        type: 3}
-      propertyPath: m_Name
-      value: Window_Current
-      objectReference: {fileID: 0}
     - target: {fileID: 563446423119064753, guid: e1788f2f28ae7a24d88757d8811d0d1a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6346,12 +6341,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3569835330354748578, guid: e1788f2f28ae7a24d88757d8811d0d1a,
+        type: 3}
+      propertyPath: m_Name
+      value: Window_Current
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1788f2f28ae7a24d88757d8811d0d1a, type: 3}
---- !u!4 &4345555608135667508 stripped
+--- !u!4 &4296223230829257094 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 563446423119064753, guid: e1788f2f28ae7a24d88757d8811d0d1a,
-    type: 3}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 4296223230829257093}
   m_PrefabAsset: {fileID: 0}
 --- !u!33 &4351704597306104993

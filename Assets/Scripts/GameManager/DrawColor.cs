@@ -25,7 +25,9 @@ public class DrawColor : MonoBehaviour
     [Range(0, 1)]
     public float _brushStrength;
     [SerializeField]
-    Texture2D[] splatTexture = new Texture2D[12];
+    Sprite[] splatSprite = new Sprite[11];
+
+    Texture2D[] splatTexture = new Texture2D[11];
 
     [SerializeField]
     ManageGame manageGame;
@@ -35,6 +37,16 @@ public class DrawColor : MonoBehaviour
 
     private void Start()
     {
+        //Turn sprites into Texture2D
+        for(int i = 0; i < splatSprite.Length; i++)
+        {
+            splatTexture[i] = new Texture2D((int)splatSprite[i].rect.width, (int)splatSprite[i].rect.height);
+            var pixels = splatSprite[i].texture.GetPixels((int)splatSprite[i].textureRect.x, (int)splatSprite[i].textureRect.y, (int)splatSprite[i].textureRect.width, (int)splatSprite[i].textureRect.height);
+            splatTexture[i].SetPixels(pixels);
+            splatTexture[i].wrapMode = TextureWrapMode.Clamp;
+            splatTexture[i].Apply();
+            
+        }
 
 
         //_terrain = GameObject.Find("Ground");
