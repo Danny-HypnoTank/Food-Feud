@@ -137,7 +137,9 @@ public class ManageGame : MonoBehaviour
         {
             PlayerSpawnPositions[i] = layoutManager.SpawnPoints[i].transform;
         }
-        drawColor._Terrain = layoutManager.PaintableObjects;
+        ///terrain
+        //drawColor._Terrain = layoutManager.PaintableObjects;
+
         godPowerUp.SetActive(false);
         //grabs time from main menu scene and checks if its in bounds if its not it sets it to 60 (temporary measure for when we test it straight from game scene)
         // reverseTime = PlayerPrefs.GetFloat("RoundDuration");

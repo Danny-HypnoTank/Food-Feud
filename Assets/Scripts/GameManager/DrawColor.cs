@@ -11,11 +11,15 @@ public class DrawColor : MonoBehaviour
 
     public Shader drawShader;
     public Shader clearShader;
+    public Shader transparentShader;
     public Material drawMaterial;
     public Material clearMaterial;
+    public Material transparentMaterial;
     public Material myMaterial;
     [SerializeField]
     private List<RenderTexture> _splatMap = new List<RenderTexture>();
+    [SerializeField]
+    private List<RenderTexture> _transparentMap = new List<RenderTexture>();
     [SerializeField]
     private List<GameObject> _terrain;
     [Range(0f, 500)]
@@ -48,13 +52,18 @@ public class DrawColor : MonoBehaviour
             
         }
 
-
-        //_terrain = GameObject.Find("Ground");
+        ///To go back to the unoptimized painting, comment the next line out, go to "manage game" and uncomment the line below the "terrain" line
+        _terrain.Add(GameObject.Find("Floor"));
         drawMaterial = new Material(drawShader);
         clearMaterial = new Material(clearShader);
+
+        transparentMaterial = new Material(transparentShader);
+
         drawMaterial.SetVector("_Color", Color.red);
         drawMaterial.SetTexture("_SplatTex", splatTexture[0]);
         clearMaterial.SetTexture("_SplatTex", splatTexture[0]);
+        transparentMaterial.SetTexture("_SplatTex", splatTexture[0]);
+
         for (int i = 0; i < _terrain.Count; i++)
         {
             if(_terrain[i].GetComponent<Renderer>().materials.Length > 1)
@@ -71,9 +80,13 @@ public class DrawColor : MonoBehaviour
             RenderTexture rend = new RenderTexture(1024 * 2, 1024 * 2, 0, RenderTextureFormat.ARGBFloat);
             rend.name = "RenderTex " + i;
             _splatMap.Add(rend);
+            RenderTexture rend2 = new RenderTexture(1024 * 2, 1024 * 2, 0, RenderTextureFormat.ARGBFloat);
+            rend2.name = "RenderTex2 " + i;
+            _transparentMap.Add(rend2);
 
           //  Debug.Log(myMaterial);
             myMaterial.SetTexture("_SplatMap", _splatMap[i]);
+            myMaterial.SetTexture("_TransparentMap", _transparentMap[i]);
             MatchPaintToSkin(myMaterial);
         }
         
@@ -94,6 +107,10 @@ public class DrawColor : MonoBehaviour
         drawMaterial.SetFloat("_Rotation", _rotation);
         drawMaterial.SetTexture("_SplatTex", splatTexture[_currentSplat]);
 
+        transparentMaterial.SetFloat("_Size", 0.1f * _sizeMultiplier);
+        transparentMaterial.SetFloat("_Rotation", _rotation);
+        transparentMaterial.SetTexture("_SplatTex", splatTexture[_currentSplat]);
+
         clearMaterial.SetFloat("_Size", 0.1f * _sizeMultiplier);
         clearMaterial.SetFloat("_Rotation", _rotation);
         clearMaterial.SetTexture("_SplatTex", splatTexture[_currentSplat]);
@@ -104,6 +121,7 @@ public class DrawColor : MonoBehaviour
         drawMaterial.SetColor("_Color", SetColour(id));
         drawMaterial.SetVector("_Coordinate", new Vector4(hit.textureCoord.x, hit.textureCoord.y, 0, 0));
         clearMaterial.SetVector("_Coordinate", new Vector4(hit.textureCoord.x, hit.textureCoord.y, 0, 0));
+        transparentMaterial.SetVector("_Coordinate", new Vector4(hit.textureCoord.x, hit.textureCoord.y, 0, 0));
 
         RenderTexture temp = RenderTexture.GetTemporary(_splatMap[terrainNum].width, _splatMap[terrainNum].height, 0, RenderTextureFormat.ARGBFloat);
         Graphics.Blit(_splatMap[terrainNum], temp);
@@ -111,7 +129,11 @@ public class DrawColor : MonoBehaviour
         Graphics.Blit(temp, _splatMap[terrainNum], drawMaterial);
         RenderTexture.ReleaseTemporary(temp);
 
-       // Debug.Log("SplatMapHit:" + _splatMap[terrainNum].name);
+        RenderTexture temp2 = RenderTexture.GetTemporary(_splatMap[terrainNum].width, _splatMap[terrainNum].height, 0, RenderTextureFormat.ARGBFloat);
+        Graphics.Blit(_transparentMap[terrainNum], temp);
+        Graphics.Blit(temp, _transparentMap[terrainNum], transparentMaterial);
+        RenderTexture.ReleaseTemporary(temp2);
+        // Debug.Log("SplatMapHit:" + _splatMap[terrainNum].name);
 
         player.playerScore += 1;
     }

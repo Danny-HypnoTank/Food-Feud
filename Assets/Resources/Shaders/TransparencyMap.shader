@@ -1,11 +1,11 @@
-﻿Shader "Unlit/CutSplatMap"
+﻿Shader "Unlit/TransparencyMap"
 {
 	Properties
 	{
 		_MainTex("Texture", 2D) = "white" {}
 		_SplatTex("SplatTexture", 2D) = "white" {}
 		_Coordinate("Coordinate", Vector) = (0,0,0,0)
-		_Color("DrawColor", color) = (1,1,1,1)
+		_Color("DrawColor", color) = (1,0,0,0)
 		_ClearColor("ClearColor", color) = (1,1,1,1)
 		_Size("Size", Range(0,500)) = 1
 		_TexSize("TexSize", Range(0,1)) = 1
@@ -58,35 +58,35 @@
 				{
 					// sample the texture
 					fixed4 col = tex2D(_MainTex, i.uv);
-					
-
-					
-					//get position and size
-					s = float2(0.5, 0.5);
-					s = s + (i.uv - _Coordinate.xy)/_Size;
-
-					s.xy -= 0.5;
-					float sn = -sin(_Rotation);
-					float cs = cos(_Rotation);
-					float2x2 rotationMatrix = float2x2 (cs, -sn, sn, cs);
-					rotationMatrix *= 0.5;
-					rotationMatrix += 0.5;
-					rotationMatrix = rotationMatrix * 2 - 1;
-					s.xy = mul(s.xy, rotationMatrix);
-					s.xy += 0.5;
-
-					fixed4 drawcol = tex2D(_SplatTex, s.xy);
-					
-					//create mask
-					float isMask = tex2D(_SplatTex, s.xy) == _Color;
 
 
-					//leave regular colour for texture, unless it is inside the mask, then clear the colour inside
-					col = (1 - isMask) * col - isMask * _Color;
-					return col;
-					
-				}
-				ENDCG
+
+				//get position and size
+				s = float2(0.5, 0.5);
+				s = s + (i.uv - _Coordinate.xy) / _Size;
+
+				s.xy -= 0.5;
+				float sn = -sin(_Rotation);
+				float cs = cos(_Rotation);
+				float2x2 rotationMatrix = float2x2 (cs, -sn, sn, cs);
+				rotationMatrix *= 0.5;
+				rotationMatrix += 0.5;
+				rotationMatrix = rotationMatrix * 2 - 1;
+				s.xy = mul(s.xy, rotationMatrix);
+				s.xy += 0.5;
+
+				fixed4 drawcol = tex2D(_SplatTex, s.xy);
+
+				//create mask
+				float isMask = tex2D(_SplatTex, s.xy).a != 0;
+
+
+				//leave regular colour for texture, unless it is inside the mask, then clear the colour inside
+				col = (1 - isMask) * col - isMask * drawcol;
+				return col;
+
 			}
+			ENDCG
+		}
 		}
 }
