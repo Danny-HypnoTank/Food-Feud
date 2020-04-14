@@ -56,8 +56,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private ParticleSystem _smokeParticles;
     [SerializeField]
-    private ParticleSystem _candyTrailParticles;
-    [SerializeField]
     private Image fillBar;
     [SerializeField]
     private Sprite[] fillBarSprites;
@@ -104,7 +102,6 @@ public class PlayerController : MonoBehaviour
     public GameObject IceCube { get { return _iceCube; } }
     public GameObject SImunnityObj { get { return _sImmunityObj; } }
     public ParticleSystem SmokeParticles { get { return _smokeParticles; } }
-    public ParticleSystem CandyTrailParticles { get { return _candyTrailParticles; } }
     public SpriteRenderer BuffSprite { get { return buffSprite; } }
     public SpriteRenderer DeBuffSprite { get { return debuffSprite; } }
 
@@ -136,9 +133,6 @@ public class PlayerController : MonoBehaviour
         MoveSpeed = Player.Speed;
         var smokeMain = SmokeParticles.main;
         smokeMain.startColor = Player.SkinColours[Player.skinId];
-
-        var candyMain = CandyTrailParticles.main;
-        candyMain.startColor = Player.SkinColours[Player.skinId];
 
         fillBarBg.sprite = fillBarBgSprites[Player.skinId];
         fillBar.sprite = fillBarSprites[Player.skinId];

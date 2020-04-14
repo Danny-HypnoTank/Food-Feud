@@ -29,9 +29,7 @@ public class DrawColor : MonoBehaviour
     [Range(0, 1)]
     public float _brushStrength;
     [SerializeField]
-    Sprite[] splatSprite = new Sprite[11];
-
-    Texture2D[] splatTexture = new Texture2D[11];
+    Texture2D[] splatTexture = new Texture2D[12];
 
     [SerializeField]
     ManageGame manageGame;
