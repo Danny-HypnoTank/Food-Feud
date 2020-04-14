@@ -16,12 +16,12 @@
 	}
 		SubShader
 		{
-			Tags { "RenderType" = "Transparent" }
+			Tags { "RenderType" = "Opaque" }
 			LOD 100
 
 			Pass
 			{
-				
+
 
 				CGPROGRAM
 				#pragma vertex vert
@@ -90,7 +90,7 @@
 
 					
 					//leave regular colour for texture, unless it is inside the mask, then make it the colour of the player
-					col = (1 - isMask) * col + isMask * (_Color * tex2D(_SplatTex, s.xy).a);
+					col = (1 - isMask) * col + isMask * (_Color);
 					return col;
 					
 				}

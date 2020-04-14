@@ -45,6 +45,9 @@ public class DrawColor : MonoBehaviour
         for(int i = 0; i < splatSprite.Length; i++)
         {
             splatTexture[i] = new Texture2D((int)splatSprite[i].rect.width, (int)splatSprite[i].rect.height);
+
+            
+
             var pixels = splatSprite[i].texture.GetPixels((int)splatSprite[i].textureRect.x, (int)splatSprite[i].textureRect.y, (int)splatSprite[i].textureRect.width, (int)splatSprite[i].textureRect.height);
             splatTexture[i].SetPixels(pixels);
             splatTexture[i].wrapMode = TextureWrapMode.Clamp;
@@ -98,8 +101,8 @@ public class DrawColor : MonoBehaviour
 
         int terrainNum = _terrain.IndexOf(hit.collider.gameObject);
 
-        //int _currentSplat = UnityEngine.Random.Range(0, splatTexture.Length);
-        int _currentSplat = 3;
+        int _currentSplat = UnityEngine.Random.Range(0, splatTexture.Length);
+        //int _currentSplat = 3;
 
         //coreCalc.Instance.CircleLogic(hit, (UInt16)id, terrainNum);
 

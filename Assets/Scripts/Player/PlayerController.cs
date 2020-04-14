@@ -315,10 +315,11 @@ public class PlayerController : MonoBehaviour
                     _smult = 1f * multiplier;
 
                 int _id = Player.playerNum;
-                for (int i = 0; i < 10; i++)
-                {
-                    DrawColor.DrawOnSplatmap(hit, _id, Player, _smult, transform.localRotation.eulerAngles.y);
-                }
+                //for (int i = 0; i < 10; i++)
+                //{
+
+                DrawColor.DrawOnSplatmap(hit, _id, Player, _smult, transform.localRotation.eulerAngles.y);
+                //}
             }
         }
 
