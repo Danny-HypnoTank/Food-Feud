@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 112000000, guid: b137b2507e51bdd48917b35d84159954,
     type: 2}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -3511,7 +3511,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0.12890625, y: 0.05078125, z: 0.0390625, w: -0.05078125}
+  m_BoundingSphereOverride: {x: 6e-45, y: 1.92e-43, z: 1e-45, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 13
@@ -3698,25 +3698,29 @@ MonoBehaviour:
   useSplatMap: 1
   drawShader: {fileID: 4800000, guid: 7af30324c52b2d245a6e7ae9658eb43c, type: 3}
   clearShader: {fileID: 4800000, guid: da7eb21ebf02b31428b6bdf3f19d681b, type: 3}
+  transparentShader: {fileID: 4800000, guid: 1ea5f7f1a20b5884aa118a5260e6863a, type: 3}
   drawMaterial: {fileID: 0}
   clearMaterial: {fileID: 0}
+  transparentMaterial: {fileID: 0}
   myMaterial: {fileID: 0}
   _splatMap: []
+  _transparentMap: []
   _terrain: []
   _brushSize: 400
   _texSize: 0.015
   _brushStrength: 1
-  splatTexture:
-  - {fileID: 2800000, guid: 25ec1e6f5d72a934593ba36413d6e3ef, type: 3}
-  - {fileID: 2800000, guid: 4256cdd248ae33349b6a1abb62dd4770, type: 3}
-  - {fileID: 2800000, guid: 4d928f0a71bd1604aa203f5f1ae6666a, type: 3}
-  - {fileID: 2800000, guid: 4d928f0a71bd1604aa203f5f1ae6666a, type: 3}
-  - {fileID: 2800000, guid: 9a84213e4babf6a418b7c38b504d79d0, type: 3}
-  - {fileID: 2800000, guid: 9a8eb1988f581ab48bb2ce8da71f55db, type: 3}
-  - {fileID: 2800000, guid: 0b670fd7057c938469e2189c08dc77a0, type: 3}
-  - {fileID: 2800000, guid: 4005ee709625d6b47b765552fc5f125c, type: 3}
-  - {fileID: 2800000, guid: 0090bd4771ee4c64eb4db047043b1182, type: 3}
-  - {fileID: 2800000, guid: df7eecdee3d6d2146880923ba277bb10, type: 3}
+  splatSprite:
+  - {fileID: -3361282096944540787, guid: 76daa6269ef85b54b9a95816b215f2c2, type: 3}
+  - {fileID: 3231115874841873871, guid: 76daa6269ef85b54b9a95816b215f2c2, type: 3}
+  - {fileID: 5660629081272955402, guid: 76daa6269ef85b54b9a95816b215f2c2, type: 3}
+  - {fileID: -7164281202976037643, guid: 76daa6269ef85b54b9a95816b215f2c2, type: 3}
+  - {fileID: -5859479925670601956, guid: 76daa6269ef85b54b9a95816b215f2c2, type: 3}
+  - {fileID: -6188373001854200064, guid: 76daa6269ef85b54b9a95816b215f2c2, type: 3}
+  - {fileID: -7076738973712226002, guid: 76daa6269ef85b54b9a95816b215f2c2, type: 3}
+  - {fileID: 8929234562426909477, guid: 76daa6269ef85b54b9a95816b215f2c2, type: 3}
+  - {fileID: -7624198075207867424, guid: 76daa6269ef85b54b9a95816b215f2c2, type: 3}
+  - {fileID: -3790367761457553103, guid: 76daa6269ef85b54b9a95816b215f2c2, type: 3}
+  - {fileID: -9132000436153021922, guid: 76daa6269ef85b54b9a95816b215f2c2, type: 3}
   manageGame: {fileID: 1661300554}
 --- !u!114 &1661300561
 MonoBehaviour:

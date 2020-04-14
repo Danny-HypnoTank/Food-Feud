@@ -5,7 +5,7 @@
 		_MainTex("Texture", 2D) = "white" {}
 		_SplatTex("SplatTexture", 2D) = "white" {}
 		_Coordinate("Coordinate", Vector) = (0,0,0,0)
-		_Color("DrawColor", color) = (1,0,0,0)
+		_Color("DrawColor", color) = (1,1,1,1)
 		_ClearColor("ClearColor", color) = (1,1,1,1)
 		_Size("Size", Range(0,500)) = 1
 		_TexSize("TexSize", Range(0,1)) = 1
