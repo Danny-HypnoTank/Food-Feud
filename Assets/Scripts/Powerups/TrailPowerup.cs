@@ -9,7 +9,6 @@ public class TrailPowerup : BuffDebuff
     {
         //Call the base implementation of Start
         base.Start(parent, 6);
-        parent.CandyTrailParticles.Play();
     }
 
     public override void OnUpdate(float deltaTime)
@@ -25,7 +24,6 @@ public class TrailPowerup : BuffDebuff
     public override void End()
     {
         //Call the base implementation of End
-        Parent.CandyTrailParticles.Stop();
         base.End();
     }
 }
