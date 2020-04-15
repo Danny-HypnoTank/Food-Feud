@@ -3,7 +3,7 @@
 	Properties 
 	{
 	    [HideInInspector]_MainTex ("Base (RGB)", 2D) = "white" {}
-		_Delta ("Line Thickness", Range(0.0005, 0.0025)) = 0.001
+		_Delta ("Line Thickness", Range(0.0000, 0.0025)) = 0.001
 		[Toggle(RAW_OUTLINE)]_Raw ("Outline Only", Float) = 0
 		[Toggle(POSTERIZE)]_Poseterize ("Posterize", Float) = 0
 		_PosterizationCount ("Count", int) = 8
