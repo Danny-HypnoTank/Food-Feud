@@ -83,7 +83,7 @@ public class NewOptionsController : MonoBehaviour
 
             if (isSlider == false)
             {
-                if (Input.GetAxis("Horizontal") > 0.3f)
+                if (Input.GetAxis("Horizontal1") > 0.3f)
                 {
                     if (isAxis == false)
                     {
@@ -99,7 +99,7 @@ public class NewOptionsController : MonoBehaviour
                         sliderHover[selectId].SetActive(true);
                     }
                 }
-                else if (Input.GetAxis("Horizontal") < -0.3f)
+                else if (Input.GetAxis("Horizontal1") < -0.3f)
                 {
                     if (isAxis == false)
                     {
@@ -116,7 +116,7 @@ public class NewOptionsController : MonoBehaviour
 
                     }
                 }
-                else if(Input.GetAxis("Vertical") > 0.3f)
+                else if(Input.GetAxis("Vertical1") > 0.3f)
                 {
                     if (isAxis == false)
                     {
@@ -130,7 +130,7 @@ public class NewOptionsController : MonoBehaviour
                         SetHover();
                     }
                 }
-                else if (Input.GetAxis("Vertical") < -0.3f)
+                else if (Input.GetAxis("Vertical1") < -0.3f)
                 {
                     if (isAxis == false)
                     {
