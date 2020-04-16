@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 112000000, guid: b137b2507e51bdd48917b35d84159954,
     type: 2}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -4007,7 +4007,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: -1.3321604e+34}
+  m_BoundingSphereOverride: {x: 0, y: 1.83672e-40, z: -1.14e-42, w: 6.6e-44}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -5223,12 +5223,12 @@ GameObject:
   - component: {fileID: 1966365533}
   - component: {fileID: 1966365537}
   m_Layer: 9
-  m_Name: Floor
+  m_Name: Floor_Invis
   m_TagString: PaintableEnvironment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &1966365533
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -7630,7 +7630,7 @@ GameObject:
   - component: {fileID: 301604874}
   - component: {fileID: 8296172668870759864}
   m_Layer: 9
-  m_Name: Floor_Bin
+  m_Name: Floor
   m_TagString: PaintableEnvironment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7648,7 +7648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cd52ca8e58615b4a99d64c8a88795ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  multiplier: 100
+  multiplier: 0.5
 --- !u!1 &8344207308100681942
 GameObject:
   m_ObjectHideFlags: 0
