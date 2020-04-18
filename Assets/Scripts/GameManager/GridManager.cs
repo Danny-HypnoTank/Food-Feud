@@ -14,6 +14,10 @@ public class GridManager : MonoBehaviour
     [SerializeField]
     private RectTransform[] fillBars; //The bars for the score bar
 
+    [Header("Objects")]
+    [SerializeField]
+    private GameObject multiplierArea;
+
     [Header("Debug")]
     [SerializeField]
     private bool usePercentages;
@@ -138,7 +142,7 @@ public class GridManager : MonoBehaviour
             {
                 //If the value of the score square is the player's skinId - 1 increment their score
                 if (gridObjects[j].Value == ManageGame.instance.Players[i].skinId)
-                    Scores[i]++;
+                    Scores[i] +=  gridObjects[j].Multiplier;
             }
         }
 
@@ -171,21 +175,29 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    //Method for updating the UI
-    public void UpdateUI()
+    public void UpdateElements()
     {
         //Check if the UI is updating
         if (!updating)
         {
             //Start the cooldown coroutine
             StartCoroutine(UpdateCooldown());
-            //Calculate the percentages
-            CalcPercentages();
-            //Calculate and set bar widths
-            CalculateBarWidth();
-            //Calculate the score text
-            CalculateScoreText();
+            //Call the UI Update method
+            UpdateUI();
+            //Call the Multiplier Area Toggle method
+            ToggleMultiplierArea();
         }
+    }
+
+    //Method for updating the UI
+    private void UpdateUI()
+    {
+        //Calculate the percentages
+        CalcPercentages();
+        //Calculate and set bar widths
+        CalculateBarWidth();
+        //Calculate the score text
+        CalculateScoreText();
     }
 
     //Method for calculating the final scores
@@ -255,6 +267,58 @@ public class GridManager : MonoBehaviour
             //Set the string value of the text
             scoreText.text = scoreString.ToString();
         }
+    }
+
+    public void ToggleMultiplierArea()
+    {
+        //Returns the opposite value of whether the object is enabled or not (i.e. if enabled, it returns false)
+        bool isEnabled = !multiplierArea.gameObject.activeSelf;
+
+        //Check if isEnabled is false and if it is, call the method to change the scale and location of the multiplier
+        if (isEnabled)
+        {
+            SetMultiplierScale();
+            SetMultiplierPosition();
+        }
+        else
+        {
+            for(int i = 0; i < gridObjects.Count; i++)
+            {
+                if(gridObjects[i].Multiplier > 1)
+                {
+                    gridObjects[i].SetMultiplier(1);
+                }
+            }
+        }
+
+        //Set the object to inactive or active
+        multiplierArea.SetActive(isEnabled);
+    }
+
+    private void SetMultiplierScale()
+    {
+        Vector3 newScale = new Vector3
+        {
+            x = Random.Range(12, 21),
+            y = 2,
+            z = Random.Range(12, 21)
+        };
+
+        multiplierArea.transform.localScale = newScale;
+    }
+
+    private void SetMultiplierPosition()
+    {
+        int squareIndex = Random.Range(0, gridObjects.Count);
+
+        Vector3 newPosition = new Vector3
+        {
+            x = gridObjects[squareIndex].transform.position.x,
+            y = 1.5f,
+            z = gridObjects[squareIndex].transform.position.z
+        };
+        
+        multiplierArea.transform.position = newPosition;
     }
 
     //Coroutine so methods can be made to only run once per second
