@@ -106,27 +106,41 @@ public class GridManager : MonoBehaviour
 
     private void InitialiseBars()
     {
-        Image currentImage;
-        int playerID;
-        Color newColour;
+        //Get the Image component of the left-most bar element
+        Image currentImage = fillBars[4].GetComponent<Image>();
+
+        //Get the skinId of the player with the lowest playernum and set the bar colour to their skin colour
+        int playerID = ManageGame.instance.allPlayerControllers[0].Player.skinId;
+        //Set the colour to the skin colour
+        currentImage.color = ManageGame.instance.allPlayerControllers[0].Player.SkinColours[playerID];
+
+        //Make sure the colour actually has 100% alpha and apply the colour to the bar image
+        Color newColour = new Color(currentImage.color.r, currentImage.color.g, currentImage.color.b, 1);
+        currentImage.color = newColour;
+
         for (int i = 0; i < playerCount + 1; i++)
         {
+            //Set the bar for the current player to active
             fillBars[i].gameObject.SetActive(true);
+
+            //Get the Image component of the current bar element
             currentImage = fillBars[i].GetComponent<Image>();
+
             if (i < playerCount)
             {
-                playerID = ManageGame.instance.Players[i].skinId;
-                currentImage.color = ManageGame.instance.Players[i].SkinColours[playerID];
+                //Get the player's skin ID
+                playerID = ManageGame.instance.allPlayerControllers[i].Player.skinId;
+
+                //Set the colour to the skin colour
+                currentImage.color = ManageGame.instance.allPlayerControllers[i].Player.SkinColours[playerID];
+
+                //Make sure the colour actually has 100% alpha and apply the colour to the bar image
                 newColour = new Color(currentImage.color.r, currentImage.color.g, currentImage.color.b, 1);
                 currentImage.color = newColour;
             }
 
         }
-        currentImage = fillBars[4].GetComponent<Image>();
-        playerID = ManageGame.instance.Players[0].skinId;
-        currentImage.color = ManageGame.instance.Players[0].SkinColours[playerID];
-        newColour = new Color(currentImage.color.r, currentImage.color.g, currentImage.color.b, 1);
-        currentImage.color = newColour;
+        
     }
 
     //Method for calculating scores
@@ -221,11 +235,6 @@ public class GridManager : MonoBehaviour
             float newWidth = originalBarWidth;
             newWidth *= Percentages[i];
             //Calculate the extra width to account for the extra bar image
-            /*float extra = 15 * (playerCount);
-            extra *= Percentages[i];
-            //if the new width is less than 
-            if (newWidth + extra < originalBarWidth)
-                newWidth += extra;*/
             if (i > 0)
                 newWidth += 15;
 
@@ -274,7 +283,7 @@ public class GridManager : MonoBehaviour
         //Returns the opposite value of whether the object is enabled or not (i.e. if enabled, it returns false)
         bool isEnabled = !multiplierArea.gameObject.activeSelf;
 
-        //Check if isEnabled is false and if it is, call the method to change the scale and location of the multiplier
+        //Check if isEnabled is false and if it is, call the method to change the scale and location of the multiplier else, reset the multipliers
         if (isEnabled)
         {
             SetMultiplierScale();
@@ -297,6 +306,7 @@ public class GridManager : MonoBehaviour
 
     private void SetMultiplierScale()
     {
+        //Scale the area of the multiplier zone by 3-5 score grid elements (4x4 squares)
         Vector3 newScale = new Vector3
         {
             x = Random.Range(12, 21),
@@ -309,8 +319,10 @@ public class GridManager : MonoBehaviour
 
     private void SetMultiplierPosition()
     {
+        //Get a random square
         int squareIndex = Random.Range(0, gridObjects.Count);
 
+        //Move the multiplier area to the chosen square
         Vector3 newPosition = new Vector3
         {
             x = gridObjects[squareIndex].transform.position.x,
