@@ -37,12 +37,23 @@ public class PinController : MonoBehaviour
 
     private void OnEnable()
     {
+        pin.gameObject.SetActive(false);
+        pin.position = defaultPinLocation.position;
+        pin.gameObject.SetActive(true);
         isLocked = false;
         isPinMoving = false;
         isOnFridge = false;
         target = null;
         isActive = false;
-        pin.position = defaultPinLocation.position;
+        
+    }
+
+    private void OnDisable()
+    {
+       /* isPinMoving = false;
+        isOnFridge = false;
+        target = null;
+        isActive = false;*/
     }
 
     private void Start()
@@ -279,7 +290,6 @@ public class PinController : MonoBehaviour
             // Debug.Log(target.parent.name);
             if (target != null)
             {
-                Debug.Log(target);
                 if (target.GetComponentInParent<CharacterPin>() != null)
                 {
                     target.GetComponentInParent<CharacterPin>().UnOwnPin();

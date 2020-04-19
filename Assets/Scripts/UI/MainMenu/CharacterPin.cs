@@ -52,6 +52,7 @@ public class CharacterPin : MonoBehaviour
     public void UnOwnPin()
     {
         characterSprite.sprite = unSelectedImage;
+        ownedBy = null;
     }
 
     public Transform TakeDirection(string direction, int playerPos)
