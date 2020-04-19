@@ -39,7 +39,7 @@ public class LevelSelector : MonoBehaviour
     private void OnEnable()
     {
         resetPin = GameObject.Find("ScriptControl").GetComponent<PinReset>();
-        resetPin.CallReset();
+        
         levelIndex = 0;
         canPressButton = true;
         isAxis = false;
@@ -57,11 +57,13 @@ public class LevelSelector : MonoBehaviour
             {
                 SelectLevel();
             }
-        }
-        if (Input.GetButton("BackButton"))
-        {
-            StartCoroutine(CloseFridge());
 
+            if (Input.GetButton("BackButton"))
+            {
+                resetPin.CallReset();
+                StartCoroutine(CloseFridge());
+
+            }
         }
         InputLevelSelect();
     }
