@@ -10,14 +10,11 @@ public class PinReset : MonoBehaviour
     private Transform[] pin;
     [SerializeField]
     private CharacterPin[] pinImg;
-    [SerializeField]
-    private float resetDelayTime = 0.1f;
 
 
     public void CallReset()
     {
-        StopCoroutine("ResetDelay");
-        StartCoroutine("ResetDelay");
+        ResetMode();
     }
     private void ResetMode()
     {
@@ -29,13 +26,6 @@ public class PinReset : MonoBehaviour
         {
             pinImg[i].UnOwnPin();
         }
-    }
-
-    private IEnumerator ResetDelay()
-    {
-        yield return new WaitForSeconds(resetDelayTime);
-        ResetMode();
-        yield return null;
     }
 
 }
