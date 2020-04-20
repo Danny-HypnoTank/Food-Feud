@@ -306,12 +306,14 @@ public class GridManager : MonoBehaviour
 
     private void SetMultiplierScale()
     {
+        int newSize = Random.Range(3, 6);
+
         //Scale the area of the multiplier zone by 3-5 score grid elements (4x4 squares)
         Vector3 newScale = new Vector3
         {
-            x = Random.Range(12, 21),
-            y = 2,
-            z = Random.Range(12, 21)
+            x = newSize,
+            y = 3,
+            z = newSize
         };
 
         multiplierArea.transform.localScale = newScale;
@@ -321,13 +323,14 @@ public class GridManager : MonoBehaviour
     {
         //Get a random square
         int squareIndex = Random.Range(0, gridObjects.Count);
+        Vector3 newPos = gridObjects[squareIndex].transform.position;
 
         //Move the multiplier area to the chosen square
         Vector3 newPosition = new Vector3
         {
-            x = gridObjects[squareIndex].transform.position.x,
-            y = 1.5f,
-            z = gridObjects[squareIndex].transform.position.z
+            x = newPos.x,
+            y = 2.5f,
+            z = newPos.z
         };
         
         multiplierArea.transform.position = newPosition;

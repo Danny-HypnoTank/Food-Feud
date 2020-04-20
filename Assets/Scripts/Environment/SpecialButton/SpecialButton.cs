@@ -46,20 +46,11 @@ public class SpecialButton : MonoBehaviour
     private float timer;
     private bool finishedUI;
     private Vector3 inactivePosition;
-    private BuffDebuff power;
     
     public PlayerController ActivatorPlayer { get; private set; }
 
-    private readonly Dictionary<SpecialPowers, BuffDebuff> powers = new Dictionary<SpecialPowers, BuffDebuff>
-    {
-        {SpecialPowers.MassFreeze, new MassFreeze()},
-        {SpecialPowers.Flood, new MassFreeze()},
-        {SpecialPowers.Trash, null}
-    };
-
     //Auto Properties
     public bool IsActive { get; private set; }
-    public bool HasBeenUsed { get; private set; }
 
     //Full Properties
     public float ActivationTime { get { return _activationTime; } }
@@ -68,15 +59,11 @@ public class SpecialButton : MonoBehaviour
     {
         //Set initial values
         IsActive = false;
-        HasBeenUsed = false;
         finishedUI = false;
         inactivePosition = transform.localPosition;
 
         UILogic.Initialisation(ActivationTime);
         logic.Initialisation();
-
-        //Instantiate an object based on the special power
-        power = powers[debuff];
     }
 
     private void OnTriggerEnter(Collider other)
@@ -98,8 +85,9 @@ public class SpecialButton : MonoBehaviour
                     StartCoroutine(DisplayTheImage());
 
                     //Set the button to inactive so it can't be triggered again
+                    timer = 0;
                     IsActive = false;
-                    HasBeenUsed = true;
+                    finishedUI = false;
                     transform.localPosition = inactivePosition;
                     indicator.SetActive(false);
                 }
@@ -115,18 +103,26 @@ public class SpecialButton : MonoBehaviour
         indicator.SetActive(true);
     }
 
-    public void UpdateVisuals(float time)
+    public void UpdateVisuals()
     {
+        timer += Time.deltaTime;
+
         if (!finishedUI)
         {
             MoveButton();
-            UILogic.UpdateUI(time);
+            UILogic.UpdateUI(timer);
+            CheckTimerFinished();
         }
+    }
+
+    private void CheckTimerFinished()
+    {
+        if(timer >= ActivationTime && !IsActive)
+            ActivateButton();
     }
 
     private void MoveButton()
     {
-        timer += Time.deltaTime;
         transform.localPosition = Vector3.Lerp(inactivePosition, activePosition, timer / ActivationTime);
     }
 

@@ -118,10 +118,8 @@ public class ManageGame : MonoBehaviour
             }
             if (reverseTime % gridManager.TimeToCheck < 1 && reverseTime > 1) //Modulus operator to check if the value of reverseTime goes into TimeToCheck with a remainder that is less than 1, i.e. 60.23416 % 30 = 0.23416, 70.81674 % 30 = 10.81674 etc. -James
                 gridManager.UpdateElements();
-            if (reverseTime >= SpecialButton.ActivationTime && !SpecialButton.IsActive && !SpecialButton.HasBeenUsed)
-                SpecialButton.ActivateButton();
             if (reverseTime % 1 < 1)
-                SpecialButton.UpdateVisuals(reverseTime);
+                SpecialButton.UpdateVisuals();
         }
     }
 

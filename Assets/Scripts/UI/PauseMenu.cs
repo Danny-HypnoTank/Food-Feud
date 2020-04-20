@@ -7,6 +7,7 @@
  * Modified by: Dominik Waldowski
  */
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -64,5 +65,6 @@ public class PauseMenu : MonoBehaviour
     {
         loading.SetID(0);
         loading.InitializeLoading();
+        SceneManager.LoadScene(0);
     }
 }
