@@ -147,7 +147,7 @@ public class NewMainMenu : MonoBehaviour
             {
                 cameraTransform.position = Vector3.MoveTowards(cameraTransform.position, characterSelectPoint.position, cameraSpeedMedals * Time.deltaTime);
             }
-            cameraTransform.rotation = Quaternion.Slerp(cameraTransform.rotation, characterSelectPoint.rotation, cameraSpeedMedals * Time.deltaTime);
+            cameraTransform.rotation = Quaternion.Slerp(cameraTransform.rotation, characterSelectPoint.rotation, (cameraSpeedMedals + 0.2f) * Time.deltaTime);
             if (Vector3.Distance(cameraTransform.position, characterSelectPoint.position) < 0.01f) arrived = true;
             yield return null;
         }

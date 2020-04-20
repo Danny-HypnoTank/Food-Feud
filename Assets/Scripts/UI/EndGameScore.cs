@@ -6,13 +6,11 @@
  * Last Modified: 16/02/2020
  * Modified By: Antoni Gudejko, Dominik Waldowski, Alex Watson
  */
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using System.Collections.Generic;
-using System.Collections;
-using System.Linq;
-using System;
 
 public class EndGameScore : MonoBehaviour
 {
@@ -26,11 +24,16 @@ public class EndGameScore : MonoBehaviour
     private Transform[] podiumLocations;
     [SerializeField]
     private GameObject[] winnerIcons;
+    [SerializeField]
+    private UIElementControllerImage[] buttons;
 
     private int usedPodiums;
+    private int selectID;
     private bool canUseInput;
+    private bool isAxis;
     private float total;
     private Loading loading;
+    private UIElementControllerImage previousSelection;
 
     MedalManager medalManager;
 
@@ -43,6 +46,7 @@ public class EndGameScore : MonoBehaviour
         players[3].hasWon = false;
         Debug.Log("Reset has won");
         sortedPlayers.Clear();
+        selectID = 0;
     }
     private void Start()
     {
@@ -199,45 +203,103 @@ public class EndGameScore : MonoBehaviour
         medalManager.WriteMedalSaveFile();
     }
 
-    //returns to main menu
-    public void MainMenuReturnBtn()
+    private void Update()
     {
         if (canUseInput)
         {
-            sortedPlayers.Clear();
-
-            foreach (Player p in players)
+            if (Input.GetButtonDown("Dash"))
             {
+                switch (selectID)
+                {
+                    case 0:
+                        MainMenuReturnBtn();
+                        break;
 
-                p.hasWon = false;
-                p.isLocked = false;
-                p.isActivated = false;
-                p.skinId = 0;
-                p.scorePercentage = 0;
+                    case 1:
+                        Rematch();
+                        break;
+                }
             }
 
-            loading.InitializeLoading();
-            SceneManager.LoadScene(0);
+            if (Input.GetAxis("Horizontal1") > 0.3f)
+            {
+                if (isAxis == false)
+                {
+                    isAxis = true;
+                    selectID++;
+                    if (selectID > buttons.Length - 1)
+                    {
+                        selectID = 0;
+                    }
+                    SetHover();
+                }
+            }
+            else if (Input.GetAxis("Horizontal1") < -0.3f)
+            {
+                if (isAxis == false)
+                {
+                    isAxis = true;
+                    selectID--;
+                    if (selectID < 0)
+                    {
+                        selectID = buttons.Length - 1;
+                    }
+                    SetHover();
+                }
+            }
+            else
+                isAxis = false;
         }
+    }
+
+    private void SetHover()
+    {
+        if (previousSelection != null)
+            previousSelection.ChangeState(UIElementState.inactive);
+
+        buttons[selectID].ChangeState(UIElementState.hover);
+        previousSelection = buttons[selectID];
+    }
+
+    //returns to main menu
+    public void MainMenuReturnBtn()
+    {
+        ToggleButtons();
+        sortedPlayers.Clear();
+        foreach (Player p in players)
+        {
+
+            p.hasWon = false;
+            p.isLocked = false;
+            p.isActivated = false;
+            p.skinId = 0;
+            p.scorePercentage = 0;
+        }
+        loading.InitializeLoading();
+        SceneManager.LoadScene(0);
     }
 
     //restarts the game
     public void Rematch()
     {
-        if (canUseInput)
+        ToggleButtons();
+        sortedPlayers.Clear();
+        foreach (Player p in players)
         {
-            sortedPlayers.Clear();
 
+            p.hasWon = false;
+            p.scorePercentage = 0;
+        }
+        loading.InitializeLoading();
+        SceneManager.LoadScene(1);
+    }
 
-            foreach (Player p in players)
-            {
-
-                p.hasWon = false;
-                p.scorePercentage = 0;
-            }
-
-            loading.InitializeLoading();
-            SceneManager.LoadScene(1);
+    private void ToggleButtons()
+    {
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            bool isActive = buttons[i].gameObject.activeSelf;
+            buttons[i].gameObject.SetActive(!isActive);
         }
     }
 
@@ -250,6 +312,8 @@ public class EndGameScore : MonoBehaviour
                 winnerIcons[i].SetActive(true);
             }
         }
+        ToggleButtons();
+        SetHover();
     }
 
     private IEnumerator WinnerCheck()

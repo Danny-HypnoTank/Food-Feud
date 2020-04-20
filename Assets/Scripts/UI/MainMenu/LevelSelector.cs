@@ -34,27 +34,36 @@ public class LevelSelector : MonoBehaviour
     private float waitBetweenAnimation = 0.5f;
     [SerializeField]
     private float animationSpeed = 0.5f;
+    private PinReset resetPin;
 
     private void OnEnable()
     {
+        resetPin = GameObject.Find("ScriptControl").GetComponent<PinReset>();
+        
         levelIndex = 0;
-        StopCoroutine("OpenFridge");
-        StartCoroutine(OpenFridge());
         canPressButton = true;
         isAxis = false;
         inTransition = false;
+        StartCoroutine("OpenFridge");
     }
+
+
 
     private void Update()
     {
-        if (Input.GetButtonDown("Dash"))
+        if (inTransition == false)
         {
-            SelectLevel();
-        }
-        if (Input.GetButton("BackButton"))
-        {
-            StartCoroutine(CloseFridge());
+            if (Input.GetButtonDown("Dash"))
+            {
+                SelectLevel();
+            }
 
+            if (Input.GetButton("BackButton"))
+            {
+                resetPin.CallReset();
+                StartCoroutine(CloseFridge());
+
+            }
         }
         InputLevelSelect();
     }
@@ -72,6 +81,22 @@ public class LevelSelector : MonoBehaviour
                     if (levelIndex == levelViewPoints.Length)
                     {
                         levelIndex = 0;
+                    }
+                    CameraMovement();
+                }
+            }
+        }
+        else  if (Input.GetAxis("Horizontal") < -0.5f)
+        {
+            if (isAxis == false)
+            {
+                if (canPressButton == true)
+                {
+                    isAxis = true;
+                    levelIndex--;
+                    if (levelIndex < 0)
+                    {
+                        levelIndex = levelViewPoints.Length;
                     }
                     CameraMovement();
                 }
@@ -134,7 +159,7 @@ public class LevelSelector : MonoBehaviour
 
     private IEnumerator OpenFridge()
     {
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForEndOfFrame();
         doorAnimation.enabled = true;
         doorAnimation.speed = animationSpeed;
         doorAnimation.SetInteger("CloseAnim", 1);
@@ -148,7 +173,7 @@ public class LevelSelector : MonoBehaviour
 
     private IEnumerator CloseFridge()
     {
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForEndOfFrame();
         doorAnimation.enabled = true;
         doorAnimation.speed = animationSpeed;
         doorAnimation.SetInteger("CloseAnim", 2);
@@ -156,7 +181,7 @@ public class LevelSelector : MonoBehaviour
         inTransition = true;
         yield return new WaitForSeconds(waitBetweenAnimation);
         inTransition = false;
-        yield return new WaitForSeconds(4);
+      //  yield return new WaitForSeconds(4);
         ReturnToCharacterSelect();
     }
 
