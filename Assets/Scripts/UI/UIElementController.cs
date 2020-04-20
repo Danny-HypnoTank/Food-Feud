@@ -23,27 +23,26 @@ public class UIElementController : MonoBehaviour
     private float lerpDuration;
     [SerializeField]
     private float lerpAngle;
-
-    [Header("Graphics")]
     [SerializeField]
-    private Sprite inactiveSprite;
-    [SerializeField]
-    private Sprite activeSprite;
+    private bool flip;
 
     private float timer;
     private int direction;
+    private int yRot;
     private Vector3 antiClockwiseLoc;
     private Vector3 clockwiseLoc;
     private UIElementState state;
-    private SpriteRenderer spriteRender;
 
     private void Awake()
     {
         //Initialisation
-        spriteRender = GetComponent<SpriteRenderer>();
-        antiClockwiseLoc = new Vector3(0, 180, -lerpAngle);
-        clockwiseLoc = new Vector3(0, 180, lerpAngle);
         timer = 0;
+        if (flip)
+            yRot = 180;
+        else
+            yRot = 0;
+        antiClockwiseLoc = new Vector3(0, yRot, -lerpAngle);
+        clockwiseLoc = new Vector3(0, yRot, lerpAngle);
 
         //Default state to inactive
         ChangeState(UIElementState.inactive);
@@ -83,35 +82,24 @@ public class UIElementController : MonoBehaviour
         }
     }
 
-    private void SetInactive()
+    public virtual void SetInactive()
     {
         //Reset the scale/angle of the UI Element and set the sprite to the inactive sprite
         transform.localScale = Vector3.one;
-        transform.eulerAngles = new Vector3(0, 180, 0);
-        ChangeSprite(inactiveSprite);
+        transform.eulerAngles = new Vector3(0, yRot, 0);
     }
 
-    private void SetHover()
+    public virtual void SetHover()
     {
         //Scale the UI Element by the scale multiplier and set the sprite to the active sprite
         transform.localScale *= scaleMultiplier;
-        ChangeSprite(activeSprite);
     }
 
     private void SetPressed()
     {
         //Reset the angle of the UI Element and scale it down from the original size by the scale multiplier
         transform.localScale = Vector3.one / scaleMultiplier;
-        transform.eulerAngles = new Vector3(0, 180, 0);
-    }
-
-    private void ChangeSprite(Sprite sprite)
-    {
-        if (spriteRender != null)
-        {
-            if (spriteRender.sprite != sprite)
-                spriteRender.sprite = sprite;
-        }
+        transform.eulerAngles = new Vector3(0, yRot, 0);
     }
 
     private void HoverAction()
