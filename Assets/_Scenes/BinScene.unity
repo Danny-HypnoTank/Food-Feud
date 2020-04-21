@@ -346,16 +346,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -4
       objectReference: {fileID: 0}
-    - target: {fileID: 4492657082117447848, guid: 6bbf727faf0490d499f0716a71dc7d18,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4492657082117447848, guid: 6bbf727faf0490d499f0716a71dc7d18,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.9443749
-      objectReference: {fileID: 0}
     - target: {fileID: 259652022309489129, guid: 6bbf727faf0490d499f0716a71dc7d18,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -630,6 +620,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.b
       value: 0.9716981
+      objectReference: {fileID: 0}
+    - target: {fileID: 4492657082117447848, guid: 6bbf727faf0490d499f0716a71dc7d18,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4492657082117447848, guid: 6bbf727faf0490d499f0716a71dc7d18,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.9443749
       objectReference: {fileID: 0}
     - target: {fileID: 120265184727077607, guid: 6bbf727faf0490d499f0716a71dc7d18,
         type: 3}
@@ -4082,7 +4082,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 1.83672e-40, z: -1.14e-42, w: 6.6e-44}
+  m_BoundingSphereOverride: {x: 3.3e-43, y: 1.05e-43, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -5299,12 +5299,12 @@ GameObject:
   - component: {fileID: 1966365533}
   - component: {fileID: 1966365537}
   m_Layer: 9
-  m_Name: Floor_Invis
+  m_Name: Floor
   m_TagString: PaintableEnvironment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!64 &1966365533
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -7761,7 +7761,7 @@ GameObject:
   - component: {fileID: 301604874}
   - component: {fileID: 8296172668870759864}
   m_Layer: 9
-  m_Name: Floor
+  m_Name: Floor_bin
   m_TagString: PaintableEnvironment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
