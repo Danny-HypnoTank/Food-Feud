@@ -15,7 +15,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.Audio;
 /// <summary>
 /// Class for the Sound Manager
 /// </summary>
@@ -59,6 +59,8 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     private Audio[] backgroundM;
 
+    [SerializeField]
+    AudioSource audioSource;
     /// <summary>
     /// Property for getting the Instance of the SoundManager. Backing Field: <see cref="_instance"/>
     /// </summary>
@@ -71,24 +73,32 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField]
     private List<AudioSource> allMusic = new List<AudioSource>();
+    [SerializeField]
+    AudioMixer audioMix;
+   
     void Awake()
     {
-        
+
 
 
         if (_instance != null && _instance != this)
+        {
             Destroy(this.gameObject);
+        }
         else
+        {
             _instance = this;
+            audioSource = GetComponentInChildren<AudioSource>();
+        }
 
         foreach (Audio a in backgroundM)
         {
             // GameObject newSound = new GameObject("SoundObj");
             //  a.SetSource(newSound.AddComponent<AudioSource>());
             //  newSound.transform.SetParent(this.gameObject.transform);
-            a.SetSource(this.gameObject.AddComponent<AudioSource>());
-            a.Source.clip = a.GetAudio();
-            a.Source.loop = true;
+            //a.SetSource(this.gameObject.AddComponent<AudioSource>());
+            //a.Source.clip = a.GetAudio();
+            //a.Source.loop = true;
             
         }
         mute = false;
@@ -109,10 +119,46 @@ public class SoundManager : MonoBehaviour
     
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "NewMainMenu")
+        switch(scene.name)
         {
-            PlayMainTheme();
+            case ("NewMainMenu"):
+                {
+                    PlayMainTheme();
+                    break;
+                }
+            case ("PlayScene"):
+                {
+                    PlayGameTheme();
+                    break;
+                }
+            case ("BinScene"):
+                {
+                    PlayGameTheme();
+                    break;
+                }
+            case ("SinkScene"):
+                {
+                    PlayGameTheme();
+                    break;
+                }
+            case ("EndRoundScenee"):
+                {
+                    PlayEndTheme();
+                    break;
+                }
+            case ("SinkEndRoundScene"):
+                {
+                    PlayEndTheme();
+                    break;
+                }
+            case ("BinEndRoundScene"):
+                {
+                    PlayEndTheme();
+                    break;
+                }
         }
+        
+
     }
 
 
@@ -120,13 +166,18 @@ public class SoundManager : MonoBehaviour
     public void PlayMainTheme()
     {
         SetBGM("Main Menu");
-        backgroundM[0].Source.Play();
+        //backgroundM[0].Source.Play();
         SetBGMVol(1);
     }
 
     public void PlayGameTheme()
     {
         SetBGM("Game Theme");
+    }
+
+    public void PlayEndTheme()
+    {
+
     }
     #endregion
 
@@ -147,18 +198,18 @@ public class SoundManager : MonoBehaviour
     /// Method to set the Master Volume
     /// </summary>
     /// <param name="vol">Value to set <see cref="MasterVol"/> to</param>
-    public void SetMasterVol(float vol)
+    public void SetMasterVol(float volume)
     {
 
-        MasterVol = vol;
+        audioMix.SetFloat("masterVol", volume);
 
         //If Master Volume is lower than the Music Volume, use the Master Volume. Else use the Music Volume.
-        if (MasterVol < MusicVol)
+        /*if (MasterVol < MusicVol)
             foreach (Audio a in backgroundM)
                 a.Source.volume = MasterVol;
         else if (MasterVol > MusicVol)
             foreach (Audio a in backgroundM)
-                a.Source.volume = MusicVol;
+                a.Source.volume = MusicVol;*/
 
 
     }
@@ -167,12 +218,12 @@ public class SoundManager : MonoBehaviour
     /// Method to set the volume of the music
     /// </summary>
     /// <param name="v">Value to set the volume to</param>
-    public void SetBGMVol(float v)
+    public void SetBGMVol(float volume)
     {
-        MusicVol = v;
+        audioMix.SetFloat("musicVol", volume);
 
-        foreach (Audio a in backgroundM)
-            a.Source.volume = MusicVol;
+        //foreach (Audio a in backgroundM)
+            //a.Source.volume = MusicVol;
        // Debug.Log(MusicVol);
     }
 
@@ -180,10 +231,10 @@ public class SoundManager : MonoBehaviour
     /// Method to set the volume of the sounds
     /// </summary>
     /// <param name="v">Value to set the volume to</param>
-    public void SetSFXVol(float v)
+    public void SetSFXVol(float volume)
     {
 
-        SoundVol = v;
+        audioMix.SetFloat("sfxVol", volume);
 
     }
 
@@ -194,8 +245,27 @@ public class SoundManager : MonoBehaviour
     public void SetBGM(string name)
     {
 
+        switch(name)
+        {
+            case ("Main Menu"):
+                {
+                    audioSource.clip = backgroundM[0].GetAudio();
+                    break;
+                }
+            case ("Game Theme"):
+                {
+                    audioSource.clip = backgroundM[1].GetAudio();
+                    break;
+                }
+            case ("Game Win"):
+                {
+                    audioSource.clip = backgroundM[2].GetAudio();
+                    break;
+                }
+        }
+
         //Find the currently playing music
-        Audio playing = Array.Find(backgroundM, sound => sound.Source.isPlaying);
+        /*Audio playing = Array.Find(backgroundM, sound => sound.Source.isPlaying);
         //Find the music specified in the parameter
         Audio toPlay = Array.Find(backgroundM, sound => sound.Name == name);
         if (toPlay != null && playing != null)
@@ -203,7 +273,7 @@ public class SoundManager : MonoBehaviour
         else if (toPlay != null)
             toPlay.Source.Play();
 
-        SetBGMTempo(1);
+        SetBGMTempo(1);*/
 
     }
 

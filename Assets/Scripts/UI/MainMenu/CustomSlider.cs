@@ -64,19 +64,20 @@ public class CustomSlider : MonoBehaviour
 
     public void SaveSettings()
     {
+        float _volumeLerp = Mathf.Lerp(-80, 0, adjustedValue);
         if (SoundManager.Instance.MasterVol != adjustedValue)
         {
             if (sliderType == typeOfSlider.master)
             {
-                SoundManager.Instance.SetMasterVol(value / 100);
+                SoundManager.Instance.SetMasterVol(_volumeLerp);
             }
             else if (sliderType == typeOfSlider.music)
             {
-                SoundManager.Instance.SetBGMVol(value / 100);
+                SoundManager.Instance.SetBGMVol(_volumeLerp);
             }
             else if (sliderType == typeOfSlider.sound)
             {
-                SoundManager.Instance.SetSFXVol(value / 100);
+                SoundManager.Instance.SetSFXVol(_volumeLerp);
             }
             save.Save();
         }
