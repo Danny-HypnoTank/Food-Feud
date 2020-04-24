@@ -221,7 +221,7 @@ public class EndGameScore : MonoBehaviour
                 }
             }
 
-            if (Input.GetAxis("Horizontal1") > 0.3f)
+            if (Input.GetAxis("Horizontal") > 0.3f)
             {
                 if (isAxis == false)
                 {
@@ -234,7 +234,7 @@ public class EndGameScore : MonoBehaviour
                     SetHover();
                 }
             }
-            else if (Input.GetAxis("Horizontal1") < -0.3f)
+            else if (Input.GetAxis("Horizontal") < -0.3f)
             {
                 if (isAxis == false)
                 {

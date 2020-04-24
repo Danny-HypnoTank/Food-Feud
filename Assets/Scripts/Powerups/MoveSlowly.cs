@@ -10,6 +10,7 @@ public class MoveSlowly : BuffDebuff
         base.Start(parent, 8);
         //Double the player's speed modifier
         Parent.SetProperty<float>(nameof(Parent.MoveSpeedModifier), Parent.BaseSpeed / 2);
+        Parent.PlayerBase.Animator.SetFloat("walkAnimSpeed", 0.5f);
     }
 
     public override void OnUpdate(float deltaTime)
@@ -22,6 +23,7 @@ public class MoveSlowly : BuffDebuff
     {
         //Set the player's speed modifier back to the default
         Parent.SetProperty<float>(nameof(Parent.MoveSpeedModifier), Parent.BaseSpeed);
+        Parent.PlayerBase.Animator.SetFloat("walkAnimSpeed", 1);
         //Call the base implementation of End
         base.End();
     }
