@@ -246,7 +246,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8588420608740178779}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -20, y: 0, z: -14}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8767161142300714876}
@@ -440,22 +440,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8767161142881055222, guid: c27c05292ae7aea408b5681ebb0ae8c2,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8767161142881055222, guid: c27c05292ae7aea408b5681ebb0ae8c2,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 8767161142509458175, guid: c27c05292ae7aea408b5681ebb0ae8c2,
         type: 3}
       propertyPath: m_LocalPosition.x
       value: -48
       objectReference: {fileID: 0}
     - target: {fileID: 8767161142509458175, guid: c27c05292ae7aea408b5681ebb0ae8c2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767161142881055222, guid: c27c05292ae7aea408b5681ebb0ae8c2,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767161142881055222, guid: c27c05292ae7aea408b5681ebb0ae8c2,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 10
@@ -510,6 +510,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2851875369964678913}
     m_Modifications:
+    - target: {fileID: 4792360579194858647, guid: 0694a0cb7a9148944bda28da30fd6146,
+        type: 3}
+      propertyPath: m_Name
+      value: SodaCan (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 5703609814412677708, guid: 0694a0cb7a9148944bda28da30fd6146,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -564,11 +569,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4792360579194858647, guid: 0694a0cb7a9148944bda28da30fd6146,
-        type: 3}
-      propertyPath: m_Name
-      value: SodaCan (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0694a0cb7a9148944bda28da30fd6146, type: 3}
@@ -660,6 +660,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4501132849457575655}
     m_Modifications:
+    - target: {fileID: 6575274982489899456, guid: 04ac351bd9e45de4982b0787d99fa945,
+        type: 3}
+      propertyPath: m_Name
+      value: StunImmunity
+      objectReference: {fileID: 0}
+    - target: {fileID: 6575274982489899456, guid: 04ac351bd9e45de4982b0787d99fa945,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6575274982489899485, guid: 04ac351bd9e45de4982b0787d99fa945,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -729,16 +739,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6575274982489899456, guid: 04ac351bd9e45de4982b0787d99fa945,
-        type: 3}
-      propertyPath: m_Name
-      value: StunImmunity
-      objectReference: {fileID: 0}
-    - target: {fileID: 6575274982489899456, guid: 04ac351bd9e45de4982b0787d99fa945,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04ac351bd9e45de4982b0787d99fa945, type: 3}
@@ -1170,6 +1170,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2851875369964678913}
     m_Modifications:
+    - target: {fileID: 6305004694465146600, guid: 901ad8423f688ba46b468883099511c4,
+        type: 3}
+      propertyPath: m_Name
+      value: YogurtPot
+      objectReference: {fileID: 0}
     - target: {fileID: 5770827904554151196, guid: 901ad8423f688ba46b468883099511c4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1225,11 +1230,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6305004694465146600, guid: 901ad8423f688ba46b468883099511c4,
-        type: 3}
-      propertyPath: m_Name
-      value: YogurtPot
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 901ad8423f688ba46b468883099511c4, type: 3}
 --- !u!4 &5526460335789985457 stripped
@@ -1245,6 +1245,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2851875369964678913}
     m_Modifications:
+    - target: {fileID: 4792360579194858647, guid: 0694a0cb7a9148944bda28da30fd6146,
+        type: 3}
+      propertyPath: m_Name
+      value: SodaCan
+      objectReference: {fileID: 0}
     - target: {fileID: 5703609814412677708, guid: 0694a0cb7a9148944bda28da30fd6146,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1299,11 +1304,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4792360579194858647, guid: 0694a0cb7a9148944bda28da30fd6146,
-        type: 3}
-      propertyPath: m_Name
-      value: SodaCan
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0694a0cb7a9148944bda28da30fd6146, type: 3}
@@ -1565,6 +1565,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2851875369964678913}
     m_Modifications:
+    - target: {fileID: 3804125174541458746, guid: 284d5a0c8c7a7f948823f71eee5f8d28,
+        type: 3}
+      propertyPath: m_Name
+      value: SwissRollVanilla
+      objectReference: {fileID: 0}
     - target: {fileID: 185120821436280617, guid: 284d5a0c8c7a7f948823f71eee5f8d28,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1619,11 +1624,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3804125174541458746, guid: 284d5a0c8c7a7f948823f71eee5f8d28,
-        type: 3}
-      propertyPath: m_Name
-      value: SwissRollVanilla
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 284d5a0c8c7a7f948823f71eee5f8d28, type: 3}
@@ -1905,6 +1905,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8944437845985279930}
     m_Modifications:
+    - target: {fileID: 6575274982489899456, guid: 04ac351bd9e45de4982b0787d99fa945,
+        type: 3}
+      propertyPath: m_Name
+      value: StunImmunity
+      objectReference: {fileID: 0}
+    - target: {fileID: 6575274982489899456, guid: 04ac351bd9e45de4982b0787d99fa945,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6575274982489899485, guid: 04ac351bd9e45de4982b0787d99fa945,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1974,16 +1984,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6575274982489899456, guid: 04ac351bd9e45de4982b0787d99fa945,
-        type: 3}
-      propertyPath: m_Name
-      value: StunImmunity
-      objectReference: {fileID: 0}
-    - target: {fileID: 6575274982489899456, guid: 04ac351bd9e45de4982b0787d99fa945,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04ac351bd9e45de4982b0787d99fa945, type: 3}
@@ -2530,6 +2530,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2851875369964678913}
     m_Modifications:
+    - target: {fileID: 8253458626027050152, guid: 25848098098281348975efadb18494db,
+        type: 3}
+      propertyPath: m_Name
+      value: Tomatoes
+      objectReference: {fileID: 0}
     - target: {fileID: 4958873568142108347, guid: 25848098098281348975efadb18494db,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2584,11 +2589,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8253458626027050152, guid: 25848098098281348975efadb18494db,
-        type: 3}
-      propertyPath: m_Name
-      value: Tomatoes
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25848098098281348975efadb18494db, type: 3}
