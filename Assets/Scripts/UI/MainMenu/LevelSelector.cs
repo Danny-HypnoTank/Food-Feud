@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class LevelSelector : MonoBehaviour
 {
     [SerializeField]
-    private Loading loadingManager;
+    private Loading LoadScript;
 
     [Header("Position References")]
     [SerializeField]
@@ -142,18 +143,21 @@ public class LevelSelector : MonoBehaviour
     {
         if (levelIndex == 0)
         {
-            loadingManager.SetID(1);
-            loadingManager.InitializeLoading();
+            SceneManager.LoadScene(7);
         }
         else if (levelIndex == 1)
         {
-            loadingManager.SetID(4);
-            loadingManager.InitializeLoading();
+            SceneManager.LoadScene(8);
+            
+            //loadingManager.SetID(4);
+            //loadingManager.InitializeLoading();
         }
         else if (levelIndex == 2)
         {
-            loadingManager.SetID(3);
-            loadingManager.InitializeLoading();
+            SceneManager.LoadScene(9);
+
+            //loadingManager.SetID(5);
+            //loadingManager.InitializeLoading();
         }
     }
 

@@ -18,8 +18,8 @@ public class MenuController : MonoBehaviour
     private Transform optionsScript;
     [SerializeField]
     private Transform characterSelectScript;
-    [SerializeField]
-    private Transform loadingPage;
+    /*[SerializeField]
+    private Transform loadingPage;*/
     [SerializeField]
     private Transform levelSelectScript;
 
@@ -31,7 +31,7 @@ public class MenuController : MonoBehaviour
 
     private void Start()
     {
-        loadingPage.gameObject.SetActive(false);
+        //loadingPage.gameObject.SetActive(false);
         mainMenuScript.gameObject.SetActive(true);
         optionsScript.gameObject.SetActive(false);
         characterSelectScript.gameObject.SetActive(false);
