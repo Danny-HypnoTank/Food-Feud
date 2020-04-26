@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 112000000, guid: b137b2507e51bdd48917b35d84159954,
     type: 2}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -3842,6 +3842,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelLayouts:
+  - {fileID: 8588420608740178779, guid: 28d0598514d3f784fad3a08af9e8467c, type: 3}
+  - {fileID: 8588420608740178779, guid: 6671ee2956a2caa4b816eea88558188b, type: 3}
+  - {fileID: 8588420608740178779, guid: ff2574ca162fb4f42b53bbac304e1685, type: 3}
   - {fileID: 4116852598353980500, guid: 192237e8eb89553438f2b213c06fd745, type: 3}
   - {fileID: 7598451108411332109, guid: f3b01f6063633db469cf1dc99678d481, type: 3}
   - {fileID: 7581306570506191199, guid: 5fca54b26f91a9c40a77c9918490ccb7, type: 3}
@@ -6169,11 +6172,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5704867346787292415, guid: 9f7ba8c21f95a104da053838d73e2e6d,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: e90151d0b45d9a44baa7d5e3e4b33507, type: 2}
     - target: {fileID: 7421319248929796069, guid: 9f7ba8c21f95a104da053838d73e2e6d,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -6309,6 +6307,11 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 5704867346787292415, guid: 9f7ba8c21f95a104da053838d73e2e6d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e90151d0b45d9a44baa7d5e3e4b33507, type: 2}
     - target: {fileID: 7421319248429844624, guid: 9f7ba8c21f95a104da053838d73e2e6d,
         type: 3}
       propertyPath: m_CullTransparentMesh
