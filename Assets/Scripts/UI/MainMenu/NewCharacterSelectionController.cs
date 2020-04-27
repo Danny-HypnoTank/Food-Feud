@@ -47,7 +47,7 @@ public class NewCharacterSelectionController : MonoBehaviour
     [Header("Animation and animation points")]
     private Animator doorAnimation;
     private bool isTransition = false;
-    private Loading loadingManager;
+    //private Loading loadingManager;
     [SerializeField]
     private bool forceload;
 
@@ -63,7 +63,7 @@ public class NewCharacterSelectionController : MonoBehaviour
     }
     private void Start()
     {
-        loadingManager = GameObject.Find("LoadingManager").GetComponent<Loading>();
+        //loadingManager = GameObject.Find("LoadingManager").GetComponent<Loading>();
         readyMsgBar.gameObject.SetActive(false);
         readyImage1.SetActive(true);
         readyImage2.SetActive(false);

@@ -37,6 +37,9 @@ public class EndGameScore : MonoBehaviour
 
     MedalManager medalManager;
 
+    [SerializeField]
+    private int sceneToLoad;
+
     //Reseting 
     private void Awake()
     {
@@ -54,7 +57,7 @@ public class EndGameScore : MonoBehaviour
         medalManager = MedalManager.Instance;
         canUseInput = false;
 
-        loading = GameObject.Find("LoadingManager").GetComponent<Loading>();
+        //loading = GameObject.Find("LoadManager").GetComponent<Loading>();
         sortedPlayers = players.OrderByDescending(o => o.playerScore).ToList();
         //sortedPlayers = players.OrderByDescending(o => o.scorePercentage).ToList();
 
@@ -275,8 +278,8 @@ public class EndGameScore : MonoBehaviour
             p.skinId = 0;
             p.scorePercentage = 0;
         }
-        loading.InitializeLoading();
-        SceneManager.LoadScene(0);
+        //loading.InitializeLoading();
+        SceneManager.LoadScene(10);
     }
 
     //restarts the game
@@ -290,8 +293,8 @@ public class EndGameScore : MonoBehaviour
             p.hasWon = false;
             p.scorePercentage = 0;
         }
-        loading.InitializeLoading();
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(sceneToLoad, LoadSceneMode.Single);
+        //loading.LoadingProgress();
     }
 
     private void ToggleButtons()

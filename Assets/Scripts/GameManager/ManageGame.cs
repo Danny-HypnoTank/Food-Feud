@@ -126,7 +126,7 @@ public class ManageGame : MonoBehaviour
 
     private void Start()
     {
-        loading = GameObject.Find("LoadingManager").GetComponent<Loading>();
+        //loading = GameObject.Find("LoadingManager").GetComponent<Loading>();
         layoutManager = GetComponent<LevelManager>();
         gridManager = GetComponent<GridManager>();
         drawColor = GetComponent<DrawColor>();
