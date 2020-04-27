@@ -41,11 +41,13 @@ public class NewOptionsController : MonoBehaviour
     {
         for (int i = 0; i < Sliderbox.Length; i++)
         {
-            Sliderbox[i].GetComponent<CustomSlider>().enabled = true;
+            //Sliderbox[i].GetComponent<CustomSlider>().enabled = true;
+            Sliderbox[i].GetComponent<CustomSlider>().inUse = true; ;
         }
         for (int i = 0; i < Sliderbox.Length; i++)
         {
-            Sliderbox[i].GetComponent<CustomSlider>().enabled = false;
+            //Sliderbox[i].GetComponent<CustomSlider>().enabled = false;
+            Sliderbox[i].GetComponent<CustomSlider>().inUse =  false;
         }
         canPressBtn = true;
         isAxis = false;
@@ -167,14 +169,14 @@ public class NewOptionsController : MonoBehaviour
         isSlider = false;
         for (int i = 0; i < Sliderbox.Length; i++)
         {
-            Sliderbox[i].GetComponent<CustomSlider>().enabled = false;
+            Sliderbox[i].GetComponent<CustomSlider>().inUse = false;
         }
     }
 
     private void SelectBox()
     {
         isSlider = true;
-        Sliderbox[selectId].GetComponent<CustomSlider>().enabled = true;
+        Sliderbox[selectId].GetComponent<CustomSlider>().inUse = true;
         Sliderbox[selectId].GetComponentInChildren<UIElementController>().ChangeState(UIElementState.pressed);
     }
 

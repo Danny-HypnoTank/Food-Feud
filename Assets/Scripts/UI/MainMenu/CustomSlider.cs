@@ -24,6 +24,7 @@ public class CustomSlider : MonoBehaviour
     private Transform coveredAreaSlider;
     private SaveData save;
     private float previousValue;
+    public bool inUse = false;
     public enum typeOfSlider
     {
         music,
@@ -31,6 +32,8 @@ public class CustomSlider : MonoBehaviour
         master
     }
     public typeOfSlider sliderType;
+
+
     private void OnEnable()
     {
         save = GameObject.Find("SaveSystem").GetComponent<SaveData>();
@@ -42,21 +45,23 @@ public class CustomSlider : MonoBehaviour
         
         knob.transform.position = Vector3.Lerp(startPoint.position, endPoint.position, adjustedValue);
         coveredAreaSlider.transform.localScale = new Vector3(adjustedValue, 1, 1);
+
+        
     }
 
     private void DetectMusicSetting()
     {
         if (sliderType == typeOfSlider.master)
         {
-            value = SoundManager.Instance.MasterVol * 100;
+            value =  SoundManager.Instance.MasterVol;
         }
         else if (sliderType == typeOfSlider.music)
         {
-            value = SoundManager.Instance.MusicVol * 100; 
+            value = SoundManager.Instance.MusicVol; 
         }
         else if(sliderType == typeOfSlider.sound)
         {
-            value = SoundManager.Instance.SoundVol * 100; 
+            value = SoundManager.Instance.SoundVol; 
         }
         previousValue = value;
         adjustedValue = (float)value / 100;
@@ -64,7 +69,7 @@ public class CustomSlider : MonoBehaviour
 
     public void SaveSettings()
     {
-        float _volumeLerp = Mathf.Lerp(-80, 0, adjustedValue);
+        float _volumeLerp = value;
         if (SoundManager.Instance.MasterVol != adjustedValue)
         {
             if (sliderType == typeOfSlider.master)
@@ -85,45 +90,47 @@ public class CustomSlider : MonoBehaviour
 
     public void CancelChanges()
     {
-        value = previousValue;
-        adjustedValue = value / 100;
-        knob.transform.position = Vector3.Lerp(startPoint.position, endPoint.position, adjustedValue);
-        coveredAreaSlider.transform.localScale = new Vector3(adjustedValue, 1, 1);
+        //value = previousValue;
+        //adjustedValue = value / 100;
+        //knob.transform.position = Vector3.Lerp(startPoint.position, endPoint.position, adjustedValue);
+        //coveredAreaSlider.transform.localScale = new Vector3(adjustedValue, 1, 1);
         SaveSettings();
     }
 
     private void Update()
     {
-        if (Input.GetAxis("Horizontal") > 0.3f)
+        if (inUse == true)
         {
-            value +=  Time.deltaTime * rateOfDrag * drag;
-            drag += Time.deltaTime * dragSpeed;
-            if(value >= 100)
+            if (Input.GetAxis("Horizontal") > 0.3f)
             {
-                value = 100;
+                value += Time.deltaTime * rateOfDrag * drag;
+                drag += Time.deltaTime * dragSpeed;
+                if (value >= 0)
+                {
+                    value = 0;
+                }
+                adjustedValue = value / 100;
+                SaveSettings();
             }
-            adjustedValue = value / 100;
-            SaveSettings();
-        }
-        else if (Input.GetAxis("Horizontal") < -0.3f)
-        {
-            value -= Time.deltaTime * rateOfDrag * drag;
-            drag += Time.deltaTime * dragSpeed;
-            if (value <=0)
+            else if (Input.GetAxis("Horizontal") < -0.3f)
             {
-                value = 0;
+                value -= Time.deltaTime * rateOfDrag * drag;
+                drag += Time.deltaTime * dragSpeed;
+                if (value <= -80)
+                {
+                    value = -80;
+                }
+                adjustedValue = value / 100;
+                SaveSettings();
             }
-            adjustedValue = value / 100;
-            SaveSettings();
+            else
+            {
+                drag = defaultDrag;
+            }
+            
         }
-        else
-        {
-            drag = defaultDrag;
-        }
-        knob.transform.position = Vector3.Lerp(startPoint.position, endPoint.position, adjustedValue);
-        coveredAreaSlider.transform.localScale = new Vector3(adjustedValue, 1, 1);
-
-        
+        knob.transform.position = Vector3.Lerp(startPoint.position, endPoint.position, adjustedValue + 1f);
+        coveredAreaSlider.transform.localScale = new Vector3(adjustedValue + 1f, 1, 1);
     }
 
     #region Depricated

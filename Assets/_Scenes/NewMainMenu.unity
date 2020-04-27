@@ -43153,6 +43153,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7772228152695579725, guid: aecf92513357b114690d0d3f7cc50de9,
+        type: 3}
+      propertyPath: masterVol
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772228152695579725, guid: aecf92513357b114690d0d3f7cc50de9,
+        type: 3}
+      propertyPath: soundVol
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772228152695579725, guid: aecf92513357b114690d0d3f7cc50de9,
+        type: 3}
+      propertyPath: musicVol
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aecf92513357b114690d0d3f7cc50de9, type: 3}
 --- !u!114 &2049915530 stripped
@@ -51841,6 +51856,7 @@ MonoBehaviour:
   dragSpeed: 10
   adjustedValue: 0
   coveredAreaSlider: {fileID: 1423872755277309084}
+  inUse: 0
   sliderType: 2
 --- !u!212 &4668931311923059096
 SpriteRenderer:
@@ -51938,7 +51954,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1423872756829496499}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f413b3075b9c4764396e75d41bf1cc4a, type: 3}
   m_Name: 
@@ -51952,6 +51968,7 @@ MonoBehaviour:
   dragSpeed: 10
   adjustedValue: 0
   coveredAreaSlider: {fileID: 1423872754984776889}
+  inUse: 0
   sliderType: 0
 --- !u!1 &4668931312165259707
 GameObject:
@@ -52253,6 +52270,7 @@ MonoBehaviour:
   dragSpeed: 10
   adjustedValue: 0
   coveredAreaSlider: {fileID: 1423872756798005961}
+  inUse: 0
   sliderType: 1
 --- !u!23 &4854743756431163798
 MeshRenderer:

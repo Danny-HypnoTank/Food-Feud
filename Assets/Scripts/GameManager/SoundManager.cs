@@ -110,7 +110,7 @@ public class SoundManager : MonoBehaviour
         //TODO: Load values from save once implemented
         
 
-        SetSFXVol(1);
+        
 
         DontDestroyOnLoad(gameObject);
 
@@ -167,7 +167,6 @@ public class SoundManager : MonoBehaviour
     {
         SetBGM("Main Menu");
         //backgroundM[0].Source.Play();
-        SetBGMVol(1);
     }
 
     public void PlayGameTheme()
@@ -200,7 +199,7 @@ public class SoundManager : MonoBehaviour
     /// <param name="vol">Value to set <see cref="MasterVol"/> to</param>
     public void SetMasterVol(float volume)
     {
-
+        masterVol = volume;
         audioMix.SetFloat("masterVol", volume);
 
         //If Master Volume is lower than the Music Volume, use the Master Volume. Else use the Music Volume.
@@ -220,6 +219,7 @@ public class SoundManager : MonoBehaviour
     /// <param name="v">Value to set the volume to</param>
     public void SetBGMVol(float volume)
     {
+        musicVol = volume;
         audioMix.SetFloat("musicVol", volume);
 
         //foreach (Audio a in backgroundM)
@@ -233,7 +233,7 @@ public class SoundManager : MonoBehaviour
     /// <param name="v">Value to set the volume to</param>
     public void SetSFXVol(float volume)
     {
-
+        soundVol = volume;
         audioMix.SetFloat("sfxVol", volume);
 
     }
