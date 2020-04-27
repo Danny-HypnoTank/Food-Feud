@@ -7,17 +7,18 @@
  * Modified by: Dominik Waldowski
  */
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
     private bool GameIsPaused = false;
     private GameObject pauseMenu;
-    private Loading loading;
+    //private Loading loading;
 
     private void Awake()
     {
         pauseMenu = GameObject.Find("PausePanel").gameObject;
-        loading = GameObject.Find("LoadingManager").GetComponent<Loading>();
+        //loading = GameObject.Find("LoadingManager").GetComponent<Loading>();
     }
 
     private void Start()
@@ -60,9 +61,13 @@ public class PauseMenu : MonoBehaviour
         GameIsPaused = true;
     }
 
+    public void Options()
+    {
+
+    }
+
     public void QuitGame()
     {
-        loading.SetID(0);
-        loading.InitializeLoading();
+        SceneManager.LoadScene(10);
     }
 }

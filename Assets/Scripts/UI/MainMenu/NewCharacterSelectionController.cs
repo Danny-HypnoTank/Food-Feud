@@ -34,6 +34,8 @@ public class NewCharacterSelectionController : MonoBehaviour
     [SerializeField]
     private float cameraMoveSpeed = 0.2f;
     [SerializeField]
+    private float goToLevelDelay = 0.2f;
+    [SerializeField]
     private bool usingLerp = true;
     [SerializeField]
     private Transform[] pinLocations, playerPins;
@@ -45,7 +47,7 @@ public class NewCharacterSelectionController : MonoBehaviour
     [Header("Animation and animation points")]
     private Animator doorAnimation;
     private bool isTransition = false;
-    private Loading loadingManager;
+    //private Loading loadingManager;
     [SerializeField]
     private bool forceload;
 
@@ -61,7 +63,7 @@ public class NewCharacterSelectionController : MonoBehaviour
     }
     private void Start()
     {
-        loadingManager = GameObject.Find("LoadingManager").GetComponent<Loading>();
+        //loadingManager = GameObject.Find("LoadingManager").GetComponent<Loading>();
         readyMsgBar.gameObject.SetActive(false);
         readyImage1.SetActive(true);
         readyImage2.SetActive(false);
@@ -98,9 +100,9 @@ public class NewCharacterSelectionController : MonoBehaviour
         {
             doorAnimation.enabled = false;
         }
-        canPressBtn = false;
+        canPressBtn = true;
         isTransition = false;
-       // ResetPlayers();
+        isConfirmation = false;
     }
 
     private void OnEnable()
@@ -109,10 +111,14 @@ public class NewCharacterSelectionController : MonoBehaviour
         doorAnimation.enabled = false;
         canPressBtn = true;
         isTransition = false;
+        isConfirmation = false;
         ResetPlayers();
-        //ReadyCancel();
-        canPressBtn = true;
-        isTransition = false;   
+        //ReadyCancel();  
+    }
+
+    private void ResetSoft()
+    {
+        Debug.Log("Ran at end of door opening!");
     }
 
     private void ResetPlayers()
@@ -206,7 +212,7 @@ public class NewCharacterSelectionController : MonoBehaviour
     //Coroutine for going to the level select
     private IEnumerator GoToLevelSelect()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(goToLevelDelay);
         readyImage2.SetActive(false);
         //Call method for enabling level select UI
         MenuController.instance.CharacterSelectionToLevelSelect();

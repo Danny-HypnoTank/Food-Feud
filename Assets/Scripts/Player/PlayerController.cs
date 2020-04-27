@@ -56,6 +56,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private ParticleSystem _smokeParticles;
     [SerializeField]
+    private ParticleSystem _candyParticles;
+    [SerializeField]
     private Image fillBar;
     [SerializeField]
     private Sprite[] fillBarSprites;
@@ -76,6 +78,8 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer buffSprite;
     [SerializeField]
     private SpriteRenderer debuffSprite;
+    [SerializeField]
+    private GameObject[] playerIcons;
 
     [Header("Layer Masks")]
     [SerializeField]
@@ -104,6 +108,8 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem SmokeParticles { get { return _smokeParticles; } }
     public SpriteRenderer BuffSprite { get { return buffSprite; } }
     public SpriteRenderer DeBuffSprite { get { return debuffSprite; } }
+
+    public ParticleSystem CandyParticles { get => _candyParticles; set => _candyParticles = value; }
 
     //MedalEvents
     public delegate int DashDelegate(int id);
@@ -134,6 +140,9 @@ public class PlayerController : MonoBehaviour
         var smokeMain = SmokeParticles.main;
         smokeMain.startColor = Player.SkinColours[Player.skinId];
 
+        var candyMain = CandyParticles.main;
+        candyMain.startColor = Player.SkinColours[Player.skinId];
+
         fillBarBg.sprite = fillBarBgSprites[Player.skinId];
         fillBar.sprite = fillBarSprites[Player.skinId];
 
@@ -146,6 +155,7 @@ public class PlayerController : MonoBehaviour
         trail.ToggleGameObjects(false);
         UpdateFillBar();
         Splat();
+        playerIcons[Player.playerNum - 1].SetActive(true);
     }
 
     private void Update()
