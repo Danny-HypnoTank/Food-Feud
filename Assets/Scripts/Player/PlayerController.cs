@@ -78,6 +78,8 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer buffSprite;
     [SerializeField]
     private SpriteRenderer debuffSprite;
+    [SerializeField]
+    private GameObject[] playerIcons;
 
     [Header("Layer Masks")]
     [SerializeField]
@@ -153,6 +155,7 @@ public class PlayerController : MonoBehaviour
         trail.ToggleGameObjects(false);
         UpdateFillBar();
         Splat();
+        playerIcons[Player.playerNum - 1].SetActive(true);
     }
 
     private void Update()
