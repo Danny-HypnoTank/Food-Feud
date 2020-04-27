@@ -37,6 +37,9 @@ public class EndGameScore : MonoBehaviour
 
     MedalManager medalManager;
 
+    [SerializeField]
+    private int sceneToLoad;
+
     //Reseting 
     private void Awake()
     {
@@ -290,6 +293,7 @@ public class EndGameScore : MonoBehaviour
             p.hasWon = false;
             p.scorePercentage = 0;
         }
+        SceneManager.LoadScene(sceneToLoad, LoadSceneMode.Single);
         //loading.LoadingProgress();
     }
 
