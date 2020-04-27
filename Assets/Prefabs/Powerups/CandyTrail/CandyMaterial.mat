@@ -8,9 +8,9 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: CandyMaterial
-  m_Shader: {fileID: 4800000, guid: b7839dad95683814aa64166edc107ae2, type: 3}
-  m_ShaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP _RECEIVE_SHADOWS_OFF
-  m_LightmapFlags: 4
+  m_Shader: {fileID: 4800000, guid: 0406db5a14f94604a8c57ccfbc9f3b46, type: 3}
+  m_ShaderKeywords: _EMISSION _NORMALMAP _RECEIVE_SHADOWS_OFF
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 2050
@@ -20,6 +20,22 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_5FB74270:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_8E994CBA:
+        m_Texture: {fileID: 2800000, guid: b26293304f94d7a48aa7eff7403da670, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_BE3E4A1D:
+        m_Texture: {fileID: 2800000, guid: b666a67170281d142b47ca24d4e481b3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_E0F51C11:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 2800000, guid: ab8423fd660befc41a721a3b535e3923, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -48,7 +64,13 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SplatMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_653241E1: 32
+    - Vector1_C45933A3: 7
     - _AlphaClip: 0
     - _Blend: 0
     - _BlendOp: 0
@@ -89,11 +111,17 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_62ECDAE1: {r: 0.1474531, g: 0.05451228, b: 0.3301887, a: 0}
+    - Vector2_F06130C2: {r: 0.01, g: 0.02, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorAddSubDiff: {r: -1, g: 1, b: 0, a: 0}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _ColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
+    - _Color_1: {r: 1, g: 0, b: 0, a: 0}
+    - _Color_2: {r: 0, g: 1, b: 0, a: 0}
+    - _Color_3: {r: 0, g: 0, b: 1, a: 0}
+    - _Color_4: {r: 1, g: 1, b: 0, a: 0}
     - _EmissionColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
