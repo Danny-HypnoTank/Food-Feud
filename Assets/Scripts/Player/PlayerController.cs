@@ -409,9 +409,15 @@ public class PlayerController : MonoBehaviour
                     scoreTextInstance.GetComponent<SpriteRenderer>().sprite = pointSprites[7];
                     break;
                 }
-            default:
+            case (9):
                 {
                     scoreTextInstance.GetComponent<SpriteRenderer>().sprite = pointSprites[8];
+                    break;
+                }
+            default:
+                {
+                    
+                    scoreTextInstance.GetComponent<SpriteRenderer>().sprite = pointSprites[Random.Range(8, pointSprites.Length)];
                     break;
                 }
         }
