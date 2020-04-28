@@ -88,7 +88,7 @@ public class NewCharacterSelectionController : MonoBehaviour
             }
         }
         // Debug.Log(canStart + " and ready players num: " + readyPlayers);
-        if (canStart == true && readyPlayers >= 2)
+        if (canStart == true && readyPlayers >= 1)
         {
             DisplayReadyMSg();
         }

@@ -24,6 +24,8 @@ public class CountdownTimer : MonoBehaviour
     [SerializeField]
     private bool isCounting;
 
+    SoundManager soundManager;
+
     private void Start()
     {
         isCounting = true;
@@ -43,6 +45,8 @@ public class CountdownTimer : MonoBehaviour
             {
                 countdownVisual.gameObject.SetActive(true);
                 countDown = 0;
+                
+
             }
             else if (timer >= 2.0f && timer <= 2.99f)
             {
@@ -61,6 +65,8 @@ public class CountdownTimer : MonoBehaviour
                 countdownVisual.gameObject.SetActive(false);
                 ManageGame.instance.StartTimer();
                 isCounting = false;
+                soundManager = SoundManager.Instance;
+                soundManager.AudioSource.Play();
             }          
         }
     }

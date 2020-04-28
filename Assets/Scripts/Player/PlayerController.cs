@@ -68,6 +68,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject scoreText;
     [SerializeField]
+    Sprite[] pointSprites;
+    [SerializeField]
     private GameObject scoreTextInstance;
     int scoreAdditive = 0;
     [SerializeField]
@@ -364,7 +366,55 @@ public class PlayerController : MonoBehaviour
     void AddScore()
     {
         scoreAdditive++;
-        scoreTextInstance.GetComponent<TextMeshPro>().text = "+" + scoreAdditive;
+        //scoreTextInstance.GetComponent<TextMeshPro>().text = "+" + scoreAdditive;
+        switch(scoreAdditive)
+        {
+            case (1):
+                {
+                    scoreTextInstance.GetComponent<SpriteRenderer>().sprite = pointSprites[0];
+                    break;
+                }
+            case (2):
+                {
+                    scoreTextInstance.GetComponent<SpriteRenderer>().sprite = pointSprites[1];
+                    break;
+                }
+            case (3):
+                {
+                    scoreTextInstance.GetComponent<SpriteRenderer>().sprite = pointSprites[2];
+                    break;
+                }
+            case (4):
+                {
+                    scoreTextInstance.GetComponent<SpriteRenderer>().sprite = pointSprites[3];
+                    break;
+                }
+            case (5):
+                {
+                    scoreTextInstance.GetComponent<SpriteRenderer>().sprite = pointSprites[4];
+                    break;
+                }
+            case (6):
+                {
+                    scoreTextInstance.GetComponent<SpriteRenderer>().sprite = pointSprites[5];
+                    break;
+                }
+            case (7):
+                {
+                    scoreTextInstance.GetComponent<SpriteRenderer>().sprite = pointSprites[6];
+                    break;
+                }
+            case (8):
+                {
+                    scoreTextInstance.GetComponent<SpriteRenderer>().sprite = pointSprites[7];
+                    break;
+                }
+            default:
+                {
+                    scoreTextInstance.GetComponent<SpriteRenderer>().sprite = pointSprites[8];
+                    break;
+                }
+        }
         scoreTextInstance.GetComponent<Animator>().SetTrigger("GoBack");
     }
 

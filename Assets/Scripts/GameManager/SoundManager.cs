@@ -60,7 +60,7 @@ public class SoundManager : MonoBehaviour
     private Audio[] backgroundM;
 
     [SerializeField]
-    AudioSource audioSource;
+    private AudioSource audioSource;
     /// <summary>
     /// Property for getting the Instance of the SoundManager. Backing Field: <see cref="_instance"/>
     /// </summary>
@@ -70,6 +70,7 @@ public class SoundManager : MonoBehaviour
     public float SoundVol { get => soundVol; set => soundVol = value; }
     public float MasterVol { get => masterVol; set => masterVol = value; }
     public bool Mute { get => mute; set => mute = value; }
+    public AudioSource AudioSource { get => audioSource; set => audioSource = value; }
 
     [SerializeField]
     private List<AudioSource> allMusic = new List<AudioSource>();
@@ -81,14 +82,17 @@ public class SoundManager : MonoBehaviour
 
 
 
-        if (_instance != null && _instance != this)
+        if (_instance != null)
         {
             Destroy(this.gameObject);
         }
         else
         {
             _instance = this;
-            audioSource = GetComponentInChildren<AudioSource>();
+            AudioSource = GetComponentInChildren<AudioSource>();
+            DontDestroyOnLoad(gameObject);
+            mute = false;
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
         foreach (Audio a in backgroundM)
@@ -101,18 +105,14 @@ public class SoundManager : MonoBehaviour
             //a.Source.loop = true;
             
         }
-        mute = false;
-
-        
-
-        SceneManager.sceneLoaded += OnSceneLoaded;
+       
 
         //TODO: Load values from save once implemented
         
 
         
 
-        DontDestroyOnLoad(gameObject);
+
 
     }
 
@@ -141,7 +141,7 @@ public class SoundManager : MonoBehaviour
                     PlayGameTheme();
                     break;
                 }
-            case ("EndRoundScenee"):
+            case ("EndRoundScene"):
                 {
                     PlayEndTheme();
                     break;
@@ -166,17 +166,22 @@ public class SoundManager : MonoBehaviour
     public void PlayMainTheme()
     {
         SetBGM("Main Menu");
+        audioSource.loop = true;
+        audioSource.Play();
         //backgroundM[0].Source.Play();
     }
 
     public void PlayGameTheme()
     {
         SetBGM("Game Theme");
+        audioSource.loop = true;
     }
 
     public void PlayEndTheme()
     {
-
+        SetBGM("Game Win");
+        audioSource.loop = false;
+        audioSource.Play();
     }
     #endregion
 
@@ -249,17 +254,17 @@ public class SoundManager : MonoBehaviour
         {
             case ("Main Menu"):
                 {
-                    audioSource.clip = backgroundM[0].GetAudio();
+                    AudioSource.clip = backgroundM[0].GetAudio();
                     break;
                 }
             case ("Game Theme"):
                 {
-                    audioSource.clip = backgroundM[1].GetAudio();
+                    AudioSource.clip = backgroundM[1].GetAudio();
                     break;
                 }
             case ("Game Win"):
                 {
-                    audioSource.clip = backgroundM[2].GetAudio();
+                    AudioSource.clip = backgroundM[2].GetAudio();
                     break;
                 }
         }
