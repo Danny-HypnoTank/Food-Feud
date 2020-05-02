@@ -25,8 +25,6 @@ public class SpecialButton : MonoBehaviour
 
     [Header("Special Logic")]
     [SerializeField]
-    private SpecialUILogic UILogic;
-    [SerializeField]
     private SpecialButtonLogic logic;
 
     [Header("Graphics")]
@@ -62,7 +60,6 @@ public class SpecialButton : MonoBehaviour
         finishedUI = false;
         inactivePosition = transform.localPosition;
 
-        UILogic.Initialisation(ActivationTime);
         logic.Initialisation();
     }
 
@@ -110,7 +107,6 @@ public class SpecialButton : MonoBehaviour
         if (!finishedUI)
         {
             MoveButton();
-            UILogic.UpdateUI(timer);
             CheckTimerFinished();
         }
     }
