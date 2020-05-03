@@ -28,8 +28,10 @@ public class GridManager : MonoBehaviour
     private float originalBarWidth; //The value of the original width of the score bar
     private List<ScoreSquare> gridObjects; //List to store the grid objects
     private StringBuilder scoreString;
-
-    public int[] Scores { get; private set; } //Array to store the scores for the players + the unpainted areas
+    [SerializeField]
+    private int[] scores;
+    
+    public int[] Scores { get { return scores; } private set { scores = value; } } //Array to store the scores for the players + the unpainted areas
     public float[] Percentages { get; private set; } //Array to store the percentages for the players + unpainted areas
     public int TimeToCheck { get { return _timeToCheck; } } //Property to grab the value of _timeToCheck
 
