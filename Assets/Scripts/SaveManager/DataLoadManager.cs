@@ -14,9 +14,8 @@ public class DataLoadManager : MonoBehaviour
     private void Start()
     {
         data = this.gameObject.GetComponent<SaveData>();
-        if (File.Exists(Application.persistentDataPath + "/PlayerData.rve"))
+        if (File.Exists(Application.persistentDataPath + "/PlayerData.cst"))
         {
-           // SaveLoadManager.DeleteSave();
             data.Load();
             data.Save();
         }

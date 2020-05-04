@@ -60,7 +60,8 @@ public class NewMainMenu : MonoBehaviour
 
     private void Start()
     {
-        MedalManager.Instance.ReadMedalSaveFile();
+        // MedalManager.Instance.ReadMedalSaveFile();
+       // MedalManager.Instance.ReadMedalSaveFile();
         cameraTransform.position = optionsCameraPoint.position;
 
         doorAnimation = doorHolder.GetComponent<Animator>();
