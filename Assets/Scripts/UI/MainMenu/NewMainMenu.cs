@@ -119,7 +119,7 @@ public class NewMainMenu : MonoBehaviour
             doorAnimation.speed = animationSpeed;
             doorAnimation.SetInteger("DoorAnim", 0);
             //StartCoroutine("CameraIn");
-            StartCoroutine(MoveCamera(optionsCameraPoint, selectId, 0.1f));
+            StartCoroutine(MoveCamera(optionsCameraPoint, selectId, 1f));
         }
         else if (selectId == 2)
         {
@@ -129,7 +129,7 @@ public class NewMainMenu : MonoBehaviour
         else if (selectId == 3)
         {
             //StopCoroutine("CameraSide");
-            StartCoroutine(MoveCamera(medalViewPoint, 2, 0.1f));
+            StartCoroutine(MoveCamera(medalViewPoint, 2, 1f));
             //StopCoroutine("CameraReset");
             //StartCoroutine("CameraSide");
         }
@@ -139,7 +139,7 @@ public class NewMainMenu : MonoBehaviour
             //StopCoroutine("CameraReset");
             //StartCoroutine("CameraControls");
 
-            StartCoroutine(MoveCamera(controlsCameraPoint, 3, 0.1f));
+            StartCoroutine(MoveCamera(controlsCameraPoint, 3, 1f));
         }
     }
     private IEnumerator CameraDown()
@@ -277,11 +277,11 @@ public class NewMainMenu : MonoBehaviour
             {
                 if (bonusStats == false)
                 {
-                    StartCoroutine(MoveCamera(medalViewPointB, 5, 0.5f));
+                    StartCoroutine(MoveCamera(medalViewPointB, 5, 1f));
                 }
                 else
                 {
-                    StartCoroutine(MoveCamera(medalViewPoint, 5, 0.5f));
+                    StartCoroutine(MoveCamera(medalViewPoint, 5, 1f));
                     
                 }
             }
@@ -294,7 +294,7 @@ public class NewMainMenu : MonoBehaviour
                 canPressBtn = true;
                 //StopCoroutine("CameraControls");
                 //StartCoroutine("CameraReset");
-                StartCoroutine(MoveCamera(defaultCameraPoint, 4, 0.5f));
+                StartCoroutine(MoveCamera(defaultCameraPoint, 4, 1f));
             }
         }
         else
