@@ -29,7 +29,7 @@ public class NewMainMenu : MonoBehaviour
     [SerializeField]
     private Transform doorHolder;
     [SerializeField]
-    private Transform cameraTransform, optionsCameraPoint, characterSelectPoint, medalViewPoint, defaultCameraPoint, controlsCameraPoint;
+    private Transform cameraTransform, optionsCameraPoint, characterSelectPoint, medalViewPoint, medalViewPointB, defaultCameraPoint, controlsCameraPoint;
     [Header("Handles animation for moving into upper fridge")]
     [SerializeField]
     private bool usingLerp = true;
@@ -57,6 +57,9 @@ public class NewMainMenu : MonoBehaviour
 
     [SerializeField]
     private Text[] medalTexts;
+
+    bool bonusStats = false;
+    bool isRunning = false;
 
     private void Start()
     {
@@ -270,6 +273,19 @@ public class NewMainMenu : MonoBehaviour
                 //StartCoroutine("CameraReset");
                 StartCoroutine(MoveCamera(defaultCameraPoint, 4, 0.5f));
             }
+            else if (Input.GetButtonDown("Dash") && isTransition == false)
+            {
+                if (bonusStats == false)
+                {
+                    StartCoroutine(MoveCamera(medalViewPointB, 5, 0.5f));
+                }
+                else
+                {
+                    StartCoroutine(MoveCamera(medalViewPoint, 5, 0.5f));
+                    
+                }
+            }
+
         }
         else if (previewingControls == true)
         {
@@ -461,6 +477,11 @@ public class NewMainMenu : MonoBehaviour
                     previewingMedals = false;
                     previewingControls = false;
 
+                    break;
+                }
+            case (5):
+                {
+                    bonusStats = !bonusStats;
                     break;
                 }
         }
