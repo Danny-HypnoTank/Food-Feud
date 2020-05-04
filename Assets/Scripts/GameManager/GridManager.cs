@@ -28,8 +28,10 @@ public class GridManager : MonoBehaviour
     private float originalBarWidth; //The value of the original width of the score bar
     private List<ScoreSquare> gridObjects; //List to store the grid objects
     private StringBuilder scoreString;
-
-    public int[] Scores { get; private set; } //Array to store the scores for the players + the unpainted areas
+    [SerializeField]
+    private int[] scores;
+    
+    public int[] Scores { get { return scores; } private set { scores = value; } } //Array to store the scores for the players + the unpainted areas
     public float[] Percentages { get; private set; } //Array to store the percentages for the players + unpainted areas
     public int TimeToCheck { get { return _timeToCheck; } } //Property to grab the value of _timeToCheck
 
@@ -112,7 +114,7 @@ public class GridManager : MonoBehaviour
         //Get the skinId of the player with the lowest playernum and set the bar colour to their skin colour
         int playerID = ManageGame.instance.allPlayerControllers[0].Player.skinId;
         //Set the colour to the skin colour
-        currentImage.color = ManageGame.instance.allPlayerControllers[0].Player.SkinColours[playerID];
+        currentImage.color = ManageGame.instance.allPlayerControllers[0].Player.ScoreColour[playerID];
 
         //Make sure the colour actually has 100% alpha and apply the colour to the bar image
         Color newColour = new Color(currentImage.color.r, currentImage.color.g, currentImage.color.b, 1);
@@ -132,7 +134,7 @@ public class GridManager : MonoBehaviour
                 playerID = ManageGame.instance.allPlayerControllers[i].Player.skinId;
 
                 //Set the colour to the skin colour
-                currentImage.color = ManageGame.instance.allPlayerControllers[i].Player.SkinColours[playerID];
+                currentImage.color = ManageGame.instance.allPlayerControllers[i].Player.ScoreColour[playerID];
 
                 //Make sure the colour actually has 100% alpha and apply the colour to the bar image
                 newColour = new Color(currentImage.color.r, currentImage.color.g, currentImage.color.b, 1);
