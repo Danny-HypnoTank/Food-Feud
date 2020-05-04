@@ -13,7 +13,14 @@ public class DataLoadManager : MonoBehaviour
     private SaveData data;
     private void Start()
     {
-        data = this.gameObject.GetComponent<SaveData>();
+        try
+        {
+            data = GameObject.Find("MedalManager").GetComponent<SaveData>();
+        }
+        catch
+        {
+            data = FindObjectOfType<SaveData>();
+        }
         if (File.Exists(Application.persistentDataPath + "/PlayerData.cst"))
         {
             data.Load();

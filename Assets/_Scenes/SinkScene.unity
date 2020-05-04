@@ -324,25 +324,25 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7553824164395918041, guid: 6bbf727faf0490d499f0716a71dc7d18,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -5
+      objectReference: {fileID: 0}
     - target: {fileID: 3381707818151692051, guid: 6bbf727faf0490d499f0716a71dc7d18,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -4
       objectReference: {fileID: 0}
-    - target: {fileID: 136895859882117954, guid: 6bbf727faf0490d499f0716a71dc7d18,
+    - target: {fileID: 4492657082117447848, guid: 6bbf727faf0490d499f0716a71dc7d18,
         type: 3}
-      propertyPath: m_Color.r
-      value: 0.75627446
+      propertyPath: m_AnchorMax.y
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 136895859882117954, guid: 6bbf727faf0490d499f0716a71dc7d18,
+    - target: {fileID: 4492657082117447848, guid: 6bbf727faf0490d499f0716a71dc7d18,
         type: 3}
-      propertyPath: m_Color.g
-      value: 0.89600873
-      objectReference: {fileID: 0}
-    - target: {fileID: 136895859882117954, guid: 6bbf727faf0490d499f0716a71dc7d18,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 0.9716981
+      propertyPath: m_LocalScale.y
+      value: 1.9443749
       objectReference: {fileID: 0}
     - target: {fileID: 259652022309489129, guid: 6bbf727faf0490d499f0716a71dc7d18,
         type: 3}
@@ -584,11 +584,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 2.3910146
       objectReference: {fileID: 0}
-    - target: {fileID: 7553824164395918041, guid: 6bbf727faf0490d499f0716a71dc7d18,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -5
-      objectReference: {fileID: 0}
     - target: {fileID: 8173897960493593175, guid: 6bbf727faf0490d499f0716a71dc7d18,
         type: 3}
       propertyPath: m_IsActive
@@ -609,15 +604,20 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4492657082117447848, guid: 6bbf727faf0490d499f0716a71dc7d18,
+    - target: {fileID: 136895859882117954, guid: 6bbf727faf0490d499f0716a71dc7d18,
         type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
+      propertyPath: m_Color.r
+      value: 0.75627446
       objectReference: {fileID: 0}
-    - target: {fileID: 4492657082117447848, guid: 6bbf727faf0490d499f0716a71dc7d18,
+    - target: {fileID: 136895859882117954, guid: 6bbf727faf0490d499f0716a71dc7d18,
         type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.9443749
+      propertyPath: m_Color.g
+      value: 0.89600873
+      objectReference: {fileID: 0}
+    - target: {fileID: 136895859882117954, guid: 6bbf727faf0490d499f0716a71dc7d18,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.9716981
       objectReference: {fileID: 0}
     - target: {fileID: 120265184727077607, guid: 6bbf727faf0490d499f0716a71dc7d18,
         type: 3}
@@ -4159,8 +4159,6 @@ GameObject:
   - component: {fileID: 1661300553}
   - component: {fileID: 1661300556}
   - component: {fileID: 1661300557}
-  - component: {fileID: 1661300558}
-  - component: {fileID: 1661300559}
   - component: {fileID: 1661300560}
   - component: {fileID: 1661300561}
   - component: {fileID: 1661300562}
@@ -4293,30 +4291,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23fd878972a96aa4497f5d1b83904eec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1661300558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1661300552}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f72cfea4e0f2cb47812171acc70cb33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1661300559
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1661300552}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f69438fb3650d32498cd006fee248f0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1661300560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4404,6 +4378,7 @@ MonoBehaviour:
   - {fileID: 1986802598}
   multiplierArea: {fileID: 2122811336}
   usePercentages: 0
+  scores: 
   scoreText: {fileID: 538399435}
 --- !u!1 &1812214596
 GameObject:

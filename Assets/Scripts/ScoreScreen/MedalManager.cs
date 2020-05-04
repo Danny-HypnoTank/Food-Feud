@@ -30,9 +30,17 @@ public class MedalManager : MonoBehaviour
 
     public GameObject UntouchableMedal;
 
-    public int[] totalMedalCounts { get; private set; }
+    public List<int> totalMedalCounts = new List<int>();
 
     public List<UnityEngine.UI.Text> medalCounts;
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.W))
+        {
+            CountMedals();
+        }
+    }
 
     private void Awake()
     {
@@ -47,22 +55,44 @@ public class MedalManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
-        totalMedalCounts = new int[4];
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        //SceneManager.sceneLoaded += OnSceneLoaded;
     }
-
+    public void CountMedals()
+    {
+        int totaltimesStunned = 0, totaltimesDashed = 0, totaltimesStunnedOthers = 0, totaltimesPowersCollected = 0;
+        Debug.Log(timesStunned[0]);
+        for (int i = 0; i < timesStunned.Count; i++)
+        {
+            totaltimesStunned += timesStunned[i];
+            totaltimesDashed += timesDashed[i];
+            totaltimesStunnedOthers += timesStunnedOthers[i];
+            totaltimesPowersCollected += timesPowersCollected[i];
+        }
+        Debug.Log(totaltimesStunned);
+        totalMedalCounts[0] = totaltimesStunned;
+        totalMedalCounts[1] = totaltimesDashed;
+        totalMedalCounts[2] = totaltimesStunnedOthers;
+        totalMedalCounts[3] = totaltimesPowersCollected;
+        medalCounts[0].text = "Stunned " + totalMedalCounts[0].ToString();
+        medalCounts[1].text = "Most Dashes " + totalMedalCounts[1].ToString();
+        medalCounts[2].text = "Most Stuns " + totalMedalCounts[2].ToString();
+        medalCounts[3].text = "Powerup Master " + totalMedalCounts[3].ToString();
+    }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "NewMainMenu")
         {
-            SetTotalMedalCount();
+            CountMedals();
         }
     }
 
     private void Start()
     {
         StartCoroutine("LateStart", 1);
-
+        if (SceneManager.GetActiveScene().name == "NewMainMenu")
+        {
+            StartCoroutine("Delay");
+        }
 
     }
 
@@ -94,6 +124,11 @@ public class MedalManager : MonoBehaviour
         return i;
     }
 
+    private IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(2);
+        CountMedals();
+    }
 
     IEnumerator LateStart(float wait)
     {
@@ -299,33 +334,4 @@ public class MedalManager : MonoBehaviour
         }*/
     }
 
-    public void SetTotalMedalCount()
-    {
-        for(int i = 0; i <totalMedalCounts.Length; i++)
-        {
-            switch(i)
-            {
-                case (0):
-                    {
-                        medalCounts[i].text = "Stunned: " + totalMedalCounts[i].ToString();
-                        break;
-                    }
-                case (1):
-                    {
-                        medalCounts[i].text = "Most Dashes: " + totalMedalCounts[i].ToString();
-                        break;
-                    }
-                case (2):
-                    {
-                        medalCounts[i].text = "Most Stuns: " + totalMedalCounts[i].ToString();
-                        break;
-                    }
-                case (3):
-                    {
-                        medalCounts[i].text = "Powerup Master: " + totalMedalCounts[i].ToString();
-                        break;
-                    }
-            }
-        }
-    }
 }
