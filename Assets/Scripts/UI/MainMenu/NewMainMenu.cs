@@ -62,7 +62,7 @@ public class NewMainMenu : MonoBehaviour
     {
         // MedalManager.Instance.ReadMedalSaveFile();
        // MedalManager.Instance.ReadMedalSaveFile();
-        cameraTransform.position = optionsCameraPoint.position;
+        cameraTransform.position = defaultCameraPoint.position;
 
         doorAnimation = doorHolder.GetComponent<Animator>();
         audioHandler = GetComponent<ObjectAudioHandler>();
@@ -106,14 +106,17 @@ public class NewMainMenu : MonoBehaviour
         //audioHandler.SetSFX("Accept");
         if (selectId == 0)
         {
-            StartCoroutine("CameraDown");
+            //StartCoroutine("CameraDown");
+
+            StartCoroutine(MoveCamera(characterSelectPoint, selectId, 0.5f));
         }
         else if (selectId == 1)
         {
             doorAnimation.enabled = true;
             doorAnimation.speed = animationSpeed;
             doorAnimation.SetInteger("DoorAnim", 0);
-            StartCoroutine("CameraIn");
+            //StartCoroutine("CameraIn");
+            StartCoroutine(MoveCamera(optionsCameraPoint, selectId, 0.1f));
         }
         else if (selectId == 2)
         {
@@ -122,15 +125,18 @@ public class NewMainMenu : MonoBehaviour
         }
         else if (selectId == 3)
         {
-            StopCoroutine("CameraSide");
-            StopCoroutine("CameraReset");
-            StartCoroutine("CameraSide");
+            //StopCoroutine("CameraSide");
+            StartCoroutine(MoveCamera(medalViewPoint, 2, 0.1f));
+            //StopCoroutine("CameraReset");
+            //StartCoroutine("CameraSide");
         }
         else if (selectId == 4)
         {
-            StopCoroutine("CameraSide");
-            StopCoroutine("CameraReset");
-            StartCoroutine("CameraControls");
+            //StopCoroutine("CameraSide");
+            //StopCoroutine("CameraReset");
+            //StartCoroutine("CameraControls");
+
+            StartCoroutine(MoveCamera(controlsCameraPoint, 3, 0.1f));
         }
     }
     private IEnumerator CameraDown()
@@ -260,8 +266,9 @@ public class NewMainMenu : MonoBehaviour
             if (Input.GetButtonDown("BackButton"))
             {
                 canPressBtn = true;
-                StopCoroutine("CameraSide");
-                StartCoroutine("CameraReset");
+                //StopCoroutine("CameraSide");
+                //StartCoroutine("CameraReset");
+                StartCoroutine(MoveCamera(defaultCameraPoint, 4, 0.5f));
             }
         }
         else if (previewingControls == true)
@@ -269,8 +276,9 @@ public class NewMainMenu : MonoBehaviour
             if (Input.GetButtonDown("BackButton"))
             {
                 canPressBtn = true;
-                StopCoroutine("CameraControls");
-                StartCoroutine("CameraReset");
+                //StopCoroutine("CameraControls");
+                //StartCoroutine("CameraReset");
+                StartCoroutine(MoveCamera(defaultCameraPoint, 4, 0.5f));
             }
         }
         else
@@ -398,5 +406,67 @@ public class NewMainMenu : MonoBehaviour
         medalTexts[1].text = ("Most Stuns: " + MedalManager.Instance.totalMedalCounts[1].ToString());
         medalTexts[2].text = ("Most Dashes: " + MedalManager.Instance.totalMedalCounts[2].ToString());
         medalTexts[3].text = ("Most Power Ups: " + MedalManager.Instance.totalMedalCounts[3].ToString());
+    }
+
+    private IEnumerator MoveCamera(Transform destination, int transitionNumber, float time)
+    {
+        if (transitionNumber != 4)
+        {
+            canPressBtn = false;
+        }
+        isTransition = true;
+        //yield return new WaitForSeconds(waitBetweenAnimation);
+        bool arrived = false;
+
+        float t = 0;
+        while (t <= time)
+        {
+            cameraTransform.position = Vector3.Lerp(cameraTransform.position, destination.position, t/time);
+            cameraTransform.rotation = Quaternion.Slerp(cameraTransform.rotation, destination.rotation, t/time);
+            //if (Vector3.Distance(cameraTransform.position, destination.position) < 0.01f) arrived = true;
+
+            t += Time.deltaTime;
+
+
+            yield return null;
+        }
+        cameraTransform.position = destination.position;
+        cameraTransform.rotation = destination.rotation;
+        isTransition = false;
+        arrived = true;
+        switch (transitionNumber)
+        {
+            case (0):
+                {
+                    MenuController.instance.MainMenuToCharacterSelect();
+                    break;
+                }
+            case (1):
+                {
+                    MenuController.instance.MainMenuToOptionsTransition();
+                    break;
+                }
+            case (2):
+                {
+                    previewingMedals = true;
+                    break;
+                }
+            case (3):
+                {
+                    previewingControls = true;
+                    break;
+                }
+            case (4):
+                {
+                    previewingMedals = false;
+                    previewingControls = false;
+
+                    break;
+                }
+        }
+
+        //canPressBtn = true;
+
+        yield return null;
     }
 }

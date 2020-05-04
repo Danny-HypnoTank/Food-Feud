@@ -34,6 +34,14 @@ public class MedalManager : MonoBehaviour
 
     public List<UnityEngine.UI.Text> medalCounts;
 
+    public int totalTimesDashed;
+
+    public int totalPowerupsPicked;
+
+    public int totalStuns;
+
+    public int totalGamesPlayed;
+
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.W))
@@ -78,11 +86,25 @@ public class MedalManager : MonoBehaviour
         medalCounts[2].text = "Most Stuns " + totalMedalCounts[2].ToString();
         medalCounts[3].text = "Powerup Master " + totalMedalCounts[3].ToString();
     }
+
+    void CountStats()
+    {
+        int _tD = 0;
+        int _tPP = 0;
+        int _tS = 0;
+        int _tG = 0;
+    }
+
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "NewMainMenu")
         {
             CountMedals();
+            CountStats();
+        }
+        else if(scene.name == "BinEndRoundScene" || scene.name == "EndRoundScene" || scene.name == "SinkEndRoundScene")
+        {
+            totalGamesPlayed++;
         }
     }
 
@@ -107,6 +129,9 @@ public class MedalManager : MonoBehaviour
     {
 
         timesDashed[i - 1] += 1;
+
+        totalTimesDashed++;
+
         return i;
     }
 
@@ -121,6 +146,9 @@ public class MedalManager : MonoBehaviour
     {
 
         timesPowersCollected[i - 1] += 1;
+
+        totalPowerupsPicked++;
+
         return i;
     }
 
