@@ -8,6 +8,7 @@ using TMPro;
 public class MedalManager : MonoBehaviour
 {
     private static MedalManager _instance;
+    private SaveData saveData;
 
     public static MedalManager Instance { get { return _instance; } }
 
@@ -29,12 +30,21 @@ public class MedalManager : MonoBehaviour
 
     public GameObject UntouchableMedal;
 
-    public int[] totalMedalCounts { get; private set; }
+    public List<int> totalMedalCounts = new List<int>();
 
     public List<UnityEngine.UI.Text> medalCounts;
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.W))
+        {
+            CountMedals();
+        }
+    }
+
     private void Awake()
     {
+        saveData = this.gameObject.GetComponent<SaveData>();
         if (_instance != null && _instance != this)
         {
             Destroy(this.gameObject);
@@ -45,22 +55,44 @@ public class MedalManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
-        totalMedalCounts = new int[4];
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        //SceneManager.sceneLoaded += OnSceneLoaded;
     }
-
+    public void CountMedals()
+    {
+        int totaltimesStunned = 0, totaltimesDashed = 0, totaltimesStunnedOthers = 0, totaltimesPowersCollected = 0;
+        Debug.Log(timesStunned[0]);
+        for (int i = 0; i < timesStunned.Count; i++)
+        {
+            totaltimesStunned += timesStunned[i];
+            totaltimesDashed += timesDashed[i];
+            totaltimesStunnedOthers += timesStunnedOthers[i];
+            totaltimesPowersCollected += timesPowersCollected[i];
+        }
+        Debug.Log(totaltimesStunned);
+        totalMedalCounts[0] = totaltimesStunned;
+        totalMedalCounts[1] = totaltimesDashed;
+        totalMedalCounts[2] = totaltimesStunnedOthers;
+        totalMedalCounts[3] = totaltimesPowersCollected;
+        medalCounts[0].text = "Stunned " + totalMedalCounts[0].ToString();
+        medalCounts[1].text = "Most Dashes " + totalMedalCounts[1].ToString();
+        medalCounts[2].text = "Most Stuns " + totalMedalCounts[2].ToString();
+        medalCounts[3].text = "Powerup Master " + totalMedalCounts[3].ToString();
+    }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "NewMainMenu")
         {
-            SetTotalMedalCount();
+            CountMedals();
         }
     }
 
     private void Start()
     {
         StartCoroutine("LateStart", 1);
-
+        if (SceneManager.GetActiveScene().name == "NewMainMenu")
+        {
+            StartCoroutine("Delay");
+        }
 
     }
 
@@ -92,6 +124,11 @@ public class MedalManager : MonoBehaviour
         return i;
     }
 
+    private IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(2);
+        CountMedals();
+    }
 
     IEnumerator LateStart(float wait)
     {
@@ -242,56 +279,59 @@ public class MedalManager : MonoBehaviour
 
     public void WriteMedalSaveFile()
     {
-        using (StreamWriter medalFile = new StreamWriter("Medal.csv"))
+        try
+        {
+            saveData.Save();
+        }
+        catch(Exception e)
+        {
+            Debug.LogWarning("Failed Save Attempt! Exception Erorr: " + e);
+        }
+       /* using (StreamWriter medalFile = new StreamWriter(Application.persistentDataPath + "Medal.cvs"))
         {
             for (int i = 0; i < totalMedalCounts.Length; i++)
             {
                 //Order of medals Saved -- 0 = Most Stunned, 1 = Most Stuns, 2 = Most Dashes, 3 =  most power ups used
                 medalFile.WriteLine(totalMedalCounts[i]);
+                Debug.Log(totalMedalCounts[i]);
             }
-        }
+        }*/
     }
 
     public void ReadMedalSaveFile()
     {
-        using (StreamReader medalFileR = new StreamReader("Medal.csv"))
+        try
         {
-            List<int> medalOrder = new List<int>();
-            while (!medalFileR.EndOfStream)
+            if (File.Exists(Application.persistentDataPath + "/PlayerData.cst"))
             {
-                medalOrder.Add(Convert.ToInt32(medalFileR.ReadLine()));
+                saveData.Load();
             }
-            totalMedalCounts = medalOrder.ToArray();
+            else
+            {
+                WriteMedalSaveFile();
+            }
         }
+        catch
+        {
+            Debug.LogWarning("Did not save");
+        }
+       /* if (File.Exists(Application.persistentDataPath + "Medal.cvs"))
+        {
+            using (StreamReader medalFileR = new StreamReader(Application.persistentDataPath + "Medal.cvs"))//("Medal.csv"))
+            {
+
+                List<int> medalOrder = new List<int>();
+                while (!medalFileR.EndOfStream)
+                {
+                    medalOrder.Add(Convert.ToInt32(medalFileR.ReadLine()));
+                }
+                totalMedalCounts = medalOrder.ToArray();
+            }
+        }
+        else
+        {
+            Debug.LogWarning("File does not exist!/Was not generated or code error!");
+        }*/
     }
 
-    public void SetTotalMedalCount()
-    {
-        for(int i = 0; i <totalMedalCounts.Length; i++)
-        {
-            switch(i)
-            {
-                case (0):
-                    {
-                        medalCounts[i].text = "Stunned: " + totalMedalCounts[i].ToString();
-                        break;
-                    }
-                case (1):
-                    {
-                        medalCounts[i].text = "Most Dashes: " + totalMedalCounts[i].ToString();
-                        break;
-                    }
-                case (2):
-                    {
-                        medalCounts[i].text = "Most Stuns: " + totalMedalCounts[i].ToString();
-                        break;
-                    }
-                case (3):
-                    {
-                        medalCounts[i].text = "Powerup Master: " + totalMedalCounts[i].ToString();
-                        break;
-                    }
-            }
-        }
-    }
 }

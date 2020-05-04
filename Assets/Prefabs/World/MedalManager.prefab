@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8301852666640847186}
   - component: {fileID: 6114366518531856592}
+  - component: {fileID: 503474325}
   m_Layer: 0
   m_Name: MedalManager
   m_TagString: Untagged
@@ -57,4 +58,21 @@ MonoBehaviour:
     type: 3}
   UntouchableMedal: {fileID: 5438404950233263885, guid: d5ed2dada7184de4d894064c5250c563,
     type: 3}
-  medalCounts: []
+  totalMedalCounts: 00000000000000000000000000000000
+  medalCounts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &503474325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082221928729758237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f72cfea4e0f2cb47812171acc70cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
