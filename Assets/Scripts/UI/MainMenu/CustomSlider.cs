@@ -84,7 +84,9 @@ public class CustomSlider : MonoBehaviour
             {
                 SoundManager.Instance.SetSFXVol(_volumeLerp);
             }
-            save.Save();
+
+
+            //save.Save();
         }
     }
 

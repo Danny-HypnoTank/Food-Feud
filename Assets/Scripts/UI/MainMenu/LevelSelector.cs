@@ -198,13 +198,16 @@ public class LevelSelector : MonoBehaviour
             switch (levelIndex)
             {
                 case 0://Fridge Movement
-                    StartCoroutine(CameraFridge());
+                    //StartCoroutine(CameraFridge());
+                    StartCoroutine(MoveCamera(levelViewPoints[0], 0.5f));
                     break;
                 case 1://Bin Movement
-                    StartCoroutine(CameraBin());
+                    //StartCoroutine(CameraBin());
+                    StartCoroutine(MoveCamera(levelViewPoints[1], 0.5f));
                     break;
                 case 2://Sink Movement
-                    StartCoroutine(CameraSink());
+                    //StartCoroutine(CameraSink());
+                    StartCoroutine(MoveCamera(levelViewPoints[2], 0.5f));
                     break;
             }
         }
@@ -275,5 +278,37 @@ public class LevelSelector : MonoBehaviour
         isAxis = false;
         yield return null;
     }
-#endregion
+    #endregion
+
+    private IEnumerator MoveCamera(Transform destination, float time)
+    {
+
+        canPressButton = false;
+        bool arrived = false;
+
+        float t = 0;
+        while (t <= time)
+        {
+            cameraPosition.position = Vector3.Lerp(cameraPosition.position, destination.position, t / time);
+            cameraPosition.rotation = Quaternion.Slerp(cameraPosition.rotation, destination.rotation, t / time);
+            //if (Vector3.Distance(cameraTransform.position, destination.position) < 0.01f) arrived = true;
+
+            t += Time.deltaTime;
+
+
+            yield return null;
+        }
+
+        isAxis = false;
+        canPressButton = true;
+
+        cameraPosition.position = destination.position;
+        cameraPosition.rotation = destination.rotation;
+        arrived = true;
+
+
+        //canPressBtn = true;
+
+        yield return null;
+    }
 }

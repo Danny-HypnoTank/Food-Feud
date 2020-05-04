@@ -395,7 +395,7 @@ GameObject:
   - component: {fileID: 18030346}
   - component: {fileID: 18030345}
   m_Layer: 0
-  m_Name: Canvas
+  m_Name: BonusInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -941,6 +941,36 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 83404569}
   m_Mesh: {fileID: 8268412853991790750, guid: 6d611a7426001f940b58c7117ee9d1cf, type: 3}
+--- !u!1 &89335141
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 89335142}
+  m_Layer: 0
+  m_Name: MedalViewPoint2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &89335142
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 89335141}
+  m_LocalRotation: {x: 0.5, y: 0.50000006, z: -0.50000006, w: 0.5}
+  m_LocalPosition: {x: 11.98, y: 2.31, z: 8.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1001 &93624536
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12640,7 +12670,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 19.677, y: 90.00001, z: 0}
 --- !u!1001 &797865065
 PrefabInstance:
@@ -12767,7 +12797,7 @@ PrefabInstance:
     - target: {fileID: 8301852666640847186, guid: 0538702cc9607754c8420ff3aa21bbdc,
         type: 3}
       propertyPath: m_RootOrder
-      value: 20
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 8301852666640847186, guid: 0538702cc9607754c8420ff3aa21bbdc,
         type: 3}
@@ -15309,6 +15339,7 @@ MonoBehaviour:
   optionsCameraPoint: {fileID: 1483951593}
   characterSelectPoint: {fileID: 2083695943}
   medalViewPoint: {fileID: 549888297}
+  medalViewPointB: {fileID: 89335142}
   defaultCameraPoint: {fileID: 2016102947}
   controlsCameraPoint: {fileID: 1798007094}
   usingLerp: 1
@@ -22563,7 +22594,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1001 &1357472893
 PrefabInstance:
@@ -28799,11 +28830,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1483951590}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 1.97, y: 6.57, z: 5.76}
+  m_LocalPosition: {x: 1.97, y: 6.57, z: 4.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1001 &1494153437
 PrefabInstance:
@@ -29570,7 +29601,7 @@ Transform:
   - {fileID: 1509671722}
   - {fileID: 1357472894}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1584745197
 PrefabInstance:
@@ -31020,7 +31051,7 @@ Transform:
   m_Children:
   - {fileID: 1613163211}
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1729954005
 MonoBehaviour:
@@ -41224,7 +41255,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1798007093
 GameObject:
@@ -41254,7 +41285,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1001 &1800392957
 PrefabInstance:
@@ -43075,7 +43106,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &2024020547
 GameObject:
@@ -43090,7 +43121,7 @@ GameObject:
   - component: {fileID: 2024020550}
   - component: {fileID: 2024020549}
   m_Layer: 0
-  m_Name: Canvas (1)
+  m_Name: MainInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48887,7 +48918,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 179.99998, z: 0}
 --- !u!1001 &2086820048
 PrefabInstance:

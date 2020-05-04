@@ -192,7 +192,8 @@ public class NewOptionsController : MonoBehaviour
     private void ReturnToMainMenu()
     {
         doorAnimation.enabled = true;
-        StartCoroutine("CameraIn");
+        //StartCoroutine("CameraIn");
+        StartCoroutine(MoveCamera(mainMenuCameraPoint, 0.5f));
     }
 
 
@@ -212,6 +213,37 @@ public class NewOptionsController : MonoBehaviour
         doorAnimation.SetInteger("DoorAnim", 1);
         yield return new WaitForSeconds(waitBetweenAnimation);
         MenuController.instance.OptionsMenuToMainMenu();
+        yield return null;
+    }
+
+    private IEnumerator MoveCamera(Transform destination, float time)
+    {
+        canPressBtn = false;
+        
+        bool arrived = false;
+
+        float t = 0;
+        while (t <= time)
+        {
+            cameraTransform.position = Vector3.Lerp(cameraTransform.position, destination.position, t / time);
+            cameraTransform.rotation = Quaternion.Slerp(cameraTransform.rotation, destination.rotation, t / time);
+            //if (Vector3.Distance(cameraTransform.position, destination.position) < 0.01f) arrived = true;
+
+            t += Time.deltaTime;
+
+
+            yield return null;
+        }
+        doorAnimation.speed = animationSpeed;
+        doorAnimation.SetInteger("DoorAnim", 1);
+        yield return new WaitForSeconds(waitBetweenAnimation);
+        cameraTransform.position = destination.position;
+        cameraTransform.rotation = destination.rotation;
+        arrived = true;
+        MenuController.instance.OptionsMenuToMainMenu();
+
+        //canPressBtn = true;
+
         yield return null;
     }
 }
