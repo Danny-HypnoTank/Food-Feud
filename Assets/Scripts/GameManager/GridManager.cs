@@ -62,7 +62,14 @@ public class GridManager : MonoBehaviour
             Percentages[i] = 0f;
         }
 
-        InitialiseBars();
+        try
+        {
+            InitialiseBars();
+        }
+        catch
+        {
+            Debug.LogWarning("Failed To initialise bars line 65 Grid Manager Script");
+        }
 
         //Updating defaults to false
         updating = false;
