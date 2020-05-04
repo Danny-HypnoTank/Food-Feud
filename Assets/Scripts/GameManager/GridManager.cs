@@ -114,7 +114,7 @@ public class GridManager : MonoBehaviour
         //Get the skinId of the player with the lowest playernum and set the bar colour to their skin colour
         int playerID = ManageGame.instance.allPlayerControllers[0].Player.skinId;
         //Set the colour to the skin colour
-        currentImage.color = ManageGame.instance.allPlayerControllers[0].Player.SkinColours[playerID];
+        currentImage.color = ManageGame.instance.allPlayerControllers[0].Player.ScoreColour[playerID];
 
         //Make sure the colour actually has 100% alpha and apply the colour to the bar image
         Color newColour = new Color(currentImage.color.r, currentImage.color.g, currentImage.color.b, 1);
@@ -134,7 +134,7 @@ public class GridManager : MonoBehaviour
                 playerID = ManageGame.instance.allPlayerControllers[i].Player.skinId;
 
                 //Set the colour to the skin colour
-                currentImage.color = ManageGame.instance.allPlayerControllers[i].Player.SkinColours[playerID];
+                currentImage.color = ManageGame.instance.allPlayerControllers[i].Player.ScoreColour[playerID];
 
                 //Make sure the colour actually has 100% alpha and apply the colour to the bar image
                 newColour = new Color(currentImage.color.r, currentImage.color.g, currentImage.color.b, 1);

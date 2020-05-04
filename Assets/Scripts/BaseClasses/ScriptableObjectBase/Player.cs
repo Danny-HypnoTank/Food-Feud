@@ -19,6 +19,8 @@ public class Player : ScriptableObject
     public int skinId;          //Temporary will be replaced later based on how we choose to handle skins
     public string[] namesOfSkins; //Temporary variable for testing
     public Color[] SkinColours;
+    [SerializeField]
+    private Color[] _scoreColour;
     [Header("In Game Values")]
     private float defaultSpeed = 5;
     public bool hasWon = false;
@@ -31,6 +33,8 @@ public class Player : ScriptableObject
     private int powerUpsCount;
     [SerializeField]
     private int invulnerabilityCount;
+
+    public Color[] ScoreColour => _scoreColour;
 
     public float Speed { get => speed; set => speed = value; }
     public float DefaultSpeed { get => defaultSpeed; set => defaultSpeed = value; }
