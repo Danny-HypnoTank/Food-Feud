@@ -47,7 +47,7 @@ public class EndGameScore : MonoBehaviour
         players[1].hasWon = false;
         players[2].hasWon = false;
         players[3].hasWon = false;
-        Debug.Log("Reset has won");
+       // Debug.Log("Reset has won");
         sortedPlayers.Clear();
         selectID = 0;
     }

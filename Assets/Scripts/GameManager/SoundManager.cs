@@ -79,9 +79,10 @@ public class SoundManager : MonoBehaviour
    
     void Awake()
     {
-
-
-
+        if(audioSource == null)
+        {
+            audioSource = this.GetComponent<AudioSource>();
+        }
         if (_instance != null)
         {
             Destroy(this.gameObject);
