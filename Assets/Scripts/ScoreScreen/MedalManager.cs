@@ -34,13 +34,17 @@ public class MedalManager : MonoBehaviour
 
     public List<UnityEngine.UI.Text> medalCounts;
 
-    public int totalTimesDashed;
+    public List<UnityEngine.UI.Text> bonusStatCounts;
 
-    public int totalPowerupsPicked;
+    public int statsDash;
 
-    public int totalStuns;
+    public int statsPowerups;
 
-    public int totalGamesPlayed;
+    public int statsStuns;
+
+    public int statsGames;
+
+
 
     private void Update()
     {
@@ -81,18 +85,19 @@ public class MedalManager : MonoBehaviour
         totalMedalCounts[1] = totaltimesDashed;
         totalMedalCounts[2] = totaltimesStunnedOthers;
         totalMedalCounts[3] = totaltimesPowersCollected;
-        medalCounts[0].text = "Stunned " + totalMedalCounts[0].ToString();
-        medalCounts[1].text = "Most Dashes " + totalMedalCounts[1].ToString();
+        medalCounts[0].text = "Most stunned others: " + totalMedalCounts[0].ToString();
+        medalCounts[1].text = "Most dashes: " + totalMedalCounts[1].ToString();
+        //bonusStatCounts[2].text = "Games played:  " + totalGamesPlayed.ToString();
         medalCounts[2].text = "Most Stuns " + totalMedalCounts[2].ToString();
-        medalCounts[3].text = "Powerup Master " + totalMedalCounts[3].ToString();
+        medalCounts[3].text = "Most powerups: " + totalMedalCounts[3].ToString();
     }
 
     void CountStats()
     {
-        int _tD = 0;
-        int _tPP = 0;
-        int _tS = 0;
-        int _tG = 0;
+        bonusStatCounts[0].text = "Total stuns: " + statsStuns;
+        bonusStatCounts[1].text = "Total dashes: " + statsDash;
+        bonusStatCounts[2].text = "Total games " + statsGames;
+        bonusStatCounts[3].text = "Total powerups: " + statsPowerups;
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -104,7 +109,7 @@ public class MedalManager : MonoBehaviour
         }
         else if(scene.name == "BinEndRoundScene" || scene.name == "EndRoundScene" || scene.name == "SinkEndRoundScene")
         {
-            totalGamesPlayed++;
+            statsGames++;
         }
     }
 
@@ -122,6 +127,7 @@ public class MedalManager : MonoBehaviour
     {
 
         timesStunned[i - 1] += 1;
+        statsStuns++;
         return i;
     }
 
@@ -130,7 +136,7 @@ public class MedalManager : MonoBehaviour
 
         timesDashed[i - 1] += 1;
 
-        totalTimesDashed++;
+        statsDash++;
 
         return i;
     }
@@ -147,7 +153,7 @@ public class MedalManager : MonoBehaviour
 
         timesPowersCollected[i - 1] += 1;
 
-        totalPowerupsPicked++;
+        statsPowerups++;
 
         return i;
     }
