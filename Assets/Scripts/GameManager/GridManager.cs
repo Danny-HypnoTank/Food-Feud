@@ -338,7 +338,7 @@ public class GridManager : MonoBehaviour
         Vector3 newPosition = new Vector3
         {
             x = newPos.x,
-            y = 2.5f,
+            y = -1.8f,
             z = newPos.z
         };
         
