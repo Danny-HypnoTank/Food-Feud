@@ -71,7 +71,18 @@ public class ManageGame : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
+        int check = 0;
+        for (int i = 0; i < players.Length; i++)
+        {
+            if(players[i].isActivated == true)
+            {
+                check++;
+            }
+        }
+        if(check < 2)
+        {
+            Debug.LogWarning("Less than 2 players initiated error!");
+        }
         clockHand.eulerAngles = v3Rot;
 
         
