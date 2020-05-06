@@ -16,7 +16,15 @@ public class SaveData : MonoBehaviour
     private float[] playerThreeData;
     private float[] playerFourData;
 
-    
+    private int statsDash;
+
+    private int statsPowerups;
+
+    private int statsStuns;
+
+    private int statsGames;
+
+
 
     //save function saves all data
     public void Save()
@@ -47,6 +55,10 @@ public class SaveData : MonoBehaviour
         playerFourData[1] = MedalManager.Instance.timesDashed[3];
         playerFourData[2] = MedalManager.Instance.timesStunnedOthers[3];
         playerFourData[3] = MedalManager.Instance.timesPowersCollected[3];
+        statsDash = MedalManager.Instance.statsDash;
+        statsPowerups = MedalManager.Instance.statsPowerups;
+        statsStuns = MedalManager.Instance.statsStuns;
+        StatsGames = MedalManager.Instance.statsGames;
         SaveLoadManager.SavePlayerData(this);
     }
     /*public List<int> timesStunned;
@@ -61,29 +73,41 @@ public class SaveData : MonoBehaviour
     public void Load()
     {
         //applying loaded values
-        float[] loadedSettings = SaveLoadManager.LoadSettings();
-        SoundManager.Instance.MusicVol = loadedSettings[0];
-        SoundManager.Instance.SoundVol = loadedSettings[1];
-        //Player one
-        MedalManager.Instance.timesStunned[0] = (int)loadedSettings[2];
-        MedalManager.Instance.timesDashed[0] = (int)loadedSettings[3];
-        MedalManager.Instance.timesStunnedOthers[0] = (int)loadedSettings[4];
-        MedalManager.Instance.timesPowersCollected[0] = (int)loadedSettings[5];
-        //Player Two
-        MedalManager.Instance.timesStunned[1] = (int)loadedSettings[6];
-        MedalManager.Instance.timesDashed[1] = (int)loadedSettings[7];
-        MedalManager.Instance.timesStunnedOthers[1] = (int)loadedSettings[8];
-        MedalManager.Instance.timesPowersCollected[1] = (int)loadedSettings[9];
-        //Player Three
-        MedalManager.Instance.timesStunned[2] = (int)loadedSettings[10];
-        MedalManager.Instance.timesDashed[2] = (int)loadedSettings[11];
-        MedalManager.Instance.timesStunnedOthers[2] = (int)loadedSettings[12];
-        MedalManager.Instance.timesPowersCollected[2] = (int)loadedSettings[13];
-        //Player Four
-        MedalManager.Instance.timesStunned[3] = (int)loadedSettings[14];
-        MedalManager.Instance.timesDashed[3] = (int)loadedSettings[15];
-        MedalManager.Instance.timesStunnedOthers[3] = (int)loadedSettings[16];
-        MedalManager.Instance.timesPowersCollected[3] = (int)loadedSettings[17];
+        try
+        {
+            float[] loadedSettings = SaveLoadManager.LoadSettings();
+            SoundManager.Instance.MusicVol = loadedSettings[0];
+            SoundManager.Instance.SoundVol = loadedSettings[1];
+            //Player one
+            MedalManager.Instance.timesStunned[0] = (int)loadedSettings[2];
+            MedalManager.Instance.timesDashed[0] = (int)loadedSettings[3];
+            MedalManager.Instance.timesStunnedOthers[0] = (int)loadedSettings[4];
+            MedalManager.Instance.timesPowersCollected[0] = (int)loadedSettings[5];
+            //Player Two
+            MedalManager.Instance.timesStunned[1] = (int)loadedSettings[6];
+            MedalManager.Instance.timesDashed[1] = (int)loadedSettings[7];
+            MedalManager.Instance.timesStunnedOthers[1] = (int)loadedSettings[8];
+            MedalManager.Instance.timesPowersCollected[1] = (int)loadedSettings[9];
+            //Player Three
+            MedalManager.Instance.timesStunned[2] = (int)loadedSettings[10];
+            MedalManager.Instance.timesDashed[2] = (int)loadedSettings[11];
+            MedalManager.Instance.timesStunnedOthers[2] = (int)loadedSettings[12];
+            MedalManager.Instance.timesPowersCollected[2] = (int)loadedSettings[13];
+            //Player Four
+            MedalManager.Instance.timesStunned[3] = (int)loadedSettings[14];
+            MedalManager.Instance.timesDashed[3] = (int)loadedSettings[15];
+            MedalManager.Instance.timesStunnedOthers[3] = (int)loadedSettings[16];
+            MedalManager.Instance.timesPowersCollected[3] = (int)loadedSettings[17];
+            MedalManager.Instance.statsStuns = (int)loadedSettings[18];
+            MedalManager.Instance.statsPowerups = (int)loadedSettings[19];
+            MedalManager.Instance.statsStuns = (int)loadedSettings[20];
+            MedalManager.Instance.statsGames = (int)loadedSettings[21];
+        }
+        catch
+        {
+            Debug.LogWarning("Failed to load no data has been loaded!");
+        }
+
     }
 
     public float SoundVal { get => soundVal; set => soundVal = value; }
@@ -92,4 +116,8 @@ public class SaveData : MonoBehaviour
     public float[] PlayerTwoData { get => playerTwoData; set => playerTwoData = value; }
     public float[] PlayerThreeData { get => playerThreeData; set => playerThreeData = value; }
     public float[] PlayerFourData { get => playerFourData; set => playerFourData = value; }
+    public int StatsDash { get => statsDash; set => statsDash = value; }
+    public int StatsPowerups { get => statsPowerups; set => statsPowerups = value; }
+    public int StatsStuns { get => statsStuns; set => statsStuns = value; }
+    public int StatsGames { get => statsGames; set => statsGames = value; }
 }

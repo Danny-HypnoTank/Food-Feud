@@ -72,7 +72,6 @@ public class MedalManager : MonoBehaviour
     public void CountMedals()
     {
         int totaltimesStunned = 0, totaltimesDashed = 0, totaltimesStunnedOthers = 0, totaltimesPowersCollected = 0;
-        Debug.Log(timesStunned[0]);
         for (int i = 0; i < timesStunned.Count; i++)
         {
             totaltimesStunned += timesStunned[i];
@@ -80,7 +79,6 @@ public class MedalManager : MonoBehaviour
             totaltimesStunnedOthers += timesStunnedOthers[i];
             totaltimesPowersCollected += timesPowersCollected[i];
         }
-        Debug.Log(totaltimesStunned);
         totalMedalCounts[0] = totaltimesStunned;
         totalMedalCounts[1] = totaltimesDashed;
         totalMedalCounts[2] = totaltimesStunnedOthers;

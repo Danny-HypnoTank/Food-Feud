@@ -14,6 +14,7 @@ using System;
 public class NewCharacterSelectionController : MonoBehaviour
 {
     private ControllerNav controlNav;
+    [SerializeField]
     private bool isConfirmation;
     [SerializeField]
     private Transform readyMsgBar;
@@ -56,6 +57,7 @@ public class NewCharacterSelectionController : MonoBehaviour
     private int forceLevel;
 
     public bool CanPressBtn { get => canPressBtn; set => canPressBtn = value; }
+    public bool IsConfirmation { get => isConfirmation; set => isConfirmation = value; }
 
     private void Awake()
     {
