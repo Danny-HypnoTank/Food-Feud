@@ -45,6 +45,7 @@ public class PinController : MonoBehaviour
         isOnFridge = false;
         target = null;
         isActive = false;
+        UnSetPlayerPRefs();
         
     }
 
@@ -55,6 +56,7 @@ public class PinController : MonoBehaviour
         target = null;
         isActive = false;*/
     }
+
 
     private void Start()
     {
@@ -270,9 +272,27 @@ public class PinController : MonoBehaviour
         player.isActivated = true;
         player.skinId = position;
         pinDirection = characters[position];
+        PlayerPrefDataSet();
         StopCoroutine("MovePinAround");
         StartCoroutine("MovePinAround");
         newSelection.CheckSubmission();
+    }
+
+
+    private void PlayerPrefDataSet()
+    {
+        PlayerPrefs.SetInt("Locked" + player.playerNum, 1);
+        PlayerPrefs.SetInt("Activated" + player.playerNum, 1);
+        PlayerPrefs.SetInt("SkinId" + player.playerNum, position);
+    }
+
+
+    private void UnSetPlayerPRefs()
+    {
+        Debug.Log("UnsetData");
+        PlayerPrefs.SetInt("Locked" + player.playerNum, 0);
+        PlayerPrefs.SetInt("Activated" + player.playerNum, 0);
+
     }
 
     public void UnlockPlayer()

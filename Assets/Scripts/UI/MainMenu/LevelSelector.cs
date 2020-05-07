@@ -56,11 +56,12 @@ public class LevelSelector : MonoBehaviour
         {
             if (Input.GetButtonDown("Dash"))
             {
+                Debug.Log("changing scene!");
                 SelectLevel();
             }
-
-            if (Input.GetButton("BackButton"))
+            else if (Input.GetButtonDown("BackButton"))
             {
+                Debug.Log("This shouldnt run");
                 resetPin.CallReset();
                 StartCoroutine(CloseFridge());
 

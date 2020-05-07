@@ -81,7 +81,26 @@ public class ManageGame : MonoBehaviour
         }
         if(check < 2)
         {
-            Debug.LogWarning("Less than 2 players initiated error!");
+            Debug.LogWarning("Less than 2 players initiated error!, commencing player prefs load");
+            for (int i = 0; i < players.Length; i++)
+            {
+               int tempLock=  PlayerPrefs.GetInt("Locked" + players[i].playerNum);
+                int tempActiv = PlayerPrefs.GetInt("Activated" + players[i].playerNum);
+                int tempSkin = PlayerPrefs.GetInt("SkinId" + players[i].playerNum);
+                if (tempLock == 1)
+                {
+                    players[i].isLocked = true;
+                }
+                if(tempActiv == 1)
+                {
+                    players[i].isActivated = true;
+                }
+                players[i].skinId = tempSkin;
+
+                //PlayerPrefs.SetInt("Locked" + player.playerNum, 1);
+              //  PlayerPrefs.SetInt("Activated" + player.playerNum, 1);
+               // PlayerPrefs.SetInt("SkinId" + player.playerNum, position);
+            }
         }
         clockHand.eulerAngles = v3Rot;
 
