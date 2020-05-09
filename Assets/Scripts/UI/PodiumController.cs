@@ -48,7 +48,7 @@ public class PodiumController : MonoBehaviour
 
         foreach (ParticleSystem p in podiumMesh.GetComponentInChildren<Transform>().GetComponentsInChildren<ParticleSystem>())
         {
-            Color _playerColour = new Color(player.SkinColours[player.skinId].r, player.SkinColours[player.skinId].g, player.SkinColours[player.skinId].b, 1);
+            Color _playerColour = new Color(player.ScoreColour[player.skinId].r, player.ScoreColour[player.skinId].g, player.ScoreColour[player.skinId].b, 1);
             p.startColor = _playerColour;
         }
 

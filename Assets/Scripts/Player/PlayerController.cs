@@ -140,10 +140,10 @@ public class PlayerController : MonoBehaviour
         BaseSpeed = MoveSpeedModifier;
         MoveSpeed = Player.Speed;
         var smokeMain = SmokeParticles.main;
-        smokeMain.startColor = Player.SkinColours[Player.skinId];
+        smokeMain.startColor = Player.ScoreColour[Player.skinId];
 
         var candyMain = CandyParticles.main;
-        candyMain.startColor = Player.SkinColours[Player.skinId];
+        candyMain.startColor = Player.ScoreColour[Player.skinId];
 
         fillBarBg.sprite = fillBarBgSprites[Player.skinId];
         fillBar.sprite = fillBarSprites[Player.skinId];
@@ -151,7 +151,7 @@ public class PlayerController : MonoBehaviour
         for (int i = 0; i < impactParticles.Length; i++)
         {
             var impactMain = impactParticles[i].main;
-            impactMain.startColor = Player.SkinColours[Player.skinId];
+            impactMain.startColor = Player.ScoreColour[Player.skinId];
         }
 
         trail.ToggleGameObjects(false);
