@@ -44,9 +44,7 @@ public class PinController : MonoBehaviour
         isPinMoving = false;
         isOnFridge = false;
         target = null;
-        isActive = false;
-        UnSetPlayerPRefs();
-        
+        isActive = false;      
     }
 
     private void OnDisable()
@@ -57,6 +55,13 @@ public class PinController : MonoBehaviour
         isActive = false;*/
     }
 
+    private void Awake()
+    {
+        PlayerPrefs.DeleteKey("Locked" + player.playerNum);
+        PlayerPrefs.DeleteKey("Activated" + player.playerNum);
+        PlayerPrefs.DeleteKey("SkinId" + player.playerNum);
+        UnSetPlayerPRefs();
+    }
 
     private void Start()
     {
@@ -284,12 +289,12 @@ public class PinController : MonoBehaviour
         PlayerPrefs.SetInt("Locked" + player.playerNum, 1);
         PlayerPrefs.SetInt("Activated" + player.playerNum, 1);
         PlayerPrefs.SetInt("SkinId" + player.playerNum, position);
+       // Debug.Log("The player set and skin: " + player.playerNum + " " + position);
     }
 
 
     private void UnSetPlayerPRefs()
     {
-        Debug.Log("UnsetData");
         PlayerPrefs.SetInt("Locked" + player.playerNum, 0);
         PlayerPrefs.SetInt("Activated" + player.playerNum, 0);
 
