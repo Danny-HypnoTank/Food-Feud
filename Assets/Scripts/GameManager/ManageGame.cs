@@ -63,6 +63,7 @@ public class ManageGame : MonoBehaviour
     //Creates instance of game manager
     private void Awake()
     {
+        
         if(instance == null)
         {
             instance = this;
@@ -100,6 +101,21 @@ public class ManageGame : MonoBehaviour
                 //PlayerPrefs.SetInt("Locked" + player.playerNum, 1);
               //  PlayerPrefs.SetInt("Activated" + player.playerNum, 1);
                // PlayerPrefs.SetInt("SkinId" + player.playerNum, position);
+            }
+        }
+        else
+        {
+            //Debug.Log("Loaded without issues");
+            for (int i = 0; i < players.Length; i++)
+            {
+                if (players[i].isActivated == true && players[i].isLocked == true)
+                {
+                    int tempSkin = PlayerPrefs.GetInt("SkinId" + players[i].playerNum);
+                    if(players[i].skinId != tempSkin)
+                    {
+                        players[i].skinId = tempSkin;
+                    }
+                }
             }
         }
         clockHand.eulerAngles = v3Rot;

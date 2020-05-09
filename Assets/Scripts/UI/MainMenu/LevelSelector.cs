@@ -56,7 +56,7 @@ public class LevelSelector : MonoBehaviour
         {
             if (Input.GetButtonDown("Dash"))
             {
-                Debug.Log("changing scene!");
+               // Debug.Log("changing scene!");
                 SelectLevel();
             }
             else if (Input.GetButtonDown("BackButton"))
