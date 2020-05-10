@@ -394,16 +394,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: LoadingPanel
       objectReference: {fileID: 0}
-    - target: {fileID: 4259726570698521952, guid: 6bbf727faf0490d499f0716a71dc7d18,
-        type: 3}
-      propertyPath: m_Text
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1112254296294081485, guid: 6bbf727faf0490d499f0716a71dc7d18,
-        type: 3}
-      propertyPath: m_FillAmount
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8445408346885361946, guid: 6bbf727faf0490d499f0716a71dc7d18,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -467,7 +457,7 @@ PrefabInstance:
     - target: {fileID: 8445408346885361946, guid: 6bbf727faf0490d499f0716a71dc7d18,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.3776
+      value: 1.3775635
       objectReference: {fileID: 0}
     - target: {fileID: 8445408346885361946, guid: 6bbf727faf0490d499f0716a71dc7d18,
         type: 3}
@@ -509,16 +499,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 8445408346885361946, guid: 6bbf727faf0490d499f0716a71dc7d18,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.0191112
-      objectReference: {fileID: 0}
-    - target: {fileID: 3381707818151692051, guid: 6bbf727faf0490d499f0716a71dc7d18,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -3.9999695
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6bbf727faf0490d499f0716a71dc7d18, type: 3}
 --- !u!224 &1701645768 stripped
@@ -539,6 +519,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1701645770 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 70060739, guid: 6bbf727faf0490d499f0716a71dc7d18,
+    type: 3}
+  m_PrefabInstance: {fileID: 1701645767}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1701645771 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 460785068, guid: 6bbf727faf0490d499f0716a71dc7d18,
+    type: 3}
+  m_PrefabInstance: {fileID: 1701645767}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1701645772 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 952356033439954819, guid: 6bbf727faf0490d499f0716a71dc7d18,
+    type: 3}
+  m_PrefabInstance: {fileID: 1701645767}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1725509781 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8445408346885361945, guid: 6bbf727faf0490d499f0716a71dc7d18,
@@ -612,8 +616,8 @@ Canvas:
   m_GameObject: {fileID: 2007914053}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 254859329}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -713,6 +717,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7618050611530100302, guid: 3fa1264ca3ef16f4da612a7b7c941653,
         type: 3}
+      propertyPath: videoClips.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7618050611530100302, guid: 3fa1264ca3ef16f4da612a7b7c941653,
+        type: 3}
+      propertyPath: tipsAndHints.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7618050611530100302, guid: 3fa1264ca3ef16f4da612a7b7c941653,
+        type: 3}
       propertyPath: loadingScreenPanel
       value: 
       objectReference: {fileID: 1725509781}
@@ -746,5 +760,30 @@ PrefabInstance:
       propertyPath: loadingPanel
       value: 
       objectReference: {fileID: 1725509781}
+    - target: {fileID: 7618050611530100302, guid: 3fa1264ca3ef16f4da612a7b7c941653,
+        type: 3}
+      propertyPath: videoClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 1701645772}
+    - target: {fileID: 7618050611530100302, guid: 3fa1264ca3ef16f4da612a7b7c941653,
+        type: 3}
+      propertyPath: videoClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 1701645771}
+    - target: {fileID: 7618050611530100302, guid: 3fa1264ca3ef16f4da612a7b7c941653,
+        type: 3}
+      propertyPath: tipText
+      value: 
+      objectReference: {fileID: 1701645770}
+    - target: {fileID: 7618050611530100302, guid: 3fa1264ca3ef16f4da612a7b7c941653,
+        type: 3}
+      propertyPath: tipsAndHints.Array.data[0]
+      value: To stun other players dash into them
+      objectReference: {fileID: 0}
+    - target: {fileID: 7618050611530100302, guid: 3fa1264ca3ef16f4da612a7b7c941653,
+        type: 3}
+      propertyPath: tipsAndHints.Array.data[1]
+      value: Hit the power up button to disrupt other players
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fa1264ca3ef16f4da612a7b7c941653, type: 3}

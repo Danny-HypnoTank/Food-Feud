@@ -19,6 +19,23 @@ public class Loading : MonoBehaviour
     [SerializeField]
     [Range(0, 1)] float progress = 0f;
 
+    [SerializeField]
+    private string[] tipsAndHints;
+    [SerializeField]
+    private Text tipText;
+
+    [SerializeField]
+    private GameObject[] videoClips;
+    private int currentClip;
+
+
+    private void Awake()
+    {
+        currentClip = Random.Range(0, videoClips.Length);
+
+        tipText.text = tipsAndHints[currentClip];
+        videoClips[currentClip].SetActive(true);
+    }
 
     private void Start()
     {
@@ -40,7 +57,7 @@ public class Loading : MonoBehaviour
     public IEnumerator LoadingProgress()
     {
         //suspend coroutine for 3 secs for loading screen to last longer
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(5);
         AsyncOperation async = SceneManager.LoadSceneAsync(sceneToLoadId);
         async.allowSceneActivation = false;
 
