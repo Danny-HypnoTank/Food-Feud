@@ -40,7 +40,7 @@ public class Loading : MonoBehaviour
     public IEnumerator LoadingProgress()
     {
         //suspend coroutine for 3 secs for loading screen to last longer
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(5);
         AsyncOperation async = SceneManager.LoadSceneAsync(sceneToLoadId);
         async.allowSceneActivation = false;
 
