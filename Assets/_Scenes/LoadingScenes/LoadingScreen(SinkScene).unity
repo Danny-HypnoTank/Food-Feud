@@ -364,6 +364,12 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!1 &460785068 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 460785068, guid: 6bbf727faf0490d499f0716a71dc7d18,
+    type: 3}
+  m_PrefabInstance: {fileID: 1424555925}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1424555925
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -519,6 +525,24 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1424555925}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1424555930 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 952356033439954819, guid: 6bbf727faf0490d499f0716a71dc7d18,
+    type: 3}
+  m_PrefabInstance: {fileID: 1424555925}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1881174713 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 70060739, guid: 6bbf727faf0490d499f0716a71dc7d18,
+    type: 3}
+  m_PrefabInstance: {fileID: 1424555925}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2007914053
 GameObject:
   m_ObjectHideFlags: 0
@@ -687,6 +711,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7618050611530100302, guid: 3fa1264ca3ef16f4da612a7b7c941653,
         type: 3}
+      propertyPath: tipsAndHints.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7618050611530100302, guid: 3fa1264ca3ef16f4da612a7b7c941653,
+        type: 3}
+      propertyPath: videoClips.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7618050611530100302, guid: 3fa1264ca3ef16f4da612a7b7c941653,
+        type: 3}
       propertyPath: loadingScreenPanel
       value: 
       objectReference: {fileID: 0}
@@ -720,5 +754,30 @@ PrefabInstance:
       propertyPath: loadingPanel
       value: 
       objectReference: {fileID: 1424555929}
+    - target: {fileID: 7618050611530100302, guid: 3fa1264ca3ef16f4da612a7b7c941653,
+        type: 3}
+      propertyPath: tipsAndHints.Array.data[0]
+      value: To stun other players dash into them
+      objectReference: {fileID: 0}
+    - target: {fileID: 7618050611530100302, guid: 3fa1264ca3ef16f4da612a7b7c941653,
+        type: 3}
+      propertyPath: videoClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 1424555930}
+    - target: {fileID: 7618050611530100302, guid: 3fa1264ca3ef16f4da612a7b7c941653,
+        type: 3}
+      propertyPath: tipText
+      value: 
+      objectReference: {fileID: 1881174713}
+    - target: {fileID: 7618050611530100302, guid: 3fa1264ca3ef16f4da612a7b7c941653,
+        type: 3}
+      propertyPath: videoClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 460785068}
+    - target: {fileID: 7618050611530100302, guid: 3fa1264ca3ef16f4da612a7b7c941653,
+        type: 3}
+      propertyPath: tipsAndHints.Array.data[1]
+      value: Hit the power up button to disrupt other players
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fa1264ca3ef16f4da612a7b7c941653, type: 3}
